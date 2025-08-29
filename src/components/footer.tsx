@@ -13,14 +13,14 @@ export function Footer() {
               <span>Verbigo</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              E-Campus for Language Intelligence
+              Master the Art of Language
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:col-span-2">
             <div className="grid gap-2">
               <h3 className="font-semibold">Platform</h3>
               <Link href="#courses" className="text-sm text-muted-foreground hover:text-primary">Courses</Link>
-              <Link href="/get-demo" className="text-sm text-muted-foreground hover:text-primary">Request a Demo</Link>
+              <Link href="/get-demo" className="text-sm text-muted-foreground hover:text-primary">Consultation</Link>
               <Link href="#faq" className="text-sm text-muted-foreground hover:text-primary">FAQ</Link>
             </div>
             <div className="grid gap-2">
@@ -37,7 +37,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Verbigo E-Campus. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Verbigo. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="#" className="text-muted-foreground hover:text-primary">
               <Twitter className="h-5 w-5" />

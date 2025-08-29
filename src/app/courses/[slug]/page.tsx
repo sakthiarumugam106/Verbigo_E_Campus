@@ -1,7 +1,7 @@
 import { courses } from '@/app/page';
 import { Button } from '@/components/ui/button';
 import { WhatsAppIcon } from '@/components/whatsapp-button';
-import { CheckCircle2, Bot } from 'lucide-react';
+import { CheckCircle2, BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -27,10 +27,10 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
             <div className="flex flex-col justify-center space-y-6">
               <div className="space-y-4">
                  <Link href="/" className="text-sm font-medium text-primary hover:underline">
-                  &larr; Back to Courses
+                  &larr; Back to All Courses
                 </Link>
                 <div className="inline-block rounded-lg bg-accent/20 px-3 py-1 text-sm text-accent-foreground">
-                  Online Course
+                  Language Course
                 </div>
                 <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl">
                   {course.title}
@@ -41,8 +41,8 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
               </div>
               <ul className="grid gap-4">
                 <li className="flex items-center gap-3 font-semibold text-lg text-primary">
-                    <Bot className="h-6 w-6" />
-                    Key Features
+                    <BookOpen className="h-6 w-6" />
+                    What You'll Learn
                 </li>
                 {course.features?.map((feature, index) => (
                   <li key={index} className="flex items-start gap-3">
@@ -55,12 +55,12 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
                 <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                   <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                     <WhatsAppIcon />
-                    WhatsApp Now
+                    Enroll via WhatsApp
                   </Link>
                 </Button>
                  <Button asChild size="lg" variant="outline" className="shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                   <Link href="/get-demo">
-                    Request a Demo
+                    Schedule a Consultation
                   </Link>
                 </Button>
               </div>

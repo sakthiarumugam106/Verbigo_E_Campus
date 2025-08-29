@@ -6,9 +6,9 @@ export default function GetDemoPage() {
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-primary/5 p-4">
       <Card className="w-full max-w-lg shadow-2xl">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-primary">Request a Demo</CardTitle>
+          <CardTitle className="text-3xl font-bold text-primary">Request a Consultation</CardTitle>
           <CardDescription>
-            See Verbigo E-Campus in action. Fill out the form below, and our team will be in touch to schedule a personalized demo.
+            Interested in a course? Fill out the form below, and one of our language experts will contact you to discuss your learning goals.
           </CardDescription>
         </CardHeader>
         <CardContent>
