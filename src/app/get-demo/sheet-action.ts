@@ -1,32 +1,26 @@
 'use server';
 
-import { google } from 'googleapis';
-import "dotenv/config";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRofdOnZAsNKHtDVC3XgJnjJiSeGtBwPL6Ra4C2AlE9FrhvwzX3xpRBe3vorJyuWKg/exec";
 
 export async function appendToGoogleSheet(data: { name: string; email: string; phoneNumber: string; submittedAt: Date }) {
   try {
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-      },
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    const response = await fetch(WEB_APP_URL, {
+        method: "POST",
+        body: JSON.stringify({
+            name: data.name,
+            email: data.email,
+            contact: data.phoneNumber,
+            submittedAt: data.submittedAt.toISOString()
+        }),
+        headers: { "Content-Type": "application/json" }
     });
 
-    const sheets = google.sheets({ version: 'v4', auth });
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
-    const range = 'Sheet1!A:D'; // Adjust sheet name and range as needed
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error writing to Google Sheet:', errorData);
+        throw new Error(`Could not write to Google Sheet. Status: ${response.status}`);
+    }
 
-    const values = [[data.name, data.email, data.phoneNumber, data.submittedAt.toISOString()]];
-
-    await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range,
-      valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values,
-      },
-    });
   } catch (error) {
     console.error('Error writing to Google Sheet:', error);
     // Re-throwing the error to be caught by the calling function

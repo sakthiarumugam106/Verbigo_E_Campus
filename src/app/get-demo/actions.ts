@@ -54,12 +54,9 @@ export async function submitDemoRequest(
       submittedAt: submissionTime,
     });
 
-    // Save to Google Sheets
-    if (process.env.GOOGLE_SHEETS_CLIENT_EMAIL && process.env.GOOGLE_SHEETS_PRIVATE_KEY && process.env.GOOGLE_SHEET_ID) {
-       await appendToGoogleSheet({ name, email, phoneNumber, submittedAt: submissionTime });
-    } else {
-        console.warn('Google Sheets environment variables are not set. Skipping sheet update.');
-    }
+    // Save to Google Sheets via Web App
+    await appendToGoogleSheet({ name, email, phoneNumber, submittedAt: submissionTime });
+    
 
     return { success: true, message: 'Your demo request has been submitted successfully!' };
   } catch (error) {
