@@ -1,3 +1,4 @@
+
 'use client';
 
 // This URL will post to your Google Sheet
@@ -16,14 +17,14 @@ export async function appendToGoogleSheet(data: ApplicationData) {
   const { resume, ...restOfData } = data;
   const payload = {
     ...restOfData,
-    resume_url: resume
+    resume_url: resume,
   };
 
   try {
     const response = await fetch(WEB_APP_URL, {
       method: 'POST',
       headers: {
-        'Content-Type': 'text/plain;charset=utf-8', // Required for Apps Script to parse JSON correctly
+        'Content-Type': 'text/plain;charset=utf-8', 
       },
       body: JSON.stringify(payload),
     });

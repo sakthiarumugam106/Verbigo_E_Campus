@@ -1,3 +1,4 @@
+
 'use server';
 
 import { z } from 'zod';
@@ -7,7 +8,7 @@ const applicationSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   age: z.coerce.number().int().positive({ message: 'Please enter a valid age.' }),
   language: z.string().min(2, { message: 'Please specify a language.' }),
-  education: z.string().min(10, { message: 'Please describe your education.' }),
+  education: z.string().min(1, { message: 'Please select your education level.' }),
   resume: z.string().url({ message: 'Please provide a valid URL for your resume.' }),
 });
 

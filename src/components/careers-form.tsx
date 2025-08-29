@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useActionState, useEffect, useRef, useState } from 'react';
@@ -9,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { submitApplication, type ApplicationFormState } from '@/app/careers/actions';
 import { appendToGoogleSheet } from '@/app/careers/sheet-action';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Textarea } from './ui/textarea';
 
 const initialState: ApplicationFormState = {
@@ -30,6 +32,7 @@ export function CareersForm() {
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+   const [educationValue, setEducationValue] = useState('');
 
   useEffect(() => {
     if (state.message) {
@@ -40,6 +43,7 @@ export function CareersForm() {
       });
       if (state.success) {
         formRef.current?.reset();
+        setEducationValue('');
         setIsOpen(false);
         if (state.submittedData) {
           appendToGoogleSheet(state.submittedData);
@@ -81,9 +85,22 @@ export function CareersForm() {
                 <Input id="language" name="language" placeholder="e.g., Spanish, French" required />
                 {state.errors?.language && <p className="text-sm text-destructive mt-1">{state.errors.language[0]}</p>}
             </div>
-            <div className="space-y-2">
-                <Label htmlFor="education">Education</Label>
-                <Textarea id="education" name="education" placeholder="Briefly describe your educational background." required />
+             <div className="space-y-2">
+                <Label htmlFor="education">Highest Education Level</Label>
+                 <input type="hidden" name="education" value={educationValue} />
+                <Select name="education-select" required onValueChange={setEducationValue}>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select your education level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="High School">High School / GED</SelectItem>
+                        <SelectItem value="Associate Degree">Associate Degree</SelectItem>
+                        <SelectItem value="Bachelor's Degree">Bachelor's Degree</SelectItem>
+                        <SelectItem value="Master's Degree">Master's Degree</SelectItem>
+                        <SelectItem value="Doctorate">Doctorate (PhD)</SelectItem>
+                         <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                </Select>
                 {state.errors?.education && <p className="text-sm text-destructive mt-1">{state.errors.education[0]}</p>}
             </div>
             <div className="space-y-2">
