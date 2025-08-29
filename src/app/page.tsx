@@ -142,157 +142,149 @@ export default function HomePage() {
         id="hero"
         className="relative overflow-hidden bg-primary/5 pt-20 pb-20 md:pt-32 md:pb-24"
       >
-        <div className="container">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-4">
-              <div className="space-y-4">
-                <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl xl:text-6xl/none">
-                  Master the Art of Language with Verbigo
-                </h1>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  Elevate your writing, perfect your grammar, and communicate with confidence. Our expert-led courses are designed for learners at every level.
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+          <div className="flex flex-col justify-center space-y-4">
+            <div className="space-y-4">
+              <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl xl:text-6xl/none">
+                Master the Art of Language with Verbigo
+              </h1>
+              <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                Elevate your writing, perfect your grammar, and communicate with confidence. Our expert-led courses are designed for learners at every level.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                <Link href="/get-demo">Get a Demo</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="#courses">Explore Courses</Link>
+              </Button>
+            </div>
+          </div>
+          <Image
+            src="https://picsum.photos/1200/800"
+            alt="Hero"
+            width={1200}
+            height={800}
+            className="mx-auto aspect-video overflow-hidden rounded-xl object-cover w-full"
+            data-ai-hint="language learning"
+          />
+        </div>
+        <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {benefits.map((benefit, index) => (
+            <div key={index} className="flex items-start space-x-4">
+              <div className="flex-shrink-0">{benefit.icon}</div>
+              <div>
+                <h3 className="text-lg font-semibold">{benefit.title}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {benefit.description}
                 </p>
               </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
-                  <Link href="/get-demo">Get a Demo</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline">
-                  <Link href="#courses">Explore Courses</Link>
-                </Button>
-              </div>
             </div>
-            <Image
-              src="https://picsum.photos/1200/800"
-              alt="Hero"
-              width={1200}
-              height={800}
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover w-full"
-              data-ai-hint="language learning"
-            />
-          </div>
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start space-x-4">
-                <div className="flex-shrink-0">{benefit.icon}</div>
-                <div>
-                  <h3 className="text-lg font-semibold">{benefit.title}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {benefit.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </section>
 
       <section id="courses" className="bg-background py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Our Language & Writing Courses
-              </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Whether you're starting from scratch or honing your expertise, we have a course for you.
-              </p>
-            </div>
+        <div className="flex flex-col items-center justify-center space-y-4 text-center">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+              Our Language & Writing Courses
+            </h2>
+            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Whether you're starting from scratch or honing your expertise, we have a course for you.
+            </p>
           </div>
-          <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-12">
-            {courses.map((course) => (
-              <Card key={course.slug} className="group overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300">
-                <Link href={`/courses/${course.slug}`}>
-                  <div className="overflow-hidden">
-                    <Image
-                      src={course.image}
-                      alt={course.title}
-                      width={600}
-                      height={400}
-                      className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      data-ai-hint={course.aiHint}
-                    />
+        </div>
+        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-12">
+          {courses.map((course) => (
+            <Card key={course.slug} className="group overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300">
+              <Link href={`/courses/${course.slug}`}>
+                <div className="overflow-hidden">
+                  <Image
+                    src={course.image}
+                    alt={course.title}
+                    width={600}
+                    height={400}
+                    className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    data-ai-hint={course.aiHint}
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <CardTitle className="text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
+                  <p className="mt-2 text-muted-foreground text-sm">{course.description}</p>
+                   <div className="flex items-center mt-4 text-primary font-medium">
+                    Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </div>
-                  <CardContent className="p-6">
-                    <CardTitle className="text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
-                    <p className="mt-2 text-muted-foreground text-sm">{course.description}</p>
-                     <div className="flex items-center mt-4 text-primary font-medium">
-                      Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-                  </CardContent>
-                </Link>
-              </Card>
-            ))}
-          </div>
+                </CardContent>
+              </Link>
+            </Card>
+          ))}
         </div>
       </section>
 
       <section id="values" className="bg-primary/5 py-16 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-            <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
-                    Our Core <span className="text-destructive">Values</span>
-                </h2>
-                <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-                    At Verbigo, our core values shape every lesson and interaction.
-                </p>
-            </div>
-            <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
-                {values.map((value, index) => (
-                    <Card key={index} className="flex flex-col justify-start transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                        <CardHeader className="flex flex-row items-center gap-4 pb-4">
-                            {value.icon}
-                            <CardTitle className="text-xl font-semibold text-primary">{value.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-muted-foreground">{value.description}</p>
-                        </CardContent>
-                    </Card>
-                ))}
-                 <Card className="flex flex-col justify-center items-center bg-background/50 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                    <CardContent className="text-center p-6">
-                        <h3 className="text-xl font-bold text-primary mb-2">And so much more...</h3>
-                        <p className="text-muted-foreground">We are constantly evolving to meet the needs of our learners.</p>
+        <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
+                Our Core <span className="text-destructive">Values</span>
+            </h2>
+            <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+                At Verbigo, our core values shape every lesson and interaction.
+            </p>
+        </div>
+        <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
+            {values.map((value, index) => (
+                <Card key={index} className="flex flex-col justify-start transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                    <CardHeader className="flex flex-row items-center gap-4 pb-4">
+                        {value.icon}
+                        <CardTitle className="text-xl font-semibold text-primary">{value.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground">{value.description}</p>
                     </CardContent>
                 </Card>
-            </div>
-             <div className="text-center">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
-                    <Link href="/get-demo">Get a Consultation</Link>
-                </Button>
-            </div>
+            ))}
+             <Card className="flex flex-col justify-center items-center bg-background/50 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                <CardContent className="text-center p-6">
+                    <h3 className="text-xl font-bold text-primary mb-2">And so much more...</h3>
+                    <p className="text-muted-foreground">We are constantly evolving to meet the needs of our learners.</p>
+                </CardContent>
+            </Card>
+        </div>
+         <div className="text-center">
+            <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                <Link href="/get-demo">Get a Consultation</Link>
+            </Button>
         </div>
       </section>
 
       <section id="faq" className="bg-background py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-              Frequently Asked Questions
-            </h2>
-            <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-              Find answers to common questions about our language and grammar courses.
-            </p>
-          </div>
-          <div className="mx-auto mt-12 max-w-3xl">
-            <Accordion type="single" collapsible className="w-full">
-              {faqItems.map((item, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-lg font-medium text-left">
-                    {item.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-base text-muted-foreground">
-                    {item.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+            Frequently Asked Questions
+          </h2>
+          <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+            Find answers to common questions about our language and grammar courses.
+          </p>
+        </div>
+        <div className="mx-auto mt-12 max-w-3xl">
+          <Accordion type="single" collapsible className="w-full">
+            {faqItems.map((item, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger className="text-lg font-medium text-left">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-base text-muted-foreground">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </section>
 
       <section id="contact" className="bg-primary/5 py-16 md:py-24">
-        <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
+        <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6">
           <div className="space-y-3">
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
               Contact Our Team
