@@ -154,7 +154,7 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                <Button asChild size="lg">
                   <Link href="/get-demo">Get a Demo</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline">
@@ -257,7 +257,7 @@ export default function HomePage() {
               </Card>
           </div>
            <div className="text-center">
-              <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+              <Button asChild size="lg">
                   <Link href="/get-demo">Get a Consultation</Link>
               </Button>
           </div>

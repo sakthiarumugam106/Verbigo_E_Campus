@@ -57,7 +57,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
                   Enroll via WhatsApp
                 </Link>
               </Button>
-               <Button asChild size="lg" className="bg-accent hover:bg-accent/90 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+               <Button asChild size="lg" className="shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                 <Link href="/get-demo">
                   Schedule a Consultation
                 </Link>

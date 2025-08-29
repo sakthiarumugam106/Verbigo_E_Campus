@@ -44,7 +44,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button asChild className="hidden sm:flex bg-accent hover:bg-accent/90">
+          <Button asChild className="hidden sm:flex">
             <Link href="/get-demo">Get a Demo</Link>
           </Button>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -82,7 +82,7 @@ export function Header() {
                   </Link>
                 ))}
               </nav>
-              <Button asChild size="lg" className="w-full mt-8 bg-accent hover:bg-accent/90">
+              <Button asChild size="lg" className="w-full mt-8">
                   <Link href="/get-demo">Get a Demo</Link>
               </Button>
             </SheetContent>
