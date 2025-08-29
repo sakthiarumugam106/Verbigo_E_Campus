@@ -28,7 +28,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
                <Link href="/" className="text-sm font-medium text-primary hover:underline">
                 &larr; Back to All Courses
               </Link>
-              <div className="flex">
+              <div className="flex items-center gap-3">
                 <div className="inline-block rounded-lg bg-accent/20 px-3 py-1 text-sm text-accent-foreground">
                   Language Course
                 </div>

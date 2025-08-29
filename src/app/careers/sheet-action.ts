@@ -1,7 +1,7 @@
 
 'use client';
 
-// This URL will post to your Google Sheet
+// This URL will post to your Google Sheet for careers
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz0MJB0hM_v7WMak51iG_CUYAPlb0UJ5axg0VMrhX4H0UwKVKsR3CTaZI6I1wz33SRjnA/exec"; 
 
 type ApplicationData = {
@@ -17,7 +17,7 @@ export async function appendToGoogleSheet(data: ApplicationData) {
   const { resume, ...restOfData } = data;
   const payload = {
     ...restOfData,
-    resume_url: resume,
+    resume_url: resume, // The sheet expects 'resume_url'
   };
 
   try {

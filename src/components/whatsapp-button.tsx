@@ -17,7 +17,7 @@ export const WhatsAppIcon = ({ className }: { className?: string }) => (
 );
 
 export function WhatsAppButton() {
-  const phoneNumber = '15551234567'; // Replace with a real number
+  const phoneNumber = '7708071872'; // Replace with a real number
   const message = "Hello Verbigo! I'm interested in learning more about your language courses.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
