@@ -54,6 +54,10 @@ export function ContactForm() {
         <Input type="email" name="email" placeholder="Email" required />
         {state.errors?.email && <p className="text-xs text-destructive">{state.errors.email[0]}</p>}
       </div>
+       <div className="grid gap-2">
+        <Input type="tel" name="phoneNumber" placeholder="Phone Number" required />
+        {state.errors?.phoneNumber && <p className="text-xs text-destructive">{state.errors.phoneNumber[0]}</p>}
+      </div>
       <div className="grid gap-2">
         <Textarea name="message" placeholder="Your Message" required />
         {state.errors?.message && <p className="text-xs text-destructive">{state.errors.message[0]}</p>}
