@@ -11,19 +11,32 @@ export async function appendToGoogleSheet(data: { name: string; email: string; p
 
   try {
     const response = await fetch(WEB_APP_URL, {
-        method: "POST",
+        method: 'POST',
         body: formData,
+        cache: 'no-cache',
     });
 
-    if (response.status !== 200 && response.status !== 302) { // 302 is a redirect on success
+    if (!response.ok && response.status !== 302) { 
         const errorText = await response.text();
         console.error('Error writing to Google Sheet:', `Status: ${response.status}`, 'Response:', errorText);
         throw new Error(`Could not write to Google Sheet. Status: ${response.status}`);
     }
+    
+    // In case of a redirect, we can consider it a success but can't read the body.
+    if(response.status === 302) {
+      console.log('Successfully wrote to Google Sheet (via redirect).');
+      return;
+    }
+
+    const responseText = await response.text();
+    console.log('Google Sheet response:', responseText);
+
 
   } catch (error) {
-    console.error('Error writing to Google Sheet:', error);
-    // Re-throwing the error to be caught by the calling function
-    throw new Error('Could not write to Google Sheet.');
+    console.error('Error during fetch to Google Sheet:', error);
+    if (error instanceof Error) {
+        throw new Error(`Could not write to Google Sheet: ${error.message}`);
+    }
+    throw new Error('An unknown error occurred while writing to Google Sheet.');
   }
 }
