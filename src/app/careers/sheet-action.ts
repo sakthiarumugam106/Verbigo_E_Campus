@@ -1,7 +1,7 @@
 'use client';
 
 // This URL will post to your Google Sheet
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlmlxRXsT7pcYKVZV4Kl_dYdW04LdaPglOERnjV1gbWeyXowZ-ImiFKptPfzCFPcDF/exec"; 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz0MJB0hM_v7WMak51iG_CUYAPlb0UJ5axg0VMrhX4H0UwKVKsR3CTaZI6I1wz33SRjnA/exec"; 
 
 type ApplicationData = {
   name: string;
@@ -13,9 +13,10 @@ type ApplicationData = {
 };
 
 export async function appendToGoogleSheet(data: ApplicationData) {
+  const { resume, ...restOfData } = data;
   const payload = {
-    ...data,
-    sheetName: 'Verbigo_Careers' // Add sheetName to direct the data
+    ...restOfData,
+    resume_url: resume
   };
 
   try {
