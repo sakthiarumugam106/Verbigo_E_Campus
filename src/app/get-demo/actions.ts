@@ -55,7 +55,7 @@ export async function submitDemoRequest(
     });
 
     // Save to Google Sheets via Web App
-    await appendToGoogleSheet({ name, email, phoneNumber, submittedAt: submissionTime });
+    await appendToGoogleSheet({ name, email, contact: phoneNumber });
     
 
     return { success: true, message: 'Your demo request has been submitted successfully!' };
