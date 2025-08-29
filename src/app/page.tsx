@@ -155,9 +155,9 @@ export default function HomePage() {
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <Button asChild size="lg">
-                  <Link href="/get-demo">Get a Demo</Link>
+                  <Link href="/get-demo">Get a Consultation</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline">
+                <Button asChild size="lg" variant="outline" className="hover:bg-primary hover:text-primary-foreground">
                   <Link href="#courses">Explore Courses</Link>
                 </Button>
               </div>
