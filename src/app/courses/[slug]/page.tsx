@@ -28,8 +28,10 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
                <Link href="/" className="text-sm font-medium text-primary hover:underline">
                 &larr; Back to All Courses
               </Link>
-              <div className="inline-block rounded-lg bg-accent/20 px-3 py-1 text-sm text-accent-foreground">
-                Language Course
+              <div className="flex">
+                <div className="inline-block rounded-lg bg-accent/20 px-3 py-1 text-sm text-accent-foreground">
+                  Language Course
+                </div>
               </div>
               <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl">
                 {course.title}
@@ -57,7 +59,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
                   Enroll via WhatsApp
                 </Link>
               </Button>
-               <Button asChild size="lg" className="shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                 <Link href="/get-demo">
                   Schedule a Consultation
                 </Link>
