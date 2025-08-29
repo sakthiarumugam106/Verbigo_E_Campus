@@ -137,7 +137,7 @@ const faqItems = [
 ];
 
 export default function HomePage() {
-   const phoneNumber = '15551234567';
+   const phoneNumber = '7708071872';
   const message = "Hello Verbigo! I'm interested in learning more about your language courses.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
@@ -159,13 +159,13 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                 <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white">
+                 <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                   <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                     <WhatsAppIcon />
                     WhatsApp Now
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="hover:bg-primary hover:text-primary-foreground">
+                <Button asChild size="lg" variant="outline" className="hover:bg-primary hover:text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                   <Link href="#courses">Explore Courses</Link>
                 </Button>
               </div>
@@ -263,11 +263,6 @@ export default function HomePage() {
                       <p className="text-muted-foreground">We are constantly evolving to meet the needs of our learners.</p>
                   </CardContent>
               </Card>
-          </div>
-           <div className="text-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                  <Link href="/get-demo">Get a Consultation</Link>
-              </Button>
           </div>
         </div>
       </section>
