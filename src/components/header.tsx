@@ -20,11 +20,14 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center px-4 md:px-6">
+      <div className="container flex h-20 items-center px-4 md:px-6">
         <div className="mr-4 flex items-center">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg text-primary">
-            <VerbigoLogo className="h-8 w-8" />
-            <span>Verbigo</span>
+          <Link href="/" className="flex items-center gap-2 text-primary">
+            <VerbigoLogo className="h-10 w-10" />
+            <div className="flex flex-col">
+              <span className="text-xl font-bold leading-none">Verbigo</span>
+              <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+            </div>
           </Link>
         </div>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
@@ -56,11 +59,14 @@ export function Header() {
             <SheetContent side="left">
               <Link
                 href="/"
-                className="flex items-center gap-2 font-bold text-lg text-primary mb-6"
+                className="flex items-center gap-2 text-primary mb-6"
                 onClick={() => setIsOpen(false)}
               >
-                <VerbigoLogo className="h-8 w-8" />
-                <span>Verbigo</span>
+                <VerbigoLogo className="h-10 w-10" />
+                 <div className="flex flex-col">
+                    <span className="text-xl font-bold leading-none">Verbigo</span>
+                    <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+                </div>
               </Link>
               <nav className="grid gap-4">
                 {navLinks.map((link) => (

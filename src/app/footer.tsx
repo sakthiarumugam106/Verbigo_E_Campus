@@ -7,13 +7,16 @@ export function Footer() {
     <footer className="bg-primary/5 py-12">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-8 md:grid-cols-3">
-          <div className="flex flex-col gap-2">
-            <Link href="/" className="flex items-center gap-2 font-bold text-lg text-primary">
-              <VerbigoLogo className="h-8 w-8" />
-              <span>Verbigo</span>
+          <div className="flex flex-col gap-4">
+            <Link href="/" className="flex items-center gap-2 text-primary">
+               <VerbigoLogo className="h-10 w-10" />
+                <div className="flex flex-col">
+                    <span className="text-xl font-bold leading-none">Verbigo</span>
+                    <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+                </div>
             </Link>
-            <p className="text-sm text-muted-foreground">
-              Master the Art of Language
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Master the Art of Language with our expert-led courses and personalized feedback.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:col-span-2">
