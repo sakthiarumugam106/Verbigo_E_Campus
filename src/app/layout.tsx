@@ -4,13 +4,13 @@ import { Header } from '@/components/header';
 import { Footer } from '@/app/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { WhatsAppButton } from '@/components/whatsapp-button';
-import { Inter, Righteous } from 'next/font/google';
+import { Inter, Poppins } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const righteous = Righteous({
+const poppins = Poppins({
   subsets: ['latin'],
-  weight: ['400'],
-  variable: '--font-righteous',
+  weight: ['400', '700'],
+  variable: '--font-poppins',
 });
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${righteous.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
       <body className="font-body-container antialiased">
         <div className="flex min-h-screen flex-col">
           <Header />
