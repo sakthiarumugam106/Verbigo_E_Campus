@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { submitDemoRequest, type DemoFormState } from '@/app/get-demo/actions';
+import { appendToGoogleSheet } from '@/app/get-demo/sheet-action';
 
 const initialState: DemoFormState = {
   message: '',
@@ -36,6 +37,10 @@ export function GetDemoForm() {
       });
       if (state.success) {
         formRef.current?.reset();
+        // If the server action was successful, trigger the client-side sheet action
+        if (state.submittedData) {
+          appendToGoogleSheet(state.submittedData);
+        }
       }
     }
   }, [state, toast]);

@@ -3,7 +3,6 @@
 import { z } from 'zod';
 import { db } from '@/lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
-import { appendToGoogleSheet } from './sheet-action';
 
 const demoRequestSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -14,6 +13,11 @@ const demoRequestSchema = z.object({
 export type DemoFormState = {
   message: string;
   success: boolean;
+  submittedData?: {
+    name: string;
+    email: string;
+    contact: string;
+  };
   errors?: {
     name?: string[];
     email?: string[];
@@ -46,19 +50,24 @@ export async function submitDemoRequest(
   const submissionTime = new Date();
 
   try {
-    // Save to Firestore (as a backup)
+    // Save to Firestore (as a backup and for speed)
     await addDoc(collection(db, 'demo-requests'), {
       name,
       email,
       phoneNumber,
       submittedAt: submissionTime,
     });
-
-    // Save to Google Sheets via Web App
-    await appendToGoogleSheet({ name, email, contact: phoneNumber });
     
-
-    return { success: true, message: 'Your demo request has been submitted successfully!' };
+    // Defer Google Sheet submission to the client for faster UI response
+    return { 
+      success: true, 
+      message: 'Your demo request has been submitted successfully!',
+      submittedData: {
+        name,
+        email,
+        contact: phoneNumber,
+      },
+    };
   } catch (error) {
     console.error('Error processing demo request: ', error);
     return { success: false, message: 'Something went wrong on our end. Please try again.' };
