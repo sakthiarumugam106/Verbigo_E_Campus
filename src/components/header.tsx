@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Sparkles } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import * as React from 'react';
+import { WhatsAppIcon } from '@/components/whatsapp-button';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -21,7 +22,9 @@ export function Header() {
       <div className="container flex h-16 items-center">
         <div className="mr-4 flex items-center">
           <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-            <Sparkles className="h-6 w-6 text-primary" />
+            <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
+              <WhatsAppIcon />
+            </div>
             <span>Verbigo</span>
           </Link>
         </div>
@@ -57,7 +60,9 @@ export function Header() {
                 className="flex items-center gap-2 font-bold text-lg mb-6"
                 onClick={() => setIsOpen(false)}
               >
-                <Sparkles className="h-6 w-6 text-primary" />
+                <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
+                  <WhatsAppIcon />
+                </div>
                 <span>Verbigo</span>
               </Link>
               <nav className="grid gap-4">

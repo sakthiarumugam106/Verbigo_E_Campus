@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Facebook, Twitter, Linkedin, Sparkles } from 'lucide-react';
+import { Facebook, Twitter, Linkedin } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/whatsapp-button';
 
 export function Footer() {
   return (
@@ -8,7 +9,9 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-3">
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-                <Sparkles className="h-6 w-6 text-primary" />
+                <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
+                  <WhatsAppIcon />
+                </div>
                 <span>Verbigo</span>
             </Link>
             <p className="text-sm text-muted-foreground">
