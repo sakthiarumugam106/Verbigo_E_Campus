@@ -140,7 +140,7 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="relative overflow-hidden bg-primary/5 pt-20 pb-20 md:pt-32 md:pb-24"
+        className="relative w-full overflow-hidden bg-primary/5 pt-20 pb-20 md:pt-32 md:pb-24"
       >
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
@@ -292,8 +292,8 @@ export default function HomePage() {
       </section>
 
       <section id="contact" className="bg-primary/5 py-16 md:py-24">
-        <div className="container">
-          <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6">
+        <div className="container px-4 md:px-6">
+          <div className="grid items-center justify-center gap-4 text-center">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                 Contact Our Team
