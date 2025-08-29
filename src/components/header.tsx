@@ -9,9 +9,10 @@ import { VerbigoLogo } from '@/components/verbigo-logo';
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Courses', href: '#courses' },
-  { name: 'FAQ', href: '#faq' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Courses', href: '/#courses' },
+  { name: 'Our Values', href: '/our-values' },
+  { name: 'FAQ', href: '/#faq' },
+  { name: 'Contact', href: '/#contact' },
 ];
 
 export function Header() {

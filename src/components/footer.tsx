@@ -19,15 +19,16 @@ export function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:col-span-2">
             <div className="grid gap-2">
               <h3 className="font-semibold">Platform</h3>
-              <Link href="#courses" className="text-sm text-muted-foreground hover:text-primary">Courses</Link>
+              <Link href="/#courses" className="text-sm text-muted-foreground hover:text-primary">Courses</Link>
+              <Link href="/our-values" className="text-sm text-muted-foreground hover:text-primary">Our Values</Link>
               <Link href="/get-demo" className="text-sm text-muted-foreground hover:text-primary">Consultation</Link>
-              <Link href="#faq" className="text-sm text-muted-foreground hover:text-primary">FAQ</Link>
+              <Link href="/#faq" className="text-sm text-muted-foreground hover:text-primary">FAQ</Link>
             </div>
             <div className="grid gap-2">
               <h3 className="font-semibold">Company</h3>
               <Link href="#" className="text-sm text-muted-foreground hover:text-primary">About Us</Link>
               <Link href="#" className="text-sm text-muted-foreground hover:text-primary">Careers</Link>
-              <Link href="#contact" className="text-sm text-muted-foreground hover:text-primary">Contact</Link>
+              <Link href="/#contact" className="text-sm text-muted-foreground hover:text-primary">Contact</Link>
             </div>
             <div className="grid gap-2">
               <h3 className="font-semibold">Legal</h3>
