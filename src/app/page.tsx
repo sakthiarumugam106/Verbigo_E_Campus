@@ -174,30 +174,28 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-          <div className="mx-auto grid max-w-5xl gap-8 py-12">
+          <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-12">
             {courses.map((course) => (
-               <Card key={course.slug} className="grid md:grid-cols-2 overflow-hidden transition-all hover:shadow-lg">
-                <div className="flex flex-col justify-between p-6">
-                  <div>
-                    <CardTitle className="text-2xl font-bold">{course.title}</CardTitle>
-                    <p className="mt-2 text-muted-foreground">{course.description}</p>
+              <Card key={course.slug} className="group overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300">
+                <Link href={`/courses/${course.slug}`}>
+                  <div className="overflow-hidden">
+                    <Image
+                      src={course.image}
+                      alt={course.title}
+                      width={600}
+                      height={400}
+                      className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      data-ai-hint={course.aiHint}
+                    />
                   </div>
-                  <Button asChild variant="link" className="p-0 h-auto mt-4 justify-start text-primary">
-                    <Link href={`/courses/${course.slug}`}>
-                      Read More <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-                <div className="p-0">
-                  <Image
-                    src={course.image}
-                    alt={course.title}
-                    width={600}
-                    height={400}
-                    className="aspect-video w-full object-cover md:aspect-auto md:h-full"
-                    data-ai-hint={course.aiHint}
-                  />
-                </div>
+                  <CardContent className="p-6">
+                    <CardTitle className="text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
+                    <p className="mt-2 text-muted-foreground text-sm">{course.description}</p>
+                     <div className="flex items-center mt-4 text-primary font-medium">
+                      Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                  </CardContent>
+                </Link>
               </Card>
             ))}
           </div>
