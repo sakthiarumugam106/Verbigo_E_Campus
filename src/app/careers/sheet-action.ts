@@ -1,7 +1,7 @@
 'use client';
 
-// Replace this with your actual Google Apps Script URL for the Verbigo_Careers sheet
-const WEB_APP_URL = "https://script.google.com/macros/s/YOUR_CAREERS_SCRIPT_ID/exec"; 
+// This URL will post to your "Verbigo_Careers" Google Sheet
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlmlxRXsT7pcYKVZV4Kl_dYdW04LdaPglOERnjV1gbWeyXowZ-ImiFKptPfzCFPcDF/exec"; 
 
 type ApplicationData = {
   name: string;
@@ -13,19 +13,19 @@ type ApplicationData = {
 };
 
 export async function appendToGoogleSheet(data: ApplicationData) {
-  const formData = new FormData();
-  formData.append('name', data.name);
-  formData.append('email', data.email);
-  formData.append('age', String(data.age));
-  formData.append('language', data.language);
-  formData.append('education', data.education);
-  formData.append('resume', data.resume);
+  const payload = {
+    ...data,
+    sheetName: 'Verbigo_Careers' // Add sheetName to direct the data
+  };
 
   try {
     // We use keepalive: true so the request continues even if the user navigates away
     await fetch(WEB_APP_URL, {
       method: 'POST',
-      body: formData,
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8', // Required header for Apps Script
+      },
+      body: JSON.stringify(payload),
       mode: 'no-cors', // Use no-cors for a "fire-and-forget" request
       keepalive: true,
     });
