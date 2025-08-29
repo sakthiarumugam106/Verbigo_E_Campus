@@ -13,7 +13,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
     notFound();
   }
 
-  const phoneNumber = '15551234567';
+  const phoneNumber = '7708071872';
   const message = `Hello Verbigo! I'm interested in the ${course.title} course.`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     message

@@ -29,7 +29,7 @@ export function WhatsAppButton() {
       aria-label="Chat on WhatsApp"
     >
       <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-        <WhatsAppIcon className="h-9 w-9" />
+        <WhatsAppIcon className="h-10 w-10" />
       </Link>
     </Button>
   );
