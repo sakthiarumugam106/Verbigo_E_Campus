@@ -16,9 +16,16 @@ export async function appendToGoogleSheet(data: { name: string; email: string; p
     });
 
     if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error writing to Google Sheet:', errorData);
-        throw new Error(`Could not write to Google Sheet. Status: ${response.status}`);
+        let errorDetails = `Status: ${response.status}`;
+        try {
+            const errorData = await response.json();
+            errorDetails += `, Response: ${JSON.stringify(errorData)}`;
+        } catch (e) {
+            // response might not be json
+            errorDetails += `, Body: ${await response.text()}`;
+        }
+        console.error('Error writing to Google Sheet:', errorDetails);
+        throw new Error(`Could not write to Google Sheet. ${errorDetails}`);
     }
 
   } catch (error) {
