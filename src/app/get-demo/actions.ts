@@ -70,6 +70,10 @@ export async function submitDemoRequest(
     };
   } catch (error) {
     console.error('Error processing demo request: ', error);
-    return { success: false, message: 'Something went wrong on our end. Please try again.' };
+    // Return a generic error to the user
+    return { 
+      success: false, 
+      message: 'An unexpected error occurred while saving your request. Please try again.' 
+    };
   }
 }

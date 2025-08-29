@@ -4,20 +4,22 @@ const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRofdOnZAsNKHtDVC3
 
 // This function now runs on the client-side, in the background.
 export async function appendToGoogleSheet(data: { name: string; email: string; contact: string; }) {
+  const formData = new FormData();
+  formData.append('name', data.name);
+  formData.append('email', data.email);
+  formData.append('contact', data.contact);
+
   try {
     // We use keepalive: true so the request continues even if the user navigates away
-    const response = await fetch(WEB_APP_URL, {
+    await fetch(WEB_APP_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-      mode: 'no-cors', // Use no-cors to avoid CORS errors for a simple "fire-and-forget" request
+      body: formData,
+      mode: 'no-cors', // Use no-cors for a "fire-and-forget" request
       keepalive: true,
     });
     
-    // With no-cors, we can't inspect the response, but we log that we tried.
-    console.log('Successfully sent data to Google Sheet in the background.');
+    // With no-cors, we can't inspect the response, but we can log that the attempt was made.
+    console.log('Successfully attempted to send data to Google Sheet in the background.');
 
   } catch (error) {
     // This will only catch network errors, not API errors, due to no-cors.
