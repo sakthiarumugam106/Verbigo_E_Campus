@@ -9,8 +9,7 @@ export async function appendToGoogleSheet(data: { name: string; email: string; p
         body: JSON.stringify({
             name: data.name,
             email: data.email,
-            contact: data.phoneNumber,
-            submittedAt: data.submittedAt.toISOString()
+            contact: data.phoneNumber
         }),
         headers: { "Content-Type": "application/json" }
     });
