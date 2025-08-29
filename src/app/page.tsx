@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Feather, BookOpen, MessageCircle, ArrowRight } from 'lucide-react';
+import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
 
 const benefits = [
@@ -82,6 +82,34 @@ export const courses = [
       'Learn the process of revision and editing',
     ],
   },
+];
+
+const values = [
+    {
+        icon: <MessageSquareQuote className="h-10 w-10 text-primary" />,
+        title: 'Empower through communication',
+        description: 'Clear communication transforms lives. It builds confidence, opens opportunities, and fuels personal growth.',
+    },
+    {
+        icon: <Languages className="h-10 w-10 text-primary" />,
+        title: 'Bridge gaps through language',
+        description: 'Language should connect, not divide. We make English approachable for those left behind by traditional methods.',
+    },
+    {
+        icon: <TrendingUp className="h-10 w-10 text-primary" />,
+        title: 'Treat language as a tool for growth',
+        description: "English isn't just a subject. It's a skill that can unlock better opportunities, whether it's for work, study, or self-expression.",
+    },
+    {
+        icon: <GraduationCap className="h-10 w-10 text-primary" />,
+        title: 'Learner First approach',
+        description: 'We design every course around the person learning it. Their pace, their comfort, their goals. Learning works best when it adapts to the learner.',
+    },
+    {
+        icon: <Laptop className="h-10 w-10 text-primary" />,
+        title: 'Blending Education & Technology',
+        description: "As a language hub we're trying to utilize technology to its best and become a game changer in the field of language learning.",
+    },
 ];
 
 const faqItems = [
@@ -199,7 +227,44 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="faq" className="bg-primary/5">
+      <section id="values" className="bg-primary/5 py-16 md:py-24 lg:py-32">
+        <div className="container px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
+                    Our Core <span className="text-destructive">Values</span>
+                </h2>
+                <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+                    At Verbigo, our core values shape every lesson and interaction.
+                </p>
+            </div>
+            <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
+                {values.map((value, index) => (
+                    <Card key={index} className="flex flex-col justify-start transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                        <CardHeader className="flex flex-row items-center gap-4 pb-4">
+                            {value.icon}
+                            <CardTitle className="text-xl font-semibold text-primary">{value.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">{value.description}</p>
+                        </CardContent>
+                    </Card>
+                ))}
+                 <Card className="flex flex-col justify-center items-center bg-background/50 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                    <CardContent className="text-center p-6">
+                        <h3 className="text-xl font-bold text-primary mb-2">And so much more...</h3>
+                        <p className="text-muted-foreground">We are constantly evolving to meet the needs of our learners.</p>
+                    </CardContent>
+                </Card>
+            </div>
+             <div className="text-center">
+                <Button asChild size="lg" className="bg-accent hover:bg-accent/90">
+                    <Link href="/get-demo">Get a Consultation</Link>
+                </Button>
+            </div>
+        </div>
+      </section>
+
+      <section id="faq" className="bg-background">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
@@ -226,7 +291,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="contact" className="bg-background">
+      <section id="contact" className="bg-primary/5">
         <div className="container grid items-center justify-center gap-4 px-4 text-center md:px-6">
           <div className="space-y-3">
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">

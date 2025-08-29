@@ -10,7 +10,7 @@ import { VerbigoLogo } from '@/components/verbigo-logo';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Courses', href: '/#courses' },
-  { name: 'Our Values', href: '/our-values' },
+  { name: 'Our Values', href: '/#values' },
   { name: 'FAQ', href: '/#faq' },
   { name: 'Contact', href: '/#contact' },
 ];

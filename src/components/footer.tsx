@@ -20,7 +20,7 @@ export function Footer() {
             <div className="grid gap-2">
               <h3 className="font-semibold">Platform</h3>
               <Link href="/#courses" className="text-sm text-muted-foreground hover:text-primary">Courses</Link>
-              <Link href="/our-values" className="text-sm text-muted-foreground hover:text-primary">Our Values</Link>
+              <Link href="/#values" className="text-sm text-muted-foreground hover:text-primary">Our Values</Link>
               <Link href="/get-demo" className="text-sm text-muted-foreground hover:text-primary">Consultation</Link>
               <Link href="/#faq" className="text-sm text-muted-foreground hover:text-primary">FAQ</Link>
             </div>
