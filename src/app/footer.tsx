@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Twitter, Linkedin } from 'lucide-react';
-import { VerbigoLogo } from './verbigo-logo';
+import { VerbigoLogo } from '@/components/verbigo-logo';
 
 export function Footer() {
   return (
