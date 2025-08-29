@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import * as React from 'react';
-import { WhatsAppIcon } from '@/components/whatsapp-button';
+import { VerbigoLogo } from '@/components/verbigo-logo';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -21,11 +21,9 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <div className="mr-4 flex items-center">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-            <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
-              <WhatsAppIcon />
-            </div>
-            <span>WhatsApp</span>
+          <Link href="/" className="flex items-center gap-2 font-bold text-lg text-primary">
+            <VerbigoLogo className="h-8 w-8" />
+            <span>Verbigo</span>
           </Link>
         </div>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
@@ -57,13 +55,11 @@ export function Header() {
             <SheetContent side="left">
               <Link
                 href="/"
-                className="flex items-center gap-2 font-bold text-lg mb-6"
+                className="flex items-center gap-2 font-bold text-lg text-primary mb-6"
                 onClick={() => setIsOpen(false)}
               >
-                <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
-                  <WhatsAppIcon />
-                </div>
-                <span>WhatsApp</span>
+                <VerbigoLogo className="h-8 w-8" />
+                <span>Verbigo</span>
               </Link>
               <nav className="grid gap-4">
                 {navLinks.map((link) => (

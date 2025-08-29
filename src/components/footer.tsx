@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Facebook, Twitter, Linkedin } from 'lucide-react';
-import { WhatsAppIcon } from '@/components/whatsapp-button';
+import { VerbigoLogo } from './verbigo-logo';
 
 export function Footer() {
   return (
@@ -8,14 +8,12 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="flex flex-col gap-2">
-            <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-                <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
-                  <WhatsAppIcon />
-                </div>
-                <span>WhatsApp</span>
+            <Link href="/" className="flex items-center gap-2 font-bold text-lg text-primary">
+              <VerbigoLogo className="h-8 w-8" />
+              <span>Verbigo</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              The future of online education, today.
+              E-Campus for Language Intelligence
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:col-span-2">
