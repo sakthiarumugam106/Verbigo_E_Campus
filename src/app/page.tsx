@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookOpen, Users, BrainCircuit } from 'lucide-react';
+import { BookOpen, Users, BrainCircuit, ArrowRight } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
 
 const benefits = [
@@ -29,30 +29,58 @@ const benefits = [
   },
 ];
 
-const courses = [
+export const courses = [
   {
+    slug: 'digital-marketing-pro',
     title: 'Digital Marketing Pro',
     description: 'Master SEO, content marketing, and social media strategies.',
     image: 'https://picsum.photos/600/400?random=1',
     aiHint: 'digital marketing',
+    features: [
+      'Strengthen grammar and sentence structure',
+      'Improve reading, listening, and speaking',
+      'Build vocabulary for everyday use',
+      'Practice short conversations with confidence',
+    ],
   },
   {
+    slug: 'full-stack-web-development',
     title: 'Full-Stack Web Development',
     description: 'From React to Node.js, become a complete web developer.',
     image: 'https://picsum.photos/600/400?random=2',
     aiHint: 'web development',
+     features: [
+      'Master front-end with React and Next.js',
+      'Build robust back-ends with Node.js and Express',
+      'Learn database management with MongoDB and SQL',
+      'Deploy full-stack applications to the cloud',
+    ],
   },
   {
+    slug: 'data-science-and-ai',
     title: 'Data Science & AI',
     description: 'Unlock the power of data with Python, ML, and deep learning.',
     image: 'https://picsum.photos/600/400?random=3',
     aiHint: 'data science',
+     features: [
+      'Master Python for data analysis',
+      'Learn machine learning algorithms from scratch',
+      'Understand neural networks and deep learning',
+      'Build and deploy AI models',
+    ],
   },
   {
+    slug: 'ux-ui-design-fundamentals',
     title: 'UX/UI Design Fundamentals',
     description: 'Create beautiful and intuitive user experiences.',
     image: 'https://picsum.photos/600/400?random=4',
     aiHint: 'ui design',
+     features: [
+      'Learn the principles of user-centered design',
+      'Master wireframing and prototyping with Figma',
+      'Understand user research and testing methodologies',
+      'Build a professional design portfolio',
+    ],
   },
 ];
 
@@ -146,28 +174,30 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-          <div className="mx-auto grid grid-cols-1 gap-6 py-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto grid max-w-5xl gap-8 py-12">
             {courses.map((course) => (
-              <Card
-                key={course.title}
-                className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1"
-              >
-                <CardHeader className="p-0">
+               <Card key={course.slug} className="grid md:grid-cols-2 overflow-hidden transition-all hover:shadow-lg">
+                <div className="flex flex-col justify-between p-6">
+                  <div>
+                    <CardTitle className="text-2xl font-bold">{course.title}</CardTitle>
+                    <p className="mt-2 text-muted-foreground">{course.description}</p>
+                  </div>
+                  <Button asChild variant="link" className="p-0 h-auto mt-4 justify-start text-primary">
+                    <Link href={`/courses/${course.slug}`}>
+                      Read More <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+                <div className="p-0">
                   <Image
                     src={course.image}
                     alt={course.title}
                     width={600}
                     height={400}
-                    className="aspect-video w-full object-cover"
+                    className="aspect-video w-full object-cover md:aspect-auto md:h-full"
                     data-ai-hint={course.aiHint}
                   />
-                  <CardTitle className="p-6 pb-2">{course.title}</CardTitle>
-                </CardHeader>
-                <CardContent className="p-6 pt-0">
-                  <p className="text-sm text-muted-foreground">
-                    {course.description}
-                  </p>
-                </CardContent>
+                </div>
               </Card>
             ))}
           </div>
