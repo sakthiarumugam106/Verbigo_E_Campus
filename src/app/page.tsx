@@ -159,7 +159,7 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                 <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white rounded-full">
+                 <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white">
                   <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
                     <WhatsAppIcon />
                     WhatsApp Now
@@ -265,7 +265,7 @@ export default function HomePage() {
               </Card>
           </div>
            <div className="text-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
                   <Link href="/get-demo">Get a Consultation</Link>
               </Button>
           </div>
