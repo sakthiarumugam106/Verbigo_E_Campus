@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { db } from '@/lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
-import { google } from 'googleapis';
+import { appendToGoogleSheet } from './sheet-action';
 
 const demoRequestSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -21,36 +21,6 @@ export type DemoFormState = {
   };
 };
 
-async function appendToGoogleSheet(data: { name: string; email: string; phoneNumber: string; submittedAt: Date }) {
-  try {
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-      },
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
-
-    const sheets = google.sheets({ version: 'v4', auth });
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
-    const range = 'Sheet1!A:D'; // Adjust sheet name and range as needed
-
-    const values = [[data.name, data.email, data.phoneNumber, data.submittedAt.toISOString()]];
-
-    await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range,
-      valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values,
-      },
-    });
-  } catch (error) {
-    console.error('Error writing to Google Sheet:', error);
-    // Silently fail for the user, but log the error for developers.
-    // You might want to add more robust error handling here.
-  }
-}
 
 export async function submitDemoRequest(
   prevState: DemoFormState,
