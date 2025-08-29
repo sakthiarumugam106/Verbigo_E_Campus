@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
+import { WhatsAppIcon } from '@/components/whatsapp-button';
 
 const benefits = [
   {
@@ -136,6 +137,10 @@ const faqItems = [
 ];
 
 export default function HomePage() {
+   const phoneNumber = '15551234567';
+  const message = "Hello Verbigo! I'm interested in learning more about your language courses.";
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
   return (
     <>
       <section
@@ -154,8 +159,11 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button asChild size="lg">
-                  <Link href="/get-demo">Get a Consultation</Link>
+                 <Button asChild size="lg" className="bg-green-500 hover:bg-green-600 text-white rounded-full">
+                  <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                    <WhatsAppIcon />
+                    WhatsApp Now
+                  </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="hover:bg-primary hover:text-primary-foreground">
                   <Link href="#courses">Explore Courses</Link>
