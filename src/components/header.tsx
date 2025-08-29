@@ -25,7 +25,7 @@ export function Header() {
             <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
               <WhatsAppIcon />
             </div>
-            <span>Verbigo</span>
+            <span>WhatsApp</span>
           </Link>
         </div>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
@@ -63,7 +63,7 @@ export function Header() {
                 <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
                   <WhatsAppIcon />
                 </div>
-                <span>Verbigo</span>
+                <span>WhatsApp</span>
               </Link>
               <nav className="grid gap-4">
                 {navLinks.map((link) => (

@@ -12,7 +12,7 @@ export function Footer() {
                 <div className="h-8 w-8 bg-[#25D366] rounded-full flex items-center justify-center">
                   <WhatsAppIcon />
                 </div>
-                <span>Verbigo</span>
+                <span>WhatsApp</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               The future of online education, today.
