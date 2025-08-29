@@ -188,7 +188,7 @@ export default function HomePage() {
       </section>
 
       <section id="courses" className="bg-background py-16 md:py-24">
-        <div className="container">
+        <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
@@ -228,7 +228,7 @@ export default function HomePage() {
       </section>
 
       <section id="values" className="bg-primary/5 py-16 md:py-24 lg:py-32">
-        <div className="container">
+        <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
                   Our Core <span className="text-destructive">Values</span>
@@ -265,7 +265,7 @@ export default function HomePage() {
       </section>
 
       <section id="faq" className="bg-background py-16 md:py-24">
-        <div className="container">
+        <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
               Frequently Asked Questions
