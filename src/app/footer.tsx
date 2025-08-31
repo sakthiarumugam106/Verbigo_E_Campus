@@ -23,7 +23,7 @@ export function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:col-span-2">
             <div className="grid gap-2">
               <h3 className="font-semibold">Platform</h3>
-              <Link href="/all-courses" className="text-sm text-gray-400 hover:text-white">Courses</Link>
+              <Link href="/#courses" className="text-sm text-gray-400 hover:text-white">Courses</Link>
               <Link href="/#values" className="text-sm text-gray-400 hover:text-white">Our Values</Link>
               <Link href="/get-demo" className="text-sm text-gray-400 hover:text-white">Consultation</Link>
               <Link href="/#faq" className="text-sm text-gray-400 hover:text-white">FAQ</Link>

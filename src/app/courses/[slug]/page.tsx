@@ -25,8 +25,8 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-6">
             <div className="space-y-4">
-               <Link href="/" className="text-sm font-medium text-primary hover:underline">
-                &larr; Back to All Courses
+               <Link href="/#courses" className="text-sm font-medium text-primary hover:underline">
+                &larr; Back to Courses
               </Link>
               <div className="flex items-center gap-3">
                 <div className="inline-block rounded-lg bg-accent/20 px-3 py-1 text-sm text-accent-foreground">

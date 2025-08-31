@@ -44,7 +44,6 @@ const benefits = [
 ];
 
 export const courses = [
-  // English Courses
   {
     slug: 'grammar-essentials',
     title: 'Grammar Essentials',
@@ -129,91 +128,6 @@ export const courses = [
         'Vocabulary and grammar enhancement',
     ],
   },
-  // Tamil Courses
-  {
-    slug: 'tamil-for-beginners',
-    title: 'Tamil for Beginners (தமிழ் ஆரம்பநிலை)',
-    description: 'Start your journey into the beautiful Tamil language, from basic script to simple conversations.',
-    image: 'https://picsum.photos/600/400?random=7',
-    aiHint: 'tamil language',
-    language: 'Tamil',
-    features: [
-        'Learn the Tamil alphabet (Uyir & Mei)',
-        'Master basic greetings and introductions',
-        'Form simple sentences for daily use',
-        'Understand fundamental grammar concepts',
-    ],
-  },
-  {
-    slug: 'conversational-tamil',
-    title: 'Conversational Tamil (தமிழ் உரையாடல்)',
-    description: 'Build confidence in speaking and understanding everyday Tamil.',
-    image: 'https://picsum.photos/600/400?random=8',
-    aiHint: 'conversation class',
-    language: 'Tamil',
-    features: [
-        'Practice common conversational scenarios',
-        'Improve pronunciation and fluency',
-        'Learn essential vocabulary for daily life',
-        'Engage in interactive role-playing exercises',
-    ],
-  },
-  {
-    slug: 'tamil-grammar-in-depth',
-    title: 'Tamil Grammar In-depth (தமிழ் இலக்கணம்)',
-    description: 'A deep dive into the rich grammar of the Tamil language.',
-    image: 'https://picsum.photos/600/400?random=9',
-    aiHint: 'ancient script',
-    language: 'Tamil',
-    features: [
-        'Understand complex sentence structures',
-        'Explore classical and modern Tamil grammar',
-        'Master sandhi rules and verb conjugations',
-        'Analyze literary and formal Tamil texts',
-    ],
-  },
-  {
-    slug: 'tamil-for-professionals',
-    title: 'Tamil for Professionals (தொழில்துறை தமிழ்)',
-    description: 'Learn to use Tamil effectively in a business and professional context.',
-    image: 'https://picsum.photos/600/400?random=10',
-    aiHint: 'professional meeting',
-    language: 'Tamil',
-    features: [
-        'Draft professional emails and letters',
-        'Participate in business meetings',
-        'Understand industry-specific terminology',
-        'Master formal communication etiquette',
-    ],
-  },
-   {
-    slug: 'tamil-literature-intro',
-    title: 'Intro to Tamil Literature (இலக்கிய அறிமுகம்)',
-    description: 'Explore the vast and ancient world of Tamil literature, from Sangam poetry to modern works.',
-    image: 'https://picsum.photos/600/400?random=11',
-    aiHint: 'ancient library',
-    language: 'Tamil',
-    features: [
-        'Introduction to Sangam, Bhakti, and modern literature',
-        'Read and analyze famous Tamil poems and stories',
-        'Understand the cultural and historical context',
-        'Appreciate the nuances of literary Tamil',
-    ],
-  },
-  {
-    slug: 'spoken-tamil-fluency',
-    title: 'Spoken Tamil Fluency (பேச்சுத் தமிழ்)',
-    description: 'Focus on regional dialects and colloquialisms to speak like a native.',
-    image: 'https://picsum.photos/600/400?random=12',
-    aiHint: 'people talking',
-    language: 'Tamil',
-    features: [
-        'Learn common slang and informal phrases',
-        'Understand different regional accents',
-        'Practice spontaneous and natural conversation',
-        'Improve listening comprehension of fast speech',
-    ],
-  },
 ];
 
 const values = [
@@ -276,11 +190,6 @@ export default function HomePage() {
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
 
-  const coursesForHomepage = [
-    ...courses.filter(c => c.language === 'English').slice(0, 3),
-    ...courses.filter(c => c.language === 'Tamil').slice(0, 3),
-  ];
-
   return (
     <>
       <section
@@ -306,7 +215,7 @@ export default function HomePage() {
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="hover:bg-primary hover:text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                  <Link href="/all-courses">Explore Courses</Link>
+                  <Link href="/#courses">Explore Courses</Link>
                 </Button>
               </div>
             </div>
@@ -358,7 +267,7 @@ export default function HomePage() {
             }}
           >
             <CarouselContent className="-ml-4">
-              {coursesForHomepage.map((course) => (
+              {courses.map((course) => (
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
                     <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col">
@@ -374,9 +283,6 @@ export default function HomePage() {
                           />
                         </div>
                         <CardContent className="p-6 flex flex-col flex-grow">
-                           <div className="inline-block rounded-md bg-accent/20 px-2 py-1 text-xs font-semibold text-accent-foreground self-start mb-2">
-                              {course.language}
-                           </div>
                           <CardTitle className="text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
                           <p className="mt-2 text-muted-foreground text-sm flex-grow">{course.description}</p>
                            <div className="flex items-center mt-4 text-primary font-medium">
@@ -392,11 +298,6 @@ export default function HomePage() {
             <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2" />
             <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2" />
           </Carousel>
-           <div className="mt-12 text-center">
-            <Button asChild size="lg">
-              <Link href="/all-courses">Explore All Courses</Link>
-            </Button>
-          </div>
         </div>
       </section>
 
