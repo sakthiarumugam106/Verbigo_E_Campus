@@ -23,7 +23,7 @@ export function WhatsAppButton() {
     <Button
       asChild
       size="icon"
-      className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg z-50 bg-transparent hover:bg-transparent"
+      className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg z-50 bg-transparent hover:bg-transparent border-none"
       aria-label="Chat on WhatsApp"
     >
       <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
