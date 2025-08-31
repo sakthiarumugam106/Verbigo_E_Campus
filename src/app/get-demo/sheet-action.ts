@@ -9,7 +9,7 @@ export async function appendToGoogleSheet(data: { name: string; email: string; c
     const response = await fetch(WEB_APP_URL, {
       method: 'POST',
       headers: {
-        'Content-Type': 'text/plain;charset=utf-8', 
+        'Content-Type': 'application/json', 
       },
       body: JSON.stringify(data),
       cache: 'no-store',
