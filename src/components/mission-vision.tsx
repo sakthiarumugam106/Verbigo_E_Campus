@@ -26,7 +26,7 @@ const missionVisionItems = [
     text: "To empower individuals by making high-quality language education accessible, engaging, and effective through innovative technology.",
   },
   {
-    icon: <Eye className="h-12 w-12 text-destructive" />,
+    icon: <Eye className="h-12 w-12 text-primary" />,
     title: 'Our Vision',
     text: "To become a world leader in language intelligence, creating a global community of confident and proficient communicators.",
   },
