@@ -1,7 +1,6 @@
 
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 
 export const WhatsAppIcon = ({ className }: { className?: string }) => (
@@ -20,15 +19,14 @@ export function WhatsAppButton() {
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
-    <Button
-      asChild
-      size="icon"
-      className="fixed bottom-6 right-6 h-16 w-16 rounded-full shadow-lg z-50 bg-transparent hover:bg-transparent border-none"
+    <Link 
+      href={whatsappUrl} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="fixed bottom-6 right-6 h-16 w-16 z-50 transition-transform hover:scale-110"
       aria-label="Chat on WhatsApp"
     >
-      <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-        <WhatsAppIcon className="h-full w-full" />
-      </Link>
-    </Button>
+      <WhatsAppIcon className="h-full w-full drop-shadow-lg" />
+    </Link>
   );
 }
