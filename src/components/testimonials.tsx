@@ -83,16 +83,6 @@ export function Testimonials() {
   );
 
   return (
-    <section id="testimonials" className="w-full bg-background py-16 md:py-24">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-5xl">
-                What Our Students Say
-            </h2>
-            <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-                Hear directly from learners who have transformed their skills with Verbigo.
-            </p>
-        </div>
         <Carousel
           plugins={[plugin.current]}
           className="w-full max-w-5xl mx-auto mt-12"
@@ -135,7 +125,5 @@ export function Testimonials() {
           <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2" />
           <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2" />
         </Carousel>
-      </div>
-    </section>
   );
 }
