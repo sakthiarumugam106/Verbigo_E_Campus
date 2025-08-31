@@ -17,7 +17,7 @@ const jobOpenings = [
 export default function CareersPage() {
   return (
     <div className="bg-primary/5 min-h-[calc(100vh-4rem)]">
-      <section className="container px-4 md:px-6 py-12 md:py-20 lg:py-24">
+      <section className="container py-12 md:py-20 lg:py-24">
         <div className="mx-auto max-w-3xl text-center mb-12">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
                 Join Our Journey
