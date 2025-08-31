@@ -10,7 +10,7 @@ export function Footer() {
 
   return (
     <footer className="bg-black text-white py-12">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="flex flex-col gap-4">
             <Link href="/" className="flex items-center gap-2 text-white">
