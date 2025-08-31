@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { courses } from '@/app/page';
 import { ArrowRight } from 'lucide-react';
 
@@ -54,29 +54,25 @@ export default function AllCoursesPage() {
           </p>
         </div>
 
-        <Tabs defaultValue="English" className="w-full max-w-md mx-auto mt-12" onValueChange={setSelectedLanguage}>
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="English">English</TabsTrigger>
-            <TabsTrigger value="Tamil">Tamil</TabsTrigger>
-          </TabsList>
-          <TabsContent value="English">
-             <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((course) => (
+        <div className="flex justify-center mt-12">
+            <Tabs defaultValue="English" className="w-full max-w-md" onValueChange={setSelectedLanguage}>
+                <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="English">English</TabsTrigger>
+                    <TabsTrigger value="Tamil">Tamil</TabsTrigger>
+                </TabsList>
+            </Tabs>
+        </div>
+
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredCourses.length > 0 ? (
+                filteredCourses.map((course) => (
                     <CourseCard key={course.slug} course={course} />
-                ))}
-            </div>
-          </TabsContent>
-          <TabsContent value="Tamil">
-             <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((course) => (
-                    <CourseCard key={course.slug} course={course} />
-                ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+                ))
+            ) : (
+                <p className="text-center text-muted-foreground col-span-full">No courses found for this language.</p>
+            )}
+        </div>
       </section>
     </div>
   );
 }
-
-    
