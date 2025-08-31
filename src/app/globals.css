@@ -81,6 +81,7 @@
   }
   html {
     scroll-behavior: smooth;
+    padding-left: calc(100vw - 100%);
   }
   body {
     @apply bg-background text-foreground;
