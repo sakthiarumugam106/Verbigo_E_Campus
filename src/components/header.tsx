@@ -31,7 +31,7 @@ export function Header() {
           <VerbigoLogo />
           <div className="flex flex-col">
             <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
-            <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+            <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
           </div>
         </Link>
         
@@ -73,7 +73,7 @@ export function Header() {
                 <VerbigoLogo />
                  <div className="flex flex-col">
                     <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
-                    <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+                    <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
                 </div>
               </Link>
               <nav className="grid gap-4">
