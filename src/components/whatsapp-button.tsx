@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -18,7 +19,7 @@ export const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 export function WhatsAppButton() {
   const phoneNumber = '7708071872'; // Replace with a real number
-  const message = "Hello Verbigo! I'm interested in learning more about your language courses.";
+  const message = "Hello Verbigo, I am interested in your courses and would like to know more. Please let me know the next steps.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
@@ -34,3 +35,5 @@ export function WhatsAppButton() {
     </Button>
   );
 }
+
+    

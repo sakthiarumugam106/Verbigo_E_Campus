@@ -183,7 +183,7 @@ const faqItems = [
 
 export default function HomePage() {
   const phoneNumber = '7708071872';
-  const message = "Hello Verbigo! I'm interested in learning more about your language courses.";
+  const message = "Hello Verbigo, I am interested in your courses and would like to know more. Please let me know the next steps.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   const coursesPlugin = React.useRef(
