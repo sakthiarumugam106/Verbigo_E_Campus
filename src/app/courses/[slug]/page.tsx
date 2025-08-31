@@ -1,3 +1,4 @@
+
 import { courses } from '@/app/page';
 import { Button } from '@/components/ui/button';
 import { WhatsAppIcon } from '@/components/whatsapp-button';

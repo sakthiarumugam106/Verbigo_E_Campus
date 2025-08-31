@@ -333,7 +333,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Testimonials />
+      <section id="testimonials" className="w-full bg-background py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center">
+                <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-5xl">
+                    What Our Students Say
+                </h2>
+                <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+                    Hear directly from learners who have transformed their skills with Verbigo.
+                </p>
+            </div>
+            <Testimonials />
+        </div>
+      </section>
 
       <section id="faq" className="w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
