@@ -5,11 +5,20 @@ export function VerbigoLogo({ className, ...props }: React.SVGProps<SVGSVGElemen
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 100 100"
-      className={cn("fill-current", className)}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn("fill-primary", className)}
       {...props}
     >
-      <path d="M50 10 L10 30 L10 70 L50 90 L90 70 L90 30 Z M 50 20 L80 35 L50 50 L20 35 Z" />
+      <path d="M22 10l-10-5-10 5 10 5 10-5z" />
+      <path d="M6 12v5l6 3 6-3v-5" />
+      <path d="M6 12l6 3 6-3" />
+      <path d="M6 12L2 10l10-5 10 5-4 2" />
+      <path d="M2 10v5l6 3 2-1" />
     </svg>
   );
 }
