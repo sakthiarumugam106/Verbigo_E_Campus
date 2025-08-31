@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
 import { WhatsAppIcon } from '@/components/whatsapp-button';
+import { Testimonials } from '@/components/testimonials';
 
 const benefits = [
   {
@@ -266,6 +267,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <Testimonials />
 
       <section id="faq" className="bg-background py-16 md:py-24">
         <div className="container px-4 md:px-6">
