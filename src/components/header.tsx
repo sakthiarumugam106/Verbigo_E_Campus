@@ -30,8 +30,8 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2 text-primary">
           <VerbigoLogo />
           <div className="flex flex-col">
-            <span className="font-brand text-2xl font-bold leading-none">Verbigo</span>
-            <span className="text-sm font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+            <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
+            <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
           </div>
         </Link>
         
@@ -72,8 +72,8 @@ export function Header() {
               >
                 <VerbigoLogo />
                  <div className="flex flex-col">
-                    <span className="font-brand text-2xl font-bold leading-none">Verbigo</span>
-                    <span className="text-sm font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+                    <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
+                    <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
                 </div>
               </Link>
               <nav className="grid gap-4">

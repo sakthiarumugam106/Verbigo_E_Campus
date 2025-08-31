@@ -16,8 +16,8 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2 text-white">
                <VerbigoLogo />
                 <div className="flex flex-col">
-                    <span className="font-brand text-2xl font-bold leading-none">Verbigo</span>
-                    <span className="text-sm font-medium text-gray-400 leading-none mt-1">E-Campus for language Intelligence</span>
+                    <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
+                    <span className="text-xs font-medium text-gray-400 leading-none mt-1">E-Campus for language Intelligence</span>
                 </div>
             </Link>
             <p className="text-sm text-gray-400 max-w-xs">
