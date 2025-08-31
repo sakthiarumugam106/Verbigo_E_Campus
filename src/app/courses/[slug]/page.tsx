@@ -25,7 +25,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
 
   return (
     <div className="bg-primary/5">
-      <section className="container px-4 md:px-6 py-12 md:py-20 lg:py-24">
+      <section className="container mx-auto px-4 md:px-6 py-12 md:py-20 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-6">
             <div className="space-y-4">
@@ -59,7 +59,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
             <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
               <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                 <Link href={whatsappEnrollUrl} target="_blank" rel="noopener noreferrer">
-                  <WhatsAppIcon />
+                  <WhatsAppIcon className="h-6 w-6"/>
                   Enroll via WhatsApp
                 </Link>
               </Button>
