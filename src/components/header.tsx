@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
@@ -26,7 +26,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-20 items-center justify-between px-4 md:px-6">
+      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2 text-primary">
           <VerbigoLogo />
           <div className="flex flex-col">
@@ -47,8 +47,8 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Button asChild className="hidden sm:flex">
+        <div className="flex items-center gap-4">
+           <Button asChild className="hidden sm:flex">
             <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
           </Button>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -63,6 +63,12 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
+                <SheetHeader className="sr-only">
+                    <SheetTitle>Mobile Menu</SheetTitle>
+                    <SheetDescription>
+                        Navigation links for Verbigo.
+                    </SheetDescription>
+                </SheetHeader>
               <Link
                 href="/"
                 className="flex items-center gap-2 text-primary mb-6"
