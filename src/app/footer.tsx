@@ -4,6 +4,10 @@ import { Facebook, Twitter, Linkedin } from 'lucide-react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 
 export function Footer() {
+  const phoneNumber = '7708071872';
+  const message = "Hi, I want to book a demo.";
+  const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
   return (
     <footer className="bg-black text-white py-12">
       <div className="container mx-auto px-6">
@@ -25,7 +29,7 @@ export function Footer() {
               <h3 className="font-semibold">Platform</h3>
               <Link href="/#courses" className="text-sm text-gray-400 hover:text-white">Courses</Link>
               <Link href="/#values" className="text-sm text-gray-400 hover:text-white">Our Values</Link>
-              <Link href="/get-demo" className="text-sm text-gray-400 hover:text-white">Consultation</Link>
+              <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white">Book a Demo</Link>
               <Link href="/#faq" className="text-sm text-gray-400 hover:text-white">FAQ</Link>
             </div>
             <div className="grid gap-2">

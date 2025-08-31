@@ -19,6 +19,10 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const phoneNumber = '7708071872';
+  const message = "Hi, I want to book a demo.";
+  const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -47,7 +51,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <Button asChild className="hidden sm:flex">
-            <Link href="/get-demo">Get a Demo</Link>
+            <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
           </Button>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -85,7 +89,7 @@ export function Header() {
                 ))}
               </nav>
               <Button asChild size="lg" className="w-full mt-8">
-                  <Link href="/get-demo">Get a Demo</Link>
+                  <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
               </Button>
             </SheetContent>
           </Sheet>
@@ -94,5 +98,4 @@ export function Header() {
     </header>
   );
 }
-
     

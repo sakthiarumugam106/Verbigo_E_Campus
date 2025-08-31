@@ -14,9 +14,13 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
   }
 
   const phoneNumber = '7708071872';
-  const message = `Hello Verbigo! I'm interested in the ${course.title} course.`;
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-    message
+  const enrollMessage = `Hello Verbigo! I'm interested in the ${course.title} course.`;
+  const demoMessage = `Hi, I want to book a demo for the ${course.title} course.`;
+  const whatsappEnrollUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+    enrollMessage
+  )}`;
+   const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+    demoMessage
   )}`;
 
   return (
@@ -54,14 +58,14 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
             </ul>
             <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
               <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                <Link href={whatsappEnrollUrl} target="_blank" rel="noopener noreferrer">
                   <WhatsAppIcon />
                   Enroll via WhatsApp
                 </Link>
               </Button>
                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <Link href="/get-demo">
-                  Schedule a Consultation
+                <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">
+                  Book a Demo
                 </Link>
               </Button>
             </div>
