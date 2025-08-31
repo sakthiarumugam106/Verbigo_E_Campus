@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -9,7 +10,7 @@ import { VerbigoLogo } from '@/components/verbigo-logo';
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Courses', href: '/#courses' },
+  { name: 'Courses', href: '/all-courses' },
   { name: 'Our Values', href: '/#values' },
   { name: 'Careers', href: '/careers' },
   { name: 'FAQ', href: '/#faq' },
@@ -93,3 +94,5 @@ export function Header() {
     </header>
   );
 }
+
+    
