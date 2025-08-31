@@ -35,7 +35,7 @@ export function Header() {
           </div>
         </Link>
         
-        <nav className="hidden flex-1 items-center justify-center gap-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -47,7 +47,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 ml-auto">
            <Button asChild className="hidden sm:flex">
             <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
           </Button>
