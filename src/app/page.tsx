@@ -1,3 +1,6 @@
+
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -12,6 +15,15 @@ import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages,
 import { ContactForm } from '@/components/contact-form';
 import { WhatsAppIcon } from '@/components/whatsapp-button';
 import { Testimonials } from '@/components/testimonials';
+import * as React from 'react';
+import Autoplay from 'embla-carousel-autoplay';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 const benefits = [
   {
@@ -138,9 +150,13 @@ const faqItems = [
 ];
 
 export default function HomePage() {
-   const phoneNumber = '7708071872';
+  const phoneNumber = '7708071872';
   const message = "Hello Verbigo! I'm interested in learning more about your language courses.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+  const coursesPlugin = React.useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  );
 
   return (
     <>
@@ -208,31 +224,48 @@ export default function HomePage() {
               </p>
             </div>
           </div>
-          <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 py-12">
-            {courses.map((course) => (
-              <Card key={course.slug} className="group overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300">
-                <Link href={`/courses/${course.slug}`}>
-                  <div className="overflow-hidden">
-                    <Image
-                      src={course.image}
-                      alt={course.title}
-                      width={600}
-                      height={400}
-                      className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      data-ai-hint={course.aiHint}
-                    />
+           <Carousel
+            plugins={[coursesPlugin.current]}
+            className="w-full max-w-6xl mx-auto mt-12"
+            onMouseEnter={coursesPlugin.current.stop}
+            onMouseLeave={coursesPlugin.current.reset}
+            opts={{
+              align: 'start',
+              loop: true,
+            }}
+          >
+            <CarouselContent className="-ml-4">
+              {courses.map((course) => (
+                 <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
+                   <div className="p-1 h-full">
+                    <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col">
+                      <Link href={`/courses/${course.slug}`} className="flex flex-col h-full">
+                        <div className="overflow-hidden">
+                          <Image
+                            src={course.image}
+                            alt={course.title}
+                            width={600}
+                            height={400}
+                            className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-ai-hint={course.aiHint}
+                          />
+                        </div>
+                        <CardContent className="p-6 flex flex-col flex-grow">
+                          <CardTitle className="text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
+                          <p className="mt-2 text-muted-foreground text-sm flex-grow">{course.description}</p>
+                           <div className="flex items-center mt-4 text-primary font-medium">
+                            Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                          </div>
+                        </CardContent>
+                      </Link>
+                    </Card>
                   </div>
-                  <CardContent className="p-6">
-                    <CardTitle className="text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
-                    <p className="mt-2 text-muted-foreground text-sm">{course.description}</p>
-                     <div className="flex items-center mt-4 text-primary font-medium">
-                      Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-                  </CardContent>
-                </Link>
-              </Card>
-            ))}
-          </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2" />
+            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2" />
+          </Carousel>
         </div>
       </section>
 
