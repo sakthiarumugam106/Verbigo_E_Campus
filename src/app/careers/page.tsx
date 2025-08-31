@@ -38,7 +38,7 @@ export default function CareersPage() {
             Current Openings
           </h2>
           {jobOpenings.map((job, index) => (
-            <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300 w-full max-w-6xl mx-auto">
+            <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
               <CardHeader className="grid grid-cols-[1fr_auto] items-start gap-4 space-y-0">
                 <div className="space-y-1">
                   <CardTitle className="text-2xl text-primary">{job.title}</CardTitle>
