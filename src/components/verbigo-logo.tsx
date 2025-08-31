@@ -1,8 +1,11 @@
 
+import Image from 'next/image';
+import logo from '@/logo.png';
+
 export function VerbigoLogo() {
   return (
-    <img
-      src="/logo.png"
+    <Image
+      src={logo}
       alt="Verbigo Logo"
       width="40"
       height="40"
