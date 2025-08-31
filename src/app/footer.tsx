@@ -1,6 +1,6 @@
 
 import Link from 'next/link';
-import { Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Instagram, Twitter, Linkedin } from 'lucide-react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 
 export function Footer() {
@@ -52,7 +52,7 @@ export function Footer() {
               <Twitter className="h-5 w-5" />
             </Link>
             <Link href="#" className="text-gray-400 hover:text-white">
-              <Facebook className="h-5 w-5" />
+              <Instagram className="h-5 w-5" />
             </Link>
             <Link href="#" className="text-gray-400 hover:text-white">
               <Linkedin className="h-5 w-5" />
