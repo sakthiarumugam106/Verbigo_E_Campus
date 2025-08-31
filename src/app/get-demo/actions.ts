@@ -1,8 +1,10 @@
+
 'use server';
 
 import { z } from 'zod';
 import { db } from '@/lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
+import { appendToGoogleSheet } from './sheet-action';
 
 const demoRequestSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -13,11 +15,6 @@ const demoRequestSchema = z.object({
 export type DemoFormState = {
   message: string;
   success: boolean;
-  submittedData?: {
-    name: string;
-    email: string;
-    contact: string;
-  };
   errors?: {
     name?: string[];
     email?: string[];
@@ -58,15 +55,16 @@ export async function submitDemoRequest(
       submittedAt: submissionTime,
     });
     
-    // Defer Google Sheet submission to the client for faster UI response
+    // Now, also send the data to Google Sheets from the server
+    await appendToGoogleSheet({
+      name,
+      email,
+      contact: phoneNumber,
+    });
+
     return { 
       success: true, 
       message: 'Your demo request has been submitted successfully!',
-      submittedData: {
-        name,
-        email,
-        contact: phoneNumber,
-      },
     };
   } catch (error) {
     console.error('Error processing demo request: ', error);

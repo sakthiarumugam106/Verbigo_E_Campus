@@ -8,10 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { submitApplication, type ApplicationFormState } from '@/app/careers/actions';
-import { appendToGoogleSheet } from '@/app/careers/sheet-action';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Textarea } from './ui/textarea';
 
 const initialState: ApplicationFormState = {
   message: '',
@@ -45,9 +43,6 @@ export function CareersForm() {
         formRef.current?.reset();
         setEducationValue('');
         setIsOpen(false);
-        if (state.submittedData) {
-          appendToGoogleSheet(state.submittedData);
-        }
       }
     }
   }, [state, toast]);

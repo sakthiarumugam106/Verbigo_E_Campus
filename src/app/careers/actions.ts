@@ -2,6 +2,7 @@
 'use server';
 
 import { z } from 'zod';
+import { appendToGoogleSheet } from './sheet-action';
 
 const applicationSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -15,7 +16,6 @@ const applicationSchema = z.object({
 export type ApplicationFormState = {
   message: string;
   success: boolean;
-  submittedData?: z.infer<typeof applicationSchema>;
   errors?: {
     name?: string[];
     email?: string[];
@@ -49,10 +49,18 @@ export async function submitApplication(
     };
   }
 
-  // Defer Google Sheet submission to the client for faster UI response
-  return { 
-    success: true, 
-    message: 'Your application has been submitted successfully!',
-    submittedData: validatedFields.data,
-  };
+  try {
+    // Now we call the sheet action from the server
+    await appendToGoogleSheet(validatedFields.data);
+    return { 
+      success: true, 
+      message: 'Your application has been submitted successfully!',
+    };
+  } catch (error) {
+    console.error('Error submitting application:', error);
+    return {
+      success: false,
+      message: 'An unexpected error occurred while submitting your application. Please try again.',
+    }
+  }
 }
