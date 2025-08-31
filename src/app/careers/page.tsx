@@ -16,24 +16,22 @@ const jobOpenings = [
 
 export default function CareersPage() {
   return (
-    <div className="bg-primary/5 min-h-[calc(100vh-4rem)]">
-      <section className="w-full py-12 md:py-20 lg:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="mx-auto max-w-3xl text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
-                  Join Our Journey
-              </h2>
-              <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-                  Learn more about our mission, vision, and how you can be a part of our team.
-              </p>
-          </div>
+    <div className="bg-primary/5 min-h-[calc(100vh-4rem)] py-12 md:py-20 lg:py-24">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="mx-auto max-w-3xl text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
+                Join Our Journey
+            </h2>
+            <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+                Learn more about our mission, vision, and how you can be a part of our team.
+            </p>
         </div>
         
-        <div className="container px-4 md:px-6">
+        <div className="mb-12">
           <MissionVision />
         </div>
 
-        <div className="container px-4 md:px-6 mt-12">
+        <div className="mt-12">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center text-primary mt-8 mb-8">
             Current Openings
           </h2>
@@ -43,7 +41,6 @@ export default function CareersPage() {
                 <CardHeader className="grid grid-cols-[1fr_auto] items-start gap-4 space-y-0">
                   <div className="space-y-1">
                     <CardTitle className="text-2xl text-primary">{job.title}</CardTitle>
-
                     <CardDescription className="flex items-center gap-4">
                       <span>{job.location}</span>
                       <span className="h-1 w-1 rounded-full bg-muted-foreground"></span>
@@ -59,7 +56,7 @@ export default function CareersPage() {
             ))}
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
