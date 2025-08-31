@@ -53,9 +53,11 @@ export function MissionVision() {
                 {missionVisionItems.map((item, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
                     <div className="p-1 h-full">
-                    <Card className="shadow-lg h-full transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                        <CardContent className="flex flex-col items-center justify-start p-8 text-center gap-4 min-h-[320px]">
+                    <Card className="shadow-lg h-full transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out overflow-hidden flex flex-col">
+                        <div className="bg-primary/5 p-8 flex justify-center items-center">
                             {item.icon}
+                        </div>
+                        <CardContent className="p-6 text-center flex-grow flex flex-col items-center justify-start gap-4">
                             <h3 className="text-2xl font-bold text-primary">{item.title}</h3>
                             <p className="text-md text-muted-foreground flex-grow">{item.text}</p>
                         </CardContent>
