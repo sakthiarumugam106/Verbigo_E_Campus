@@ -28,7 +28,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container relative flex h-20 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2 text-primary">
-          <VerbigoLogo className="h-10 w-10" />
+          <VerbigoLogo />
           <div className="flex flex-col">
             <span className="font-brand text-2xl font-bold leading-none">Verbigo</span>
             <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
@@ -68,7 +68,7 @@ export function Header() {
                 className="flex items-center gap-2 text-primary mb-6"
                 onClick={() => setIsOpen(false)}
               >
-                <VerbigoLogo className="h-10 w-10" />
+                <VerbigoLogo />
                  <div className="flex flex-col">
                     <span className="font-brand text-2xl font-bold leading-none">Verbigo</span>
                     <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
