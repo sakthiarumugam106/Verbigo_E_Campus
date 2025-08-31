@@ -124,7 +124,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                  <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                   <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                    <WhatsAppButtonIcon className="h-6 w-6"/>
+                    <WhatsAppButtonIcon className="h-5 w-5"/>
                     WhatsApp Now
                   </Link>
                 </Button>
