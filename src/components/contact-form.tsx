@@ -1,64 +1,69 @@
 'use client';
 
-import { useActionState, useEffect, useRef } from 'react';
-import { useFormStatus } from 'react-dom';
-import { submitContactForm, type ContactFormState } from '@/app/actions';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-
-const initialState: ContactFormState = {
-  message: '',
-  success: false,
-};
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" className="w-full" disabled={pending} aria-disabled={pending}>
-      {pending ? 'Submitting...' : 'Submit'}
-    </Button>
-  );
-}
+import { appendContactToGoogleSheet } from '@/app/actions/appendContactToGoogleSheet';
 
 export function ContactForm() {
-  const [state, formAction] = useActionState(submitContactForm, initialState);
+  const [form, setForm] = useState({ name: '', email: '', phoneNumber: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
-    if (state.message) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.phoneNumber || !form.message) {
       toast({
-        title: state.success ? 'Success!' : 'Error',
-        description: state.message,
-        variant: state.success ? 'default' : 'destructive',
+        title: 'Error',
+        description: 'Please fill out all fields.',
+        variant: 'destructive',
       });
-      if (state.success) {
-        formRef.current?.reset();
-      }
+      return;
     }
-  }, [state, toast]);
+    setIsSubmitting(true);
+
+    const result = await appendContactToGoogleSheet(form);
+
+    setIsSubmitting(false);
+
+    if (result.success) {
+      toast({
+        title: 'Success!',
+        description: 'Your message has been sent. We will get back to you soon.',
+      });
+      setForm({ name: '', email: '', phoneNumber: '', message: '' });
+    } else {
+      toast({
+        title: 'Error',
+        description: `Failed to send message: ${result.error}`,
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
-    <form ref={formRef} action={formAction} className="grid gap-4">
+    <form onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid gap-2">
-        <Input name="name" placeholder="Name" required />
-        {state.errors?.name && <p className="text-xs text-destructive">{state.errors.name[0]}</p>}
-      </div>
-      <div className="grid gap-2">
-        <Input type="email" name="email" placeholder="Email" required />
-        {state.errors?.email && <p className="text-xs text-destructive">{state.errors.email[0]}</p>}
-      </div>
-       <div className="grid gap-2">
-        <Input type="tel" name="phoneNumber" placeholder="Phone Number" required />
-        {state.errors?.phoneNumber && <p className="text-xs text-destructive">{state.errors.phoneNumber[0]}</p>}
+        <Input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
       </div>
       <div className="grid gap-2">
-        <Textarea name="message" placeholder="Your Message" required />
-        {state.errors?.message && <p className="text-xs text-destructive">{state.errors.message[0]}</p>}
+        <Input type="email" name="email" placeholder="Email" value={form.email} onChange={handleChange} required />
       </div>
-      <SubmitButton />
+      <div className="grid gap-2">
+        <Input type="tel" name="phoneNumber" placeholder="Phone Number" value={form.phoneNumber} onChange={handleChange} required />
+      </div>
+      <div className="grid gap-2">
+        <Textarea name="message" placeholder="Your Message" value={form.message} onChange={handleChange} required />
+      </div>
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? 'Submitting...' : 'Submit'}
+      </Button>
     </form>
   );
 }
