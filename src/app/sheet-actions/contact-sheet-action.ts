@@ -12,8 +12,10 @@ type ContactFormData = {
 };
 
 export async function appendContactToGoogleSheet(data: ContactFormData) {
+  const { phoneNumber, ...restOfData } = data;
   const payload = {
-    ...data,
+    ...restOfData,
+    contact: phoneNumber, 
   };
 
   try {
