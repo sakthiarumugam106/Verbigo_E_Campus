@@ -25,6 +25,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { courses } from '@/lib/courses';
+import { Team } from '@/components/team';
 
 const benefits = [
   {
@@ -246,6 +247,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <Team />
 
       <section id="testimonials" className="w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
