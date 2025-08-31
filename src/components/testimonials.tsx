@@ -13,7 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { Quote } from 'lucide-react';
+import { Quote, Star } from 'lucide-react';
 
 const testimonials = [
   {
@@ -23,6 +23,7 @@ const testimonials = [
     title: 'Advanced Writing Student',
     avatar: 'https://picsum.photos/100/100?random=11',
     aiHint: 'happy student',
+    rating: 5,
   },
   {
     quote:
@@ -31,6 +32,7 @@ const testimonials = [
     title: 'Grammar Essentials Student',
     avatar: 'https://picsum.photos/100/100?random=12',
     aiHint: 'smiling person',
+    rating: 5,
   },
   {
     quote:
@@ -39,6 +41,7 @@ const testimonials = [
     title: 'Business Communication Student',
     avatar: 'https://picsum.photos/100/100?random=13',
     aiHint: 'professional woman',
+    rating: 5,
   },
   {
     quote:
@@ -47,6 +50,7 @@ const testimonials = [
     title: 'Creative Writing Student',
     avatar: 'https://picsum.photos/100/100?random=14',
     aiHint: 'thoughtful man',
+    rating: 4,
   },
     {
     quote:
@@ -55,8 +59,23 @@ const testimonials = [
     title: 'ESL Student',
     avatar: 'https://picsum.photos/100/100?random=15',
     aiHint: 'student portrait',
+    rating: 5,
   },
 ];
+
+const StarRating = ({ rating }: { rating: number }) => (
+  <div className="flex items-center gap-1">
+    {Array.from({ length: 5 }).map((_, i) => (
+      <Star
+        key={i}
+        className={`h-5 w-5 ${
+          i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
+        }`}
+      />
+    ))}
+  </div>
+);
+
 
 export function Testimonials() {
   const plugin = React.useRef(
@@ -89,13 +108,14 @@ export function Testimonials() {
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-4 h-full">
                   <Card className="flex flex-col justify-between h-full shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <CardContent className="flex flex-col items-center text-center p-6 gap-6">
-                        <Quote className="w-12 h-12 text-primary/20" />
-                        <p className="text-muted-foreground italic">
+                    <CardContent className="flex flex-col items-center text-center p-6 gap-4">
+                        <Quote className="w-10 h-10 text-primary/20" />
+                        <StarRating rating={testimonial.rating} />
+                        <p className="text-muted-foreground italic text-sm">
                             "{testimonial.quote}"
                         </p>
                     </CardContent>
-                    <div className="bg-primary/5 p-4 flex flex-col items-center text-center">
+                    <div className="bg-primary/5 p-4 flex flex-col items-center text-center mt-auto">
                         <Image
                             src={testimonial.avatar}
                             alt={testimonial.name}
