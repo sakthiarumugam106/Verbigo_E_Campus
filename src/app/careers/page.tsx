@@ -37,25 +37,27 @@ export default function CareersPage() {
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center text-primary mt-8 mb-8">
             Current Openings
           </h2>
-          {jobOpenings.map((job, index) => (
-            <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
-              <CardHeader className="grid grid-cols-[1fr_auto] items-start gap-4 space-y-0">
-                <div className="space-y-1">
-                  <CardTitle className="text-2xl text-primary">{job.title}</CardTitle>
+          <div className="mx-auto max-w-3xl">
+            {jobOpenings.map((job, index) => (
+              <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                <CardHeader className="grid grid-cols-[1fr_auto] items-start gap-4 space-y-0">
+                  <div className="space-y-1">
+                    <CardTitle className="text-2xl text-primary">{job.title}</CardTitle>
 
-                  <CardDescription className="flex items-center gap-4">
-                    <span>{job.location}</span>
-                    <span className="h-1 w-1 rounded-full bg-muted-foreground"></span>
-                    <span>{job.type}</span>
-                  </CardDescription>
-                </div>
-                 <CareersForm />
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{job.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+                    <CardDescription className="flex items-center gap-4">
+                      <span>{job.location}</span>
+                      <span className="h-1 w-1 rounded-full bg-muted-foreground"></span>
+                      <span>{job.type}</span>
+                    </CardDescription>
+                  </div>
+                  <CareersForm />
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{job.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
     </div>
