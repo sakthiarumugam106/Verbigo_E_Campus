@@ -10,9 +10,14 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
-import { Target, Eye } from 'lucide-react';
+import { Target, Eye, Briefcase } from 'lucide-react';
 
 const missionVisionItems = [
+    {
+    icon: <Briefcase className="h-12 w-12 text-primary" />,
+    title: 'Join Our Team',
+    text: "We're on a mission to make language learning accessible to everyone. If you're passionate about education and technology, we'd love to hear from you.",
+  },
   {
     icon: <Target className="h-12 w-12 text-primary" />,
     title: 'Our Mission',
@@ -31,7 +36,7 @@ export function MissionVision() {
   );
 
   return (
-    <div className="mt-16 mb-12">
+    <div className="mb-12">
         <Carousel
             plugins={[plugin.current]}
             className="w-full max-w-4xl mx-auto"
@@ -47,7 +52,7 @@ export function MissionVision() {
                 <CarouselItem key={index}>
                     <div className="p-1">
                     <Card className="shadow-lg">
-                        <CardContent className="flex flex-col items-center justify-center p-8 md:p-12 text-center gap-4">
+                        <CardContent className="flex flex-col items-center justify-center p-8 md:p-12 text-center gap-4 min-h-[280px]">
                             {item.icon}
                             <h3 className="text-3xl font-bold text-primary">{item.title}</h3>
                             <p className="text-lg text-muted-foreground max-w-2xl">{item.text}</p>

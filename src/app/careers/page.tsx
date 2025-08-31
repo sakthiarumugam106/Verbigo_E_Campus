@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Briefcase } from 'lucide-react';
@@ -17,14 +18,6 @@ export default function CareersPage() {
   return (
     <div className="bg-primary/5 min-h-[calc(100vh-4rem)]">
       <section className="container px-4 md:px-6 py-12 md:py-20 lg:py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl">
-            Join Our Team
-          </h1>
-          <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-            We're on a mission to make language learning accessible to everyone. If you're passionate about education and technology, we'd love to hear from you.
-          </p>
-        </div>
         <MissionVision />
         <div className="mt-12 grid gap-8">
           {jobOpenings.map((job, index) => (
