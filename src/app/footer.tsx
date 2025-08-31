@@ -14,7 +14,7 @@ export function Footer() {
         <div className="grid gap-8 md:grid-cols-3">
           <div className="flex flex-col gap-4">
             <Link href="/" className="flex items-center gap-2 text-white">
-               <VerbigoLogo className="h-10 w-10" />
+               <VerbigoLogo className="h-10 w-auto" />
                 <div className="flex flex-col">
                     <span className="font-brand text-2xl font-bold leading-none">Verbigo</span>
                     <span className="text-xs font-medium text-gray-400 leading-none mt-1">E-Campus for language Intelligence</span>
