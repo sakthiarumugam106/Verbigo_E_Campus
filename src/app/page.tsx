@@ -194,9 +194,9 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="relative w-full overflow-hidden bg-primary/5 pt-20 pb-20 md:pt-32 md:pb-24"
+        className="w-full overflow-hidden bg-primary/5 pt-20 pb-20 md:pt-32 md:pb-24"
       >
-        <div className="container px-4 md:px-6">
+        <div className="container mx-auto px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-4">
@@ -244,8 +244,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="courses" className="bg-background py-16 md:py-24">
-        <div className="container px-4 md:px-6">
+      <section id="courses" className="w-full bg-background py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
@@ -301,8 +301,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="values" className="bg-primary/5 py-16 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
+      <section id="values" className="w-full bg-primary/5 py-16 md:py-24 lg:py-32">
+        <div className="container mx-auto px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
                   Our Core <span className="text-destructive">Values</span>
@@ -335,8 +335,8 @@ export default function HomePage() {
 
       <Testimonials />
 
-      <section id="faq" className="bg-background py-16 md:py-24">
-        <div className="container px-4 md:px-6">
+      <section id="faq" className="w-full bg-background py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
               Frequently Asked Questions
@@ -362,8 +362,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="contact" className="bg-primary/5 py-16 md:py-24">
-        <div className="container px-4 md:px-6">
+      <section id="contact" className="w-full bg-primary/5 py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-6">
           <div className="grid items-center justify-center gap-4 text-center">
             <div className="space-y-3">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
