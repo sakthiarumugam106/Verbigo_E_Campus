@@ -49,13 +49,13 @@ export function Footer() {
           <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} Verbigo. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="#" className="text-gray-400 hover:text-white">
-              <Twitter className="h-5 w-5" />
+              <Linkedin className="h-5 w-5" />
             </Link>
             <Link href="#" className="text-gray-400 hover:text-white">
               <Instagram className="h-5 w-5" />
             </Link>
             <Link href="#" className="text-gray-400 hover:text-white">
-              <Linkedin className="h-5 w-5" />
+              <Twitter className="h-5 w-5" />
             </Link>
           </div>
         </div>
