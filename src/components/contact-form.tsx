@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const initialState: ContactFormState = {
   message: '',
+  success: false,
 };
 
 function SubmitButton() {
@@ -28,17 +29,12 @@ export function ContactForm() {
 
   useEffect(() => {
     if (state.message) {
-      if (state.errors) {
-        toast({
-          variant: 'destructive',
-          title: 'Oops!',
-          description: state.message,
-        });
-      } else {
-        toast({
-          title: 'Success!',
-          description: state.message,
-        });
+      toast({
+        title: state.success ? 'Success!' : 'Error',
+        description: state.message,
+        variant: state.success ? 'default' : 'destructive',
+      });
+      if (state.success) {
         formRef.current?.reset();
       }
     }

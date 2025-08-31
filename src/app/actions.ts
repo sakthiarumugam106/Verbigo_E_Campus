@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import { appendContactToGoogleSheet } from './sheet-actions/contact-sheet-action';
 
 const contactSchema = z.object({
   name: z.string().min(2, { message: 'Name is required.' }),
@@ -11,6 +12,7 @@ const contactSchema = z.object({
 
 export type ContactFormState = {
   message: string;
+  success: boolean;
   errors?: {
     name?: string[];
     email?: string[];
@@ -31,14 +33,15 @@ export async function submitContactForm(prevState: ContactFormState, formData: F
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Validation failed. Please check your input.',
+      success: false,
     };
   }
 
   try {
-    // In a real app, you would send an email or save this to a database.
-    console.log('New contact form submission:', validatedFields.data);
-    return { message: 'Thank you for your message! We will get back to you soon.' };
+    await appendContactToGoogleSheet(validatedFields.data);
+    return { message: 'Thank you for your message! We will get back to you soon.', success: true };
   } catch (e) {
-    return { message: 'An unexpected error occurred. Please try again.' };
+    console.error('Error submitting contact form:', e);
+    return { message: 'An unexpected error occurred. Please try again.', success: false };
   }
 }
