@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Briefcase } from 'lucide-react';
 import { CareersForm } from '@/components/careers-form';
+import { MissionVision } from '@/components/mission-vision';
 
 const jobOpenings = [
   {
@@ -24,6 +25,7 @@ export default function CareersPage() {
             We're on a mission to make language learning accessible to everyone. If you're passionate about education and technology, we'd love to hear from you.
           </p>
         </div>
+        <MissionVision />
         <div className="mt-12 grid gap-8">
           {jobOpenings.map((job, index) => (
             <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
