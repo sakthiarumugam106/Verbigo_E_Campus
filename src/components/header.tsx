@@ -31,21 +31,23 @@ export function Header() {
           <VerbigoLogo />
           <div className="flex flex-col">
             <span className="font-brand text-2xl font-bold leading-none">Verbigo</span>
-            <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+            <span className="text-sm font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
           </div>
         </Link>
         
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="transition-colors hover:text-foreground/80 text-foreground/60"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </nav>
+        <div className="flex flex-1 items-center justify-center">
+            <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+            {navLinks.map((link) => (
+                <Link
+                key={link.name}
+                href={link.href}
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                >
+                {link.name}
+                </Link>
+            ))}
+            </nav>
+        </div>
 
         <div className="flex items-center gap-2">
           <Button asChild className="hidden sm:flex">
@@ -71,7 +73,7 @@ export function Header() {
                 <VerbigoLogo />
                  <div className="flex flex-col">
                     <span className="font-brand text-2xl font-bold leading-none">Verbigo</span>
-                    <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
+                    <span className="text-sm font-medium text-muted-foreground leading-none mt-1">E-Campus for language Intelligence</span>
                 </div>
               </Link>
               <nav className="grid gap-4">
