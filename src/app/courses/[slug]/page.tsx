@@ -1,5 +1,5 @@
 
-import { courses } from '@/app/page';
+import { courses } from '@/lib/courses';
 import { Button } from '@/components/ui/button';
 import { WhatsAppIcon } from '@/components/whatsapp-button';
 import { CheckCircle2, BookOpen } from 'lucide-react';

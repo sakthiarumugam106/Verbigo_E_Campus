@@ -24,6 +24,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import { courses } from '@/lib/courses';
 
 const benefits = [
   {
@@ -40,93 +41,6 @@ const benefits = [
     icon: <MessageCircle className="h-8 w-8 text-primary" />,
     title: 'Interactive Feedback',
     description: 'Receive personalized feedback to refine your grammar and style.',
-  },
-];
-
-export const courses = [
-  {
-    slug: 'grammar-essentials',
-    title: 'Grammar Essentials',
-    description: 'Build a strong foundation in English grammar and sentence structure.',
-    image: 'https://picsum.photos/600/400?random=1',
-    aiHint: 'grammar book',
-    language: 'English',
-    features: [
-      'Master parts of speech (nouns, verbs, adjectives)',
-      'Understand verb tenses and subject-verb agreement',
-      'Learn to use punctuation correctly',
-      'Construct clear and grammatically correct sentences',
-    ],
-  },
-  {
-    slug: 'advanced-writing-workshop',
-    title: 'Advanced Writing Workshop',
-    description: 'Elevate your writing with advanced techniques in style and rhetoric.',
-    image: 'https://picsum.photos/600/400?random=2',
-    aiHint: 'writing workshop',
-    language: 'English',
-     features: [
-      'Develop a compelling writing voice and tone',
-      'Master persuasive writing and argumentation',
-      'Learn narrative techniques and storytelling',
-      'Analyze and critique complex texts',
-    ],
-  },
-  {
-    slug: 'business-communication',
-    title: 'Business Communication Pro',
-    description: 'Write effective emails, reports, and presentations for the modern workplace.',
-    image: 'https://picsum.photos/600/400?random=3',
-    aiHint: 'business communication',
-    language: 'English',
-     features: [
-      'Write professional and persuasive emails',
-      'Create clear and concise business reports',
-      'Design and deliver impactful presentations',
-      'Master the art of virtual communication',
-    ],
-  },
-  {
-    slug: 'creative-writing-unleashed',
-    title: 'Creative Writing Unleashed',
-    description: 'Unlock your inner storyteller and bring your imaginative ideas to life.',
-    image: 'https://picsum.photos/600/400?random=4',
-    aiHint: 'creative writing',
-    language: 'English',
-     features: [
-      'Explore different genres: fiction, poetry, and non-fiction',
-      'Develop memorable characters and compelling plots',
-      'Master descriptive language and imagery',
-      'Learn the process of revision and editing',
-    ],
-  },
-  {
-    slug: 'public-speaking-mastery',
-    title: 'Public Speaking Mastery',
-    description: 'Conquer your fear of public speaking and deliver presentations with confidence.',
-    image: 'https://picsum.photos/600/400?random=5',
-    aiHint: 'public speaking',
-    language: 'English',
-    features: [
-        'Structure a compelling speech',
-        'Use body language effectively',
-        'Handle Q&A sessions with ease',
-        'Engage and persuade your audience',
-    ],
-  },
-  {
-    slug: 'ielts-preparation',
-    title: 'IELTS Preparation',
-    description: 'Comprehensive training to help you achieve your desired score in the IELTS exam.',
-    image: 'https://picsum.photos/600/400?random=6',
-    aiHint: 'exam preparation',
-    language: 'English',
-    features: [
-        'In-depth strategies for all four modules',
-        'Practice tests and mock exams',
-        'Personalized feedback from certified trainers',
-        'Vocabulary and grammar enhancement',
-    ],
   },
 ];
 
