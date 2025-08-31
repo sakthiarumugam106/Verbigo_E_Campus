@@ -1,48 +1,38 @@
-
 'use server';
 
-// This URL will post to your Google Sheet for careers
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz0MJB0hM_v7WMak51iG_CUYAPlb0UJ5axg0VMrhX4H0UwKVKsR3CTaZI6I1wz33SRjnA/exec"; 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbztmUYt4_YyE0ZbAu-_uDLQW6jvMLMy6UKfOtU5D-hLpdNCK1mtVGy-f97q2a4h_qEi/exec";
 
-type ApplicationData = {
+type FormData = {
   name: string;
   email: string;
-  age: number;
+  age: string;
   language: string;
   education: string;
-  resume: string;
+  resumeUrl: string;
 };
 
-export async function appendToGoogleSheet(data: ApplicationData) {
-  const { resume, ...restOfData } = data;
-  const payload = {
-    ...restOfData,
-    resume_url: resume, // The sheet expects 'resume_url'
-  };
-
+export async function appendToGoogleSheet(data: FormData) {
   try {
     const response = await fetch(WEB_APP_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', 
-      },
-      body: JSON.stringify(payload),
-      // Caching is not needed for this POST request
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
       cache: 'no-store',
     });
-    
-    if (response.ok) {
-        console.log('Successfully sent application data to Google Sheet from the server.');
-    } else {
-        const errorText = await response.text();
-        console.error('Failed to send data to Google Sheet:', response.status, errorText);
-        // Throw an error to be caught by the server action
-        throw new Error(`Google Sheet API Error: ${errorText}`);
-    }
 
-  } catch (error) {
-    console.error('Error in appendToGoogleSheet:', error);
-    // Re-throw the error so the server action knows something went wrong
-    throw error;
+    if (response.ok) {
+      const result = await response.json();
+      if (result.success) {
+        return { success: true, message: result.message, id: result.id };
+      }
+      return { success: false, error: result.error || "Unknown error" };
+    } else {
+      const errorText = await response.text();
+      console.error("Google Sheet API Error:", errorText);
+      return { success: false, error: `Google Sheet API Error: ${errorText}` };
+    }
+  } catch (error: any) {
+    console.error("Error in appendToGoogleSheet:", error);
+    return { success: false, error: error.message };
   }
 }

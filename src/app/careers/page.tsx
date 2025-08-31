@@ -27,7 +27,7 @@ export default function CareersPage() {
             </p>
         </div>
         <MissionVision />
-        <div className="mt-12 grid gap-8">
+        <div className="mx-auto max-w-6xl mt-12 grid gap-8">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center text-primary mt-8">
             Current Openings
           </h2>

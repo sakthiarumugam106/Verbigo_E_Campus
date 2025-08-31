@@ -1,7 +1,7 @@
 
 'use server';
 
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxlmlxRXsT7pcYKVZV4Kl_dYdW04LdaPglOERnjV1gbWeyXowZ-ImiFKptPfzCFPcDF/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRofdOnZAsNKHtDVC3XgJnjJiSeGtBwPL6Ra4C2AlE9FrhvwzX3xpRBe3vorJyuWKg/exec";
 
 // This function now runs on the server-side.
 export async function appendToGoogleSheet(data: { name: string; email: string; contact: string; }) {
