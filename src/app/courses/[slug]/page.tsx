@@ -1,7 +1,7 @@
 
 import { courses } from '@/lib/courses';
 import { Button } from '@/components/ui/button';
-import { WhatsAppIcon } from '@/components/whatsapp-button';
+import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
 import { CheckCircle2, BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -60,7 +60,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
             <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
               <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                 <Link href={whatsappEnrollUrl} target="_blank" rel="noopener noreferrer">
-                  <WhatsAppIcon className="h-6 w-6"/>
+                  <WhatsAppButtonIcon className="h-6 w-6"/>
                   Enroll via WhatsApp
                 </Link>
               </Button>

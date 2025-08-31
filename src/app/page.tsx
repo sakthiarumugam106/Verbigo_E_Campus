@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
-import { WhatsAppIcon } from '@/components/whatsapp-button';
 import { Testimonials } from '@/components/testimonials';
 import * as React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -25,6 +24,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { courses } from '@/lib/courses';
+import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
 
 const benefits = [
   {
@@ -124,7 +124,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                  <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                   <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                    <WhatsAppIcon className="h-6 w-6"/>
+                    <WhatsAppButtonIcon className="h-6 w-6"/>
                     WhatsApp Now
                   </Link>
                 </Button>
