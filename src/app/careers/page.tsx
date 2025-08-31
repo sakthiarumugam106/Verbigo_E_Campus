@@ -27,15 +27,16 @@ export default function CareersPage() {
             </p>
         </div>
         <MissionVision />
-        <div className="mx-auto max-w-6xl mt-12 grid gap-8">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center text-primary mt-8">
+        <div className="mt-12">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center text-primary mt-8 mb-8">
             Current Openings
           </h2>
           {jobOpenings.map((job, index) => (
-            <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
+            <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300 w-full max-w-6xl mx-auto">
               <CardHeader className="grid grid-cols-[1fr_auto] items-start gap-4 space-y-0">
                 <div className="space-y-1">
                   <CardTitle className="text-2xl text-primary">{job.title}</CardTitle>
+
                   <CardDescription className="flex items-center gap-4">
                     <span>{job.location}</span>
                     <span className="h-1 w-1 rounded-full bg-muted-foreground"></span>
