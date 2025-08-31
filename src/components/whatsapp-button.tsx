@@ -6,9 +6,9 @@ import Image from 'next/image';
 
 export const WhatsAppIcon = ({ className }: { className?: string }) => (
     <Image
-        width="94"
-        height="94"
-        src="https://img.icons8.com/3d-fluency/94/whatsapp.png"
+        width="375"
+        height="375"
+        src="https://img.icons8.com/3d-fluency/375/whatsapp.png"
         alt="whatsapp"
         className={cn("h-full w-full", className)}
     />
