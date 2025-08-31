@@ -15,7 +15,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
 
   const phoneNumber = '7708071872';
   const enrollMessage = `Hello Verbigo! I'm interested in the ${course.title} course.`;
-  const demoMessage = `Hi, I want to book a demo for the ${course.title} course.`;
+  const demoMessage = `Hello Verbigo, I would like to book a demo for the ${course.title} course. Please let me know the next steps.`;
   const whatsappEnrollUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
     enrollMessage
   )}`;

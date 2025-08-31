@@ -5,7 +5,7 @@ import { VerbigoLogo } from '@/components/verbigo-logo';
 
 export function Footer() {
   const phoneNumber = '7708071872';
-  const message = "Hi, I want to book a demo.";
+  const message = "Hello Verbigo, I am interested in your courses and would like to schedule a demo. Please let me know the next steps.";
   const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
