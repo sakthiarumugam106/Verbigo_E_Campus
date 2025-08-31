@@ -35,7 +35,7 @@ export function Header() {
           </div>
         </Link>
         
-        <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex flex-1">
+        <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -63,9 +63,9 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-                <SheetHeader className="sr-only">
-                    <SheetTitle>Mobile Menu</SheetTitle>
-                    <SheetDescription>
+                <SheetHeader>
+                    <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                    <SheetDescription className="sr-only">
                         Navigation links for Verbigo.
                     </SheetDescription>
                 </SheetHeader>
