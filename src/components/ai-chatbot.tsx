@@ -106,9 +106,14 @@ export function AiChatbot() {
       >
         <Card className="w-[380px] h-[500px] shadow-2xl flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
-            <div className="space-y-1">
-              <CardTitle className="text-lg">Malar Teacher</CardTitle>
-              <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
+            <div className="flex items-center gap-3">
+               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                    <VerbigoTutorLogo width={32} height={32} />
+               </div>
+               <div className="space-y-1">
+                <CardTitle className="text-lg">Malar Teacher</CardTitle>
+                <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
+               </div>
             </div>
             <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleToggle}>
                 <X className="h-5 w-5" />
