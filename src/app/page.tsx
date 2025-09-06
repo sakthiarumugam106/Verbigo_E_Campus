@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp } from 'lucide-react';
+import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp, Users, Target, Lightbulb, Globe } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
 import { Testimonials } from '@/components/testimonials';
 import * as React from 'react';
@@ -47,29 +47,29 @@ const benefits = [
 
 const values = [
     {
-        icon: <MessageSquareQuote className="h-10 w-10 text-primary" />,
-        title: 'Empower through communication',
-        description: 'Clear communication transforms lives. It builds confidence, opens opportunities, and fuels personal growth.',
+        icon: <Users className="h-10 w-10 text-primary" />,
+        title: 'Learner-centric Environment',
+        description: "We tailor every aspect of learning to the individual student's needs, pace, and goals, ensuring a personalized and effective journey.",
     },
     {
-        icon: <Languages className="h-10 w-10 text-primary" />,
-        title: 'Bridge gaps through language',
-        description: 'Language should connect, not divide. We make English approachable for those left behind by traditional methods.',
+        icon: <BookOpen className="h-10 w-10 text-primary" />,
+        title: 'Foundational Literacy',
+        description: "We focus on building strong literacy fundamentals, providing the essential building blocks for lifelong learning and communication.",
     },
     {
-        icon: <TrendingUp className="h-10 w-10 text-primary" />,
-        title: 'Treat language as a tool for growth',
-        description: "English isn't just a subject. It's a skill that can unlock better opportunities, whether it's for work, study, or self-expression.",
+        icon: <Lightbulb className="h-10 w-10 text-primary" />,
+        title: 'Experiential & Competency-Based Education',
+        description: "Our approach is hands-on and practical, focusing on developing real-world skills and measurable competencies, not just theoretical knowledge.",
     },
     {
-        icon: <GraduationCap className="h-10 w-10 text-primary" />,
-        title: 'Learner First approach',
-        description: 'We design every course around the person learning it. Their pace, their comfort, their goals. Learning works best when it adapts to the learner.',
+        icon: <Globe className="h-10 w-10 text-primary" />,
+        title: 'Global Competence & 21st Century Skills',
+        description: 'We equip learners with the language skills and cultural understanding needed to thrive in an interconnected, 21st-century world.',
     },
     {
         icon: <Laptop className="h-10 w-10 text-primary" />,
         title: 'Blending Education & Technology',
-        description: "As a language hub we're trying to utilize technology to its best and become a game changer in the field of language learning.",
+        description: "As a language hub, we leverage cutting-edge technology to create innovative, engaging, and accessible learning experiences.",
     },
 ];
 
