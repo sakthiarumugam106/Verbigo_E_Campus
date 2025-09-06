@@ -114,7 +114,7 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="relative flex items-center justify-center w-full min-h-screen overflow-hidden bg-primary"
+        className="relative w-full overflow-hidden bg-primary py-20 md:py-32 lg:py-40"
       >
         <div 
           className="absolute inset-0 bg-repeat" 
@@ -324,7 +324,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
-
-    
