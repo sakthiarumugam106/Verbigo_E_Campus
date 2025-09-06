@@ -107,7 +107,7 @@ export function AiChatbot() {
         <Card className="w-[380px] h-[500px] shadow-2xl flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
             <div className="space-y-1">
-              <CardTitle className="text-lg">AI Grammar Coach</CardTitle>
+              <CardTitle className="text-lg">Malar Teacher</CardTitle>
               <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
             </div>
             <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleToggle}>
@@ -163,7 +163,7 @@ export function AiChatbot() {
       <button
         onClick={handleToggle}
         className={cn(
-            "fixed bottom-[6.5rem] right-6 h-16 w-16 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
+            "fixed bottom-20 right-6 h-16 w-16 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
             isOpen && 'opacity-0 scale-95 pointer-events-none',
             isOpening && 'scale-95',
             isButtonVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'
