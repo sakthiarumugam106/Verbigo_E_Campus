@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import Image from 'next/image';
@@ -108,52 +109,32 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="w-full overflow-hidden bg-primary/5 pt-20 pb-20 md:pt-32 md:pb-24"
+        className="w-full overflow-hidden bg-[#f2b9ca] pt-20 pb-20 md:pt-32 md:pb-24"
       >
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-4">
+            <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
-                <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl xl:text-6xl/none">
-                  Master the Art of Language with Verbigo
+                <h1 className="text-5xl font-bold tracking-tighter text-black sm:text-6xl xl:text-7xl/none font-brand">
+                  Learn faster with your best language tutor
                 </h1>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  Elevate your writing, perfect your grammar, and communicate with confidence. Our expert-led courses are designed for learners at every level.
-                </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                 <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                  <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                    <WhatsAppButtonIcon className="h-5 w-5"/>
-                    WhatsApp Now
+                 <Button asChild size="lg" className="bg-black hover:bg-gray-800 text-white shadow-lg rounded-full">
+                  <Link href="/#courses">
+                    Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="hover:bg-primary hover:text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                  <Link href="/#courses">Explore Courses</Link>
                 </Button>
               </div>
             </div>
             <Image
-              src="https://images.unsplash.com/photo-1462536943532-57a629f6cc60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxlZHVjYXRpb258ZW58MHx8fHwxNzU2NjI4MjMwfDA&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Hero"
-              width={1200}
-              height={800}
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover w-full"
-              data-ai-hint="language learning"
+              src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3NDE5ODJ8MHwxfGFsbHwxfHx8fHx8fHx8fHwxNjE2NjYyOTU1&ixlib=rb-1.2.1&q=80&w=1080"
+              alt="Language tutor"
+              width={600}
+              height={400}
+              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
+              data-ai-hint="language tutor online"
             />
-          </div>
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start space-x-4">
-                <div className="flex-shrink-0">{benefit.icon}</div>
-                <div>
-                  <h3 className="text-lg font-semibold">{benefit.title}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {benefit.description}
-                  </p>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -311,3 +292,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
