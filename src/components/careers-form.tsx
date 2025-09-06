@@ -13,7 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { storage } from '@/lib/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Progress } from './ui/progress';
-import { File, Loader2 } from 'lucide-react';
+import { File, Link, Loader2 } from 'lucide-react';
+import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 
 const initialState: ApplicationFormState = {
   message: '',
@@ -42,7 +43,9 @@ export function CareersForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [educationValue, setEducationValue] = useState('');
+  const [resumeOption, setResumeOption] = useState<'upload' | 'link'>('upload');
   const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [resumeLink, setResumeLink] = useState('');
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const resumeInputRef = useRef<HTMLInputElement>(null);
@@ -52,7 +55,9 @@ export function CareersForm() {
         // Reset form state when dialog is closed
         formRef.current?.reset();
         setEducationValue('');
+        setResumeOption('upload');
         setResumeFile(null);
+        setResumeLink('');
         if (resumeInputRef.current) resumeInputRef.current.value = '';
         setIsUploading(false);
         setUploadProgress(null);
@@ -94,43 +99,57 @@ export function CareersForm() {
     const formData = new FormData(event.currentTarget);
     const name = formData.get('name') as string;
 
-    if (!resumeFile) {
+    if (resumeOption === 'upload' && !resumeFile) {
         toast({ title: 'Error', description: 'Please select a resume file to upload.', variant: 'destructive' });
         return;
     }
+    if (resumeOption === 'link' && !resumeLink) {
+        toast({ title: 'Error', description: 'Please provide a link to your resume.', variant: 'destructive' });
+        return;
+    }
     
-    setIsUploading(true);
-    setUploadProgress(0);
+    formData.set('resumeOption', resumeOption);
 
-    try {
-        const fileExtension = resumeFile.name.split('.').pop();
-        const sanitizedName = name.replace(/[^a-zA-Z0-9]/g, '_');
-        const storageRef = ref(storage, `resumes/${sanitizedName}_${Date.now()}.${fileExtension}`);
-        
-        const uploadTask = uploadBytes(storageRef, resumeFile);
-        
-        const interval = setInterval(() => {
-            setUploadProgress(oldProgress => {
-                if (oldProgress === null) return 0;
-                if (oldProgress >= 90) return 95;
-                return oldProgress + 10;
-            });
-        }, 200);
-
-        await uploadTask;
-        clearInterval(interval);
-        setUploadProgress(100);
-
-        const downloadURL = await getDownloadURL(storageRef);
-        formData.set('resume', downloadURL);
-        
+    if (resumeOption === 'link') {
+        formData.set('resume', resumeLink);
         formAction(formData);
+        return;
+    }
 
-    } catch (error) {
-        console.error("File upload error:", error);
-        toast({ title: 'Error uploading file', description: 'Could not upload your resume. Please try again.', variant: 'destructive' });
-        setIsUploading(false);
-        setUploadProgress(null);
+    if (resumeOption === 'upload' && resumeFile) {
+      setIsUploading(true);
+      setUploadProgress(0);
+
+      try {
+          const fileExtension = resumeFile.name.split('.').pop();
+          const sanitizedName = name.replace(/[^a-zA-Z0-9]/g, '_');
+          const storageRef = ref(storage, `resumes/${sanitizedName}_${Date.now()}.${fileExtension}`);
+          
+          const uploadTask = uploadBytes(storageRef, resumeFile);
+          
+          const interval = setInterval(() => {
+              setUploadProgress(oldProgress => {
+                  if (oldProgress === null) return 0;
+                  if (oldProgress >= 90) return 95;
+                  return oldProgress + 10;
+              });
+          }, 200);
+
+          await uploadTask;
+          clearInterval(interval);
+          setUploadProgress(100);
+
+          const downloadURL = await getDownloadURL(storageRef);
+          formData.set('resume', downloadURL);
+          
+          formAction(formData);
+
+      } catch (error) {
+          console.error("File upload error:", error);
+          toast({ title: 'Error uploading file', description: 'Could not upload your resume. Please try again.', variant: 'destructive' });
+          setIsUploading(false);
+          setUploadProgress(null);
+      }
     }
   };
 
@@ -148,6 +167,7 @@ export function CareersForm() {
         </DialogHeader>
         <form ref={formRef} onSubmit={handleFormSubmit} className="space-y-4 pt-4">
             <input type="hidden" name="resume" />
+            <input type="hidden" name="resumeOption" value={resumeOption} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                     <Label htmlFor="name">Full Name</Label>
@@ -188,22 +208,46 @@ export function CareersForm() {
                     {state.errors?.education && <p className="text-sm text-destructive mt-1">{state.errors.education[0]}</p>}
                 </div>
                  <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="resume-file">Upload Resume (PDF, DOCX, 5MB Max)</Label>
-                    <Input id="resume-file" name="resume-file" type="file" required accept=".pdf,.doc,.docx" onChange={handleFileChange} ref={resumeInputRef} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"/>
-                     {resumeFile && !isUploading && (
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
-                            <File className="h-4 w-4" />
-                            <span>{resumeFile.name}</span>
+                    <Label>Resume</Label>
+                    <RadioGroup value={resumeOption} onValueChange={(value) => setResumeOption(value as 'upload' | 'link')} className="flex gap-4 pt-1">
+                        <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="upload" id="upload" />
+                            <Label htmlFor="upload" className="font-normal">Upload File</Label>
                         </div>
-                    )}
-                     {isUploading && uploadProgress !== null && (
-                        <div className="space-y-2 mt-2">
-                            <p className="text-sm text-muted-foreground">Uploading: {uploadProgress.toFixed(0)}%</p>
-                            <Progress value={uploadProgress} className="h-2" />
+                        <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="link" id="link" />
+                            <Label htmlFor="link" className="font-normal">Provide Link</Label>
                         </div>
-                    )}
-                    {state.errors?.resume && <p className="text-sm text-destructive mt-1">{state.errors.resume[0]}</p>}
+                    </RadioGroup>
                 </div>
+
+                {resumeOption === 'upload' && (
+                    <div className="space-y-2 md:col-span-2">
+                        <Label htmlFor="resume-file">Upload Resume (PDF, DOCX, 5MB Max)</Label>
+                        <Input id="resume-file" name="resume-file" type="file" required accept=".pdf,.doc,.docx" onChange={handleFileChange} ref={resumeInputRef} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"/>
+                        {resumeFile && !isUploading && (
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
+                                <File className="h-4 w-4" />
+                                <span>{resumeFile.name}</span>
+                            </div>
+                        )}
+                        {isUploading && uploadProgress !== null && (
+                            <div className="space-y-2 mt-2">
+                                <p className="text-sm text-muted-foreground">Uploading: {uploadProgress.toFixed(0)}%</p>
+                                <Progress value={uploadProgress} className="h-2" />
+                            </div>
+                        )}
+                    </div>
+                )}
+                
+                {resumeOption === 'link' && (
+                    <div className="space-y-2 md:col-span-2">
+                        <Label htmlFor="resume-link">Resume Link</Label>
+                        <Input id="resume-link" name="resume-link" type="url" placeholder="https://linkedin.com/in/..." value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} required />
+                    </div>
+                )}
+
+                {state.errors?.resume && <p className="md:col-span-2 text-sm text-destructive mt-1">{state.errors.resume[0]}</p>}
             </div>
             <div className="pt-4">
                 <SubmitButton disabled={isUploading}/>
@@ -213,5 +257,3 @@ export function CareersForm() {
     </Dialog>
   );
 }
-
-    

@@ -11,6 +11,7 @@ const applicationSchema = z.object({
   language: z.string().min(2, { message: 'Please specify a language.' }),
   education: z.string().min(1, { message: 'Please select your education level.' }),
   resume: z.string().url({ message: 'A valid resume URL is required.' }),
+  resumeOption: z.string(), // No validation needed, just for logic
 });
 
 export type ApplicationFormState = {
@@ -37,6 +38,7 @@ export async function submitApplication(
     language: formData.get('language'),
     education: formData.get('education'),
     resume: formData.get('resume'),
+    resumeOption: formData.get('resumeOption'),
   };
 
   const validatedFields = applicationSchema.safeParse(rawFormData);
