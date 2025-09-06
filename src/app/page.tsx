@@ -109,18 +109,25 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="w-full overflow-hidden bg-primary/10 pt-20 pb-20 md:pt-32 md:pb-24"
+        className="relative w-full overflow-hidden bg-primary pt-20 pb-20 md:pt-32 md:pb-24"
       >
-        <div className="container mx-auto px-4 md:px-6">
+        <div 
+          className="absolute inset-0 bg-repeat" 
+          style={{ 
+            backgroundImage: "url('/subtle-pattern.svg')",
+            opacity: 0.1,
+          }}
+        />
+        <div className="container relative mx-auto px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
-                <h1 className="text-5xl font-bold tracking-tighter text-primary sm:text-6xl xl:text-7xl/none font-brand">
+                <h1 className="text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
                   Learn english through your native language
                 </h1>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                 <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg rounded-full">
+                 <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
                   <Link href="/#courses">
                     Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
