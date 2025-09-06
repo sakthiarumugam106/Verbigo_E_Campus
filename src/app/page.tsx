@@ -218,7 +218,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
-                  Our Core <span className="text-destructive">Values</span>
+                  Our Core Values
               </h2>
               <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
                   At Verbigo, our core values shape every lesson and interaction.
