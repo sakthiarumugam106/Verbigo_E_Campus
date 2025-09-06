@@ -11,6 +11,7 @@ import { Loader2, MessageCircle, Send, X } from 'lucide-react';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { VerbigoTutorLogo } from './verbigo-tutor-logo';
 import { useIsMobile } from '@/hooks/use-mobile';
+import ReactMarkdown from 'react-markdown';
 
 type Message = {
   role: 'user' | 'model';
@@ -168,8 +169,8 @@ export function AiChatbot() {
                                 <VerbigoTutorLogo width={24} height={24} />
                             </div>
                            )}
-                            <div className={cn("max-w-[80%] rounded-xl px-4 py-2 text-sm", msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted')}>
-                                {msg.content}
+                            <div className={cn("max-w-[80%] rounded-xl px-4 py-2 text-sm prose prose-sm", msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted')}>
+                                {msg.role === 'model' ? <ReactMarkdown className="text-foreground [&_p]:m-0">{msg.content.replace(/\n/g, '  \n')}</ReactMarkdown> : msg.content}
                             </div>
                         </div>
                     ))}
