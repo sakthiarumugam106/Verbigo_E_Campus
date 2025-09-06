@@ -20,6 +20,7 @@ export function FindTutorForm() {
     schedule: '',
   });
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([]);
+  const [otherLanguage, setOtherLanguage] = useState('');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export function FindTutorForm() {
       const selectedState = IndianStatesAndLanguages.find(s => s.state === formData.state);
       setAvailableLanguages(selectedState ? selectedState.languages : []);
       setFormData(prev => ({ ...prev, language: '' }));
+      setOtherLanguage('');
     } else {
       setAvailableLanguages([]);
     }
@@ -36,12 +38,22 @@ export function FindTutorForm() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleLanguageChange = (value: string) => {
+    if (value === 'Other') {
+      setFormData(prev => ({ ...prev, language: 'Other' }));
+    } else {
+      setFormData(prev => ({ ...prev, language: value }));
+      setOtherLanguage('');
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const { name, email, whatsapp, state, language, schedule } = formData;
+    const finalLanguage = language === 'Other' ? otherLanguage : language;
 
-    if (!name || !email || !whatsapp || !state || !language || !schedule) {
+    if (!name || !email || !whatsapp || !state || !finalLanguage || !schedule) {
       toast({
         title: 'Error',
         description: 'Please fill out all the fields.',
@@ -58,7 +70,7 @@ export function FindTutorForm() {
       Email: ${email}
       WhatsApp: ${whatsapp}
       State: ${state}
-      Native Language: ${language}
+      Native Language: ${finalLanguage}
       Schedule Preference: ${schedule}
       -----------------------------
       Please get back to me soon.
@@ -103,7 +115,7 @@ export function FindTutorForm() {
       </div>
       <div className="space-y-2">
         <Label htmlFor="language">Native Language</Label>
-        <Select name="language" required disabled={!formData.state} onValueChange={(value) => handleChange('language', value)} value={formData.language}>
+        <Select name="language" required disabled={!formData.state} onValueChange={handleLanguageChange} value={formData.language}>
           <SelectTrigger>
             <SelectValue placeholder={formData.state ? "Select your language" : "Select a state first"} />
           </SelectTrigger>
@@ -111,9 +123,23 @@ export function FindTutorForm() {
             {availableLanguages.map((lang) => (
               <SelectItem key={lang} value={lang}>{lang}</SelectItem>
             ))}
+            <SelectItem value="Other">Other</SelectItem>
           </SelectContent>
         </Select>
       </div>
+       {formData.language === 'Other' && (
+        <div className="space-y-2">
+            <Label htmlFor="otherLanguage">Please specify your language</Label>
+            <Input
+            id="otherLanguage"
+            name="otherLanguage"
+            placeholder="Your language"
+            required
+            value={otherLanguage}
+            onChange={(e) => setOtherLanguage(e.target.value)}
+            />
+        </div>
+        )}
       <div className="space-y-2 md:col-span-2">
         <Label>Schedule Preference</Label>
         <RadioGroup name="schedule" required className="flex flex-col sm:flex-row gap-4 pt-2" onValueChange={(value) => handleChange('schedule', value)}>
