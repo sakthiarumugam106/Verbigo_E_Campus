@@ -10,7 +10,7 @@ const applicationSchema = z.object({
   age: z.coerce.number().int().positive({ message: 'Please enter a valid age.' }),
   language: z.string().min(2, { message: 'Please specify a language.' }),
   education: z.string().min(1, { message: 'Please select your education level.' }),
-  resume: z.string().url({ message: 'Please provide a valid URL for your resume.' }),
+  resume: z.string().url({ message: 'A valid resume URL is required.' }),
 });
 
 export type ApplicationFormState = {
@@ -51,7 +51,14 @@ export async function submitApplication(
 
   try {
     // Now we call the sheet action from the server
-    await appendToGoogleSheet(validatedFields.data);
+    await appendToGoogleSheet({
+      name: validatedFields.data.name,
+      email: validatedFields.data.email,
+      age: validatedFields.data.age.toString(),
+      language: validatedFields.data.language,
+      education: validatedFields.data.education,
+      resumeUrl: validatedFields.data.resume,
+    });
     return { 
       success: true, 
       message: 'Your application has been submitted successfully!',
