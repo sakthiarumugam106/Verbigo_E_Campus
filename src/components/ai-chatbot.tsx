@@ -117,11 +117,11 @@ export function AiChatbot() {
     <>
       <div
         className={cn(
-          "fixed bottom-[11rem] right-6 z-50 transition-all duration-300 ease-in-out",
+          "fixed bottom-0 right-0 z-50 transition-all duration-300 ease-in-out md:bottom-[11rem] md:right-6",
           isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         )}
       >
-        <Card className="w-[380px] h-[500px] shadow-2xl flex flex-col" ref={chatCardRef}>
+        <Card className="w-screen h-[80vh] md:w-[380px] md:h-[500px] shadow-2xl flex flex-col rounded-none md:rounded-xl" ref={chatCardRef}>
           <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4 overflow-hidden">
             <div 
               className="absolute inset-0 bg-repeat" 
