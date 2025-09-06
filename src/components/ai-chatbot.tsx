@@ -24,10 +24,37 @@ export function AiChatbot() {
   const [isPending, startTransition] = useTransition();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    const footer = document.getElementById('page-footer');
+    if (!footer) {
+        setIsButtonVisible(true);
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsButtonVisible(!entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: "0px 0px 50px 0px"
+      }
+    );
+
+    observer.observe(footer);
+
+    return () => {
+      observer.unobserve(footer);
+    };
+  }, [isClient]);
 
   const handleToggle = () => {
     if (isOpen) {
@@ -138,7 +165,8 @@ export function AiChatbot() {
         className={cn(
             "fixed bottom-[6.5rem] right-6 h-16 w-16 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
             isOpen && 'opacity-0 scale-95 pointer-events-none',
-            isOpening && 'scale-95'
+            isOpening && 'scale-95',
+            isButtonVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'
         )}
         aria-label="Toggle AI Chatbot"
       >
