@@ -133,7 +133,7 @@ export default function HomePage() {
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                  <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
-                  <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                  <Link href="/find-tutor">
                     Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
