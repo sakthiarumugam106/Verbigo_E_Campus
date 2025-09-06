@@ -151,11 +151,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="courses" className="w-full bg-background py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
+      <section id="courses" className="relative w-full bg-primary/5 py-16 md:py-24 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-repeat" 
+          style={{ 
+            backgroundImage: "url('/subtle-pattern.svg')",
+            opacity: 0.05,
+          }}
+        />
+        <div className="container mx-auto px-4 md:px-6 relative">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-5xl">
                 Our Courses
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -183,7 +190,7 @@ export default function HomePage() {
               {filteredCourses.map((course) => (
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
-                    <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col">
+                    <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col bg-background/80 backdrop-blur-sm border-primary/10">
                       <Link href={`/courses/${course.slug}`} className="flex flex-col h-full">
                         <div className="overflow-hidden">
                           <Image
