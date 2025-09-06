@@ -71,7 +71,6 @@ export function AiChatbot() {
 
   return (
     <>
-      {/* Chat Window */}
       <div
         className={cn(
           "fixed bottom-[12rem] right-6 z-50 transition-all duration-300 ease-in-out",
@@ -134,17 +133,16 @@ export function AiChatbot() {
         </Card>
       </div>
 
-      {/* Trigger Button */}
       <button
         onClick={handleToggle}
         className={cn(
-            "fixed bottom-[6.5rem] right-5 h-24 w-24 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
+            "fixed bottom-[6.5rem] right-5 h-20 w-20 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
             isOpen && 'opacity-0 scale-95 pointer-events-none',
             isOpening && 'scale-95'
         )}
         aria-label="Toggle AI Chatbot"
       >
-        <VerbigoTutorLogo width={96} height={96} />
+        <VerbigoTutorLogo width={80} height={80} />
       </button>
     </>
   );
