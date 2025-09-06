@@ -23,6 +23,7 @@ export function AiChatbot() {
   const [input, setInput] = useState('');
   const [isPending, startTransition] = useTransition();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const chatCardRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
 
@@ -55,6 +56,22 @@ export function AiChatbot() {
       observer.unobserve(footer);
     };
   }, [isClient]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (chatCardRef.current && !chatCardRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleToggle = () => {
     if (isOpen) {
@@ -100,11 +117,11 @@ export function AiChatbot() {
     <>
       <div
         className={cn(
-          "fixed bottom-[12rem] right-6 z-50 transition-all duration-300 ease-in-out",
+          "fixed bottom-[6rem] right-6 z-50 transition-all duration-300 ease-in-out",
           isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         )}
       >
-        <Card className="w-[380px] h-[500px] shadow-2xl flex flex-col">
+        <Card className="w-[380px] h-[500px] shadow-2xl flex flex-col" ref={chatCardRef}>
           <CardHeader className="flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
             <div className="flex items-center gap-3">
                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
@@ -168,7 +185,7 @@ export function AiChatbot() {
       <button
         onClick={handleToggle}
         className={cn(
-            "fixed bottom-20 right-6 h-16 w-16 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
+            "fixed bottom-6 right-6 h-16 w-16 z-40 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
             isOpen && 'opacity-0 scale-95 pointer-events-none',
             isOpening && 'scale-95',
             isButtonVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'
