@@ -1,4 +1,6 @@
 
+'use client';
+
 import Image from 'next/image';
 import logo from '../logo.png';
 import chatbotIcon from '../chatbot.png';
@@ -11,8 +13,8 @@ export function VerbigoLogo() {
     <Image
       src={chatbotIcon}
       alt="Verbigo Logo"
-      width="40"
-      height="40"
+      width="64"
+      height="64"
     />
   );
 }
