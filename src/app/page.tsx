@@ -163,9 +163,9 @@ export default function HomePage() {
               </p>
             </div>
             <Tabs value={courseFilter} onValueChange={setCourseFilter} className="mt-8">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="Adults">For Adults</TabsTrigger>
-                <TabsTrigger value="Kids">For Kids</TabsTrigger>
+               <TabsList className="grid w-full grid-cols-2 bg-primary/20 text-primary-foreground">
+                <TabsTrigger value="Adults" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">For Adults</TabsTrigger>
+                <TabsTrigger value="Kids" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">For Kids</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
