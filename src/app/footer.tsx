@@ -34,7 +34,7 @@ export function Footer() {
             </div>
             <div className="grid gap-2">
               <h3 className="font-semibold">Company</h3>
-              <Link href="#" className="text-sm text-gray-400 hover:text-white">About Us</Link>
+              <Link href="/about-us" className="text-sm text-gray-400 hover:text-white">About Us</Link>
               <Link href="/careers" className="text-sm text-gray-400 hover:text-white">Careers</Link>
               <Link href="/#contact" className="text-sm text-gray-400 hover:text-white">Contact</Link>
             </div>

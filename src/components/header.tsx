@@ -14,9 +14,7 @@ const navLinks = [
   { name: 'AI Coach', href: '/#grammar-coach'},
   { name: 'Know Your Level', href: '/know-your-level' },
   { name: 'Our Values', href: '/#values' },
-  { name: 'Careers', href: '/careers' },
   { name: 'FAQ', href: '/#faq' },
-  { name: 'Contact', href: '/#contact' },
 ];
 
 export function Header() {
@@ -92,6 +90,8 @@ export function Header() {
                     {link.name}
                   </Link>
                 ))}
+                 <Link href="/careers" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
+                 <Link href="/#contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
               </nav>
               <Button asChild size="lg" className="w-full mt-8">
                   <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
