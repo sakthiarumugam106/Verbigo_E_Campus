@@ -138,13 +138,13 @@ export function AiChatbot() {
       <button
         onClick={handleToggle}
         className={cn(
-            "fixed bottom-[6.5rem] right-5 h-20 w-20 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
+            "fixed bottom-[6.5rem] right-5 h-24 w-24 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
             isOpen && 'opacity-0 scale-95 pointer-events-none',
             isOpening && 'scale-95'
         )}
         aria-label="Toggle AI Chatbot"
       >
-        <VerbigoTutorLogo />
+        <VerbigoTutorLogo width={96} height={96} />
       </button>
     </>
   );
