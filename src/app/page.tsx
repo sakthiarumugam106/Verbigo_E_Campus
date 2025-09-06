@@ -115,7 +115,7 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="relative w-full overflow-hidden bg-primary py-16 md:py-24"
+        className="relative w-full overflow-hidden bg-primary py-12 md:py-20"
       >
         <div 
           className="absolute inset-0 bg-repeat" 
@@ -132,10 +132,15 @@ export default function HomePage() {
                   Learn english through your native language
                 </h1>
               </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <div className="flex flex-col gap-4 sm:flex-row">
                  <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
                   <Link href="/find-tutor">
                     Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-primary-foreground/20">
+                  <Link href="/know-your-level">
+                    Know Your Level <GraduationCap className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
               </div>
@@ -341,5 +346,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
