@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { Loader2, MessageCircle, Send, X } from 'lucide-react';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import { VerbigoTutorLogo } from './verbigo-tutor-logo';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type Message = {
   role: 'user' | 'model';
@@ -26,6 +27,7 @@ export function AiChatbot() {
   const chatCardRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setIsClient(true);
@@ -72,6 +74,19 @@ export function AiChatbot() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (isMobile) {
+      if (isOpen) {
+        document.body.classList.add('chatbot-open');
+      } else {
+        document.body.classList.remove('chatbot-open');
+      }
+    } else {
+      // Ensure class is removed on desktop
+      document.body.classList.remove('chatbot-open');
+    }
+  }, [isOpen, isMobile]);
 
   const handleToggle = () => {
     if (isOpen) {

@@ -18,21 +18,23 @@ export const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 export function WhatsAppButton() {
   const [isVisible, setIsVisible] = useState(true);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
     const footer = document.getElementById('page-footer');
     if (!footer) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // When the footer is intersecting with the viewport, hide the button.
-        // Otherwise, show it.
         setIsVisible(!entry.isIntersecting);
       },
       {
-        // A threshold of 0 means the callback will run as soon as one pixel of the footer is visible.
         threshold: 0,
-        // We set a rootMargin to trigger a bit before the footer is actually in view
         rootMargin: "0px 0px 50px 0px"
       }
     );
@@ -42,19 +44,29 @@ export function WhatsAppButton() {
     return () => {
       observer.unobserve(footer);
     };
-  }, []);
+  }, [isClient]);
 
   const phoneNumber = '7708071872'; // Replace with a real number
   const message = "Hello Verbigo, I am interested in your courses and would like to know more. Please let me know the next steps.";
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
+    <>
+    {isClient && (
+        <style jsx global>{`
+          @media (max-width: 767px) {
+            body.chatbot-open .whatsapp-button {
+              display: none;
+            }
+          }
+        `}</style>
+    )}
     <Link 
       href={whatsappUrl} 
       target="_blank" 
       rel="noopener noreferrer"
       className={cn(
-        "fixed bottom-6 right-6 h-16 w-16 z-50 transition-all duration-300",
+        "whatsapp-button fixed bottom-6 right-6 h-16 w-16 z-50 transition-all duration-300",
         isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0',
         "hover:scale-110"
       )}
@@ -62,5 +74,6 @@ export function WhatsAppButton() {
     >
       <WhatsAppIcon className="h-full w-full drop-shadow-lg" />
     </Link>
+    </>
   );
 }
