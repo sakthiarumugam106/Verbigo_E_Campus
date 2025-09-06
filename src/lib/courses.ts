@@ -7,6 +7,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=1',
     aiHint: 'new beginnings',
     language: 'English',
+    category: 'adults',
     features: [
       'Learn the alphabet and basic phonics',
       'Introduce yourself and others',
@@ -21,6 +22,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=2',
     aiHint: 'building blocks',
     language: 'English',
+    category: 'adults',
      features: [
       'Expand your vocabulary and idiomatic expressions',
       'Understand and use different verb tenses',
@@ -35,6 +37,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=3',
     aiHint: 'mountain peak',
     language: 'English',
+    category: 'adults',
      features: [
       'Master complex sentence structures',
       'Understand nuanced and idiomatic language',
@@ -49,6 +52,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=4',
     aiHint: 'children playing',
     language: 'English',
+    category: 'kids',
      features: [
       'Learn through songs, games, and stories',
       'Develop basic listening and speaking skills',
@@ -63,6 +67,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=5',
     aiHint: 'alphabet blocks',
     language: 'English',
+    category: 'kids',
     features: [
         'Learn letter-sound correspondence',
         'Practice blending and segmenting words',
@@ -77,6 +82,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=6',
     aiHint: 'public speaking',
     language: 'English',
+    category: 'adults',
     features: [
         'Structure a compelling speech',
         'Use body language effectively',
@@ -91,6 +97,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=7',
     aiHint: 'business meeting',
     language: 'English',
+    category: 'adults',
     features: [
         'Write effective emails and reports',
         'Participate confidently in meetings',
@@ -105,6 +112,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=8',
     aiHint: 'exam success',
     language: 'English',
+    category: 'adults',
     features: [
         'Intensive practice for all test sections',
         'Strategies for maximizing your score',

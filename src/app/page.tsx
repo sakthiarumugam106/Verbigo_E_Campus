@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import Image from 'next/image';
@@ -26,6 +25,7 @@ import {
 } from '@/components/ui/carousel';
 import { courses } from '@/lib/courses';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 
 const benefits = [
   {
@@ -105,6 +105,11 @@ export default function HomePage() {
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
 
+  const [courseFilter, setCourseFilter] = React.useState('Adults');
+
+  const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
+
+
   return (
     <>
       <section
@@ -157,6 +162,12 @@ export default function HomePage() {
                 Whether you're starting from scratch or honing your expertise, we have a course for you.
               </p>
             </div>
+            <Tabs value={courseFilter} onValueChange={setCourseFilter} className="mt-8">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="Adults">For Adults</TabsTrigger>
+                <TabsTrigger value="Kids">For Kids</TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
            <Carousel
             plugins={[coursesPlugin.current]}
@@ -169,7 +180,7 @@ export default function HomePage() {
             }}
           >
             <CarouselContent className="-ml-4">
-              {courses.map((course) => (
+              {filteredCourses.map((course) => (
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
                     <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col">
