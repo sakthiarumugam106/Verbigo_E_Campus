@@ -3,7 +3,7 @@
 export function VerbigoTutorLogo({ width = 48, height = 48 }: { width?: number; height?: number; }) {
   return (
     <img
-      src="/chatbot.png"
+      src="https://firebasestudio-hosting.web.app/verbigo/chatbot-icon.png"
       alt="Verbigo Tutor"
       width={width}
       height={height}
