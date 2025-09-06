@@ -1,3 +1,4 @@
+
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
@@ -8,7 +9,7 @@ const firebaseConfig = {
   "projectId": "verbigo-e-campus",
   "appId": "1:282326473798:web:38035b2ec6b2f3ffe7fe47",
   "storageBucket": "verbigo-e-campus.appspot.com",
-  "apiKey": "AIzaSyAZQFPLhs8jlFSOSQ3E-8eQCFjnJmZd4Rg",
+  "apiKey": "AIzaSyA3m7mPcP3--NC02nxHuU1elMRuavF7So0",
   "authDomain": "verbigo-e-campus.firebaseapp.com",
   "messagingSenderId": "282326473798"
 };
