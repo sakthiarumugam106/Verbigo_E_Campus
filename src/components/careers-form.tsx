@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
+import { useActionState, useEffect, useRef, useState, useTransition } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { storage } from '@/lib/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Progress } from './ui/progress';
-import { File, Link, Loader2 } from 'lucide-react';
+import { File, Link as LinkIcon, Loader2 } from 'lucide-react';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 
 const initialState: ApplicationFormState = {
@@ -39,6 +39,7 @@ function SubmitButton({ disabled }: { disabled?: boolean }) {
 
 export function CareersForm() {
   const [state, formAction] = useActionState(submitApplication, initialState);
+  const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -112,7 +113,9 @@ export function CareersForm() {
 
     if (resumeOption === 'link') {
         formData.set('resume', resumeLink);
-        formAction(formData);
+        startTransition(() => {
+            formAction(formData);
+        });
         return;
     }
 
@@ -142,7 +145,9 @@ export function CareersForm() {
           const downloadURL = await getDownloadURL(storageRef);
           formData.set('resume', downloadURL);
           
-          formAction(formData);
+          startTransition(() => {
+            formAction(formData);
+          });
 
       } catch (error) {
           console.error("File upload error:", error);
@@ -212,11 +217,11 @@ export function CareersForm() {
                     <RadioGroup value={resumeOption} onValueChange={(value) => setResumeOption(value as 'upload' | 'link')} className="flex gap-4 pt-1">
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem value="upload" id="upload" />
-                            <Label htmlFor="upload" className="font-normal">Upload File</Label>
+                            <Label htmlFor="upload" className="font-normal flex items-center gap-2"><File className="w-4 h-4 text-muted-foreground" />Upload File</Label>
                         </div>
                         <div className="flex items-center space-x-2">
                             <RadioGroupItem value="link" id="link" />
-                            <Label htmlFor="link" className="font-normal">Provide Link</Label>
+                            <Label htmlFor="link" className="font-normal flex items-center gap-2"><LinkIcon className="w-4 h-4 text-muted-foreground" />Provide Link</Label>
                         </div>
                     </RadioGroup>
                 </div>
@@ -231,10 +236,13 @@ export function CareersForm() {
                                 <span>{resumeFile.name}</span>
                             </div>
                         )}
-                        {isUploading && uploadProgress !== null && (
+                        {(isUploading || isPending) && uploadProgress !== null && (
                             <div className="space-y-2 mt-2">
-                                <p className="text-sm text-muted-foreground">Uploading: {uploadProgress.toFixed(0)}%</p>
-                                <Progress value={uploadProgress} className="h-2" />
+                                <p className="text-sm text-muted-foreground">
+                                    {isUploading && !isPending && `Uploading: ${uploadProgress.toFixed(0)}%`}
+                                    {isPending && 'Submitting...'}
+                                </p>
+                                <Progress value={isPending ? 100 : uploadProgress} className="h-2" />
                             </div>
                         )}
                     </div>
@@ -250,10 +258,12 @@ export function CareersForm() {
                 {state.errors?.resume && <p className="md:col-span-2 text-sm text-destructive mt-1">{state.errors.resume[0]}</p>}
             </div>
             <div className="pt-4">
-                <SubmitButton disabled={isUploading}/>
+                <SubmitButton disabled={isUploading || isPending}/>
             </div>
             </form>
       </DialogContent>
     </Dialog>
   );
 }
+
+    
