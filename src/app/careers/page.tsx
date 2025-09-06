@@ -38,7 +38,7 @@ export default function CareersPage() {
           <div className="mx-auto max-w-3xl">
             {jobOpenings.map((job, index) => (
               <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                <CardHeader className="grid grid-cols-[1fr_auto] items-start gap-4 space-y-0">
+                <CardHeader>
                   <div className="space-y-1">
                     <CardTitle className="text-2xl text-primary">{job.title}</CardTitle>
                     <CardDescription className="flex items-center gap-4">
@@ -47,10 +47,12 @@ export default function CareersPage() {
                       <span>{job.type}</span>
                     </CardDescription>
                   </div>
-                  <CareersForm />
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">{job.description}</p>
+                  <p className="text-muted-foreground mb-4">{job.description}</p>
+                  <div className="flex justify-end">
+                    <CareersForm />
+                  </div>
                 </CardContent>
               </Card>
             ))}
