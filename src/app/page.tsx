@@ -105,7 +105,7 @@ export default function HomePage() {
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
 
-  const [courseFilter, setCourseFilter] = React.useState('Adults');
+  const [courseFilter, setCourseFilter] = React.useState('Professional');
 
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
 
@@ -163,9 +163,9 @@ export default function HomePage() {
               </p>
             </div>
             <Tabs value={courseFilter} onValueChange={setCourseFilter} className="mt-8">
-               <TabsList className="grid w-full grid-cols-2 bg-primary/20 text-primary-foreground">
-                <TabsTrigger value="Adults" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">For Adults</TabsTrigger>
-                <TabsTrigger value="Kids" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">For Kids</TabsTrigger>
+               <TabsList className="grid w-full grid-cols-2 bg-primary/20 text-primary-foreground p-1 h-auto rounded-lg">
+                <TabsTrigger value="Professional" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md py-2 font-medium">For Professionals</TabsTrigger>
+                <TabsTrigger value="Kids" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md py-2 font-medium">For Kids</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
