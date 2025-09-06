@@ -1,4 +1,6 @@
 
+'use client';
+
 import Image from 'next/image';
 
 export function VerbigoTutorLogo({ width = 48, height = 48 }: { width?: number; height?: number; }) {
