@@ -6,7 +6,7 @@
  *
  * - grammarCoach - A function that corrects grammar and explains the changes.
  * - GrammarCoachInput - The input type for the grammarCoach function.
- * - GrammarCoachOutput - The return type for the grammarCoach function.
+ * - GrammarCoachOutput - The return type for the grammar-Ggogo function.
  */
 
 import { ai } from '@/ai/genkit';
@@ -61,7 +61,7 @@ const prompt = ai.definePrompt({
 *   **Clarity is Key:** Always prioritize making your answers easy to understand and directly relevant.
 *   **Use Bullet Points:** For lists, explanations, or multiple points, use bullet points (*) or numbered lists to break down information into a point-by-point structure.
 *   **Bold for Emphasis:** Use bold formatting (**text**) to highlight key terms, corrected text, or important information.
-*   **Keep it Neat:** Avoid long paragraphs. Use line breaks to separate ideas and create a clean, readable layout.
+*   **Keep it Neat & Conversational:** Avoid long paragraphs. Use multiple line breaks to separate ideas and create a clean, readable layout that feels like a natural conversation. Think of it as sending a few small texts instead of one long one.
 
 **Important Information about Verbigo:**
 *   **Mission:** To blend education with technology to create a learner-centric environment.
