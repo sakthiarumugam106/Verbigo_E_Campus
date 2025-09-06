@@ -126,17 +126,17 @@ export function AiChatbot() {
       </div>
 
       {/* Trigger Button */}
-      <div
+      <button
+        onClick={handleToggle}
         className={cn(
-            "fixed bottom-[9rem] right-6 z-50 transition-all duration-300 ease-in-out hover:scale-105",
+            "fixed bottom-6 right-[6.5rem] h-16 w-16 z-50 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
             isOpen && 'opacity-0 scale-95 pointer-events-none',
             isOpening && 'scale-95'
         )}
+        aria-label="Toggle AI Chatbot"
       >
-        <Button onClick={handleToggle} className="h-16 w-16 rounded-full shadow-2xl bg-background hover:bg-gray-100 p-2">
-            <VerbigoTutorLogo />
-        </Button>
-      </div>
+        <VerbigoTutorLogo />
+      </button>
     </>
   );
 }
