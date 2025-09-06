@@ -5,6 +5,7 @@ import { Footer } from '@/app/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { WhatsAppButton } from '@/components/whatsapp-button';
 import { Inter, Poppins } from 'next/font/google';
+import { AiChatbot } from '@/components/ai-chatbot';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -32,6 +33,7 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+        <AiChatbot />
         <WhatsAppButton />
         <Toaster />
       </body>

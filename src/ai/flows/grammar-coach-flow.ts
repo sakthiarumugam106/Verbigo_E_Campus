@@ -13,13 +13,16 @@ import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 
 const GrammarCoachInputSchema = z.object({
-  text: z.string().describe('The text to be checked for grammar mistakes.'),
+  history: z.array(z.object({
+    role: z.enum(['user', 'model']),
+    content: z.string(),
+  })).describe('The conversation history.'),
+  message: z.string().describe('The latest message from the user.'),
 });
 export type GrammarCoachInput = z.infer<typeof GrammarCoachInputSchema>;
 
 const GrammarCoachOutputSchema = z.object({
-  correctedText: z.string().describe('The grammatically correct version of the text.'),
-  explanation: z.string().describe('A brief explanation of the corrections made.'),
+  response: z.string().describe('The AI\'s response, which could be a correction, an explanation, or a conversational reply.'),
 });
 export type GrammarCoachOutput = z.infer<typeof GrammarCoachOutputSchema>;
 
@@ -31,14 +34,23 @@ const prompt = ai.definePrompt({
   name: 'grammarCoachPrompt',
   input: { schema: GrammarCoachInputSchema },
   output: { schema: GrammarCoachOutputSchema },
-  prompt: `You are an expert English grammar coach. Your task is to correct the provided text and provide a simple, friendly explanation for the changes.
+  prompt: `You are an expert, friendly, and conversational English grammar coach. Your main goal is to help users improve their grammar.
 
-You must identify any grammatical errors, spelling mistakes, or awkward phrasing in the user's text.
-Provide a corrected version of the text.
-Provide a concise, easy-to-understand explanation of the main correction. For example, if you corrected a verb tense, explain why the new tense is correct.
+- If the user asks for a grammar check, correct their text. Provide the corrected version and a simple, friendly explanation for the changes.
+- If the user asks a question, answer it clearly and concisely.
+- If the user just wants to chat, be a good conversational partner. Keep your responses brief and engaging.
+- Always be encouraging and positive.
 
-Analyze the following text:
-{{{text}}}`,
+Analyze the user's message in the context of the conversation history.
+
+Conversation History:
+{{#each history}}
+{{role}}: {{{content}}}
+{{/each}}
+
+User's Latest Message:
+{{{message}}}
+`,
 });
 
 const grammarCoachFlow = ai.defineFlow(
@@ -52,5 +64,3 @@ const grammarCoachFlow = ai.defineFlow(
     return output!;
   }
 );
-
-    
