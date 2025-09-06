@@ -133,16 +133,8 @@ export function AiChatbot() {
             isOpening && 'scale-95'
         )}
       >
-        <Button onClick={handleToggle} className="h-auto w-auto rounded-full shadow-2xl p-0">
-             <div className="relative">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-max bg-primary text-primary-foreground text-sm font-medium px-3 py-1.5 rounded-full shadow-lg">
-                    Hi, I am your AI coach!
-                    <div className="absolute left-1/2 -translate-x-1/2 bottom-[-4px] w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-primary"></div>
-                </div>
-                <div className="rounded-full p-2">
-                     <Image src="/chatbot-icon.png" width={48} height={48} alt="AI Coach" />
-                </div>
-            </div>
+        <Button onClick={handleToggle} className="h-16 w-16 rounded-full shadow-2xl p-2">
+            <Image src="/chatbot-icon.png" width={48} height={48} alt="AI Coach" />
         </Button>
       </div>
     </>
