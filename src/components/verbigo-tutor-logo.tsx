@@ -1,15 +1,16 @@
 
 'use client';
-import { VerbigoLogo } from './verbigo-logo';
+import Image from 'next/image';
+import chatbotIcon from '../chatbot.png';
 
 
-export function VerbigoTutorLogo({ width = 48, height = 48 }: { width?: number; height?: number; }) {
-  // We are now re-using the main VerbigoLogo component which correctly loads the icon.
-  // The width and height props are not directly passed here, but the container
-  // will respect the size. This can be refined if needed.
+export function VerbigoTutorLogo({ width = 64, height = 64 }: { width?: number; height?: number; }) {
   return (
-    <div style={{ width: `${width}px`, height: `${height}px` }}>
-        <VerbigoLogo />
-    </div>
+    <Image
+        src={chatbotIcon}
+        alt="Verbigo Tutor"
+        width={width}
+        height={height}
+    />
   );
 }
