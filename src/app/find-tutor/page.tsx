@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function FindTutorPage() {
   return (
-    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center bg-primary/5 p-4 py-12 overflow-hidden">
+    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center bg-primary/10 p-4 py-12 overflow-hidden">
       <div 
         className="absolute inset-0 bg-repeat" 
         style={{ 
