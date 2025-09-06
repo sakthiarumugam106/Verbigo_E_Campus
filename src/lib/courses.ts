@@ -82,7 +82,7 @@ export const courses = [
     image: 'https://picsum.photos/600/400?random=6',
     aiHint: 'public speaking',
     language: 'English',
-    category: 'professional',
+    category: 'kids',
     features: [
         'Structure a compelling speech',
         'Use body language effectively',
