@@ -151,7 +151,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="courses" className="relative w-full bg-primary/10 py-16 md:py-24 overflow-hidden">
+      <section id="courses" className="relative w-full bg-secondary py-16 md:py-24 overflow-hidden">
         <div 
           className="absolute inset-0 bg-repeat" 
           style={{ 
@@ -324,5 +324,7 @@ export default function HomePage() {
     </>
   );
 }
+
+    
 
     
