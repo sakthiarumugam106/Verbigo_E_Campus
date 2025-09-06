@@ -23,9 +23,11 @@ const initialState: ApplicationFormState = {
 
 function SubmitButton({ disabled }: { disabled?: boolean }) {
   const { pending } = useFormStatus();
+  const isDisabled = pending || disabled;
+
   return (
-    <Button type="submit" className="w-full" disabled={pending || disabled}>
-      {pending || disabled ? (
+    <Button type="submit" className="w-full" disabled={isDisabled}>
+      {isDisabled ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           Submitting...
@@ -36,6 +38,7 @@ function SubmitButton({ disabled }: { disabled?: boolean }) {
     </Button>
   );
 }
+
 
 export function CareersForm() {
   const [state, formAction] = useActionState(submitApplication, initialState);
@@ -130,6 +133,7 @@ export function CareersForm() {
           
           const uploadTask = uploadBytes(storageRef, resumeFile);
           
+          // Simplified progress simulation
           const interval = setInterval(() => {
               setUploadProgress(oldProgress => {
                   if (oldProgress === null) return 0;
@@ -157,6 +161,8 @@ export function CareersForm() {
       }
     }
   };
+  
+  const isSubmitDisabled = isUploading || isPending;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -229,14 +235,14 @@ export function CareersForm() {
                 {resumeOption === 'upload' && (
                     <div className="space-y-2 md:col-span-2">
                         <Label htmlFor="resume-file">Upload Resume (PDF, DOCX, 5MB Max)</Label>
-                        <Input id="resume-file" name="resume-file" type="file" required accept=".pdf,.doc,.docx" onChange={handleFileChange} ref={resumeInputRef} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"/>
+                        <Input id="resume-file" name="resume-file" type="file" required accept=".pdf,.doc,.docx" onChange={handleFileChange} ref={resumeInputRef} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 flex items-center" />
                         {resumeFile && !isUploading && (
                             <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
                                 <File className="h-4 w-4" />
                                 <span>{resumeFile.name}</span>
                             </div>
                         )}
-                        {(isUploading || isPending) && uploadProgress !== null && (
+                        {isSubmitDisabled && uploadProgress !== null && (
                             <div className="space-y-2 mt-2">
                                 <p className="text-sm text-muted-foreground">
                                     {isUploading && !isPending && `Uploading: ${uploadProgress.toFixed(0)}%`}
@@ -258,12 +264,10 @@ export function CareersForm() {
                 {state.errors?.resume && <p className="md:col-span-2 text-sm text-destructive mt-1">{state.errors.resume[0]}</p>}
             </div>
             <div className="pt-4">
-                <SubmitButton disabled={isUploading || isPending}/>
+                <SubmitButton disabled={isSubmitDisabled}/>
             </div>
             </form>
       </DialogContent>
     </Dialog>
   );
 }
-
-    
