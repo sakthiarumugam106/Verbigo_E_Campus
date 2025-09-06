@@ -26,6 +26,7 @@ import {
 import { courses } from '@/lib/courses';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { GrammarCoach } from '@/components/grammar-coach';
 
 const benefits = [
   {
@@ -221,6 +222,22 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section id="grammar-coach" className="w-full bg-background py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-5xl">
+              Meet Your AI Grammar Coach
+            </h2>
+            <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+              Get instant feedback on your writing. Type a sentence and see the magic!
+            </p>
+          </div>
+          <div className="mx-auto mt-8 max-w-4xl">
+            <GrammarCoach />
+          </div>
+        </div>
+      </section>
+
       <section id="values" className="relative w-full bg-primary/10 py-16 md:py-24 lg:py-32 overflow-hidden">
         <div 
           className="absolute inset-0 bg-repeat" 
@@ -324,3 +341,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    

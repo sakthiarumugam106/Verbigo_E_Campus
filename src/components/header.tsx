@@ -11,6 +11,7 @@ import { VerbigoLogo } from '@/components/verbigo-logo';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Courses', href: '/#courses' },
+  { name: 'AI Coach', href: '/#grammar-coach'},
   { name: 'Our Values', href: '/#values' },
   { name: 'Careers', href: '/careers' },
   { name: 'FAQ', href: '/#faq' },
@@ -101,3 +102,5 @@ export function Header() {
     </header>
   );
 }
+
+    
