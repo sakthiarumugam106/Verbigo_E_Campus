@@ -133,7 +133,7 @@ export function AiChatbot() {
     <>
       <div
         className={cn(
-          "fixed bottom-0 right-0 z-50 transition-all duration-300 ease-in-out md:bottom-[11rem] md:right-6",
+          "fixed bottom-0 right-0 z-50 transition-all duration-300 ease-in-out md:bottom-28 md:right-6",
           isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         )}
       >
@@ -208,7 +208,7 @@ export function AiChatbot() {
       <button
         onClick={handleToggle}
         className={cn(
-            "fixed bottom-[6rem] right-6 h-16 w-16 z-40 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
+            "fixed bottom-28 right-6 h-16 w-16 z-40 transition-all duration-300 ease-in-out hover:scale-110 drop-shadow-lg",
             isOpen && 'opacity-0 scale-95 pointer-events-none',
             isOpening && 'scale-95',
             isButtonVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0 pointer-events-none'
