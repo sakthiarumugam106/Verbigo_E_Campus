@@ -121,7 +121,7 @@ export function AiChatbot() {
           isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         )}
       >
-        <Card className="w-screen h-[80vh] md:w-[380px] md:h-[500px] shadow-2xl flex flex-col rounded-none md:rounded-xl" ref={chatCardRef}>
+        <Card className="w-screen h-[80vh] md:w-[350px] md:h-[450px] shadow-2xl flex flex-col rounded-none md:rounded-xl" ref={chatCardRef}>
           <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4 overflow-hidden">
             <div 
               className="absolute inset-0 bg-repeat" 
