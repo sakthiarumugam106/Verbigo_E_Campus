@@ -114,7 +114,7 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="relative w-full overflow-hidden bg-primary pt-20 pb-20 md:pt-32 md:pb-24"
+        className="relative flex items-center justify-center w-full min-h-screen overflow-hidden bg-primary"
       >
         <div 
           className="absolute inset-0 bg-repeat" 
