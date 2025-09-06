@@ -127,7 +127,7 @@ export default function HomePage() {
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
-                <h1 className="text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
                   Learn english through your native language
                 </h1>
               </div>
@@ -167,7 +167,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-4xl md:text-5xl">
                 Our Courses
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -207,8 +207,8 @@ export default function HomePage() {
                             data-ai-hint={course.aiHint}
                           />
                         </div>
-                        <CardContent className="p-6 flex flex-col flex-grow">
-                          <CardTitle className="text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
+                        <CardContent className="p-4 md:p-6 flex flex-col flex-grow">
+                          <CardTitle className="text-lg md:text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
                           <p className="mt-2 text-muted-foreground text-sm flex-grow">{course.description}</p>
                            <div className="flex items-center mt-4 text-primary font-medium">
                             Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -236,7 +236,7 @@ export default function HomePage() {
         />
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">
                   Our Core Values
               </h2>
               <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
@@ -256,7 +256,7 @@ export default function HomePage() {
                   </Card>
               ))}
                <Card className="flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                  <CardContent className="text-center p-6">
+                  <CardContent className="p-4 md:p-6 text-center">
                       <h3 className="text-xl font-bold text-primary mb-2">And so much more...</h3>
                       <p className="text-muted-foreground">We are constantly evolving to meet the needs of our learners.</p>
                   </CardContent>
@@ -268,7 +268,7 @@ export default function HomePage() {
       <section id="testimonials" className="w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-5xl">
+                <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-4xl md:text-5xl">
                     What Our Students Say
                 </h2>
                 <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
@@ -282,7 +282,7 @@ export default function HomePage() {
       <section id="faq" className="w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Frequently Asked Questions
             </h2>
             <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
