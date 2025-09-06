@@ -9,6 +9,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { Loader2, MessageCircle, Send, X } from 'lucide-react';
 import { useEffect, useRef, useState, useTransition } from 'react';
+import Image from 'next/image';
 
 type Message = {
   role: 'user' | 'model';
@@ -83,7 +84,11 @@ export function AiChatbot() {
                  <div className="p-4 space-y-4">
                     {history.map((msg, index) => (
                         <div key={index} className={cn("flex items-end gap-2", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
-                           {msg.role === 'model' && <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0"><MessageCircle className="h-5 w-5" /></div>}
+                           {msg.role === 'model' && (
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
+                                <Image src="/chatbot-icon.png" width={20} height={20} alt="AI Coach" />
+                            </div>
+                           )}
                             <div className={cn("max-w-[80%] rounded-xl px-4 py-2 text-sm", msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted')}>
                                 {msg.content}
                             </div>
@@ -91,7 +96,9 @@ export function AiChatbot() {
                     ))}
                     {isPending && (
                         <div className="flex items-end gap-2 justify-start">
-                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0"><MessageCircle className="h-5 w-5" /></div>
+                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
+                                <Image src="/chatbot-icon.png" width={20} height={20} alt="AI Coach" />
+                             </div>
                              <div className="max-w-[80%] rounded-xl px-4 py-2 text-sm bg-muted flex items-center gap-2">
                                 <Loader2 className="h-4 w-4 animate-spin" />
                                 <span>Thinking...</span>
@@ -132,8 +139,8 @@ export function AiChatbot() {
                     Hi, I am your AI coach!
                     <div className="absolute left-1/2 -translate-x-1/2 bottom-[-4px] w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-primary"></div>
                 </div>
-                <div className="bg-primary rounded-full p-4">
-                     <MessageCircle className="h-8 w-8 text-primary-foreground" />
+                <div className="rounded-full p-2">
+                     <Image src="/chatbot-icon.png" width={48} height={48} alt="AI Coach" />
                 </div>
             </div>
         </Button>
