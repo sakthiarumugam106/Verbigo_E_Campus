@@ -214,8 +214,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="values" className="w-full bg-primary/5 py-16 md:py-24 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+      <section id="values" className="relative w-full bg-primary/10 py-16 md:py-24 lg:py-32 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-repeat" 
+          style={{ 
+            backgroundImage: "url('/subtle-pattern.svg')",
+            opacity: 0.05,
+          }}
+        />
+        <div className="container mx-auto px-4 md:px-6 relative">
           <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
                   Our Core Values
@@ -226,7 +233,7 @@ export default function HomePage() {
           </div>
           <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
               {values.map((value, index) => (
-                  <Card key={index} className="flex flex-col justify-start transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                  <Card key={index} className="flex flex-col justify-start bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
                       <CardHeader className="flex flex-row items-center gap-4 pb-4">
                           {value.icon}
                           <CardTitle className="text-xl font-semibold text-primary">{value.title}</CardTitle>
@@ -236,7 +243,7 @@ export default function HomePage() {
                       </CardContent>
                   </Card>
               ))}
-               <Card className="flex flex-col justify-center items-center bg-background/50 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+               <Card className="flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
                   <CardContent className="text-center p-6">
                       <h3 className="text-xl font-bold text-primary mb-2">And so much more...</h3>
                       <p className="text-muted-foreground">We are constantly evolving to meet the needs of our learners.</p>
