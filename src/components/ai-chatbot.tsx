@@ -86,7 +86,7 @@ export function AiChatbot() {
                         <div key={index} className={cn("flex items-end gap-2", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
                            {msg.role === 'model' && (
                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
-                                <Image src="/chatbot-icon.png" width={20} height={20} alt="AI Coach" />
+                                <Image src="/chatbot-icon.png" width={24} height={24} alt="AI Coach" />
                             </div>
                            )}
                             <div className={cn("max-w-[80%] rounded-xl px-4 py-2 text-sm", msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted')}>
@@ -97,7 +97,7 @@ export function AiChatbot() {
                     {isPending && (
                         <div className="flex items-end gap-2 justify-start">
                              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
-                                <Image src="/chatbot-icon.png" width={20} height={20} alt="AI Coach" />
+                                <Image src="/chatbot-icon.png" width={24} height={24} alt="AI Coach" />
                              </div>
                              <div className="max-w-[80%] rounded-xl px-4 py-2 text-sm bg-muted flex items-center gap-2">
                                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -133,8 +133,8 @@ export function AiChatbot() {
             isOpening && 'scale-95'
         )}
       >
-        <Button onClick={handleToggle} className="h-16 w-16 rounded-full shadow-2xl p-2">
-            <Image src="/chatbot-icon.png" width={48} height={48} alt="AI Coach" />
+        <Button onClick={handleToggle} className="h-16 w-16 rounded-full shadow-2xl bg-background hover:bg-gray-100 p-2">
+            <Image src="/chatbot-icon.png" width={48} height={48} alt="AI Coach" className="object-contain"/>
         </Button>
       </div>
     </>
