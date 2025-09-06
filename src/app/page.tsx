@@ -116,7 +116,7 @@ export default function HomePage() {
             <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
                 <h1 className="text-5xl font-bold tracking-tighter text-black sm:text-6xl xl:text-7xl/none font-brand">
-                  Learn faster with your best language tutor
+                  Learn english through your native language
                 </h1>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
@@ -292,5 +292,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
