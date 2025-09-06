@@ -23,6 +23,11 @@ export function AiChatbot() {
   const [input, setInput] = useState('');
   const [isPending, startTransition] = useTransition();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleToggle = () => {
     if (isOpen) {
@@ -59,6 +64,10 @@ export function AiChatbot() {
       scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
     }
   }, [history]);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <>
