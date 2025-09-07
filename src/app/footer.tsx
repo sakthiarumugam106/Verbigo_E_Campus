@@ -10,12 +10,12 @@ export function Footer() {
 
   return (
     <footer id="page-footer" className="bg-black text-white py-12">
-      <div className="container mx-auto">
+      <div className="container mx-auto text-center md:text-left">
         <div className="grid gap-8 md:grid-cols-3">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col items-center md:items-start gap-4">
             <Link href="/" className="flex items-center gap-2 text-white">
                <VerbigoLogo />
-                <div className="flex flex-col">
+                <div className="flex flex-col text-left">
                     <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
                     <span className="text-[10px] font-medium text-gray-400 leading-none mt-1">E-Campus for Language Intelligence</span>
                 </div>
