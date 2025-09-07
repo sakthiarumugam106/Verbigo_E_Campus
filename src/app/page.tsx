@@ -149,7 +149,7 @@ export default function HomePage() {
               alt="Verbigo E-Campus"
               width={600}
               height={400}
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
+              className="mx-auto aspect-video rounded-xl object-cover shadow-2xl border-4 border-white/80"
               data-ai-hint="language class students"
             />
           </div>
