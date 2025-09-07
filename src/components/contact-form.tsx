@@ -11,11 +11,11 @@ import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 const countryCodes = [
-    { value: '+91', label: 'IN (+91)' },
-    { value: '+1', label: 'US (+1)' },
-    { value: '+44', label: 'UK (+44)' },
-    { value: '+61', label: 'AU (+61)' },
-    { value: '+_other', label: 'Other' },
+    { value: '+91', label: 'IN (+91)', maxLength: 10 },
+    { value: '+1', label: 'US (+1)', maxLength: 10 },
+    { value: '+44', label: 'UK (+44)', maxLength: 11 },
+    { value: '+61', label: 'AU (+61)', maxLength: 9 },
+    { value: '+_other', label: 'Other', maxLength: 15 },
 ]
 
 export function ContactForm() {
@@ -28,7 +28,19 @@ export function ContactForm() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+
+    if (name === 'phoneNumber') {
+      const selectedCountry = countryCodes.find(c => c.value === countryCode);
+      const maxLength = selectedCountry?.maxLength || 15;
+      // Allow only numbers and limit length
+      const numericValue = value.replace(/[^0-9]/g, '');
+      if (numericValue.length <= maxLength) {
+        setForm({ ...form, [name]: numericValue });
+      }
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+    
     if (errors[name]) {
         setErrors({ ...errors, [name]: null });
     }
@@ -91,7 +103,7 @@ export function ContactForm() {
       <div className="grid gap-2 text-left">
         <Label htmlFor="phoneNumber">Phone Number</Label>
         <div className="flex gap-2">
-            <Select value={countryCode} onValueChange={setCountryCode}>
+            <Select value={countryCode} onValueChange={(value) => { setCountryCode(value); setForm({...form, phoneNumber: ''})}}>
                 <SelectTrigger className="w-[120px]">
                     <SelectValue placeholder="Code" />
                 </SelectTrigger>
