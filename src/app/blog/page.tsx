@@ -2,50 +2,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
-
-const blogPosts = [
-  {
-    title: 'Mastering the Art of Business Communication',
-    description: 'Learn how to write effective emails, deliver compelling presentations, and navigate the modern workplace with confidence.',
-    image: '/images/business-communication.jpeg',
-    slug: 'mastering-business-communication',
-    aiHint: 'business meeting presentation',
-    date: 'October 26, 2023',
-    readTime: '5 min read',
-  },
-  {
-    title: 'Unlocking Your Potential with the IELTS Accelerator',
-    description: 'Discover the key strategies and techniques to help you achieve your target score in the IELTS exam.',
-    image: '/images/ielts-accelerator.jpeg',
-    slug: 'ielts-accelerator-strategies',
-    aiHint: 'student studying exam',
-    date: 'October 22, 2023',
-    readTime: '7 min read',
-  },
-  {
-    title: 'Why Phonics is the Foundation of Early Learning',
-    description: 'Explore the importance of phonics in helping young children develop strong reading and spelling skills.',
-    image: '/images/phonics-starter.jpeg',
-    slug: 'why-phonics-matters',
-    aiHint: 'child learning alphabet',
-    date: 'October 18, 2023',
-    readTime: '4 min read',
-  },
-   {
-    title: 'From Shy Speaker to Confident Communicator',
-    description: "Learn practical tips and exercises to overcome the fear of public speaking and deliver your message with impact.",
-    image: '/images/public-speaking.jpeg',
-    slug: 'public-speaking-confidence',
-    aiHint: 'person speaking confidently',
-    date: 'October 15, 2023',
-    readTime: '6 min read',
-  },
-];
+import { blogPosts } from '@/lib/blog';
 
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState('');
