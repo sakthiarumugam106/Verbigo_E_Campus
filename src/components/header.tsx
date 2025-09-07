@@ -11,6 +11,7 @@ import { VerbigoLogo } from '@/components/verbigo-logo';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Courses', href: '/#courses' },
+  { name: 'Blog', href: '/blog' },
   { name: 'Know Your Level', href: '/know-your-level' },
   { name: 'Our Values', href: '/#values' },
   { name: 'FAQ', href: '/#faq' },
@@ -23,7 +24,7 @@ export function Header() {
   const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background md:bg-background/95 md:backdrop-blur md:supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between pl-4 md:pl-6">
         <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2 text-primary">

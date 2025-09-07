@@ -1,19 +1,10 @@
 
-import beginnerImg from '../Images/beginner.jpeg';
-import intermediateImg from '../Images/intermediate.jpeg';
-import advancedImg from '../Images/advanced.jpeg';
-import earlyFoundationImg from '../Images/early-foundation.jpeg';
-import phonicsStarterImg from '../Images/phonics-starter.jpeg';
-import publicSpeakingImg from '../Images/public-speaking.jpeg';
-import businessCommImg from '../Images/business-communication.jpeg';
-import ieltsImg from '../Images/ielts-accelerator.jpeg';
-
 export const courses = [
   {
     slug: 'beginner',
     title: 'Beginner',
     description: 'Start your language journey with fundamental concepts and basic conversational skills.',
-    image: beginnerImg,
+    image: '/images/beginner.jpeg',
     aiHint: 'new beginnings',
     language: 'English',
     category: 'professional',
@@ -28,7 +19,7 @@ export const courses = [
     slug: 'intermediate',
     title: 'Intermediate',
     description: 'Build upon your basic knowledge to engage in more complex conversations.',
-    image: intermediateImg,
+    image: '/images/intermediate.jpeg',
     aiHint: 'building blocks',
     language: 'English',
     category: 'professional',
@@ -43,7 +34,7 @@ export const courses = [
     slug: 'advanced',
     title: 'Advanced',
     description: 'Refine your skills to achieve fluency and a native-like command of the language.',
-    image: advancedImg,
+    image: '/images/advanced.jpeg',
     aiHint: 'mountain peak',
     language: 'English',
     category: 'professional',
@@ -58,7 +49,7 @@ export const courses = [
     slug: 'early-foundation',
     title: 'Early Foundation',
     description: 'A fun, play-based approach to introduce young learners to the English language.',
-    image: earlyFoundationImg,
+    image: '/images/early-foundation.jpeg',
     aiHint: 'children playing',
     language: 'English',
     category: 'kids',
@@ -73,7 +64,7 @@ export const courses = [
     slug: 'phonics-starter',
     title: 'Phonics Starter',
     description: 'Master the sounds of English to build a strong foundation for reading and spelling.',
-    image: phonicsStarterImg,
+    image: '/images/phonics-starter.jpeg',
     aiHint: 'alphabet blocks',
     language: 'English',
     category: 'kids',
@@ -88,7 +79,7 @@ export const courses = [
     slug: 'public-speaking',
     title: 'Public Speaking',
     description: 'Develop the confidence and skills to deliver impactful presentations.',
-    image: publicSpeakingImg,
+    image: '/images/public-speaking.jpeg',
     aiHint: 'public speaking',
     language: 'English',
     category: 'kids',
@@ -103,7 +94,7 @@ export const courses = [
     slug: 'business-communication',
     title: 'Business Communication',
     description: 'Master professional communication for the modern workplace.',
-    image: businessCommImg,
+    image: '/images/business-communication.jpeg',
     aiHint: 'business meeting',
     language: 'English',
     category: 'professional',
@@ -118,7 +109,7 @@ export const courses = [
     slug: 'ielts-accelerator',
     title: 'IELTS Accelerator Program',
     description: 'A focused program to help you achieve your target IELTS score quickly.',
-    image: ieltsImg,
+    image: '/images/ielts-accelerator.jpeg',
     aiHint: 'exam success',
     language: 'English',
     category: 'professional',
