@@ -8,6 +8,7 @@ import { Menu } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { whatsapp } from '@/lib/config';
+import { ThemeToggle } from './theme-toggle';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -48,6 +49,7 @@ export function Header() {
            <Button asChild className="hidden sm:flex">
             <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
           </Button>
+          <ThemeToggle />
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button
