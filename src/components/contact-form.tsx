@@ -8,39 +8,16 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { appendContactToGoogleSheet } from '@/app/actions/appendContactToGoogleSheet';
 import { Label } from './ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-
-const countryCodes = [
-    { value: '+91', label: 'IN (+91)', maxLength: 10 },
-    { value: '+1', label: 'US (+1)', maxLength: 10 },
-    { value: '+44', label: 'UK (+44)', maxLength: 11 },
-    { value: '+61', label: 'AU (+61)', maxLength: 9 },
-    { value: '+_other', label: 'Other', maxLength: 15 },
-]
 
 export function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', phoneNumber: '', message: '' });
-  const [countryCode, setCountryCode] = useState('+91');
-  const [customCountryCode, setCustomCountryCode] = useState('');
   const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-
-    if (name === 'phoneNumber') {
-      const selectedCountry = countryCodes.find(c => c.value === countryCode);
-      const maxLength = selectedCountry?.maxLength || 15;
-      // Allow only numbers and limit length
-      const numericValue = value.replace(/[^0-9]/g, '');
-      if (numericValue.length <= maxLength) {
-        setForm({ ...form, [name]: numericValue });
-      }
-    } else {
-      setForm({ ...form, [name]: value });
-    }
-    
+    setForm({ ...form, [name]: value });
     if (errors[name]) {
         setErrors({ ...errors, [name]: null });
     }
@@ -51,13 +28,7 @@ export function ContactForm() {
     setIsSubmitting(true);
     setErrors({});
     
-    const finalCountryCode = countryCode === '+_other' ? customCountryCode : countryCode;
-    const fullPhoneNumber = `${finalCountryCode} ${form.phoneNumber}`;
-
-    const result = await appendContactToGoogleSheet({
-        ...form,
-        phoneNumber: fullPhoneNumber
-    });
+    const result = await appendContactToGoogleSheet(form);
 
     setIsSubmitting(false);
 
@@ -67,8 +38,6 @@ export function ContactForm() {
         description: 'Your message has been sent. We will get back to you soon.',
       });
       setForm({ name: '', email: '', phoneNumber: '', message: '' });
-      setCountryCode('+91');
-      setCustomCountryCode('');
       setErrors({});
     } else {
        if (result.error && typeof result.error === 'object') {
@@ -102,30 +71,7 @@ export function ContactForm() {
       </div>
       <div className="grid gap-2 text-left">
         <Label htmlFor="phoneNumber">Phone Number</Label>
-        <div className="flex gap-2">
-            <Select value={countryCode} onValueChange={(value) => { setCountryCode(value); setForm({...form, phoneNumber: ''})}}>
-                <SelectTrigger className="w-[120px]">
-                    <SelectValue placeholder="Code" />
-                </SelectTrigger>
-                <SelectContent>
-                    {countryCodes.map(c => (
-                        <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
-            {countryCode === '+_other' && (
-                 <Input 
-                    id="customCountryCode" 
-                    name="customCountryCode" 
-                    placeholder="+CC" 
-                    value={customCountryCode} 
-                    onChange={(e) => setCustomCountryCode(e.target.value)} 
-                    className="w-[80px]"
-                    required 
-                />
-            )}
-            <Input id="phoneNumber" type="tel" name="phoneNumber" placeholder="9876543210" value={form.phoneNumber} onChange={handleInputChange} required />
-        </div>
+        <Input id="phoneNumber" type="tel" name="phoneNumber" placeholder="e.g., +91 9876543210" value={form.phoneNumber} onChange={handleInputChange} required />
         {errors.phoneNumber && <p className="text-destructive text-xs">{errors.phoneNumber[0]}</p>}
       </div>
       <div className="grid gap-2 text-left">
