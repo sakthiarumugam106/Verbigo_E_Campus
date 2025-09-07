@@ -10,9 +10,19 @@ const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
   email: z.string().email('Please enter a valid email address.'),
   phoneNumber: z.string()
-    .regex(/^\+\d{1,3}\s\d{10,}$/, 'Phone number must be in the format: +[code] [number]. For India, it should be +91 followed by a space and 10 digits.'),
+    .regex(/^\+\d{1,3}\s\d{4,}$/, 'Phone number must be in the format: +[code] [number].'),
   message: z.string().min(10, 'Message must be at least 10 characters long.'),
+}).refine(data => {
+    if (data.phoneNumber.startsWith('+91')) {
+        const numberPart = data.phoneNumber.split(' ')[1] || '';
+        return numberPart.length === 10;
+    }
+    return true;
+}, {
+    message: 'For India (+91), the phone number must be 10 digits.',
+    path: ['phoneNumber'],
 });
+
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
