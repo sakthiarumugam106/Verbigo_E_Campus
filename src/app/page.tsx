@@ -208,7 +208,7 @@ export default function HomePage() {
                           />
                         </div>
                         <CardContent className="p-4 md:p-6 flex flex-col flex-grow">
-                          <CardTitle className="text-lg md:text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
+                          <CardTitle className="text-lg md:text-xl font-bold text-primary group-hover:text-primary">{course.title}</CardTitle>
                           <p className="mt-2 text-muted-foreground text-sm flex-grow">{course.description}</p>
                            <div className="flex items-center mt-4 text-primary font-medium">
                             Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
