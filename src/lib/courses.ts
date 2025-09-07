@@ -1,10 +1,19 @@
 
+import beginnerImg from '../Images/beginner.jpeg';
+import intermediateImg from '../Images/intermediate.jpeg';
+import advancedImg from '../Images/advanced.jpeg';
+import earlyFoundationImg from '../Images/early-foundation.jpeg';
+import phonicsStarterImg from '../Images/phonics-starter.jpeg';
+import publicSpeakingImg from '../Images/public-speaking.jpeg';
+import businessCommImg from '../Images/business-communication.jpeg';
+import ieltsImg from '../Images/ielts-accelerator.jpeg';
+
 export const courses = [
   {
     slug: 'beginner',
     title: 'Beginner',
     description: 'Start your language journey with fundamental concepts and basic conversational skills.',
-    image: 'https://picsum.photos/600/400?random=1',
+    image: beginnerImg,
     aiHint: 'new beginnings',
     language: 'English',
     category: 'professional',
@@ -19,7 +28,7 @@ export const courses = [
     slug: 'intermediate',
     title: 'Intermediate',
     description: 'Build upon your basic knowledge to engage in more complex conversations.',
-    image: 'https://picsum.photos/600/400?random=2',
+    image: intermediateImg,
     aiHint: 'building blocks',
     language: 'English',
     category: 'professional',
@@ -34,7 +43,7 @@ export const courses = [
     slug: 'advanced',
     title: 'Advanced',
     description: 'Refine your skills to achieve fluency and a native-like command of the language.',
-    image: 'https://picsum.photos/600/400?random=3',
+    image: advancedImg,
     aiHint: 'mountain peak',
     language: 'English',
     category: 'professional',
@@ -49,7 +58,7 @@ export const courses = [
     slug: 'early-foundation',
     title: 'Early Foundation',
     description: 'A fun, play-based approach to introduce young learners to the English language.',
-    image: 'https://picsum.photos/600/400?random=4',
+    image: earlyFoundationImg,
     aiHint: 'children playing',
     language: 'English',
     category: 'kids',
@@ -64,7 +73,7 @@ export const courses = [
     slug: 'phonics-starter',
     title: 'Phonics Starter',
     description: 'Master the sounds of English to build a strong foundation for reading and spelling.',
-    image: 'https://picsum.photos/600/400?random=5',
+    image: phonicsStarterImg,
     aiHint: 'alphabet blocks',
     language: 'English',
     category: 'kids',
@@ -79,7 +88,7 @@ export const courses = [
     slug: 'public-speaking',
     title: 'Public Speaking',
     description: 'Develop the confidence and skills to deliver impactful presentations.',
-    image: 'https://picsum.photos/600/400?random=6',
+    image: publicSpeakingImg,
     aiHint: 'public speaking',
     language: 'English',
     category: 'kids',
@@ -94,7 +103,7 @@ export const courses = [
     slug: 'business-communication',
     title: 'Business Communication',
     description: 'Master professional communication for the modern workplace.',
-    image: 'https://picsum.photos/600/400?random=7',
+    image: businessCommImg,
     aiHint: 'business meeting',
     language: 'English',
     category: 'professional',
@@ -109,7 +118,7 @@ export const courses = [
     slug: 'ielts-accelerator',
     title: 'IELTS Accelerator Program',
     description: 'A focused program to help you achieve your target IELTS score quickly.',
-    image: 'https://picsum.photos/600/400?random=8',
+    image: ieltsImg,
     aiHint: 'exam success',
     language: 'English',
     category: 'professional',
