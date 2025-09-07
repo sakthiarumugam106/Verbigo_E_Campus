@@ -220,8 +220,8 @@ export default function HomePage() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2" />
-            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2" />
+            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hover:bg-primary hover:text-primary-foreground" />
+            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hover:bg-primary hover:text-primary-foreground" />
           </Carousel>
         </div>
       </section>
