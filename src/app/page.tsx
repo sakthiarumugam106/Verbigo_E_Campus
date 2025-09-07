@@ -145,8 +145,8 @@ export default function HomePage() {
               </div>
             </div>
             <Image
-              src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop"
-              alt="Collaborative language learning session"
+              src="/images/main-page.jpg"
+              alt="Verbigo E-Campus"
               width={600}
               height={400}
               className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
