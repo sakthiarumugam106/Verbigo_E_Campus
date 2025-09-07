@@ -145,12 +145,12 @@ export default function HomePage() {
               </div>
             </div>
             <Image
-              src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=Mnw3NDE5ODJ8MHwxfGFsbHwxfHx8fHx8fHx8fHwxNjE2NjYyOTU1&ixlib=rb-1.2.1&q=80&w=1080"
-              alt="Language tutor"
+              src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop"
+              alt="Collaborative language learning session"
               width={600}
               height={400}
               className="mx-auto aspect-video overflow-hidden rounded-xl object-cover"
-              data-ai-hint="language tutor online"
+              data-ai-hint="language class students"
             />
           </div>
         </div>
