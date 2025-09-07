@@ -69,8 +69,8 @@ export function ContactForm() {
         {errors.email && <p className="text-destructive text-xs">{errors.email[0]}</p>}
       </div>
       <div className="grid gap-2 text-left">
-        <Label htmlFor="phoneNumber">Phone Number (with country code)</Label>
-        <Input id="phoneNumber" type="tel" name="phoneNumber" placeholder="e.g., +91 98765 43210" value={form.phoneNumber} onChange={handleChange} required />
+        <Label htmlFor="phoneNumber">Phone Number</Label>
+        <Input id="phoneNumber" type="tel" name="phoneNumber" placeholder="e.g., +91 9876543210" value={form.phoneNumber} onChange={handleChange} required />
         {errors.phoneNumber && <p className="text-destructive text-xs">{errors.phoneNumber[0]}</p>}
       </div>
       <div className="grid gap-2 text-left">
