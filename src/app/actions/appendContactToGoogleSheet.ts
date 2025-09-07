@@ -11,7 +11,7 @@ const contactSchema = z.object({
   email: z.string().email('Please enter a valid email address.'),
   phoneNumber: z.string()
     .min(10, 'Phone number must be at least 10 characters.')
-    .regex(/^\+?\d{1,4}[ -]?\d{4,}$/, 'Please enter a valid phone number with country code.'),
+    .regex(/^\d+ \d+$/, 'Please enter a valid phone number with country code.'),
   message: z.string().min(10, 'Message must be at least 10 characters long.'),
 });
 
@@ -27,10 +27,9 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
       error: validatedFields.error.flatten().fieldErrors,
     };
   }
-
-  const payloadPhoneNumber = validatedFields.data.phoneNumber.startsWith('+') 
-      ? validatedFields.data.phoneNumber.substring(1) 
-      : validatedFields.data.phoneNumber;
+  
+  // The phone number is already formatted as "<code> <number>"
+  const payloadPhoneNumber = validatedFields.data.phoneNumber;
 
   // rename phoneNumber → contact
   const payload = {
