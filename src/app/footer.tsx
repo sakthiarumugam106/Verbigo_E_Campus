@@ -10,8 +10,8 @@ export function Footer() {
 
   return (
     <footer id="page-footer" className="bg-black text-white py-12">
-      <div className="container mx-auto px-6 md:px-8 text-center md:text-left">
-        <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4">
+      <div className="container mx-auto px-6 md:px-8">
+        <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4 text-center md:text-left">
           <div className="flex flex-col items-center md:items-start gap-4 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 text-white">
                <VerbigoLogo />
@@ -25,20 +25,20 @@ export function Footer() {
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 md:col-span-2 lg:col-span-3">
-            <div className="grid gap-2 text-center sm:text-left">
+            <div className="flex flex-col items-center sm:items-start gap-2">
               <h3 className="font-semibold">Platform</h3>
               <Link href="/#courses" className="text-sm text-gray-400 hover:text-white">Courses</Link>
               <Link href="/#values" className="text-sm text-gray-400 hover:text-white">Our Values</Link>
               <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white">Book a Demo</Link>
               <Link href="/#faq" className="text-sm text-gray-400 hover:text-white">FAQ</Link>
             </div>
-            <div className="grid gap-2 text-center sm:text-left">
+            <div className="flex flex-col items-center sm:items-start gap-2">
               <h3 className="font-semibold">Company</h3>
               <Link href="/about-us" className="text-sm text-gray-400 hover:text-white">About Us</Link>
               <Link href="/careers" className="text-sm text-gray-400 hover:text-white">Careers</Link>
               <Link href="/#contact" className="text-sm text-gray-400 hover:text-white">Contact</Link>
             </div>
-            <div className="grid gap-2 text-center sm:text-left">
+            <div className="flex flex-col items-center sm:items-start gap-2">
               <h3 className="font-semibold">Legal</h3>
               <Link href="/privacy-policy" className="text-sm text-gray-400 hover:text-white">Privacy Policy</Link>
               <Link href="/terms-of-service" className="text-sm text-gray-400 hover:text-white">Terms of Service</Link>
