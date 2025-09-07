@@ -1,7 +1,9 @@
 
 'use server';
 
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRofdOnZAsNKHtDVC3XgJnjJiSeGtBwPL6Ra4C2AlE9FrhvwzX3xpRBe3vorJyuWKg/exec";
+import { siteConfig } from '@/lib/config';
+
+const WEB_APP_URL = siteConfig.googleSheetUrls.demo;
 
 // This function now runs on the server-side.
 export async function appendToGoogleSheet(data: { name: string; email: string; contact: string; }) {

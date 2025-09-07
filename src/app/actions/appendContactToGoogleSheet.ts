@@ -1,7 +1,9 @@
+
 'use server';
 
-const WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbzs942Zf1lwHmdIFOdc07dPRSvahKLv2NKIosImOtLMt7jdgLfbZm7NoWKNnQpf0m4/exec";
+import { siteConfig } from '@/lib/config';
+
+const WEB_APP_URL = siteConfig.googleSheetUrls.contact;
 
 type ContactFormData = {
   name: string;
