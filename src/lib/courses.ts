@@ -34,7 +34,7 @@ export const courses = [
     slug: 'advanced',
     title: 'Advanced',
     description: 'Refine your skills to achieve fluency and a native-like command of the language.',
-    image: '/images/advanced.jpg',
+    image: '/images/advanced.jpeg',
     aiHint: 'mountain peak',
     language: 'English',
     category: 'professional',
