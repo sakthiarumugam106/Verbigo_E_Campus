@@ -164,7 +164,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-4xl md:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-4xl md:text-5xl">
                 Our Courses
               </h2>
               <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
@@ -233,7 +233,7 @@ export default function HomePage() {
         />
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary dark:text-primary-foreground">
                   Our Core Values
               </h2>
               <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
@@ -265,7 +265,7 @@ export default function HomePage() {
       <section id="testimonials" className="w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-4xl md:text-5xl">
+                <h2 className="text-3xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-4xl md:text-5xl">
                     What Our Students Say
                 </h2>
                 <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
