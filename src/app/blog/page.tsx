@@ -1,8 +1,12 @@
 
+'use client';
+
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Input } from '@/components/ui/input';
 
 const blogPosts = [
   {
@@ -44,6 +48,13 @@ const blogPosts = [
 ];
 
 export default function BlogPage() {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredBlogPosts = blogPosts.filter(post => 
+    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="bg-primary/5 min-h-screen py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
@@ -56,34 +67,53 @@ export default function BlogPage() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {blogPosts.map((post, index) => (
-            <Card key={index} className="group overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col bg-background/80 backdrop-blur-sm border-primary/10">
-               <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
-                <div className="overflow-hidden">
-                    <Image
-                        src={post.image}
-                        alt={post.title}
-                        width={600}
-                        height={400}
-                        className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        data-ai-hint={post.aiHint}
-                    />
-                </div>
-                <CardHeader>
-                    <CardTitle className="text-xl text-primary group-hover:text-accent">{post.title}</CardTitle>
-                    <CardDescription>{post.description}</CardDescription>
-                </CardHeader>
-                <CardFooter className="mt-auto flex items-center justify-between text-sm text-muted-foreground">
-                    <span>{post.date} &middot; {post.readTime}</span>
-                     <div className="flex items-center text-primary font-medium">
-                        Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-                </CardFooter>
-               </Link>
-            </Card>
-          ))}
+        <div className="mx-auto max-w-2xl mb-8">
+            <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Input
+                    type="search"
+                    placeholder="Search for articles..."
+                    className="w-full pl-10"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
         </div>
+
+        {filteredBlogPosts.length > 0 ? (
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {filteredBlogPosts.map((post, index) => (
+              <Card key={index} className="group overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col bg-background/80 backdrop-blur-sm border-primary/10">
+                 <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
+                  <div className="overflow-hidden">
+                      <Image
+                          src={post.image}
+                          alt={post.title}
+                          width={600}
+                          height={400}
+                          className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          data-ai-hint={post.aiHint}
+                      />
+                  </div>
+                  <CardHeader>
+                      <CardTitle className="text-xl text-primary group-hover:text-accent">{post.title}</CardTitle>
+                      <CardDescription>{post.description}</CardDescription>
+                  </CardHeader>
+                  <CardFooter className="mt-auto flex items-center justify-between text-sm text-muted-foreground">
+                      <span>{post.date} &middot; {post.readTime}</span>
+                       <div className="flex items-center text-primary font-medium">
+                          Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </div>
+                  </CardFooter>
+                 </Link>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center max-w-5xl mx-auto py-16">
+            <p className="text-lg text-muted-foreground">No articles found for your search.</p>
+          </div>
+        )}
       </div>
     </div>
   );
