@@ -24,7 +24,7 @@ export default function BlogPage() {
           <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl">
             Verbigo Blog
           </h1>
-          <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+          <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
             Insights, tips, and stories on language learning and communication.
           </p>
         </div>
@@ -59,9 +59,9 @@ export default function BlogPage() {
                   </div>
                   <CardHeader>
                       <CardTitle className="text-xl text-primary group-hover:text-accent">{post.title}</CardTitle>
-                      <CardDescription>{post.description}</CardDescription>
+                      <CardDescription className="dark:text-foreground/80">{post.description}</CardDescription>
                   </CardHeader>
-                  <CardFooter className="mt-auto flex items-center justify-between text-sm text-muted-foreground">
+                  <CardFooter className="mt-auto flex items-center justify-between text-sm text-muted-foreground dark:text-foreground/80">
                       <span>{post.date} &middot; {post.readTime}</span>
                        <div className="flex items-center text-primary font-medium">
                           Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -73,7 +73,7 @@ export default function BlogPage() {
           </div>
         ) : (
           <div className="text-center max-w-5xl mx-auto py-16">
-            <p className="text-lg text-muted-foreground">No articles found for your search.</p>
+            <p className="text-lg text-muted-foreground dark:text-foreground/80">No articles found for your search.</p>
           </div>
         )}
       </div>

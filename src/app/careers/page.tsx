@@ -22,7 +22,7 @@ export default function CareersPage() {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">
                 Join Our Journey
             </h2>
-            <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+            <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
                 Learn more about our mission, vision, and how you can be a part of our team.
             </p>
         </div>
@@ -41,7 +41,7 @@ export default function CareersPage() {
                 <CardHeader>
                   <div className="space-y-1">
                     <CardTitle className="text-2xl text-primary">{job.title}</CardTitle>
-                    <CardDescription className="flex items-center gap-4">
+                    <CardDescription className="flex items-center gap-4 dark:text-foreground/80">
                       <span>{job.location}</span>
                       <span className="h-1 w-1 rounded-full bg-muted-foreground"></span>
                       <span>{job.type}</span>
@@ -49,7 +49,7 @@ export default function CareersPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-4">{job.description}</p>
+                  <p className="text-muted-foreground mb-4 dark:text-foreground/80">{job.description}</p>
                   <div className="flex justify-end">
                     <CareersForm />
                   </div>

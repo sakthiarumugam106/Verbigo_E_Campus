@@ -101,7 +101,7 @@ export function Testimonials() {
                     <CardContent className="flex flex-col items-center text-center p-6 gap-4">
                         <Quote className="w-10 h-10 text-primary/20" />
                         <StarRating rating={testimonial.rating} />
-                        <p className="text-muted-foreground italic text-sm">
+                        <p className="text-muted-foreground italic text-sm dark:text-foreground/80">
                             "{testimonial.quote}"
                         </p>
                     </CardContent>
@@ -115,7 +115,7 @@ export function Testimonials() {
                              data-ai-hint={testimonial.aiHint}
                         />
                         <p className="font-semibold text-primary">{testimonial.name}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.title}</p>
+                        <p className="text-sm text-muted-foreground dark:text-foreground/80">{testimonial.title}</p>
                     </div>
                   </Card>
                 </div>

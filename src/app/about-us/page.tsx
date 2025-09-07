@@ -19,7 +19,7 @@ export default function AboutUsPage() {
               <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl">
                 About Verbigo
               </h1>
-              <p className="text-muted-foreground md:text-xl/relaxed">
+              <p className="text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
                 Verbigo was founded on a simple yet powerful idea: that language intelligence is the key to unlocking human potential. We are an e-campus dedicated to helping individuals master the art of language through expert-led courses, personalized feedback, and cutting-edge technology. Our mission is to blend education with technology to create a learner-centric environment where everyone can thrive.
               </p>
                <Button asChild size="lg">
@@ -50,17 +50,17 @@ export default function AboutUsPage() {
                  <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20">
                     <Target className="h-12 w-12 text-accent"/>
                     <h3 className="text-xl font-bold text-primary">Our Mission</h3>
-                    <p className="text-muted-foreground text-sm">To empower individuals by making high-quality language education accessible, engaging, and effective through innovative technology.</p>
+                    <p className="text-muted-foreground text-sm dark:text-foreground/80">To empower individuals by making high-quality language education accessible, engaging, and effective through innovative technology.</p>
                 </Card>
                  <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20">
                     <Building className="h-12 w-12 text-accent"/>
                     <h3 className="text-xl font-bold text-primary">Our Vision</h3>
-                    <p className="text-muted-foreground text-sm">To become a world leader in language intelligence, creating a global community of confident and proficient communicators.</p>
+                    <p className="text-muted-foreground text-sm dark:text-foreground/80">To become a world leader in language intelligence, creating a global community of confident and proficient communicators.</p>
                 </Card>
                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20 md:col-span-2 lg:col-span-1">
                     <Users className="h-12 w-12 text-accent"/>
                     <h3 className="text-xl font-bold text-primary">Our Team</h3>
-                    <p className="text-muted-foreground text-sm">A dedicated group of educators, technologists, and innovators committed to your success.</p>
+                    <p className="text-muted-foreground text-sm dark:text-foreground/80">A dedicated group of educators, technologists, and innovators committed to your success.</p>
                 </Card>
             </div>
         </div>

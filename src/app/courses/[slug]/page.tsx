@@ -32,7 +32,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
               <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl">
                 {course.title}
               </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl">
+              <p className="max-w-[600px] text-muted-foreground md:text-xl dark:text-foreground/80">
                 {course.description}
               </p>
             </div>
@@ -44,7 +44,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
               {course.features?.map((feature, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <CheckCircle2 className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
-                  <span className="text-muted-foreground">{feature}</span>
+                  <span className="text-muted-foreground dark:text-foreground/80">{feature}</span>
                 </li>
               ))}
             </ul>

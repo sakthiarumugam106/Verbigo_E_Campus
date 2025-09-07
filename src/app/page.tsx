@@ -167,7 +167,7 @@ export default function HomePage() {
               <h2 className="text-3xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-4xl md:text-5xl">
                 Our Courses
               </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-foreground/80">
                 Whether you're starting from scratch or honing your expertise, we have a course for you.
               </p>
             </div>
@@ -206,7 +206,7 @@ export default function HomePage() {
                         </div>
                         <CardContent className="p-4 md:p-6 flex flex-col flex-grow">
                           <CardTitle className="text-lg md:text-xl font-bold text-primary group-hover:text-primary">{course.title}</CardTitle>
-                          <p className="mt-2 text-muted-foreground text-sm flex-grow">{course.description}</p>
+                          <p className="mt-2 text-muted-foreground text-sm flex-grow dark:text-foreground/80">{course.description}</p>
                            <div className="flex items-center mt-4 text-primary font-medium">
                             Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                           </div>
@@ -236,7 +236,7 @@ export default function HomePage() {
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary dark:text-primary-foreground">
                   Our Core Values
               </h2>
-              <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+              <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
                   At Verbigo, our core values shape every lesson and interaction.
               </p>
           </div>
@@ -248,14 +248,14 @@ export default function HomePage() {
                           <CardTitle className="text-xl font-semibold text-primary">{value.title}</CardTitle>
                       </CardHeader>
                       <CardContent>
-                          <p className="text-muted-foreground">{value.description}</p>
+                          <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
                       </CardContent>
                   </Card>
               ))}
                <Card className="flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
                   <CardContent className="p-4 md:p-6 text-center">
                       <h3 className="text-xl font-bold text-primary mb-2">And so much more...</h3>
-                      <p className="text-muted-foreground">We are constantly evolving to meet the needs of our learners.</p>
+                      <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
                   </CardContent>
               </Card>
           </div>
@@ -268,7 +268,7 @@ export default function HomePage() {
                 <h2 className="text-3xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-4xl md:text-5xl">
                     What Our Students Say
                 </h2>
-                <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+                <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
                     Hear directly from learners who have transformed their skills with Verbigo.
                 </p>
             </div>
@@ -282,7 +282,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Frequently Asked Questions
             </h2>
-            <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+            <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
               Find answers to common questions about our language and grammar courses.
             </p>
           </div>
@@ -293,7 +293,7 @@ export default function HomePage() {
                   <AccordionTrigger className="text-lg font-medium text-left">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-base text-muted-foreground">
+                  <AccordionContent className="text-base text-muted-foreground dark:text-foreground/80">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -310,13 +310,13 @@ export default function HomePage() {
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                 Contact Our Team
               </h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-foreground/80">
                 Have a question about a course? We're here to help. For demo requests, please use our dedicated demo form.
               </p>
             </div>
             <div className="mx-auto w-full max-w-sm space-y-2">
               <ContactForm />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground dark:text-foreground/80">
                 Our language experts will get back to you shortly.
               </p>
             </div>
