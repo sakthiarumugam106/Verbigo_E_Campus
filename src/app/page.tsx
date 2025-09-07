@@ -26,6 +26,7 @@ import {
 import { courses } from '@/lib/courses';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { whatsapp } from '@/lib/config';
 
 const benefits = [
   {
@@ -97,10 +98,6 @@ const faqItems = [
 ];
 
 export default function HomePage() {
-  const phoneNumber = '7708071872';
-  const message = "Hello Verbigo, I am interested in your courses and would like to know more. Please let me know the next steps.";
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
   const coursesPlugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );

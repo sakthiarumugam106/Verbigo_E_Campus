@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Menu } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
+import { whatsapp } from '@/lib/config';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -19,9 +20,6 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const phoneNumber = '7708071872';
-  const message = "Hello Verbigo, I am interested in your courses and would like to schedule a demo. Please let me know the next steps.";
-  const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -48,7 +46,7 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-4">
            <Button asChild className="hidden sm:flex">
-            <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
+            <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
           </Button>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -94,7 +92,7 @@ export function Header() {
                  <Link href="/#contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
               </nav>
               <Button asChild size="lg" className="w-full mt-8">
-                  <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
+                  <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
               </Button>
             </SheetContent>
           </Sheet>

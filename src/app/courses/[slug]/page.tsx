@@ -6,6 +6,7 @@ import { CheckCircle2, BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { whatsapp } from '@/lib/config';
 
 export default function CoursePage({ params }: { params: { slug: string } }) {
   const course = courses.find((c) => c.slug === params.slug);
@@ -13,16 +14,6 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
   if (!course) {
     notFound();
   }
-
-  const phoneNumber = '7708071872';
-  const enrollMessage = `Hello Verbigo! I'm interested in the ${course.title} course.`;
-  const demoMessage = `Hello Verbigo, I would like to book a demo for the ${course.title} course. Please let me know the next steps.`;
-  const whatsappEnrollUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-    enrollMessage
-  )}`;
-   const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-    demoMessage
-  )}`;
 
   return (
     <div className="bg-primary/5">
@@ -59,13 +50,13 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
             </ul>
             <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
               <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <Link href={whatsappEnrollUrl} target="_blank" rel="noopener noreferrer">
+                <Link href={whatsapp.getCourseInquiryUrl(course.title)} target="_blank" rel="noopener noreferrer">
                   <WhatsAppButtonIcon className="h-5 w-5"/>
                   Enroll via WhatsApp
                 </Link>
               </Button>
                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">
+                <Link href={whatsapp.getCourseDemoUrl(course.title)} target="_blank" rel="noopener noreferrer">
                   Book a Demo
                 </Link>
               </Button>

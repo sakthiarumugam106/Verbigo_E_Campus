@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { IndianStatesAndLanguages } from '@/lib/india-states-languages';
+import { whatsapp } from '@/lib/config';
 
 export function FindTutorForm() {
   const [formData, setFormData] = useState({
@@ -50,10 +51,10 @@ export function FindTutorForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { name, email, whatsapp, state, language, schedule } = formData;
-    const finalLanguage = language === 'Other' ? otherLanguage : language;
+    const finalLanguage = formData.language === 'Other' ? otherLanguage : formData.language;
+    const finalFormData = { ...formData, language: finalLanguage };
 
-    if (!name || !email || !whatsapp || !state || !finalLanguage || !schedule) {
+    if (!finalFormData.name || !finalFormData.email || !finalFormData.whatsapp || !finalFormData.state || !finalFormData.language || !finalFormData.schedule) {
       toast({
         title: 'Error',
         description: 'Please fill out all the fields.',
@@ -62,22 +63,7 @@ export function FindTutorForm() {
       return;
     }
     
-    const phoneNumber = '7708071872'; // Your WhatsApp number
-    const message = `
-      New Tutor Request!
-      -----------------------------
-      Name: ${name}
-      Email: ${email}
-      WhatsApp: ${whatsapp}
-      State: ${state}
-      Native Language: ${finalLanguage}
-      Schedule Preference: ${schedule}
-      -----------------------------
-      Please get back to me soon.
-    `;
-    
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message.trim())}`;
-    
+    const whatsappUrl = whatsapp.getTutorInquiryUrl(finalFormData);
     window.open(whatsappUrl, '_blank');
 
     toast({

@@ -8,10 +8,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
+import { whatsapp } from '@/lib/config';
 import { CheckCircle, GraduationCap, Loader2, MessageSquare, Star } from 'lucide-react';
 import { useState, useTransition } from 'react';
 import { WhatsAppButtonIcon } from './whatsapp-button-icon';
-import Link from 'next/link';
 
 type Question = {
   question: string;
@@ -83,23 +83,8 @@ export function LevelAssessment() {
   
   const handleDiscussWithTutor = () => {
     if (!report) return;
-
-    const phoneNumber = '7708071872'; // Your WhatsApp number
-    const message = `
-      Hello! I just completed the English Level Assessment.
-      Here is my report:
-      -----------------------------
-      Level: ${report.level} (${report.score}%)
-      Summary: ${report.summary}
-      
-      Skill Breakdown:
-      ${report.skillBreakdown.map(skill => `- ${skill.skill}: ${skill.level}`).join('\n')}
-      -----------------------------
-      I would like to discuss my results with a tutor.
-    `;
     
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message.trim())}`;
-    
+    const whatsappUrl = whatsapp.getReportDiscussionUrl(report);
     window.open(whatsappUrl, '_blank');
 
     toast({

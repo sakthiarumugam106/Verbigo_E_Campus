@@ -1,0 +1,65 @@
+/**
+ * @fileOverview Site-wide configuration and constants.
+ *
+ * This file centralizes constants like contact information, social media links,
+ * and other site-wide settings to make them easily updatable.
+ */
+
+export const siteConfig = {
+  whatsappNumber: '7708071872',
+  email: 'hello@verbigo.ai',
+  socials: {
+    instagram: 'https://instagram.com/verbigo',
+    twitter: 'https://twitter.com/verbigo',
+    linkedin: 'https://linkedin.com/company/verbigo',
+  },
+};
+
+export const whatsapp = {
+  demoMessage: "Hello Verbigo, I am interested in your courses and would like to schedule a demo. Please let me know the next steps.",
+  courseInfoMessage: "Hello Verbigo, I am interested in your courses and would like to know more. Please let me know the next steps.",
+  get whatsappDemoUrl() {
+    return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(this.demoMessage)}`;
+  },
+   get whatsappCourseInfoUrl() {
+    return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(this.courseInfoMessage)}`;
+  },
+  getCourseInquiryUrl(courseTitle: string) {
+     const message = `Hello Verbigo! I'm interested in the ${courseTitle} course.`;
+     return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  },
+  getCourseDemoUrl(courseTitle: string) {
+    const message = `Hello Verbigo, I would like to book a demo for the ${courseTitle} course. Please let me know the next steps.`;
+    return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
+  },
+  getTutorInquiryUrl(details: { name: string, email: string, whatsapp: string, state: string, language: string, schedule: string }) {
+     const message = `
+      New Tutor Request!
+      -----------------------------
+      Name: ${details.name}
+      Email: ${details.email}
+      WhatsApp: ${details.whatsapp}
+      State: ${details.state}
+      Native Language: ${details.language}
+      Schedule Preference: ${details.schedule}
+      -----------------------------
+      Please get back to me soon.
+    `;
+    return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message.trim())}`;
+  },
+  getReportDiscussionUrl(report: { level: string; score: number; summary: string; skillBreakdown: { skill: string; level: string }[] }) {
+      const message = `
+      Hello! I just completed the English Level Assessment.
+      Here is my report:
+      -----------------------------
+      Level: ${report.level} (${report.score}%)
+      Summary: ${report.summary}
+      
+      Skill Breakdown:
+      ${report.skillBreakdown.map(skill => `- ${skill.skill}: ${skill.level}`).join('\n')}
+      -----------------------------
+      I would like to discuss my results with a tutor.
+    `;
+    return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message.trim())}`;
+  }
+};

@@ -2,12 +2,9 @@
 import Link from 'next/link';
 import { Instagram, Twitter, Linkedin } from 'lucide-react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
+import { siteConfig, whatsapp } from '@/lib/config';
 
 export function Footer() {
-  const phoneNumber = '7708071872';
-  const message = "Hello Verbigo, I am interested in your courses and would like to schedule a demo. Please let me know the next steps.";
-  const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
   return (
     <footer id="page-footer" className="bg-black text-white py-12">
       <div className="container mx-auto px-6 md:px-8">
@@ -29,7 +26,7 @@ export function Footer() {
               <h3 className="font-semibold">Platform</h3>
               <Link href="/#courses" className="text-sm text-gray-400 hover:text-white">Courses</Link>
               <Link href="/#values" className="text-sm text-gray-400 hover:text-white">Our Values</Link>
-              <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white">Book a Demo</Link>
+              <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white">Book a Demo</Link>
               <Link href="/#faq" className="text-sm text-gray-400 hover:text-white">FAQ</Link>
             </div>
             <div className="flex flex-col items-center sm:items-start gap-2">
@@ -48,13 +45,13 @@ export function Footer() {
         <div className="mt-8 border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} Verbigo. All rights reserved.</p>
           <div className="flex gap-4">
-            <Link href="#" className="text-gray-400 hover:text-white">
+            <Link href={siteConfig.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
               <Linkedin className="h-5 w-5" />
             </Link>
-            <Link href="#" className="text-gray-400 hover:text-white">
+            <Link href={siteConfig.socials.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
               <Instagram className="h-5 w-5" />
             </Link>
-            <Link href="#" className="text-gray-400 hover:text-white">
+            <Link href={siteConfig.socials.twitter} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
               <Twitter className="h-5 w-5" />
             </Link>
           </div>

@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { whatsapp } from '@/lib/config';
 
 export const WhatsAppIcon = ({ className }: { className?: string }) => (
     <Image
@@ -46,10 +47,6 @@ export function WhatsAppButton() {
     };
   }, [isClient]);
 
-  const phoneNumber = '7708071872'; // Replace with a real number
-  const message = "Hello Verbigo, I am interested in your courses and would like to know more. Please let me know the next steps.";
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
   return (
     <>
     {isClient && (
@@ -62,7 +59,7 @@ export function WhatsAppButton() {
         `}</style>
     )}
     <Link 
-      href={whatsappUrl} 
+      href={whatsapp.whatsappCourseInfoUrl} 
       target="_blank" 
       rel="noopener noreferrer"
       className={cn(
