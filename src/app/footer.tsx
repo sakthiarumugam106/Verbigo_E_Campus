@@ -1,6 +1,6 @@
 
 import Link from 'next/link';
-import { Instagram, Twitter, Linkedin } from 'lucide-react';
+import { Instagram, Twitter, Linkedin, Mail } from 'lucide-react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { siteConfig, whatsapp } from '@/lib/config';
 
@@ -45,6 +45,9 @@ export function Footer() {
         <div className="mt-8 border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-gray-400">&copy; {new Date().getFullYear()} Verbigo. All rights reserved.</p>
           <div className="flex gap-4">
+            <Link href={`mailto:${siteConfig.email}`} className="text-gray-400 hover:text-white">
+              <Mail className="h-5 w-5" />
+            </Link>
             <Link href={siteConfig.socials.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white">
               <Linkedin className="h-5 w-5" />
             </Link>
