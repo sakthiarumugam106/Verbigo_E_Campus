@@ -40,8 +40,8 @@ export function Footer() {
             </div>
             <div className="grid gap-2">
               <h3 className="font-semibold">Legal</h3>
-              <Link href="#" className="text-sm text-gray-400 hover:text-white">Privacy Policy</Link>
-              <Link href="#" className="text-sm text-gray-400 hover:text-white">Terms of Service</Link>
+              <Link href="/privacy-policy" className="text-sm text-gray-400 hover:text-white">Privacy Policy</Link>
+              <Link href="/terms-of-service" className="text-sm text-gray-400 hover:text-white">Terms of Service</Link>
             </div>
           </div>
         </div>
@@ -63,5 +63,3 @@ export function Footer() {
     </footer>
   );
 }
-
-    
