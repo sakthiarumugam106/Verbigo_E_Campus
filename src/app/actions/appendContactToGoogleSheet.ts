@@ -2,23 +2,35 @@
 'use server';
 
 import { siteConfig } from '@/lib/config';
+import { z } from 'zod';
 
 const WEB_APP_URL = siteConfig.googleSheetUrls.contact;
 
-type ContactFormData = {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  message: string;
-};
+const contactSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters.'),
+  email: z.string().email('Please enter a valid email address.'),
+  phoneNumber: z.string().min(10, 'Please enter a valid phone number with country code.'),
+  message: z.string().min(10, 'Message must be at least 10 characters long.'),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 export async function appendContactToGoogleSheet(data: ContactFormData) {
+  const validatedFields = contactSchema.safeParse(data);
+
+  if (!validatedFields.success) {
+    return { 
+      success: false, 
+      error: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
   // rename phoneNumber → contact
   const payload = {
-    name: data.name,
-    email: data.email,
-    contact: data.phoneNumber,
-    message: data.message,
+    name: validatedFields.data.name,
+    email: validatedFields.data.email,
+    contact: validatedFields.data.phoneNumber,
+    message: validatedFields.data.message,
   };
 
   try {
