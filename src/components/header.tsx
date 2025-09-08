@@ -47,58 +47,62 @@ export function Header() {
         </div>
         
         <div className="flex items-center gap-4">
-           <Button asChild className="hidden sm:flex">
-            <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
-          </Button>
+           <div className="hidden sm:flex">
+             <Button asChild>
+                <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
+             </Button>
+           </div>
           <ThemeToggle />
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="md:hidden hover:bg-primary hover:text-primary-foreground"
-                aria-label="Open navigation menu"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-                <SheetHeader>
-                    <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
-                    <SheetDescription className="sr-only">
-                        Navigation links for Verbigo.
-                    </SheetDescription>
-                </SheetHeader>
-              <Link
-                href="/"
-                className="flex items-center gap-2 text-primary dark:text-primary-foreground mb-6"
-                onClick={() => setIsOpen(false)}
-              >
-                <VerbigoLogo />
-                 <div className="flex flex-col">
-                    <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
-                    <span className="text-[10px] font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
-                </div>
-              </Link>
-              <nav className="grid gap-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
+          <div className="md:hidden">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <SheetTrigger asChild>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    className="hover:bg-primary hover:text-primary-foreground"
+                    aria-label="Open navigation menu"
+                >
+                    <Menu className="h-5 w-5" />
+                </Button>
+                </SheetTrigger>
+                <SheetContent side="left">
+                    <SheetHeader>
+                        <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                        <SheetDescription className="sr-only">
+                            Navigation links for Verbigo.
+                        </SheetDescription>
+                    </SheetHeader>
+                <Link
+                    href="/"
+                    className="flex items-center gap-2 text-primary dark:text-primary-foreground mb-6"
                     onClick={() => setIsOpen(false)}
-                    className="text-lg font-medium text-foreground/80 hover:text-foreground"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                 <Link href="/careers" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
-                 <Link href="/#contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
-              </nav>
-              <Button asChild size="lg" className="w-full mt-8">
-                  <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
-              </Button>
-            </SheetContent>
-          </Sheet>
+                >
+                    <VerbigoLogo />
+                    <div className="flex flex-col">
+                        <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
+                        <span className="text-[10px] font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
+                    </div>
+                </Link>
+                <nav className="grid gap-4">
+                    {navLinks.map((link) => (
+                    <Link
+                        key={link.name}
+                        href={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="text-lg font-medium text-foreground/80 hover:text-foreground"
+                    >
+                        {link.name}
+                    </Link>
+                    ))}
+                    <Link href="/careers" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
+                    <Link href="/#contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
+                </nav>
+                <Button asChild size="lg" className="w-full mt-8">
+                    <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
+                </Button>
+                </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>
