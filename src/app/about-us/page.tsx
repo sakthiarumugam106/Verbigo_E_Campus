@@ -13,7 +13,7 @@ export default function AboutUsPage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <div className="inline-block rounded-lg bg-accent/20 px-3 py-1 text-sm text-accent-foreground">
+              <div className="inline-block rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary dark:text-primary-foreground">
                 Our Story
               </div>
               <h1 className="text-4xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-5xl md:text-6xl">
@@ -47,18 +47,18 @@ export default function AboutUsPage() {
                 </h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20">
-                    <Target className="h-12 w-12 text-accent"/>
+                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-primary/20">
+                    <Target className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Mission</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">To empower individuals by making high-quality language education accessible, engaging, and effective through innovative technology.</p>
                 </Card>
-                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20">
-                    <Building className="h-12 w-12 text-accent"/>
+                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-primary/20">
+                    <Building className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Vision</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">To become a world leader in language intelligence, creating a global community of confident and proficient communicators.</p>
                 </Card>
-                <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20 md:col-span-2 lg:col-span-1">
-                    <Users className="h-12 w-12 text-accent"/>
+                <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-primary/20 md:col-span-2 lg:col-span-1">
+                    <Users className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Team</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">A dedicated group of educators, technologists, and innovators committed to your success.</p>
                 </Card>
