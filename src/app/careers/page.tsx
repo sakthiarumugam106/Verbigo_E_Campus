@@ -1,18 +1,9 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase } from 'lucide-react';
 import { CareersForm } from '@/components/careers-form';
 import { MissionVision } from '@/components/mission-vision';
-
-const jobOpenings = [
-  {
-    title: 'Language Tutor',
-    description: 'We are looking for passionate and experienced language tutors to join our team. You will be responsible for creating engaging lesson plans and providing personalized instruction to our students.',
-    location: 'Remote',
-    type: 'Part-time',
-  },
-];
+import { jobOpenings } from '@/lib/careers';
 
 export default function CareersPage() {
   return (
@@ -35,7 +26,7 @@ export default function CareersPage() {
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center text-primary dark:text-primary-foreground mt-8 mb-8">
             Current Openings
           </h2>
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-3xl space-y-8">
             {jobOpenings.map((job, index) => (
               <Card key={index} className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
                 <CardHeader>
