@@ -142,12 +142,13 @@ export default function HomePage() {
               </div>
             </div>
             <Image
-              src="/images/main-page.jpg"
-              alt="Verbigo E-Campus"
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
+              alt="Confident students learning at Verbigo E-Campus"
               width={600}
               height={400}
               className="mx-auto aspect-video rounded-xl object-cover shadow-2xl border-4 border-white/80"
               data-ai-hint="language class students"
+              priority
             />
           </div>
         </div>
