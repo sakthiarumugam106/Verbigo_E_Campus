@@ -24,8 +24,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between pl-4 md:pl-6">
-        <div className="flex items-center gap-6">
+      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+        <div className="flex items-center gap-6 md:gap-10">
             <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground">
                 <VerbigoLogo />
                 <div className="flex flex-col">
@@ -33,18 +33,19 @@ export function Header() {
                     <span className="text-[10px] font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
                 </div>
             </Link>
+            <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
+                {navLinks.map((link) => (
+                    <Link
+                    key={link.name}
+                    href={link.href}
+                    className="transition-colors hover:text-foreground/80 text-foreground/60"
+                    >
+                    {link.name}
+                    </Link>
+                ))}
+            </nav>
         </div>
-        <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex flex-1">
-            {navLinks.map((link) => (
-                <Link
-                key={link.name}
-                href={link.href}
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                >
-                {link.name}
-                </Link>
-            ))}
-        </nav>
+        
         <div className="flex items-center gap-4">
            <Button asChild className="hidden sm:flex">
             <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
