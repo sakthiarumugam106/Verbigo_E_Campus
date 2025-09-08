@@ -12,14 +12,10 @@ import { useEffect, useRef, useState, useTransition } from 'react';
 import { VerbigoTutorLogo } from './verbigo-tutor-logo';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ReactMarkdown from 'react-markdown';
-import { useAuth } from '@/context/auth-context';
-import { collection, addDoc, query, where, getDocs, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 
 type Message = {
   role: 'user' | 'model';
   content: string;
-  timestamp?: any;
 };
 
 export function AiChatbot() {
@@ -33,31 +29,6 @@ export function AiChatbot() {
   const [isClient, setIsClient] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const isMobile = useIsMobile();
-  const { user, loading } = useAuth();
-  
-  // Load chat history
-  useEffect(() => {
-    if (!user) {
-      setHistory([]); // Clear history if user logs out
-      return;
-    }
-
-    const q = query(
-        collection(db, `userChats/${user.uid}/messages`),
-        orderBy('timestamp', 'asc')
-    );
-
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const loadedHistory: Message[] = [];
-        querySnapshot.forEach((doc) => {
-            loadedHistory.push(doc.data() as Message);
-        });
-        setHistory(loadedHistory);
-    });
-
-    return () => unsubscribe();
-  }, [user]);
-
 
   useEffect(() => {
     setIsClient(true);
@@ -127,26 +98,11 @@ export function AiChatbot() {
     }
   };
 
-  const saveMessage = async (message: Message) => {
-    if (!user) return;
-    try {
-        await addDoc(collection(db, `userChats/${user.uid}/messages`), {
-            ...message,
-            timestamp: serverTimestamp(),
-        });
-    } catch (error) {
-        console.error("Error saving message: ", error);
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isPending) return;
 
-    const userMessage: Message = { role: 'user', content: input };
-    if(user) saveMessage(userMessage);
-
-    const newHistory = [...history, userMessage];
+    const newHistory = [...history, { role: 'user' as const, content: input }];
     setHistory(newHistory);
     
     const message = input;
@@ -156,21 +112,10 @@ export function AiChatbot() {
       try {
         const aiHistory = newHistory.map(({ role, content }) => ({ role, content }));
         const result = await grammarCoach({ history: aiHistory, message });
-        const aiMessage: Message = { role: 'model', content: result.response };
-        
-        if (user) saveMessage(aiMessage);
-        
-        // The onSnapshot listener will update the history, so we don't need to do it here
-        if(!user) {
-            setHistory((prev) => [...prev, aiMessage]);
-        }
-
+        setHistory((prev) => [...prev, { role: 'model', content: result.response }]);
       } catch (error) {
         console.error('AI chat error:', error);
-        const errorMessage: Message = { role: 'model', content: "I'm sorry, I encountered an error. Please try again." };
-        if(!user) {
-            setHistory((prev) => [...prev, errorMessage]);
-        }
+        setHistory((prev) => [...prev, { role: 'model', content: "I'm sorry, I encountered an error. Please try again." }]);
       }
     });
   };
@@ -249,11 +194,11 @@ export function AiChatbot() {
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder={user ? "Ask me anything..." : "Please log in to chat"}
+                placeholder="Ask me anything..."
                 autoComplete="off"
-                disabled={isPending || !user}
+                disabled={isPending}
               />
-              <Button type="submit" size="icon" disabled={isPending || !input.trim() || !user}>
+              <Button type="submit" size="icon" disabled={isPending || !input.trim()}>
                 <Send className="h-4 w-4" />
               </Button>
             </form>

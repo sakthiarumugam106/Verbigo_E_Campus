@@ -4,20 +4,11 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { LogOut, Menu, User } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { whatsapp } from '@/lib/config';
 import { ThemeToggle } from './theme-toggle';
-import { useAuth } from '@/context/auth-context';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 
 const navLinks = [
@@ -31,7 +22,6 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { user, loading, logout } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -59,46 +49,11 @@ export function Header() {
         
         <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-2">
-                {!loading && (
-                    !user ? (
-                        <>
-                            <Button asChild variant="ghost">
-                                <Link href="/login">Log In</Link>
-                            </Button>
-                            <Button asChild>
-                                <Link href="/signup">Sign Up</Link>
-                            </Button>
-                        </>
-                    ) : (
-                        <Button asChild>
-                            <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
-                        </Button>
-                    )
-                )}
+                <Button asChild>
+                    <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
+                </Button>
             </div>
           <ThemeToggle />
-           {!loading && user && (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon" className="rounded-full">
-                  <User className="h-5 w-5" />
-                  <span className="sr-only">User menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem disabled>Profile</DropdownMenuItem>
-                <DropdownMenuItem disabled>Settings</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={logout}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
-
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
@@ -144,22 +99,9 @@ export function Header() {
                     <Link href="/#contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
                 </nav>
                 <div className="mt-8 space-y-4">
-                    {!loading && (
-                        !user ? (
-                        <>
-                            <Button asChild size="lg" className="w-full" variant="outline">
-                                <Link href="/login" onClick={() => setIsOpen(false)}>Log In</Link>
-                            </Button>
-                            <Button asChild size="lg" className="w-full">
-                                <Link href="/signup" onClick={() => setIsOpen(false)}>Sign Up</Link>
-                            </Button>
-                        </>
-                        ) : (
-                           <Button asChild size="lg" className="w-full">
-                                <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
-                            </Button>
-                        )
-                    )}
+                    <Button asChild size="lg" className="w-full">
+                        <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
+                    </Button>
                 </div>
                 </SheetContent>
             </Sheet>
