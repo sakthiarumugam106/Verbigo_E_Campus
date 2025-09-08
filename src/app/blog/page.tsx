@@ -58,7 +58,7 @@ export default function BlogPage() {
                       />
                   </div>
                   <CardHeader>
-                      <CardTitle className="text-xl text-primary group-hover:text-accent dark:text-primary-foreground">{post.title}</CardTitle>
+                      <CardTitle className="text-xl text-primary group-hover:text-primary-foreground dark:text-primary-foreground">{post.title}</CardTitle>
                       <CardDescription className="dark:text-foreground/80">{post.description}</CardDescription>
                   </CardHeader>
                   <CardFooter className="mt-auto flex items-center justify-between text-sm text-muted-foreground dark:text-foreground/80">

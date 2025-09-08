@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/header';
@@ -7,6 +8,7 @@ import { WhatsAppButton } from '@/components/whatsapp-button';
 import { Inter, Poppins } from 'next/font/google';
 import { AiChatbot } from '@/components/ai-chatbot';
 import { ThemeProvider } from '@/components/theme-provider';
+import { BackToTopButton } from '@/components/back-to-top-button';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -41,6 +43,7 @@ export default function RootLayout({
           </div>
           <AiChatbot />
           <WhatsAppButton />
+          <BackToTopButton />
           <Toaster />
         </ThemeProvider>
       </body>
