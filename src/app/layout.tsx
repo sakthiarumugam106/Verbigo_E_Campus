@@ -9,6 +9,7 @@ import { Inter, Poppins } from 'next/font/google';
 import { AiChatbot } from '@/components/ai-chatbot';
 import { ThemeProvider } from '@/components/theme-provider';
 import { BackToTopButton } from '@/components/back-to-top-button';
+import { AuthProvider } from '@/context/auth-context';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -36,15 +37,17 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
         >
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-          <AiChatbot />
-          <WhatsAppButton />
-          <BackToTopButton />
-          <Toaster />
+          <AuthProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <AiChatbot />
+            <WhatsAppButton />
+            <BackToTopButton />
+            <Toaster />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -12,10 +12,14 @@ import { useEffect, useRef, useState, useTransition } from 'react';
 import { VerbigoTutorLogo } from './verbigo-tutor-logo';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ReactMarkdown from 'react-markdown';
+import { useAuth } from '@/context/auth-context';
+import { collection, addDoc, query, where, getDocs, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 type Message = {
   role: 'user' | 'model';
   content: string;
+  timestamp?: any;
 };
 
 export function AiChatbot() {
@@ -29,6 +33,31 @@ export function AiChatbot() {
   const [isClient, setIsClient] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const isMobile = useIsMobile();
+  const { user, loading } = useAuth();
+  
+  // Load chat history
+  useEffect(() => {
+    if (!user) {
+      setHistory([]); // Clear history if user logs out
+      return;
+    }
+
+    const q = query(
+        collection(db, `userChats/${user.uid}/messages`),
+        orderBy('timestamp', 'asc')
+    );
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const loadedHistory: Message[] = [];
+        querySnapshot.forEach((doc) => {
+            loadedHistory.push(doc.data() as Message);
+        });
+        setHistory(loadedHistory);
+    });
+
+    return () => unsubscribe();
+  }, [user]);
+
 
   useEffect(() => {
     setIsClient(true);
@@ -84,7 +113,6 @@ export function AiChatbot() {
         document.body.classList.remove('chatbot-open');
       }
     } else {
-      // Ensure class is removed on desktop
       document.body.classList.remove('chatbot-open');
     }
   }, [isOpen, isMobile]);
@@ -99,22 +127,50 @@ export function AiChatbot() {
     }
   };
 
+  const saveMessage = async (message: Message) => {
+    if (!user) return;
+    try {
+        await addDoc(collection(db, `userChats/${user.uid}/messages`), {
+            ...message,
+            timestamp: serverTimestamp(),
+        });
+    } catch (error) {
+        console.error("Error saving message: ", error);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isPending) return;
 
-    const newHistory = [...history, { role: 'user' as const, content: input }];
+    const userMessage: Message = { role: 'user', content: input };
+    if(user) saveMessage(userMessage);
+
+    const newHistory = [...history, userMessage];
     setHistory(newHistory);
+    
     const message = input;
     setInput('');
 
     startTransition(async () => {
       try {
-        const result = await grammarCoach({ history, message });
-        setHistory((prev) => [...prev, { role: 'model', content: result.response }]);
+        const aiHistory = newHistory.map(({ role, content }) => ({ role, content }));
+        const result = await grammarCoach({ history: aiHistory, message });
+        const aiMessage: Message = { role: 'model', content: result.response };
+        
+        if (user) saveMessage(aiMessage);
+        
+        // The onSnapshot listener will update the history, so we don't need to do it here
+        if(!user) {
+            setHistory((prev) => [...prev, aiMessage]);
+        }
+
       } catch (error) {
         console.error('AI chat error:', error);
-        setHistory((prev) => [...prev, { role: 'model', content: "I'm sorry, I encountered an error. Please try again." }]);
+        const errorMessage: Message = { role: 'model', content: "I'm sorry, I encountered an error. Please try again." };
+        if(!user) {
+            setHistory((prev) => [...prev, errorMessage]);
+        }
       }
     });
   };
@@ -170,7 +226,7 @@ export function AiChatbot() {
                             </div>
                            )}
                             <div className={cn("max-w-[80%] rounded-xl px-4 py-2 text-sm prose prose-sm", msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted')}>
-                                {msg.role === 'model' ? <ReactMarkdown className="text-foreground [&_p]:m-0">{msg.content.replace(/\n/g, '  \n')}</ReactMarkdown> : msg.content}
+                                {msg.role === 'model' ? <ReactMarkdown className="text-foreground [&_p]:m-0">{msg.content.replace(/\\n/g, '  \n')}</ReactMarkdown> : msg.content}
                             </div>
                         </div>
                     ))}
@@ -193,11 +249,11 @@ export function AiChatbot() {
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask me anything..."
+                placeholder={user ? "Ask me anything..." : "Please log in to chat"}
                 autoComplete="off"
-                disabled={isPending}
+                disabled={isPending || !user}
               />
-              <Button type="submit" size="icon" disabled={isPending || !input.trim()}>
+              <Button type="submit" size="icon" disabled={isPending || !input.trim() || !user}>
                 <Send className="h-4 w-4" />
               </Button>
             </form>
