@@ -18,6 +18,8 @@ type Message = {
   content: string;
 };
 
+const CHAT_STORAGE_KEY = 'verbigo-chat-history';
+
 export function AiChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpening, setIsOpening] = useState(false);
@@ -32,6 +34,14 @@ export function AiChatbot() {
 
   useEffect(() => {
     setIsClient(true);
+    try {
+      const storedHistory = localStorage.getItem(CHAT_STORAGE_KEY);
+      if (storedHistory) {
+        setHistory(JSON.parse(storedHistory));
+      }
+    } catch (error) {
+      console.error("Could not load chat history from localStorage", error);
+    }
   }, []);
 
   useEffect(() => {
@@ -87,6 +97,16 @@ export function AiChatbot() {
       document.body.classList.remove('chatbot-open');
     }
   }, [isOpen, isMobile]);
+
+  useEffect(() => {
+    if(isClient) {
+      try {
+        localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(history));
+      } catch (error) {
+        console.error("Could not save chat history to localStorage", error);
+      }
+    }
+  }, [history, isClient]);
 
   const handleToggle = () => {
     if (isOpen) {

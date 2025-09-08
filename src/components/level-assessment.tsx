@@ -10,13 +10,21 @@ import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { whatsapp } from '@/lib/config';
 import { CheckCircle, GraduationCap, Loader2, MessageSquare, Star } from 'lucide-react';
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { WhatsAppButtonIcon } from './whatsapp-button-icon';
 
 type Question = {
   question: string;
   answer: string;
 };
+
+type AssessmentState = {
+  questions: Question[];
+  currentQuestion: string | null;
+  report: LevelAssessmentOutput['report'] | null;
+}
+
+const ASSESSMENT_STORAGE_KEY = 'verbigo-assessment-state';
 
 const StarRating = ({ level }: { level: 'Beginner' | 'Intermediate' | 'Advanced' }) => {
   const rating = level === 'Beginner' ? 1 : level === 'Intermediate' ? 2 : 3;
@@ -36,13 +44,40 @@ const StarRating = ({ level }: { level: 'Beginner' | 'Intermediate' | 'Advanced'
 
 
 export function LevelAssessment() {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState<string | null>(null);
+  const [assessmentState, setAssessmentState] = useState<AssessmentState>({
+    questions: [],
+    currentQuestion: null,
+    report: null,
+  });
   const [currentAnswer, setCurrentAnswer] = useState('');
-  const [report, setReport] = useState<LevelAssessmentOutput['report'] | null>(null);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    try {
+      const storedState = localStorage.getItem(ASSESSMENT_STORAGE_KEY);
+      if (storedState) {
+        setAssessmentState(JSON.parse(storedState));
+      }
+    } catch (error) {
+      console.error("Could not load assessment state from localStorage", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      try {
+        localStorage.setItem(ASSESSMENT_STORAGE_KEY, JSON.stringify(assessmentState));
+      } catch (error) {
+        console.error("Could not save assessment state to localStorage", error);
+      }
+    }
+  }, [assessmentState, isClient]);
+
+  const { questions, currentQuestion, report } = assessmentState;
 
   const getNextQuestion = (history: Question[]) => {
     setError(null);
@@ -50,10 +85,9 @@ export function LevelAssessment() {
       try {
         const result = await assessLevel({ previousQuestions: history });
         if (result.isFinal && result.report) {
-          setReport(result.report);
-          setCurrentQuestion(null);
+          setAssessmentState({ questions: history, report: result.report, currentQuestion: null });
         } else if (result.nextQuestion) {
-          setCurrentQuestion(result.nextQuestion);
+          setAssessmentState({ questions: history, report: null, currentQuestion: result.nextQuestion });
         } else {
             setError('Could not generate the next step. Please try again.');
         }
@@ -65,10 +99,10 @@ export function LevelAssessment() {
   };
 
   const handleStart = () => {
-    setQuestions([]);
-    setReport(null);
-    setCurrentQuestion(null);
-    getNextQuestion([]);
+    const initialState = { questions: [], report: null, currentQuestion: null };
+    setAssessmentState(initialState);
+    setCurrentAnswer('');
+    getNextQuestion(initialState.questions);
   };
 
   const handleAnswerSubmit = (e: React.FormEvent) => {
@@ -76,7 +110,6 @@ export function LevelAssessment() {
     if (!currentAnswer.trim() || !currentQuestion) return;
 
     const newHistory = [...questions, { question: currentQuestion, answer: currentAnswer }];
-    setQuestions(newHistory);
     setCurrentAnswer('');
     getNextQuestion(newHistory);
   };
