@@ -29,6 +29,7 @@ export const courses = [
       'Understand and use different verb tenses',
       'Improve listening comprehension skills',
       'Practice conversational fluency',
+      'Communicate Ideas in real-life contexts',
     ],
   },
   {
