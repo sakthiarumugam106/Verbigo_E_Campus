@@ -13,6 +13,7 @@ export const courses = [
       'Introduce yourself and others',
       'Form simple sentences and questions',
       'Build a foundation of essential vocabulary',
+      'Questioning and Responding in a daily conversation',
     ],
   },
   {
