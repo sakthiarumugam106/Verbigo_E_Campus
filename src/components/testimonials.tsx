@@ -114,7 +114,7 @@ export function Testimonials() {
                             className="rounded-full border-4 border-background mb-3"
                              data-ai-hint={testimonial.aiHint}
                         />
-                        <p className="font-semibold text-primary">{testimonial.name}</p>
+                        <p className="font-semibold text-primary dark:text-primary-foreground">{testimonial.name}</p>
                         <p className="text-sm text-muted-foreground dark:text-foreground/80">{testimonial.title}</p>
                     </div>
                   </Card>

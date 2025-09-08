@@ -14,7 +14,7 @@ export default function FindTutorPage() {
       />
       <Card className="w-full max-w-2xl shadow-2xl z-10 bg-background/80 backdrop-blur-sm">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-primary">Find Your Perfect Tutor</CardTitle>
+          <CardTitle className="text-3xl font-bold text-primary dark:text-primary-foreground">Find Your Perfect Tutor</CardTitle>
           <CardDescription>
             Fill out the form below, and we'll connect you with a language expert who fits your needs.
           </CardDescription>

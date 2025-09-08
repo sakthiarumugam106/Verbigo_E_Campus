@@ -21,7 +21,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-6">
             <div className="space-y-4">
-               <Link href="/#courses" className="text-sm font-medium text-primary hover:underline">
+               <Link href="/#courses" className="text-sm font-medium text-primary dark:text-primary-foreground hover:underline">
                 &larr; Back to Courses
               </Link>
               <div className="flex items-center gap-3">
@@ -29,7 +29,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
                   Language Course
                 </div>
               </div>
-              <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl">
+              <h1 className="text-4xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-5xl">
                 {course.title}
               </h1>
               <p className="max-w-[600px] text-muted-foreground md:text-xl dark:text-foreground/80">
@@ -37,7 +37,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
               </p>
             </div>
             <ul className="grid gap-4">
-              <li className="flex items-center gap-3 font-semibold text-lg text-primary">
+              <li className="flex items-center gap-3 font-semibold text-lg text-primary dark:text-primary-foreground">
                   <BookOpen className="h-6 w-6" />
                   What You'll Learn
               </li>

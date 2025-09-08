@@ -21,7 +21,7 @@ export default function BlogPage() {
     <div className="bg-primary/5 min-h-screen py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mx-auto max-w-3xl text-center mb-12">
-          <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl">
+          <h1 className="text-4xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-5xl md:text-6xl">
             Verbigo Blog
           </h1>
           <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
@@ -58,12 +58,12 @@ export default function BlogPage() {
                       />
                   </div>
                   <CardHeader>
-                      <CardTitle className="text-xl text-primary group-hover:text-accent">{post.title}</CardTitle>
+                      <CardTitle className="text-xl text-primary group-hover:text-accent dark:text-primary-foreground">{post.title}</CardTitle>
                       <CardDescription className="dark:text-foreground/80">{post.description}</CardDescription>
                   </CardHeader>
                   <CardFooter className="mt-auto flex items-center justify-between text-sm text-muted-foreground dark:text-foreground/80">
                       <span>{post.date} &middot; {post.readTime}</span>
-                       <div className="flex items-center text-primary font-medium">
+                       <div className="flex items-center text-primary dark:text-primary-foreground font-medium">
                           Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                       </div>
                   </CardFooter>

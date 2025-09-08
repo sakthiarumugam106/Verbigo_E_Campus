@@ -17,7 +17,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       <div className="container mx-auto px-4 md:px-6">
         <article className="prose prose-lg mx-auto max-w-4xl bg-background p-6 md:p-10 rounded-xl shadow-lg dark:prose-invert">
           <div className="mb-8">
-            <Link href="/blog" className="text-primary hover:underline">&larr; Back to Blog</Link>
+            <Link href="/blog" className="text-primary dark:text-primary-foreground hover:underline">&larr; Back to Blog</Link>
           </div>
           <div className="relative w-full h-64 md:h-96 mb-8 rounded-lg overflow-hidden">
              <Image
@@ -29,7 +29,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             />
           </div>
           <header className="mb-8 border-b pb-4">
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-primary !mb-4">{post.title}</h1>
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-primary dark:text-primary-foreground !mb-4">{post.title}</h1>
             <div className="flex items-center gap-6 text-sm text-muted-foreground dark:text-foreground/80">
                 <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />

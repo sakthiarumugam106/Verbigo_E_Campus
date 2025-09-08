@@ -16,7 +16,7 @@ export default function AboutUsPage() {
               <div className="inline-block rounded-lg bg-accent/20 px-3 py-1 text-sm text-accent-foreground">
                 Our Story
               </div>
-              <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl md:text-6xl">
+              <h1 className="text-4xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-5xl md:text-6xl">
                 About Verbigo
               </h1>
               <p className="text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
@@ -42,24 +42,24 @@ export default function AboutUsPage() {
        <section className="py-16 md:py-24 bg-primary/5">
         <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center mb-12">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary dark:text-primary-foreground">
                     Why Choose Verbigo?
                 </h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                  <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20">
                     <Target className="h-12 w-12 text-accent"/>
-                    <h3 className="text-xl font-bold text-primary">Our Mission</h3>
+                    <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Mission</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">To empower individuals by making high-quality language education accessible, engaging, and effective through innovative technology.</p>
                 </Card>
                  <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20">
                     <Building className="h-12 w-12 text-accent"/>
-                    <h3 className="text-xl font-bold text-primary">Our Vision</h3>
+                    <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Vision</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">To become a world leader in language intelligence, creating a global community of confident and proficient communicators.</p>
                 </Card>
                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-accent/20 md:col-span-2 lg:col-span-1">
                     <Users className="h-12 w-12 text-accent"/>
-                    <h3 className="text-xl font-bold text-primary">Our Team</h3>
+                    <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Team</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">A dedicated group of educators, technologists, and innovators committed to your success.</p>
                 </Card>
             </div>

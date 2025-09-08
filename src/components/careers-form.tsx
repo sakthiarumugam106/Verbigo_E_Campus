@@ -171,7 +171,7 @@ export function CareersForm() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle className='text-primary text-2xl'>Apply for Language Tutor</DialogTitle>
+          <DialogTitle className='text-primary dark:text-primary-foreground text-2xl'>Apply for Language Tutor</DialogTitle>
           <DialogDescription>
             We're excited to hear from you! Please fill out the form below.
           </DialogDescription>

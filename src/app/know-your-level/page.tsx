@@ -17,10 +17,10 @@ export default function KnowYourLevelPage() {
         <CardHeader className="text-center space-y-4">
             <div className="flex justify-center">
                 <div className="bg-primary/10 p-3 rounded-full">
-                    <Languages className="h-8 w-8 text-primary" />
+                    <Languages className="h-8 w-8 text-primary dark:text-primary-foreground" />
                 </div>
             </div>
-          <CardTitle className="text-3xl font-bold text-primary">Know Your English Level</CardTitle>
+          <CardTitle className="text-3xl font-bold text-primary dark:text-primary-foreground">Know Your English Level</CardTitle>
           <CardDescription className="text-lg">
             Answer 3 quick questions, and our AI will assess your proficiency.
           </CardDescription>

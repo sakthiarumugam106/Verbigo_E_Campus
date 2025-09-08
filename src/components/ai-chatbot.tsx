@@ -165,7 +165,7 @@ export function AiChatbot() {
                     {history.map((msg, index) => (
                         <div key={index} className={cn("flex items-end gap-2", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
                            {msg.role === 'model' && (
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0">
                                 <VerbigoTutorLogo width={24} height={24} />
                             </div>
                            )}
@@ -176,7 +176,7 @@ export function AiChatbot() {
                     ))}
                     {isPending && (
                         <div className="flex items-end gap-2 justify-start">
-                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary shrink-0">
+                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0">
                                 <VerbigoTutorLogo width={24} height={24} />
                              </div>
                              <div className="max-w-[80%] rounded-xl px-4 py-2 text-sm bg-muted flex items-center gap-2">

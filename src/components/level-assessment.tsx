@@ -107,7 +107,7 @@ export function LevelAssessment() {
             <CardContent className="space-y-6">
                 <div className="text-center bg-primary/5 p-6 rounded-lg">
                     <p className="text-sm font-medium text-muted-foreground">YOUR LEVEL</p>
-                    <p className="text-4xl font-bold text-primary">{report.level}</p>
+                    <p className="text-4xl font-bold text-primary dark:text-primary-foreground">{report.level}</p>
                     <div className="w-full bg-gray-200 rounded-full h-2.5 mt-4">
                         <div className="bg-accent h-2.5 rounded-full" style={{ width: `${report.score}%` }}></div>
                     </div>
@@ -115,11 +115,11 @@ export function LevelAssessment() {
                 </div>
                 <div className="space-y-4">
                     <div>
-                        <h3 className="font-semibold text-primary">Summary</h3>
+                        <h3 className="font-semibold text-primary dark:text-primary-foreground">Summary</h3>
                         <p className="text-muted-foreground">{report.summary}</p>
                     </div>
                     <div>
-                        <h3 className="font-semibold text-primary">Skill Breakdown</h3>
+                        <h3 className="font-semibold text-primary dark:text-primary-foreground">Skill Breakdown</h3>
                         <ul className="space-y-2 mt-2">
                             {report.skillBreakdown.map((skill, index) => (
                                 <li key={index} className="flex justify-between items-center bg-secondary/50 p-3 rounded-md">
@@ -144,7 +144,7 @@ export function LevelAssessment() {
   if (isPending && !currentQuestion) {
     return (
       <div className="flex flex-col items-center justify-center text-center p-8 space-y-4">
-        <Loader2 className="h-10 w-10 text-primary animate-spin" />
+        <Loader2 className="h-10 w-10 text-primary dark:text-primary-foreground animate-spin" />
         <p className="text-muted-foreground">Preparing your assessment...</p>
       </div>
     );
@@ -169,7 +169,7 @@ export function LevelAssessment() {
       <form onSubmit={handleAnswerSubmit} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="answer" className="text-lg font-medium flex items-start gap-3">
-             <MessageSquare className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
+             <MessageSquare className="h-5 w-5 text-primary dark:text-primary-foreground mt-1 flex-shrink-0" />
             <span>{currentQuestion}</span>
           </Label>
           <Input

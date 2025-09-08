@@ -30,17 +30,17 @@ import { whatsapp } from '@/lib/config';
 
 const benefits = [
   {
-    icon: <BookOpen className="h-8 w-8 text-primary" />,
+    icon: <BookOpen className="h-8 w-8 text-primary dark:text-primary-foreground" />,
     title: 'Expert-Led Instruction',
     description: 'Learn from seasoned linguists and certified language coaches.',
   },
   {
-    icon: <Feather className="h-8 w-8 text-primary" />,
+    icon: <Feather className="h-8 w-8 text-primary dark:text-primary-foreground" />,
     title: 'Practical Writing Exercises',
     description: 'Apply what you learn with hands-on assignments and real-world scenarios.',
   },
   {
-    icon: <MessageCircle className="h-8 w-8 text-primary" />,
+    icon: <MessageCircle className="h-8 w-8 text-primary dark:text-primary-foreground" />,
     title: 'Interactive Feedback',
     description: 'Receive personalized feedback to refine your grammar and style.',
   },
@@ -48,27 +48,27 @@ const benefits = [
 
 const values = [
     {
-        icon: <Users className="h-10 w-10 text-primary" />,
+        icon: <Users className="h-10 w-10 text-primary dark:text-primary-foreground" />,
         title: 'Learner-centric Environment',
         description: "We tailor every aspect of learning to the individual student's needs, pace, and goals, ensuring a personalized and effective journey.",
     },
     {
-        icon: <BookOpen className="h-10 w-10 text-primary" />,
+        icon: <BookOpen className="h-10 w-10 text-primary dark:text-primary-foreground" />,
         title: 'Foundational Literacy',
         description: "We focus on building strong literacy fundamentals, providing the essential building blocks for lifelong learning and communication.",
     },
     {
-        icon: <Lightbulb className="h-10 w-10 text-primary" />,
+        icon: <Lightbulb className="h-10 w-10 text-primary dark:text-primary-foreground" />,
         title: 'Experiential & Competency-Based Education',
         description: "Our approach is hands-on and practical, focusing on developing real-world skills and measurable competencies, not just theoretical knowledge.",
     },
     {
-        icon: <Globe className="h-10 w-10 text-primary" />,
+        icon: <Globe className="h-10 w-10 text-primary dark:text-primary-foreground" />,
         title: 'Global Competence & 21st Century Skills',
         description: 'We equip learners with the language skills and cultural understanding needed to thrive in an interconnected, 21st-century world.',
     },
     {
-        icon: <Laptop className="h-10 w-10 text-primary" />,
+        icon: <Laptop className="h-10 w-10 text-primary dark:text-primary-foreground" />,
         title: 'Blending Education & Technology',
         description: "As a language hub, we leverage cutting-edge technology to create innovative, engaging, and accessible learning experiences.",
     },
@@ -205,9 +205,9 @@ export default function HomePage() {
                           />
                         </div>
                         <CardContent className="p-4 md:p-6 flex flex-col flex-grow">
-                          <CardTitle className="text-lg md:text-xl font-bold text-primary group-hover:text-primary">{course.title}</CardTitle>
+                          <CardTitle className="text-lg md:text-xl font-bold text-primary group-hover:text-primary dark:text-primary-foreground">{course.title}</CardTitle>
                           <p className="mt-2 text-muted-foreground text-sm flex-grow dark:text-foreground/80">{course.description}</p>
-                           <div className="flex items-center mt-4 text-primary font-medium">
+                           <div className="flex items-center mt-4 text-primary font-medium dark:text-primary-foreground">
                             Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                           </div>
                         </CardContent>
@@ -245,7 +245,7 @@ export default function HomePage() {
                   <Card key={index} className="flex flex-col justify-start bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
                       <CardHeader className="flex flex-row items-center gap-4 pb-4">
                           {value.icon}
-                          <CardTitle className="text-xl font-semibold text-primary">{value.title}</CardTitle>
+                          <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
                       </CardHeader>
                       <CardContent>
                           <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
@@ -254,7 +254,7 @@ export default function HomePage() {
               ))}
                <Card className="flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
                   <CardContent className="p-4 md:p-6 text-center">
-                      <h3 className="text-xl font-bold text-primary mb-2">And so much more...</h3>
+                      <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
                       <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
                   </CardContent>
               </Card>
