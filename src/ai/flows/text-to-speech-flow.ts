@@ -68,7 +68,7 @@ const textToSpeechFlow = ai.defineFlow(
         responseModalities: ['AUDIO'],
         speechConfig: {
           voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'en-IN-Neural2-A' },
+            prebuiltVoiceConfig: { voiceName: 'erinome' },
           },
         },
       },
