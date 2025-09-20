@@ -98,7 +98,7 @@ Conversation History:
 {{role}}: {{{content}}}
 {{/each}}
 
-User's LatestMessage:
+User's Latest Message:
 {{{message}}}
 `,
 });
