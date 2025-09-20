@@ -3,6 +3,10 @@
 
 import { z } from 'zod';
 import { appendToGoogleSheet } from './sheet-action';
+import { Resend } from 'resend';
+import { siteConfig } from '@/lib/config';
+import CareerApplicationEmail from '@/emails/career-application-email';
+
 
 const applicationSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -50,17 +54,36 @@ export async function submitApplication(
       success: false,
     };
   }
+  
+  const applicationData = validatedFields.data;
 
   try {
     // Now we call the sheet action from the server
     await appendToGoogleSheet({
-      name: validatedFields.data.name,
-      email: validatedFields.data.email,
-      age: validatedFields.data.age.toString(),
-      language: validatedFields.data.language,
-      education: validatedFields.data.education,
-      resumeUrl: validatedFields.data.resume,
+      name: applicationData.name,
+      email: applicationData.email,
+      age: applicationData.age.toString(),
+      language: applicationData.language,
+      education: applicationData.education,
+      resumeUrl: applicationData.resume,
     });
+
+    // Send email notification
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: 'Verbigo Careers <onboarding@resend.dev>',
+          to: siteConfig.email,
+          subject: `New Application from ${applicationData.name} for Language Tutor`,
+          react: CareerApplicationEmail(applicationData),
+        });
+      } catch (emailError) {
+        console.error('Error sending application email:', emailError);
+      }
+    }
+
+
     return { 
       success: true, 
       message: 'Your application has been submitted successfully!',

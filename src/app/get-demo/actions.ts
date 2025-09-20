@@ -5,6 +5,9 @@ import { z } from 'zod';
 import { db } from '@/lib/firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { appendToGoogleSheet } from './sheet-action';
+import { Resend } from 'resend';
+import { siteConfig } from '@/lib/config';
+import DemoRequestEmail from '@/emails/demo-request-email';
 
 const demoRequestSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -61,6 +64,23 @@ export async function submitDemoRequest(
       email,
       contact: phoneNumber,
     });
+
+    // Send email notification
+    if (process.env.RESEND_API_KEY) {
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: 'Verbigo Demo Request <onboarding@resend.dev>',
+          to: siteConfig.email,
+          subject: `New Demo Request from ${name}`,
+          react: DemoRequestEmail({ name, email, phoneNumber }),
+        });
+      } catch (emailError: any) {
+        console.error("Resend API Error:", emailError);
+        // Don't block the user response for this
+      }
+    }
+
 
     return { 
       success: true, 

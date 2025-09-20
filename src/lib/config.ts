@@ -1,3 +1,4 @@
+
 /**
  * @fileOverview Site-wide configuration and constants.
  *
@@ -7,7 +8,7 @@
 
 export const siteConfig = {
   whatsappNumber: '7708071872',
-  email: 'hello@verbigo.ai',
+  email: 'sakthiarumugam106@gmail.com',
   socials: {
     instagram: 'https://instagram.com/verbigo',
     twitter: 'https://twitter.com/verbigo',

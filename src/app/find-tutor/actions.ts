@@ -39,9 +39,9 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
   const { name, email, whatsapp, state, language, schedule } = validatedFields.data;
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: 'Verbigo <onboarding@resend.dev>',
-      to: ['sakthistoragebackup01@gmail.com'],
+    const { data: emailData, error } = await resend.emails.send({
+      from: 'Verbigo Tutor Request <onboarding@resend.dev>',
+      to: siteConfig.email,
       subject: 'New Tutor Request from Verbigo Website',
       react: TutorRequestEmail({
         name,
@@ -58,7 +58,7 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
       return { success: false, error: error.message };
     }
 
-    return { success: true, data };
+    return { success: true, data: emailData };
   } catch (error: any) {
     console.error('Error sending email:', error);
     return { success: false, error: error.message };
