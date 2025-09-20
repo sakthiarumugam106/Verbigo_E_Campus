@@ -1,7 +1,16 @@
 
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
 
 export default function PrivacyPolicyPage() {
+  const [lastUpdated, setLastUpdated] = useState('');
+
+  useEffect(() => {
+    setLastUpdated(new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }));
+  }, []);
+
   return (
     <div className="bg-primary/5 min-h-screen py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
@@ -10,7 +19,7 @@ export default function PrivacyPolicyPage() {
             <CardTitle className="text-3xl font-bold text-primary dark:text-primary-foreground">Privacy Policy</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 text-muted-foreground prose prose-lg max-w-none">
-            <p>Last updated: {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <p>Last updated: {lastUpdated || '...'}</p>
 
             <p>Verbigo ("us", "we", or "our") operates the Verbigo website (the "Service"). This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.</p>
             
