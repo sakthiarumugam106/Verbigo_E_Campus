@@ -55,17 +55,12 @@ const ContactFormUserEmail = ({ name }: ContactFormUserEmailProps) => (
         </Section>
         
         <Section style={footer.container}>
-          <table width="100%" border={0} cellSpacing="0" cellPadding="0">
-            <tr>
-              <td valign="top" style={{ width: '50px' }}>
-                <Img src={siteConfig.assets.logoWhite} width="40" height="40" alt="Verbigo" />
-              </td>
-              <td valign="top">
-                <Text style={footer.heading}>Verbigo E-Campus</Text>
-              </td>
-            </tr>
-          </table>
-
+          <Row>
+            <Column>
+              <Text style={footer.heading}>Verbigo</Text>
+              <Text style={footer.subheading}>E-Campus for Language Intelligence</Text>
+            </Column>
+          </Row>
           <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '15px' }}>
             <tr>
               <td valign="top" style={{ width: '50%' }}>
@@ -125,7 +120,7 @@ const container = {
 };
 
 const header = {
-  backgroundColor: '#0047AB', // Verbigo Primary Blue
+  backgroundColor: '#2e378c', // Verbigo Primary Blue
   padding: '24px',
   textAlign: 'center' as const,
   backgroundImage: "url('https://firebasestudio-hosting.web.app/subtle-pattern.svg')",
@@ -198,9 +193,16 @@ const footer = {
   },
   heading: {
     color: '#ffffff',
-    fontSize: '16px',
+    fontSize: '20px',
     fontWeight: 'bold',
-    margin: '0 0 5px',
+    margin: '0',
+    padding: '0',
+    fontFamily: "'Poppins', sans-serif",
+  },
+  subheading: {
+    color: '#a8b2d1',
+    fontSize: '12px',
+    margin: '4px 0 0',
     padding: '0',
   },
   link: {

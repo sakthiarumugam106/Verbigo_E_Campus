@@ -21,7 +21,6 @@ export const siteConfig = {
   },
   assets: {
     baseUrl: 'https://firebasestudio-hosting.web.app',
-    logoWhite: 'https://firebasestudio-hosting.web.app/verbigo-logo-white.png',
     emailIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/new-post.png',
     phoneIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/phone.png',
     linkedinIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/linkedin.png',
