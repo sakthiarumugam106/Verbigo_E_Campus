@@ -6,7 +6,6 @@ import TutorRequestEmail from '@/emails/tutor-request-email';
 import { z } from 'zod';
 import { siteConfig } from '@/lib/config';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const tutorRequestSchema = z.object({
   name: z.string(),
@@ -28,6 +27,14 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
       error: validatedFields.error.flatten().fieldErrors,
     };
   }
+
+  if (!process.env.RESEND_API_KEY) {
+    console.error('Resend API Key is not set. Email not sent.');
+    // Fail silently on the server but log the error. The primary action (WhatsApp) still works.
+    return { success: true, message: 'Primary action complete.' };
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
   const { name, email, whatsapp, state, language, schedule } = validatedFields.data;
 
