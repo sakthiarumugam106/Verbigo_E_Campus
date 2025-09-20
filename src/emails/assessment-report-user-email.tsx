@@ -197,13 +197,6 @@ const footer = {
     margin: '0 0 5px',
     padding: '0',
   },
-  text: {
-    color: '#a8b2d1',
-    fontSize: '12px',
-    margin: '0',
-    padding: '0',
-    lineHeight: '1.5',
-  },
   link: {
     color: '#a8b2d1',
     textDecoration: 'none',

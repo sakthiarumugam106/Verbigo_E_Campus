@@ -9,7 +9,6 @@
 export const siteConfig = {
   whatsappNumber: '7708071872',
   email: 'sakthiarumugam106@gmail.com',
-  address: '123 Language Lane, Verbville, IN 54321',
   socials: {
     instagram: 'https://www.instagram.com/verbigo.in',
     twitter: 'https://twitter.com/verbigo_in',
@@ -22,7 +21,7 @@ export const siteConfig = {
   },
   assets: {
     baseUrl: 'https://firebasestudio-hosting.web.app',
-    logoWhite: 'https://img.icons8.com/fluency/40/FFFFFF/v.png',
+    logoWhite: 'https://firebasestudio-hosting.web.app/verbigo-logo-white.png',
     emailIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/new-post.png',
     phoneIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/phone.png',
     linkedinIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/linkedin.png',
