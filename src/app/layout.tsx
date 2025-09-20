@@ -1,7 +1,6 @@
 
 'use client'; // Required for useEffect
 
-import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/header';
 import { Footer } from '@/app/footer';
@@ -20,14 +19,6 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
-// We can't export metadata from a client component, so we'll leave this here.
-// The metadata from the previous version of the file will still be used.
-// export const metadata: Metadata = {
-//   title: 'Verbigo | Master Your Language Skills',
-//   description:
-//     'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
-// };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,13 +32,18 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        <title>Verbigo | Master Your Language Skills</title>
+        <meta name="description" content="Unlock your full potential with expert-led courses in grammar, writing, and communication." />
+        <link rel="icon" href="/logo.png" />
+      </head>
       <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
         >
-          {isClient && (
+          {isClient ? (
             <>
               <div className="flex min-h-screen flex-col">
                 <Header />
@@ -59,6 +55,12 @@ export default function RootLayout({
               <BackToTopButton />
               <Toaster />
             </>
+          ) : (
+             <div className="flex min-h-screen flex-col">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
           )}
         </ThemeProvider>
       </body>
