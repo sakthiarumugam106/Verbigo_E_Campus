@@ -141,7 +141,7 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover shadow-2xl border-4 border-white/80">
+            <div className="mx-auto aspect-video overflow-hidden rounded-xl shadow-2xl border-4 border-white/80">
               <video
                 src="https://cdn.pixabay.com/video/2024/05/29/213054_large.mp4"
                 autoPlay
@@ -328,6 +328,8 @@ export default function HomePage() {
     </>
   );
 }
+
+    
 
     
 
