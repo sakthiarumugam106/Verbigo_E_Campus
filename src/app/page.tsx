@@ -149,7 +149,7 @@ export default function HomePage() {
                 className="object-cover"
                 data-ai-hint="world language map"
                 />
-                 <blockquote className="absolute bottom-0 left-0 right-0 bg-background/70 backdrop-blur-sm p-4 text-center">
+                 <blockquote className="absolute bottom-0 left-0 right-0 bg-background/70 backdrop-blur-sm p-4 text-center rounded-b-xl">
                     <p className="text-lg font-medium text-foreground">"To have another language is to possess a second soul."</p>
                     <footer className="mt-2 text-sm text-muted-foreground">- Charlemagne</footer>
                 </blockquote>
@@ -331,3 +331,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
