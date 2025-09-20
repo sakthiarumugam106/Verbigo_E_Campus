@@ -47,19 +47,19 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
         >
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
           {isClient && (
             <>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
               <AiChatbot />
               <WhatsAppButton />
               <BackToTopButton />
-              <Toaster />
             </>
           )}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
