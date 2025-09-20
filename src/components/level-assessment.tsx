@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { whatsapp } from '@/lib/config';
+import { cn } from '@/lib/utils';
 import { CheckCircle, GraduationCap, Loader2, MessageSquare, Star } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { WhatsAppButtonIcon } from './whatsapp-button-icon';
@@ -25,6 +26,7 @@ type AssessmentState = {
 }
 
 const ASSESSMENT_STORAGE_KEY = 'verbigo-assessment-state';
+const MIN_WORDS = 10;
 
 const StarRating = ({ level }: { level: 'Beginner' | 'Intermediate' | 'Advanced' }) => {
   const rating = level === 'Beginner' ? 1 : level === 'Intermediate' ? 2 : 3;
@@ -54,6 +56,9 @@ export function LevelAssessment() {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
+  const [answerError, setAnswerError] = useState<string | null>(null);
+
+  const wordCount = currentAnswer.trim() === '' ? 0 : currentAnswer.trim().split(/\s+/).length;
 
   useEffect(() => {
     setIsClient(true);
@@ -102,12 +107,26 @@ export function LevelAssessment() {
     const initialState = { questions: [], report: null, currentQuestion: null };
     setAssessmentState(initialState);
     setCurrentAnswer('');
+    setAnswerError(null);
     getNextQuestion(initialState.questions);
+  };
+
+  const handleAnswerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentAnswer(e.target.value);
+    if (answerError) {
+      setAnswerError(null);
+    }
   };
 
   const handleAnswerSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentAnswer.trim() || !currentQuestion) return;
+
+    if (wordCount < MIN_WORDS) {
+      setAnswerError(`Please provide a more detailed answer (at least ${MIN_WORDS} words).`);
+      return;
+    }
+    setAnswerError(null);
 
     const newHistory = [...questions, { question: currentQuestion, answer: currentAnswer }];
     setCurrentAnswer('');
@@ -209,16 +228,22 @@ export function LevelAssessment() {
             id="answer"
             name="answer"
             value={currentAnswer}
-            onChange={(e) => setCurrentAnswer(e.target.value)}
+            onChange={handleAnswerChange}
             placeholder="Type your answer here..."
             required
             disabled={isPending}
             autoComplete="off"
           />
+           <div className="text-xs text-right text-muted-foreground pr-1">
+            <span className={cn(wordCount < MIN_WORDS ? "text-destructive" : "text-green-600")}>
+                {wordCount} / {MIN_WORDS} words
+            </span>
+           </div>
         </div>
+         {answerError && <p className="text-destructive text-sm">{answerError}</p>}
          {error && <p className="text-destructive text-sm">{error}</p>}
         <div className="flex justify-end">
-          <Button type="submit" disabled={isPending || !currentAnswer.trim()}>
+          <Button type="submit" disabled={isPending || !currentAnswer.trim() || wordCount < MIN_WORDS}>
             {isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
