@@ -4,7 +4,8 @@
 import { siteConfig } from '@/lib/config';
 import { z } from 'zod';
 import { Resend } from 'resend';
-import ContactFormEmail from '@/emails/contact-form-email';
+import ContactFormAdminEmail from '@/emails/contact-form-admin-email';
+import ContactFormUserEmail from '@/emails/contact-form-user-email';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
@@ -41,6 +42,7 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
     message,
   };
 
+  let sheetSuccess = false;
   try {
     const response = await fetch(siteConfig.googleSheetUrls.contact, {
       method: "POST",
@@ -49,29 +51,44 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
       cache: "no-store",
     });
 
-    if (!response.ok) {
+    if (response.ok) {
+      sheetSuccess = true;
+    } else {
       const errorText = await response.text();
       console.error("Google Sheet API Error:", errorText);
-      // We can still try to send the email even if sheet fails
     }
   } catch (error: any) {
     console.error("Error in appendContactToGoogleSheet:", error);
-    // We can still try to send the email even if sheet fails
   }
 
-  // Send email notification
+  // Send email notifications
   if (process.env.RESEND_API_KEY) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const fromAddress = 'Verbigo <onboarding@resend.dev>';
+
+    // Admin notification
     try {
-      const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
-        from: 'Verbigo Contact <onboarding@resend.dev>',
+        from: fromAddress,
         to: siteConfig.email,
         subject: `New Contact Form Submission from ${name}`,
-        react: ContactFormEmail({ name, email, phoneNumber, message }),
+        react: ContactFormAdminEmail({ name, email, phoneNumber, message, sheetSuccess }),
       });
-    } catch (emailError: any) {
-      console.error("Resend API Error:", emailError);
-      // Don't block the user response for this
+    } catch (adminEmailError) {
+      console.error("Resend API Error (Admin):", adminEmailError);
+    }
+
+    // User confirmation
+    try {
+      await resend.emails.send({
+        from: fromAddress,
+        // This will only work if the domain is verified. For testing, you can change `email` to `siteConfig.email`.
+        to: email,
+        subject: "We've Received Your Message!",
+        react: ContactFormUserEmail({ name }),
+      });
+    } catch (userEmailError) {
+       console.error("Resend API Error (User):", userEmailError);
     }
   }
 

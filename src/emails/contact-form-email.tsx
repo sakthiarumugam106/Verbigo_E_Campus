@@ -12,6 +12,11 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
+// This component is being replaced by more specific templates:
+// - contact-form-admin-email.tsx
+// - contact-form-user-email.tsx
+// This file can be considered deprecated and is no longer in use.
+
 interface ContactFormEmailProps {
   name: string;
   email: string;
