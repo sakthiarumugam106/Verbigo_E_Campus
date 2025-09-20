@@ -21,13 +21,13 @@ export const siteConfig = {
     careers: "https://script.google.com/macros/s/AKfycbztmUYt4_YyE0ZbAu-_uDLQW6jvMLMy6UKfOtU5D-hLpdNCK1mtVGy-f97q2a4h_qEi/exec",
   },
   assets: {
-    baseUrl: 'https://img.icons8.com',
-    logoWhite: '/fluency/40/FFFFFF/v.png',
-    emailIcon: '/material-outlined/16/a8b2d1/new-post.png',
-    phoneIcon: '/material-outlined/16/a8b2d1/phone.png',
-    linkedinIcon: '/ios-filled/24/a8b2d1/linkedin.png',
-    instagramIcon: '/ios-filled/24/a8b2d1/instagram-new.png',
-    twitterIcon: '/ios-filled/24/a8b2d1/twitterx.png',
+    baseUrl: 'https://firebasestudio-hosting.web.app',
+    logoWhite: 'https://img.icons8.com/fluency/40/FFFFFF/v.png',
+    emailIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/new-post.png',
+    phoneIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/phone.png',
+    linkedinIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/linkedin.png',
+    instagramIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/instagram-new.png',
+    twitterIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/twitterx.png',
   }
 };
 

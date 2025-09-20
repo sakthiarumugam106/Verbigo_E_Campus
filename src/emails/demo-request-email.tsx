@@ -55,11 +55,10 @@ const DemoRequestEmail = ({
           <table width="100%" border={0} cellSpacing="0" cellPadding="0">
             <tr>
               <td valign="top" style={{ width: '50px' }}>
-                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.logoWhite}`} width="40" height="40" alt="Verbigo" />
+                <Img src={siteConfig.assets.logoWhite} width="40" height="40" alt="Verbigo" />
               </td>
               <td valign="top">
                 <Text style={footer.heading}>Verbigo E-Campus</Text>
-                <Text style={footer.text}>{siteConfig.address}</Text>
               </td>
             </tr>
           </table>
@@ -68,13 +67,13 @@ const DemoRequestEmail = ({
             <tr>
               <td valign="top" style={{ width: '50%' }}>
                 <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
-                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.emailIcon}`} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
+                  <Img src={siteConfig.assets.emailIcon} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
                   <span style={{verticalAlign: 'middle'}}>{siteConfig.email}</span>
                 </Link>
               </td>
               <td valign="top" style={{ width: '50%' }}>
                 <Link href={`https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, '')}`} style={footer.link}>
-                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.phoneIcon}`} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
+                  <Img src={siteConfig.assets.phoneIcon} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
                   <span style={{verticalAlign: 'middle'}}>+{siteConfig.whatsappNumber}</span>
                 </Link>
               </td>
@@ -85,13 +84,13 @@ const DemoRequestEmail = ({
             <tr>
               <td>
                 <Link href={siteConfig.socials.linkedin} style={{...footer.link, ...footer.social}}>
-                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.linkedinIcon}`} width="24" height="24" alt="LinkedIn" />
+                  <Img src={siteConfig.assets.linkedinIcon} width="24" height="24" alt="LinkedIn" />
                 </Link>
                 <Link href={siteConfig.socials.instagram} style={{...footer.link, ...footer.social}}>
-                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.instagramIcon}`} width="24" height="24" alt="Instagram" />
+                  <Img src={siteConfig.assets.instagramIcon} width="24" height="24" alt="Instagram" />
                 </Link>
                 <Link href={siteConfig.socials.twitter} style={{...footer.link, ...footer.social}}>
-                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.twitterIcon}`} width="24" height="24" alt="Twitter" />
+                  <Img src={siteConfig.assets.twitterIcon} width="24" height="24" alt="Twitter" />
                 </Link>
               </td>
             </tr>
