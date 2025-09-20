@@ -141,15 +141,16 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <Image
-              src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop"
-              alt="Confident students learning at Verbigo E-Campus"
-              width={600}
-              height={400}
-              className="mx-auto aspect-video rounded-xl object-cover shadow-2xl border-4 border-white/80"
-              data-ai-hint="language class students"
-              priority
-            />
+            <div className="mx-auto aspect-video overflow-hidden rounded-xl object-cover shadow-2xl border-4 border-white/80">
+              <video
+                src="https://cdn.pixabay.com/video/2024/05/29/213054_large.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -327,5 +328,7 @@ export default function HomePage() {
     </>
   );
 }
+
+    
 
     
