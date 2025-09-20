@@ -120,8 +120,8 @@ export function AiChatbot() {
   useEffect(() => {
     if(isClient) {
       try {
-        if (history.length > 0) {
-            localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(history));
+        if (history.length > 1 || (history.length === 1 && history[0].content !== initialMessage.content)) {
+          localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(history));
         } else {
             localStorage.removeItem(CHAT_STORAGE_KEY);
         }
@@ -163,9 +163,15 @@ export function AiChatbot() {
         const result = await grammarCoach({ history: aiHistory, message });
         setHistory((prev) => [...prev, { role: 'model', content: result.response }]);
 
-        // Generate and play audio for the response
-        const audioResult = await textToSpeech(result.response);
-        setAudioUrl(audioResult.audio);
+        // Generate and play audio in parallel
+        textToSpeech(result.response).then(audioResult => {
+            setAudioUrl(audioResult.audio);
+        }).catch(async (ttsError) => {
+            console.error('AI TTS error:', ttsError);
+             const errorMessage = "I'm sorry, I encountered an error generating audio.";
+             const audioResult = await textToSpeech(errorMessage);
+             setAudioUrl(audioResult.audio);
+        });
 
       } catch (error) {
         console.error('AI chat error:', error);
