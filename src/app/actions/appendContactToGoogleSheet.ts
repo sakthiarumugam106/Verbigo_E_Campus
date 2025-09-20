@@ -64,7 +64,7 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
-        from: 'Verbigo Contact <hello@verbigo.in>',
+        from: 'Verbigo Contact <onboarding@resend.dev>',
         to: siteConfig.email,
         subject: `New Contact Form Submission from ${name}`,
         react: ContactFormEmail({ name, email, phoneNumber, message }),

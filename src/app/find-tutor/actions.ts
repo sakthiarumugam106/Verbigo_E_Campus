@@ -42,7 +42,7 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
     // Attempt to send notification to admin
     try {
         await resend.emails.send({
-            from: 'Verbigo Tutor Request <hello@verbigo.in>',
+            from: 'Verbigo Tutor Request <onboarding@resend.dev>',
             to: siteConfig.email,
             subject: 'New Tutor Request from Verbigo Website',
             react: TutorRequestEmail({
@@ -62,7 +62,7 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
     // Attempt to send confirmation to user
     try {
         await resend.emails.send({
-            from: 'Verbigo <hello@verbigo.in>',
+            from: 'Verbigo <onboarding@resend.dev>',
             // IMPORTANT: For development with an unverified domain, we are sending this to the admin's email.
             // For production, change this back to the dynamic 'email' variable from the form
             // after you have verified your domain in Resend.
