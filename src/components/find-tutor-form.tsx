@@ -167,7 +167,7 @@ export function FindTutorForm() {
                     Submitting...
                 </>
             ) : (
-                'Submit & Chat on WhatsApp'
+                'Submit & chat'
             )}
         </Button>
       </div>
