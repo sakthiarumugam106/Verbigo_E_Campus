@@ -127,6 +127,10 @@ export default function HomePage() {
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
                   Learn english through your native language
                 </h1>
+                <blockquote className="text-center">
+                    <p className="text-lg font-medium text-primary-foreground/80">"To have another language is to possess a second soul."</p>
+                    <footer className="mt-2 text-sm text-primary-foreground/60">- Charlemagne</footer>
+                </blockquote>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
                  <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
