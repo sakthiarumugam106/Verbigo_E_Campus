@@ -147,7 +147,7 @@ export default function HomePage() {
             </div>
              <div className="relative h-80 lg:h-96 w-full group">
                <Image
-                src="https://firebasestudio-hosting.web.app/World_Languages.png"
+                src="/Images/World_Languages.png"
                 alt="World map of official languages"
                 fill
                 className="rounded-xl object-contain shadow-2xl border-4 border-white/80"
