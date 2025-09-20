@@ -52,42 +52,50 @@ const DemoRequestEmail = ({
             </Section>
         </Section>
         <Section style={footer.container}>
-          <Row>
-            <Column>
-              <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.logoWhite}`} width="40" height="40" alt="Verbigo" />
-            </Column>
-            <Column style={{ paddingLeft: '15px' }}>
-              <Text style={footer.heading}>Verbigo E-Campus</Text>
-              <Text style={footer.text}>{siteConfig.address}</Text>
-            </Column>
-          </Row>
-          <Row style={{ paddingTop: '15px' }}>
-            <Column>
-              <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
-                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.emailIcon}`} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
-                <span style={{verticalAlign: 'middle'}}>{siteConfig.email}</span>
-              </Link>
-            </Column>
-            <Column>
-              <Link href={`https://wa.me/${siteConfig.whatsappNumber}`} style={footer.link}>
-                 <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.phoneIcon}`} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
-                <span style={{verticalAlign: 'middle'}}>+{siteConfig.whatsappNumber}</span>
-              </Link>
-            </Column>
-          </Row>
-          <Row style={{ paddingTop: '15px' }}>
-            <Column>
-               <Link href={siteConfig.socials.linkedin} style={{...footer.link, ...footer.social}}>
-                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.linkedinIcon}`} width="24" height="24" alt="LinkedIn" />
-              </Link>
-               <Link href={siteConfig.socials.instagram} style={{...footer.link, ...footer.social}}>
-                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.instagramIcon}`} width="24" height="24" alt="Instagram" />
-              </Link>
-               <Link href={siteConfig.socials.twitter} style={{...footer.link, ...footer.social}}>
-                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.twitterIcon}`} width="24" height="24" alt="Twitter" />
-              </Link>
-            </Column>
-          </Row>
+          <table width="100%" border={0} cellSpacing="0" cellPadding="0">
+            <tr>
+              <td valign="top" style={{ width: '50px' }}>
+                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.logoWhite}`} width="40" height="40" alt="Verbigo" />
+              </td>
+              <td valign="top">
+                <Text style={footer.heading}>Verbigo E-Campus</Text>
+                <Text style={footer.text}>{siteConfig.address}</Text>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '15px' }}>
+            <tr>
+              <td valign="top" style={{ width: '50%' }}>
+                <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
+                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.emailIcon}`} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
+                  <span style={{verticalAlign: 'middle'}}>{siteConfig.email}</span>
+                </Link>
+              </td>
+              <td valign="top" style={{ width: '50%' }}>
+                <Link href={`https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, '')}`} style={footer.link}>
+                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.phoneIcon}`} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
+                  <span style={{verticalAlign: 'middle'}}>+{siteConfig.whatsappNumber}</span>
+                </Link>
+              </td>
+            </tr>
+          </table>
+          
+          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '15px' }}>
+            <tr>
+              <td>
+                <Link href={siteConfig.socials.linkedin} style={{...footer.link, ...footer.social}}>
+                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.linkedinIcon}`} width="24" height="24" alt="LinkedIn" />
+                </Link>
+                <Link href={siteConfig.socials.instagram} style={{...footer.link, ...footer.social}}>
+                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.instagramIcon}`} width="24" height="24" alt="Instagram" />
+                </Link>
+                <Link href={siteConfig.socials.twitter} style={{...footer.link, ...footer.social}}>
+                  <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.twitterIcon}`} width="24" height="24" alt="Twitter" />
+                </Link>
+              </td>
+            </tr>
+          </table>
           <Text style={footer.copyright}>© {new Date().getFullYear()} Verbigo. All Rights Reserved.</Text>
         </Section>
       </Container>
@@ -167,18 +175,19 @@ const footer = {
     backgroundColor: '#0a192f',
     color: '#a8b2d1',
     padding: '25px 40px',
-    textAlign: 'left' as const,
   },
   heading: {
     color: '#ffffff',
     fontSize: '16px',
     fontWeight: 'bold',
     margin: '0 0 5px',
+    padding: '0',
   },
   text: {
     color: '#a8b2d1',
     fontSize: '12px',
     margin: '0',
+    padding: '0',
     lineHeight: '1.5',
   },
   link: {
