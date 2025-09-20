@@ -68,7 +68,10 @@ const textToSpeechFlow = ai.defineFlow(
         responseModalities: ['AUDIO'],
         speechConfig: {
           voiceConfig: {
-            prebuiltVoiceConfig: { voiceName: 'erinome' },
+            customVoiceConfig: {
+                languageCode: 'en-IN',
+                name: 'en-IN-Standard-A',
+            }
           },
         },
       },
