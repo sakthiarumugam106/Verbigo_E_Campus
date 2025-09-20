@@ -52,16 +52,18 @@ export async function sendAssessmentReport(data: SendReportData): Promise<{ succ
   try {
     // Send to Admin
     const adminEmailPromise = resend.emails.send({
-      from: 'Verbigo Assessment <hello@verbigo.in>',
+      from: 'Verbigo Assessment <onboarding@resend.dev>',
       to: siteConfig.email,
       subject: `New English Assessment Report for ${userDetails.name}`,
       react: AssessmentReportAdminEmail({ report, userDetails }),
     });
 
-    // Send to User
+    // Send to User (using admin email for testing due to Resend limitations)
     const userEmailPromise = resend.emails.send({
-      from: 'Verbigo <hello@verbigo.in>',
-      to: userDetails.email,
+      from: 'Verbigo <onboarding@resend.dev>',
+      // IMPORTANT: Changed to admin email for testing. 
+      // Replace with `userDetails.email` once your domain is verified in Resend.
+      to: siteConfig.email,
       subject: 'Your Verbigo English Assessment Report',
       react: AssessmentReportUserEmail({ report, name: userDetails.name }),
     });
@@ -76,7 +78,6 @@ export async function sendAssessmentReport(data: SendReportData): Promise<{ succ
     }
     
     // We can consider it a success if at least the admin email went through.
-    // Or even if both failed, from user perspective the whatsapp part might still work.
     // Let's return success and just log errors.
     
     return { success: true };
