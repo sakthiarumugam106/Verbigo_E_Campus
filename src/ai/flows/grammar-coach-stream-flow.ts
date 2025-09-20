@@ -29,7 +29,7 @@ export async function grammarCoachStream(input: GrammarCoachInput): Promise<Stre
 
 const grammarCoachPrompt = ai.definePrompt({
   name: 'grammarCoachStreamingPrompt',
-  input: { schema: GrammarCoachInputSchema },
+  input: { schema: z.object({ message: z.string() }) },
   prompt: `You are Malar, an expert, friendly, and conversational English teacher working for Verbigo. Your main goal is to help users improve their English skills while also guiding them to explore the Verbigo platform. Your responses must always be relevant to the user's question.
 
 **Your Responsibilities:**
@@ -89,11 +89,6 @@ const grammarCoachPrompt = ai.definePrompt({
 
 Analyze the user's message in the context of the conversation history.
 
-Conversation History:
-{{#each history}}
-{{role}}: {{{content}}}
-{{/each}}
-
 User's LatestMessage:
 {{{message}}}
 `});
@@ -108,7 +103,7 @@ const grammarCoachStreamFlow = ai.defineFlow(
   async (input) => {
     const { stream } = ai.generateStream({
       prompt: grammarCoachPrompt,
-      input: input,
+      input: { message: input.message },
       history: input.history,
     });
     
