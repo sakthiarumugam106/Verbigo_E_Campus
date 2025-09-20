@@ -92,6 +92,11 @@ export function AiChatbot() {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (chatCardRef.current && !chatCardRef.current.contains(event.target as Node)) {
+        // Also check if the click was on the toggle button
+        const toggleButton = document.querySelector('[aria-label="Toggle AI Chatbot"]');
+        if (toggleButton && toggleButton.contains(event.target as Node)) {
+            return;
+        }
         setIsOpen(false);
       }
     }
@@ -165,7 +170,6 @@ export function AiChatbot() {
         const aiMessage: Message = { role: 'model', content: aiResponseText };
         setHistory(prev => [...prev, aiMessage]);
         
-        // Generate and play audio in parallel, with graceful error handling for rate limits
         try {
           const audioResult = await textToSpeech(aiResponseText);
           setAudioUrl(audioResult.audio);
@@ -175,7 +179,7 @@ export function AiChatbot() {
           } else {
             console.error('AI TTS error:', ttsError);
           }
-           setAudioUrl(null); // Ensure no audio plays on error
+           setAudioUrl(null);
         }
 
       } catch (error) {
@@ -208,7 +212,6 @@ export function AiChatbot() {
       audioRef.current.currentTime = 0;
       setAudioUrl(null);
     }
-    // Placeholder for Speech-to-Text logic
     setIsRecording(!isRecording); 
   }
 
@@ -220,11 +223,14 @@ export function AiChatbot() {
     <>
       <div
         className={cn(
-          "fixed bottom-0 right-0 z-50 transition-all duration-300 ease-in-out md:bottom-28 md:right-6",
+          "fixed bottom-4 right-4 z-50 transition-all duration-300 ease-in-out md:bottom-28 md:right-6",
           isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         )}
       >
-        <Card className="w-screen h-[60vh] md:w-[350px] md:h-[450px] shadow-2xl flex flex-col rounded-none md:rounded-xl" ref={chatCardRef}>
+        <Card 
+          className="w-[calc(100vw-2rem)] h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] shadow-2xl flex flex-col rounded-xl"
+          ref={chatCardRef}
+        >
           <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4 overflow-hidden">
             <div 
               className="absolute inset-0 bg-repeat" 
