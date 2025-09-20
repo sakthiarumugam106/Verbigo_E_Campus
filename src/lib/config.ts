@@ -9,10 +9,11 @@
 export const siteConfig = {
   whatsappNumber: '7708071872',
   email: 'sakthiarumugam106@gmail.com',
+  address: '123 Language Lane, Verbville, IN 54321',
   socials: {
-    instagram: 'https://instagram.com/verbigo',
-    twitter: 'https://twitter.com/verbigo',
-    linkedin: 'https://linkedin.com/company/verbigo',
+    instagram: 'https://www.instagram.com/verbigo.in',
+    twitter: 'https://twitter.com/verbigo_in',
+    linkedin: 'https://www.linkedin.com/company/verbigo',
   },
   googleSheetUrls: {
     contact: "https://script.google.com/macros/s/AKfycbzs942Zf1lwHmdIFOdc07dPRSvahKLv2NKIosImOtLMt7jdgLfbZm7NoWKNnQpf0m4/exec",

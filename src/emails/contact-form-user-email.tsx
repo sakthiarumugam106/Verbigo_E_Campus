@@ -12,12 +12,16 @@ import {
   Link,
   Column,
   Row,
+  Img,
 } from '@react-email/components';
 import * as React from 'react';
+import { siteConfig } from '@/lib/config';
 
 interface ContactFormUserEmailProps {
   name: string;
 }
+
+const baseUrl = 'https://firebasestudio-hosting.web.app';
 
 const ContactFormUserEmail = ({ name }: ContactFormUserEmailProps) => (
   <Html>
@@ -50,21 +54,45 @@ const ContactFormUserEmail = ({ name }: ContactFormUserEmailProps) => (
               <em>Example: The weather will **affect** our plans. The change had a positive **effect**.</em>
             </Text>
           </Section>
-          
-          <Text style={footerText}>
-            Explore more on our website or visit our social channels.
-          </Text>
         </Section>
         
         <Section style={footer}>
           <Row>
-            <Column align="center">
-              <Link href="https://verbigo.in/about-us" style={footerLink}>About Us</Link> | 
-              <Link href="https://verbigo.in/#courses" style={footerLink}>Courses</Link> | 
-              <Link href="https://verbigo.in/blog" style={footerLink}>Blog</Link>
+            <Column style={{ width: '64px' }}>
+               <Img src={`${baseUrl}/logo-white.png`} width="40" height="40" alt="Verbigo" />
+            </Column>
+            <Column>
+              <Text style={footer.heading}>Verbigo E-Campus</Text>
+              <Text style={footer.text}>{siteConfig.address}</Text>
             </Column>
           </Row>
-          <Text style={copyright}>© {new Date().getFullYear()} Verbigo. All Rights Reserved.</Text>
+          <Row style={{ paddingTop: '10px' }}>
+            <Column>
+              <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
+                <Img src={`${baseUrl}/email-icon.png`} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '5px' }}/>
+                {siteConfig.email}
+              </Link>
+              <span style={footer.separator}>|</span>
+              <Link href={`https://wa.me/${siteConfig.whatsappNumber}`} style={footer.link}>
+                 <Img src={`${baseUrl}/phone-icon.png`} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '5px' }}/>
+                +{siteConfig.whatsappNumber}
+              </Link>
+            </Column>
+          </Row>
+          <Row style={{ paddingTop: '10px' }}>
+            <Column>
+               <Link href={siteConfig.socials.linkedin} style={{...footer.link, ...footer.social}}>
+                <Img src={`${baseUrl}/linkedin-icon.png`} width="20" height="20" alt="LinkedIn" />
+              </Link>
+               <Link href={siteConfig.socials.instagram} style={{...footer.link, ...footer.social}}>
+                <Img src={`${baseUrl}/instagram-icon.png`} width="20" height="20" alt="Instagram" />
+              </Link>
+               <Link href={siteConfig.socials.twitter} style={{...footer.link, ...footer.social}}>
+                <Img src={`${baseUrl}/twitter-icon.png`} width="20" height="20" alt="Twitter" />
+              </Link>
+            </Column>
+          </Row>
+          <Text style={footer.copyright}>© {new Date().getFullYear()} Verbigo. All Rights Reserved.</Text>
         </Section>
       </Container>
     </Body>
@@ -156,30 +184,44 @@ const tipExample = {
   margin: 0,
 };
 
-const footerText = {
-  ...paragraph,
-  textAlign: 'center' as const,
-  fontSize: '14px',
-  color: '#8492a6',
-  marginTop: '30px',
-  marginBottom: '20px',
-};
-
 const footer = {
-  backgroundColor: '#f0f5ff',
-  padding: '20px 40px',
-};
-
-const footerLink = {
-  color: '#0047AB',
-  textDecoration: 'none',
-  fontSize: '14px',
-  margin: '0 8px',
-};
-
-const copyright = {
-  fontSize: '12px',
-  color: '#8492a6',
-  textAlign: 'center' as const,
-  marginTop: '16px',
+  backgroundColor: '#0a192f',
+  color: '#a8b2d1',
+  padding: '25px',
+  textAlign: 'left' as const,
+  heading: {
+    color: '#ffffff',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    margin: '0 0 5px',
+  },
+  text: {
+    color: '#a8b2d1',
+    fontSize: '12px',
+    margin: '0',
+    lineHeight: '1.5',
+  },
+  link: {
+    color: '#a8b2d1',
+    textDecoration: 'none',
+    fontSize: '12px',
+    display: 'inline-flex',
+    alignItems: 'center',
+  },
+  separator: {
+    color: '#a8b2d1',
+    margin: '0 10px',
+  },
+  social: {
+    display: 'inline-block',
+    margin: '0 5px',
+  },
+  copyright: {
+    color: '#8892b0',
+    fontSize: '10px',
+    textAlign: 'center' as const,
+    paddingTop: '15px',
+    borderTop: '1px solid #1a2c4e',
+    marginTop: '15px',
+  },
 };
