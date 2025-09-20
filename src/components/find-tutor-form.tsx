@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -10,6 +10,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { IndianStatesAndLanguages } from '@/lib/india-states-languages';
 import { whatsapp } from '@/lib/config';
+import { sendTutorRequestEmail } from '@/app/find-tutor/actions';
+import { Loader2 } from 'lucide-react';
 
 export function FindTutorForm() {
   const [formData, setFormData] = useState({
@@ -23,6 +25,7 @@ export function FindTutorForm() {
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([]);
   const [otherLanguage, setOtherLanguage] = useState('');
   const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
     if (formData.state) {
@@ -63,6 +66,7 @@ export function FindTutorForm() {
       return;
     }
     
+    // Open WhatsApp link immediately for the user
     const whatsappUrl = whatsapp.getTutorInquiryUrl(finalFormData);
     window.open(whatsappUrl, '_blank');
 
@@ -70,6 +74,18 @@ export function FindTutorForm() {
         title: 'Redirecting to WhatsApp!',
         description: 'Your message has been prepared. Please send it to connect with us.',
     });
+
+    // Send email in the background
+    startTransition(async () => {
+        const result = await sendTutorRequestEmail(finalFormData);
+        if (result.success) {
+            console.log('Tutor request email sent successfully.');
+        } else {
+            console.error('Failed to send tutor request email:', result.error);
+            // Optionally, you could show a silent error or log it.
+        }
+    });
+
   };
 
   return (
@@ -144,7 +160,16 @@ export function FindTutorForm() {
         </RadioGroup>
       </div>
       <div className="md:col-span-2 text-center mt-4">
-        <Button type="submit" className="w-full max-w-xs" size="lg">Submit & Chat on WhatsApp</Button>
+        <Button type="submit" className="w-full max-w-xs" size="lg" disabled={isPending}>
+            {isPending ? (
+                <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
+                </>
+            ) : (
+                'Submit & Chat on WhatsApp'
+            )}
+        </Button>
       </div>
     </form>
   );
