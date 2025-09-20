@@ -267,7 +267,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
                 <h2 className="text-3xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-4xl md:text-5xl">
-                    What Our Students Say
+                    Testimonials
                 </h2>
                 <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
                     Hear directly from learners who have transformed their skills with Verbigo.
@@ -327,3 +327,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
