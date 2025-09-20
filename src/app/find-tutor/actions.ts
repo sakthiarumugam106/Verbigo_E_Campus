@@ -34,7 +34,7 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Verbigo <onboarding@resend.dev>',
-      to: [siteConfig.email],
+      to: ['sakthiarumugam106@gmail.com'],
       subject: 'New Tutor Request from Verbigo Website',
       react: TutorRequestEmail({
         name,
