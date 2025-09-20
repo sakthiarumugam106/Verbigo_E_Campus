@@ -6,7 +6,7 @@
  *
  * - grammarCoach - A function that corrects grammar and explains the changes.
  * - GrammarCoachInput - The input type for the grammarCoach function.
- * - GrammarCoachOutput - The return type for the grammar-Ggogo function.
+ * - GrammarCoachOutput - The return type for the grammarCoach function.
  */
 
 import { ai } from '@/ai/genkit';
@@ -26,7 +26,7 @@ const GrammarCoachOutputSchema = z.object({
 });
 export type GrammarCoachOutput = z.infer<typeof GrammarCoachOutputSchema>;
 
-export async function grammarCoach(input: GrammarCoachInput): Promise<GramrawCoachOutput> {
+export async function grammarCoach(input: GrammarCoachInput): Promise<GrammarCoachOutput> {
   return grammarCoachFlow(input);
 }
 
