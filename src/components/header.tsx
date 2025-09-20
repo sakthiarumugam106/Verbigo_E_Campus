@@ -51,7 +51,7 @@ export function Header() {
         <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-2">
                 <Button asChild>
-                    <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
+                    <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book Demo</Link>
                 </Button>
             </div>
           <ThemeToggle />
@@ -101,7 +101,7 @@ export function Header() {
                 </nav>
                 <div className="mt-8 space-y-4">
                     <Button asChild size="lg" className="w-full">
-                        <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
+                        <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book Demo</Link>
                     </Button>
                 </div>
                 </SheetContent>
