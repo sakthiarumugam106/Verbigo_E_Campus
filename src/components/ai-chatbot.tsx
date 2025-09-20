@@ -158,20 +158,25 @@ export function AiChatbot() {
     setInput('');
 
     startTransition(async () => {
+      let aiResponseText = '';
       try {
         const result = await grammarCoach({ history: history, message });
-        const aiMessage: Message = { role: 'model', content: result.response };
+        aiResponseText = result.response;
+        const aiMessage: Message = { role: 'model', content: aiResponseText };
         setHistory(prev => [...prev, aiMessage]);
-
-        // Generate and play audio in parallel
-        textToSpeech(result.response).then(audioResult => {
-            setAudioUrl(audioResult.audio);
-        }).catch(async (ttsError) => {
+        
+        // Generate and play audio in parallel, with graceful error handling for rate limits
+        try {
+          const audioResult = await textToSpeech(aiResponseText);
+          setAudioUrl(audioResult.audio);
+        } catch (ttsError: any) {
+          if (ttsError.message && ttsError.message.includes('429')) {
+             console.warn("TTS rate limit exceeded. Audio generation is temporarily unavailable.");
+          } else {
             console.error('AI TTS error:', ttsError);
-             const errorMessage = "I'm sorry, I encountered an error generating audio.";
-             const audioResult = await textToSpeech(errorMessage);
-             setAudioUrl(audioResult.audio);
-        });
+          }
+           setAudioUrl(null); // Ensure no audio plays on error
+        }
 
       } catch (error) {
         console.error('AI chat error:', error);
@@ -180,8 +185,13 @@ export function AiChatbot() {
           ...prev,
           { role: 'model', content: errorMessage },
         ]);
-        const audioResult = await textToSpeech(errorMessage);
-        setAudioUrl(audioResult.audio);
+         try {
+           const audioResult = await textToSpeech(errorMessage);
+           setAudioUrl(audioResult.audio);
+         } catch (ttsError) {
+           console.error('Error generating audio for error message:', ttsError);
+           setAudioUrl(null);
+         }
       }
     });
   };
@@ -302,5 +312,3 @@ export function AiChatbot() {
     </>
   );
 }
-
-    
