@@ -1,7 +1,7 @@
 
 'use client';
 
-import { grammarCoachStream } from '@/ai/flows/grammar-coach-stream-flow';
+import { grammarCoach } from '@/ai/flows/grammar-coach-flow';
 import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -153,32 +153,18 @@ export function AiChatbot() {
 
     const userMessage: Message = { role: 'user', content: input };
     const newHistory = [...history, userMessage];
-    
     setHistory(newHistory);
-    setHistory(prev => [...prev, { role: 'model', content: '' }]);
-    
     const message = input;
     setInput('');
 
     startTransition(async () => {
       try {
-        // Pass the history and the new message separately
-        const stream = await grammarCoachStream({ history, message });
-        let fullResponse = '';
-        for await (const chunk of stream) {
-            const textChunk = chunk.text;
-            if (textChunk) {
-                fullResponse += textChunk;
-                setHistory(prev => {
-                    const newHist = [...prev];
-                    newHist[newHist.length-1].content = fullResponse;
-                    return newHist;
-                });
-            }
-        }
+        const result = await grammarCoach({ history: history, message });
+        const aiMessage: Message = { role: 'model', content: result.response };
+        setHistory(prev => [...prev, aiMessage]);
 
         // Generate and play audio in parallel
-        textToSpeech(fullResponse).then(audioResult => {
+        textToSpeech(result.response).then(audioResult => {
             setAudioUrl(audioResult.audio);
         }).catch(async (ttsError) => {
             console.error('AI TTS error:', ttsError);
@@ -190,11 +176,10 @@ export function AiChatbot() {
       } catch (error) {
         console.error('AI chat error:', error);
         const errorMessage = "I'm sorry, I encountered an error. Please try again.";
-        setHistory((prev) => {
-          const newHist = [...prev];
-          newHist[newHist.length-1].content = errorMessage;
-          return newHist;
-        });
+        setHistory((prev) => [
+          ...prev,
+          { role: 'model', content: errorMessage },
+        ]);
         const audioResult = await textToSpeech(errorMessage);
         setAudioUrl(audioResult.audio);
       }
@@ -266,7 +251,7 @@ export function AiChatbot() {
                             </div>
                         </div>
                     ))}
-                    {isPending && history[history.length -1]?.content === '' && (
+                    {isPending && (
                         <div className="flex items-end gap-2 justify-start">
                              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0">
                                 <VerbigoTutorLogo width={24} height={24} />
@@ -317,3 +302,5 @@ export function AiChatbot() {
     </>
   );
 }
+
+    
