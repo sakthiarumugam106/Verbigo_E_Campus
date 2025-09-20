@@ -12,6 +12,7 @@ import { ai } from '@/ai/genkit';
 import { z } from 'zod';
 import {
   Stream,
+  Transform
 } from 'readable-stream';
 
 const GrammarCoachInputSchema = z.object({
@@ -103,23 +104,25 @@ const grammarCoachStreamFlow = ai.defineFlow(
     outputSchema: z.any(),
   },
   async (input) => {
-    const { stream } = ai.generateStream({
+    const { stream } = await ai.generate({
       prompt: {
         text: prompt,
         data: input,
       },
       history: input.history,
+      stream: true,
       output: {
         format: 'text',
       }
     });
-    
-    return stream.pipeThrough(
-        new TransformStream<any, string>({
-            transform(chunk, controller) {
-                controller.enqueue(chunk.text);
-            }
-        })
-    );
+
+    const transformStream = new Transform({
+      transform(chunk, encoding, callback) {
+        this.push(chunk.text);
+        callback();
+      }
+    });
+
+    return stream.pipe(transformStream);
   }
 );
