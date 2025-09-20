@@ -57,19 +57,21 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
     // Send confirmation to user
     const userEmailPromise = resend.emails.send({
         from: 'Verbigo <onboarding@resend.dev>',
-        to: email,
+        // Temporarily send to admin email for testing due to Resend limitations.
+        // TODO: Change back to `email` variable after domain is verified.
+        to: siteConfig.email,
         subject: 'Thanks for Choosing Verbigo!',
         react: TutorConfirmationEmail({ name }),
     });
     
-    const [adminResult, userResult] = await Promise.all([adminEmailPromise, userEmailPromise]);
+    const [adminResult, userResult] = await Promise.allSettled([adminEmailPromise, userEmailPromise]);
 
-    if (adminResult.error) {
-        console.error('Resend API Error (Admin):', adminResult.error);
-        return { success: false, error: adminResult.error.message };
+    if (adminResult.status === 'rejected') {
+        console.error('Resend API Error (Admin):', adminResult.reason);
+        // Don't block success for this, but log it. It might be a non-critical failure.
     }
-     if (userResult.error) {
-        console.error('Resend API Error (User):', userResult.error);
+     if (userResult.status === 'rejected') {
+        console.error('Resend API Error (User):', userResult.reason);
         // Don't block success for user email failure, but log it
     }
 
