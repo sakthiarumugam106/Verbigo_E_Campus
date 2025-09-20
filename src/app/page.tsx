@@ -127,9 +127,6 @@ export default function HomePage() {
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
                   Learn english through your native language
                 </h1>
-                <p className="text-lg text-primary-foreground/80 md:text-xl">
-                  "To have another language is to possess a second soul." - Charlemagne
-                </p>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
                  <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
@@ -144,7 +141,7 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-             <div className="relative h-80 lg:h-96 w-full">
+             <div className="relative h-80 lg:h-96 w-full group">
                <Image
                 src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1974&auto=format&fit=crop"
                 alt="People learning"
@@ -152,6 +149,14 @@ export default function HomePage() {
                 className="rounded-xl object-cover shadow-2xl border-4 border-white/80"
                 data-ai-hint="happy diverse people"
                 />
+                 <div className="absolute inset-x-4 bottom-4">
+                    <div className="bg-white/90 backdrop-blur-sm p-4 rounded-lg shadow-xl dark:bg-black/80">
+                        <blockquote className="text-center">
+                            <p className="text-lg font-medium text-primary dark:text-primary-foreground">"To have another language is to possess a second soul."</p>
+                            <footer className="mt-2 text-sm text-muted-foreground dark:text-foreground/80">- Charlemagne</footer>
+                        </blockquote>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
