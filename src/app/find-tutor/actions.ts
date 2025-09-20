@@ -3,6 +3,7 @@
 
 import { Resend } from 'resend';
 import TutorRequestEmail from '@/emails/tutor-request-email';
+import TutorConfirmationEmail from '@/emails/tutor-confirmation-email';
 import { z } from 'zod';
 import { siteConfig } from '@/lib/config';
 
@@ -35,11 +36,11 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);
-
   const { name, email, whatsapp, state, language, schedule } = validatedFields.data;
 
   try {
-    const { data: emailData, error } = await resend.emails.send({
+    // Send notification to admin
+    const adminEmailPromise = resend.emails.send({
       from: 'Verbigo Tutor Request <onboarding@resend.dev>',
       to: siteConfig.email,
       subject: 'New Tutor Request from Verbigo Website',
@@ -53,12 +54,27 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
       }),
     });
 
-    if (error) {
-      console.error('Resend API Error:', error);
-      return { success: false, error: error.message };
+    // Send confirmation to user
+    const userEmailPromise = resend.emails.send({
+        from: 'Verbigo <onboarding@resend.dev>',
+        to: email,
+        subject: 'Thanks for Choosing Verbigo!',
+        react: TutorConfirmationEmail({ name }),
+    });
+    
+    const [adminResult, userResult] = await Promise.all([adminEmailPromise, userEmailPromise]);
+
+    if (adminResult.error) {
+        console.error('Resend API Error (Admin):', adminResult.error);
+        return { success: false, error: adminResult.error.message };
+    }
+     if (userResult.error) {
+        console.error('Resend API Error (User):', userResult.error);
+        // Don't block success for user email failure, but log it
     }
 
-    return { success: true, data: emailData };
+
+    return { success: true };
   } catch (error: any) {
     console.error('Error sending email:', error);
     return { success: false, error: error.message };
