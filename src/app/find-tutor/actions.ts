@@ -63,10 +63,10 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
     try {
         await resend.emails.send({
             from: 'Verbigo <hello@verbigo.in>',
-            // IMPORTANT: For this to work with dynamic user emails, you must have a
-            // verified domain in your Resend account. Without it, Resend will only
-            // send emails TO your own verified email address for security.
-            to: email, 
+            // IMPORTANT: For development with an unverified domain, we are sending this to the admin's email.
+            // For production, change this back to the dynamic 'email' variable from the form
+            // after you have verified your domain in Resend.
+            to: siteConfig.email, 
             subject: 'Thanks for Choosing Verbigo!',
             react: TutorConfirmationEmail({ name }),
         });
