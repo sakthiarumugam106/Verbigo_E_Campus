@@ -1,5 +1,5 @@
 
-'use client'; // Required for useEffect
+'use client'; 
 
 import './globals.css';
 import { Header } from '@/components/header';
@@ -38,29 +38,25 @@ export default function RootLayout({
         <link rel="icon" href="/logo.png" />
       </head>
       <body>
-        {isClient ? (
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-          >
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-            <AiChatbot />
-            <WhatsAppButton />
-            <BackToTopButton />
-            <Toaster />
-          </ThemeProvider>
-        ) : (
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
-        )}
+          {isClient && (
+            <>
+              <AiChatbot />
+              <WhatsAppButton />
+              <BackToTopButton />
+            </>
+          )}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
