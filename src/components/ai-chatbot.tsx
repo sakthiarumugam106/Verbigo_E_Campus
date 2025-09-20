@@ -1,7 +1,7 @@
 
 'use client';
 
-import { grammarCoach } from '@/ai/flows/grammar-coach-flow';
+import { grammarCoachStream } from '@/ai/flows/grammar-coach-stream-flow';
 import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -153,18 +153,26 @@ export function AiChatbot() {
 
     const newHistory = [...history, { role: 'user' as const, content: input }];
     setHistory(newHistory);
+    setHistory(prev => [...prev, { role: 'model', content: '' }]);
     
     const message = input;
     setInput('');
 
     startTransition(async () => {
       try {
-        const aiHistory = newHistory.map(({ role, content }) => ({ role, content }));
-        const result = await grammarCoach({ history: aiHistory, message });
-        setHistory((prev) => [...prev, { role: 'model', content: result.response }]);
+        const stream = await grammarCoachStream({ history: newHistory, message });
+        let fullResponse = '';
+        for await (const chunk of stream) {
+            fullResponse += chunk;
+            setHistory(prev => {
+                const newHist = [...prev];
+                newHist[newHist.length-1].content = fullResponse;
+                return newHist;
+            });
+        }
 
         // Generate and play audio in parallel
-        textToSpeech(result.response).then(audioResult => {
+        textToSpeech(fullResponse).then(audioResult => {
             setAudioUrl(audioResult.audio);
         }).catch(async (ttsError) => {
             console.error('AI TTS error:', ttsError);
@@ -248,7 +256,7 @@ export function AiChatbot() {
                             </div>
                         </div>
                     ))}
-                    {isPending && (
+                    {isPending && history[history.length -1]?.content === '' && (
                         <div className="flex items-end gap-2 justify-start">
                              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0">
                                 <VerbigoTutorLogo width={24} height={24} />
