@@ -58,12 +58,13 @@ export async function sendAssessmentReport(data: SendReportData): Promise<{ succ
       react: AssessmentReportAdminEmail({ report, userDetails }),
     });
 
-    // Send to User (using admin email for testing due to Resend limitations)
+    // Send to User
+    // IMPORTANT: For development, this sends to the admin's verified email.
+    // Once your domain is verified in Resend, change `to: siteConfig.email` 
+    // to `to: userDetails.email` to send to the actual user.
     const userEmailPromise = resend.emails.send({
       from: 'Verbigo <onboarding@resend.dev>',
-      // IMPORTANT: Changed to admin email for testing. 
-      // Replace with `userDetails.email` once your domain is verified in Resend.
-      to: siteConfig.email,
+      to: siteConfig.email, 
       subject: 'Your Verbigo English Assessment Report',
       react: AssessmentReportUserEmail({ report, name: userDetails.name }),
     });
@@ -78,7 +79,7 @@ export async function sendAssessmentReport(data: SendReportData): Promise<{ succ
     }
     
     // We can consider it a success if at least the admin email went through.
-    // Let's return success and just log errors.
+    // Let's return success and just log errors for now.
     
     return { success: true };
 
