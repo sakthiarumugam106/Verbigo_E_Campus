@@ -64,7 +64,8 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
         await resend.emails.send({
             from: 'Verbigo <hello@verbigo.in>',
             // IMPORTANT: For this to work with dynamic user emails, you must have a
-            // verified domain in your Resend account.
+            // verified domain in your Resend account. Without it, Resend will only
+            // send emails TO your own verified email address for security.
             to: email, 
             subject: 'Thanks for Choosing Verbigo!',
             react: TutorConfirmationEmail({ name }),
