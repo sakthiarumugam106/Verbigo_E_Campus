@@ -143,15 +143,15 @@ export default function HomePage() {
             </div>
             <div className="relative h-80 lg:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
                <Image
-                src="/Images/World_Languages.png"
+                src="/images/World_Languages.png"
                 alt="World map of official languages"
                 fill
                 className="object-cover"
                 data-ai-hint="world language map"
                 />
-                 <blockquote className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm p-4 text-center">
-                    <p className="text-lg font-medium text-white">"To have another language is to possess a second soul."</p>
-                    <footer className="mt-2 text-sm text-gray-300">- Charlemagne</footer>
+                 <blockquote className="absolute bottom-0 left-0 right-0 bg-background/70 backdrop-blur-sm p-4 text-center">
+                    <p className="text-lg font-medium text-foreground">"To have another language is to possess a second soul."</p>
+                    <footer className="mt-2 text-sm text-muted-foreground">- Charlemagne</footer>
                 </blockquote>
             </div>
           </div>
