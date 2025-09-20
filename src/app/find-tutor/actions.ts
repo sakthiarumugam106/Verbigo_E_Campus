@@ -63,10 +63,9 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
     try {
         await resend.emails.send({
             from: 'Verbigo <onboarding@resend.dev>',
-            // IMPORTANT: For development with an unverified domain, this will fail.
-            // For production, this will work correctly once you have verified
-            // your domain (e.g., verbigo.in) in your Resend account.
-            to: email, 
+            // HARDCODED FOR DEVELOPMENT: Send to admin's verified email.
+            // Replace with `email` variable after domain is verified in Resend.
+            to: siteConfig.email, 
             subject: 'Thanks for Choosing Verbigo!',
             react: TutorConfirmationEmail({ name }),
         });
