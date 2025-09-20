@@ -41,7 +41,7 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
   try {
     // Send notification to admin
     const adminEmailPromise = resend.emails.send({
-      from: 'Verbigo Tutor Request <onboarding@resend.dev>',
+      from: 'Verbigo Tutor Request <hello@verbigo.in>',
       to: siteConfig.email,
       subject: 'New Tutor Request from Verbigo Website',
       react: TutorRequestEmail({
@@ -56,7 +56,7 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
 
     // Send confirmation to user
     const userEmailPromise = resend.emails.send({
-        from: 'Verbigo <onboarding@resend.dev>',
+        from: 'Verbigo <hello@verbigo.in>',
         // IMPORTANT: For this to work with dynamic user emails, you must have a
         // verified domain in your Resend account. In the free/dev tier,
         // Resend only allows sending TO your verified admin email.

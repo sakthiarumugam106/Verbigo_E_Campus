@@ -41,7 +41,7 @@ async function sendNotificationEmail(data: DemoRequestData) {
     const DemoRequestEmail = (await import('@/emails/demo-request-email')).default;
     
     await resend.emails.send({
-      from: 'Verbigo Demo Request <onboarding@resend.dev>',
+      from: 'Verbigo Demo Request <hello@verbigo.in>',
       to: siteConfig.email,
       subject: `New Demo Request from ${data.name}`,
       react: DemoRequestEmail({ name: data.name, email: data.email, phoneNumber: data.phoneNumber }),

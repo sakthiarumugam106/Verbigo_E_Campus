@@ -6,8 +6,6 @@ import { z } from 'zod';
 import { Resend } from 'resend';
 import ContactFormEmail from '@/emails/contact-form-email';
 
-const WEB_APP_URL = siteConfig.googleSheetUrls.contact;
-
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
   email: z.string().email('Please enter a valid email address.'),
@@ -44,7 +42,7 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
   };
 
   try {
-    const response = await fetch(WEB_APP_URL, {
+    const response = await fetch(siteConfig.googleSheetUrls.contact, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -66,7 +64,7 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
       await resend.emails.send({
-        from: 'Verbigo Contact <onboarding@resend.dev>',
+        from: 'Verbigo Contact <hello@verbigo.in>',
         to: siteConfig.email,
         subject: `New Contact Form Submission from ${name}`,
         react: ContactFormEmail({ name, email, phoneNumber, message }),

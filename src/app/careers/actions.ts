@@ -73,7 +73,7 @@ export async function submitApplication(
       try {
         const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
-          from: 'Verbigo Careers <onboarding@resend.dev>',
+          from: 'Verbigo Careers <hello@verbigo.in>',
           to: siteConfig.email,
           subject: `New Application from ${applicationData.name} for Language Tutor`,
           react: CareerApplicationEmail(applicationData),
