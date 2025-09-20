@@ -10,19 +10,28 @@ import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { whatsapp } from '@/lib/config';
 import { cn } from '@/lib/utils';
-import { CheckCircle, GraduationCap, Loader2, MessageSquare, Star } from 'lucide-react';
+import { CheckCircle, GraduationCap, Loader2, MessageSquare, Star, User, Phone } from 'lucide-react';
 import { useEffect, useState, useTransition } from 'react';
 import { WhatsAppButtonIcon } from './whatsapp-button-icon';
+import { sendAssessmentReport } from '@/app/know-your-level/actions';
 
 type Question = {
   question: string;
   answer: string;
 };
 
+type UserDetails = {
+    name: string;
+    phone: string;
+    email: string;
+}
+
 type AssessmentState = {
   questions: Question[];
   currentQuestion: string | null;
   report: LevelAssessmentOutput['report'] | null;
+  userDetails: UserDetails | null;
+  view: 'idle' | 'assessing' | 'collecting_info' | 'showing_report';
 }
 
 const ASSESSMENT_STORAGE_KEY = 'verbigo-assessment-state';
@@ -50,6 +59,8 @@ export function LevelAssessment() {
     questions: [],
     currentQuestion: null,
     report: null,
+    userDetails: null,
+    view: 'idle',
   });
   const [currentAnswer, setCurrentAnswer] = useState('');
   const [isPending, startTransition] = useTransition();
@@ -65,7 +76,11 @@ export function LevelAssessment() {
     try {
       const storedState = localStorage.getItem(ASSESSMENT_STORAGE_KEY);
       if (storedState) {
-        setAssessmentState(JSON.parse(storedState));
+          const parsedState = JSON.parse(storedState);
+          // Don't restore if mid-assessment to avoid weird states
+          if (parsedState.view === 'showing_report' || parsedState.view === 'idle') {
+            setAssessmentState(parsedState);
+          }
       }
     } catch (error) {
       console.error("Could not load assessment state from localStorage", error);
@@ -82,17 +97,18 @@ export function LevelAssessment() {
     }
   }, [assessmentState, isClient]);
 
-  const { questions, currentQuestion, report } = assessmentState;
+  const { questions, currentQuestion, report, userDetails, view } = assessmentState;
 
   const getNextQuestion = (history: Question[]) => {
     setError(null);
+    setAssessmentState(prev => ({ ...prev, view: 'assessing' }));
     startTransition(async () => {
       try {
         const result = await assessLevel({ previousQuestions: history });
         if (result.isFinal && result.report) {
-          setAssessmentState({ questions: history, report: result.report, currentQuestion: null });
+          setAssessmentState(prev => ({ ...prev, questions: history, report: result.report, currentQuestion: null, view: 'collecting_info' }));
         } else if (result.nextQuestion) {
-          setAssessmentState({ questions: history, report: null, currentQuestion: result.nextQuestion });
+          setAssessmentState(prev => ({ ...prev, questions: history, report: null, currentQuestion: result.nextQuestion }));
         } else {
             setError('Could not generate the next step. Please try again.');
         }
@@ -104,7 +120,13 @@ export function LevelAssessment() {
   };
 
   const handleStart = () => {
-    const initialState = { questions: [], report: null, currentQuestion: null };
+    const initialState: AssessmentState = { 
+        questions: [], 
+        report: null, 
+        currentQuestion: null, 
+        userDetails: null, 
+        view: 'assessing' 
+    };
     setAssessmentState(initialState);
     setCurrentAnswer('');
     setAnswerError(null);
@@ -133,28 +155,65 @@ export function LevelAssessment() {
     getNextQuestion(newHistory);
   };
   
-  const handleDiscussWithTutor = () => {
-    if (!report) return;
-    
-    const whatsappUrl = whatsapp.getReportDiscussionUrl(report);
-    window.open(whatsappUrl, '_blank');
+  const handleUserInfoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const name = formData.get('name') as string;
+      const phone = formData.get('phone') as string;
+      const email = formData.get('email') as string;
 
-    toast({
-        title: 'Redirecting to WhatsApp!',
-        description: 'Your report has been prepared. Please send it to connect with a tutor.',
+      if(name && phone && email) {
+          setAssessmentState(prev => ({
+              ...prev,
+              userDetails: { name, phone, email },
+              view: 'showing_report'
+          }));
+      }
+  }
+
+  const handleDiscussWithTutor = () => {
+    if (!report || !userDetails) return;
+    
+    startTransition(async () => {
+        const result = await sendAssessmentReport({ report, userDetails });
+
+        if (result.success) {
+            const whatsappUrl = whatsapp.getReportDiscussionUrl(report);
+            window.open(whatsappUrl, '_blank');
+
+            toast({
+                title: 'Redirecting to WhatsApp!',
+                description: 'Your report has been emailed to you and the admin. Please send the prepared message on WhatsApp to connect with a tutor.',
+            });
+        } else {
+             toast({
+                title: 'Error',
+                description: result.error || 'Failed to send the report email. Please try again.',
+                variant: 'destructive',
+            });
+        }
     });
   };
 
   const progress = report ? 100 : Math.min(questions.length / 3 * 100, 100);
 
-  if (report) {
+  if (!isClient) {
+    return (
+        <div className="flex flex-col items-center justify-center text-center p-8 space-y-4">
+            <Loader2 className="h-10 w-10 text-primary dark:text-primary-foreground animate-spin" />
+            <p className="text-muted-foreground">Loading Assessment...</p>
+        </div>
+    )
+  }
+
+  if (view === 'showing_report' && report) {
     return (
         <Card className="border-green-500/50">
             <CardHeader className="text-center">
                 <CardTitle className="text-2xl font-bold text-green-600 flex items-center justify-center gap-2">
                     <CheckCircle /> Assessment Complete!
                 </CardTitle>
-                <CardDescription>Here is your proficiency report.</CardDescription>
+                <CardDescription>Here is your proficiency report{userDetails ? `, ${userDetails.name}`: ''}.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
                 <div className="text-center bg-primary/5 p-6 rounded-lg">
@@ -185,15 +244,43 @@ export function LevelAssessment() {
             </CardContent>
             <CardFooter className="flex-col sm:flex-row gap-4 pt-6">
                 <Button onClick={handleStart} variant="outline" className="w-full sm:w-auto">Start Over</Button>
-                <Button onClick={handleDiscussWithTutor} className="w-full sm:w-auto bg-green-600 hover:bg-green-700">
-                    <WhatsAppButtonIcon className="h-5 w-5"/> Discuss with Tutor
+                <Button onClick={handleDiscussWithTutor} className="w-full sm:w-auto bg-green-600 hover:bg-green-700" disabled={isPending}>
+                    {isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...</> : <><WhatsAppButtonIcon className="h-5 w-5"/> Discuss with Tutor</>}
                 </Button>
             </CardFooter>
         </Card>
     );
   }
 
-  if (isPending && !currentQuestion) {
+  if (view === 'collecting_info') {
+      return (
+          <Card>
+              <CardHeader className="text-center">
+                  <CardTitle className="text-2xl font-bold text-primary">One Last Step!</CardTitle>
+                  <CardDescription>Your report is ready. Please provide your details to view it.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                  <form onSubmit={handleUserInfoSubmit} className="space-y-4">
+                      <div className="space-y-2">
+                          <Label htmlFor="name">Full Name</Label>
+                          <Input id="name" name="name" placeholder="Jane Doe" required />
+                      </div>
+                      <div className="space-y-2">
+                          <Label htmlFor="email">Email Address</Label>
+                          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required />
+                      </div>
+                      <div className="space-y-2">
+                          <Label htmlFor="phone">Phone Number</Label>
+                          <Input id="phone" name="phone" type="tel" placeholder="+91 12345 67890" required />
+                      </div>
+                      <Button type="submit" className="w-full">View My Report</Button>
+                  </form>
+              </CardContent>
+          </Card>
+      )
+  }
+
+  if (view === 'assessing' && isPending && !currentQuestion) {
     return (
       <div className="flex flex-col items-center justify-center text-center p-8 space-y-4">
         <Loader2 className="h-10 w-10 text-primary dark:text-primary-foreground animate-spin" />
@@ -202,59 +289,59 @@ export function LevelAssessment() {
     );
   }
 
-  if (!currentQuestion) {
-    return (
+  if (view === 'assessing' && currentQuestion) {
+      return (
+        <div className="space-y-6">
+            <div className="space-y-2">
+                <Label>Question {questions.length + 1} of 3</Label>
+                <Progress value={progress} className="w-full" />
+            </div>
+          <form onSubmit={handleAnswerSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="answer" className="text-lg font-medium flex items-start gap-3">
+                 <MessageSquare className="h-5 w-5 text-primary dark:text-primary-foreground mt-1 flex-shrink-0" />
+                <span>{currentQuestion}</span>
+              </Label>
+              <Input
+                id="answer"
+                name="answer"
+                value={currentAnswer}
+                onChange={handleAnswerChange}
+                placeholder="Type your answer here..."
+                required
+                disabled={isPending}
+                autoComplete="off"
+              />
+               <div className="text-xs text-right text-muted-foreground pr-1">
+                <span className={cn(wordCount < MIN_WORDS ? "text-destructive" : "text-green-600")}>
+                    {wordCount} / {MIN_WORDS} words
+                </span>
+               </div>
+            </div>
+             {answerError && <p className="text-destructive text-sm">{answerError}</p>}
+             {error && <p className="text-destructive text-sm">{error}</p>}
+            <div className="flex justify-end">
+              <Button type="submit" disabled={isPending || !currentAnswer.trim() || wordCount < MIN_WORDS}>
+                {isPending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Evaluating...
+                  </>
+                ) : (
+                  'Next Question'
+                )}
+              </Button>
+            </div>
+          </form>
+        </div>
+      );
+  }
+
+  return (
       <div className="text-center">
         <Button onClick={handleStart} size="lg">
           <GraduationCap className="mr-2 h-5 w-5" /> Start Assessment
         </Button>
       </div>
     );
-  }
-
-  return (
-    <div className="space-y-6">
-        <div className="space-y-2">
-            <Label>Question {questions.length + 1} of 3</Label>
-            <Progress value={progress} className="w-full" />
-        </div>
-      <form onSubmit={handleAnswerSubmit} className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="answer" className="text-lg font-medium flex items-start gap-3">
-             <MessageSquare className="h-5 w-5 text-primary dark:text-primary-foreground mt-1 flex-shrink-0" />
-            <span>{currentQuestion}</span>
-          </Label>
-          <Input
-            id="answer"
-            name="answer"
-            value={currentAnswer}
-            onChange={handleAnswerChange}
-            placeholder="Type your answer here..."
-            required
-            disabled={isPending}
-            autoComplete="off"
-          />
-           <div className="text-xs text-right text-muted-foreground pr-1">
-            <span className={cn(wordCount < MIN_WORDS ? "text-destructive" : "text-green-600")}>
-                {wordCount} / {MIN_WORDS} words
-            </span>
-           </div>
-        </div>
-         {answerError && <p className="text-destructive text-sm">{answerError}</p>}
-         {error && <p className="text-destructive text-sm">{error}</p>}
-        <div className="flex justify-end">
-          <Button type="submit" disabled={isPending || !currentAnswer.trim() || wordCount < MIN_WORDS}>
-            {isPending ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Evaluating...
-              </>
-            ) : (
-              'Next Question'
-            )}
-          </Button>
-        </div>
-      </form>
-    </div>
-  );
 }
