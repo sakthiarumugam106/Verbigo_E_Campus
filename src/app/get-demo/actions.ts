@@ -79,24 +79,28 @@ export async function submitDemoRequest(
   const submissionTime = new Date();
 
   try {
-    // Save to Firestore (as a backup and for speed)
-    await addDoc(collection(db, 'demo-requests'), {
-      name,
-      email,
-      phoneNumber,
-      submittedAt: submissionTime,
-    });
-    
-    // Now, also send the data to Google Sheets from the server
-    await appendToGoogleSheet({
-      name,
-      email,
-      contact: phoneNumber,
-    });
+    // Run all operations in parallel
+    const [firestoreResult, sheetResult, emailResult] = await Promise.all([
+      addDoc(collection(db, 'demo-requests'), {
+        name,
+        email,
+        phoneNumber,
+        submittedAt: submissionTime,
+      }),
+      appendToGoogleSheet({
+        name,
+        email,
+        contact: phoneNumber,
+      }),
+      sendNotificationEmail(validatedFields.data),
+    ]);
 
-    // Send email notification
-    await sendNotificationEmail(validatedFields.data);
-
+    // Optional: Check results if needed, though for now we assume success if no errors are thrown
+    // For example, if email fails, we might not want to block the user.
+    if (!emailResult.success) {
+        // Log the email error but still return success to the user
+        console.error("Email notification failed to send, but other operations succeeded.");
+    }
 
     return { 
       success: true, 
