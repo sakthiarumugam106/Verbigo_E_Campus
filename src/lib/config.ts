@@ -19,6 +19,15 @@ export const siteConfig = {
     contact: "https://script.google.com/macros/s/AKfycbzs942Zf1lwHmdIFOdc07dPRSvahKLv2NKIosImOtLMt7jdgLfbZm7NoWKNnQpf0m4/exec",
     demo: "https://script.google.com/macros/s/AKfycbxRofdOnZAsNKHtDVC3XgJnjJiSeGtBwPL6Ra4C2AlE9FrhvwzX3xpRBe3vorJyuWKg/exec",
     careers: "https://script.google.com/macros/s/AKfycbztmUYt4_YyE0ZbAu-_uDLQW6jvMLMy6UKfOtU5D-hLpdNCK1mtVGy-f97q2a4h_qEi/exec",
+  },
+  assets: {
+    baseUrl: 'https://firebasestudio-hosting.web.app',
+    logoWhite: '/logo-white.png',
+    emailIcon: '/email-icon.png',
+    phoneIcon: '/phone-icon.png',
+    linkedinIcon: '/linkedin-icon.png',
+    instagramIcon: '/instagram-icon.png',
+    twitterIcon: '/twitter-icon.png',
   }
 };
 

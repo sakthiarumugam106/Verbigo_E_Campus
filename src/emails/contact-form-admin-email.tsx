@@ -26,8 +26,6 @@ interface ContactFormAdminEmailProps {
   sheetSuccess: boolean;
 }
 
-const baseUrl = 'https://firebasestudio-hosting.web.app';
-
 const ContactFormAdminEmail = ({
   name,
   email,
@@ -70,39 +68,40 @@ const ContactFormAdminEmail = ({
             </Row>
           </Section>
         </Section>
-        <Section style={footer}>
+        <Section style={footer.container}>
           <Row>
-            <Column style={{ width: '64px' }}>
-               <Img src={`${baseUrl}/logo-white.png`} width="40" height="40" alt="Verbigo" />
-            </Column>
             <Column>
+              <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.logoWhite}`} width="40" height="40" alt="Verbigo" />
+            </Column>
+            <Column style={{ paddingLeft: '15px' }}>
               <Text style={footer.heading}>Verbigo E-Campus</Text>
               <Text style={footer.text}>{siteConfig.address}</Text>
             </Column>
           </Row>
-          <Row style={{ paddingTop: '10px' }}>
+          <Row style={{ paddingTop: '15px' }}>
             <Column>
               <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
-                <Img src={`${baseUrl}/email-icon.png`} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '5px' }}/>
-                {siteConfig.email}
+                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.emailIcon}`} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
+                <span style={{verticalAlign: 'middle'}}>{siteConfig.email}</span>
               </Link>
-              <span style={footer.separator}>|</span>
+            </Column>
+            <Column>
               <Link href={`https://wa.me/${siteConfig.whatsappNumber}`} style={footer.link}>
-                 <Img src={`${baseUrl}/phone-icon.png`} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '5px' }}/>
-                +{siteConfig.whatsappNumber}
+                 <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.phoneIcon}`} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
+                <span style={{verticalAlign: 'middle'}}>+{siteConfig.whatsappNumber}</span>
               </Link>
             </Column>
           </Row>
-          <Row style={{ paddingTop: '10px' }}>
+          <Row style={{ paddingTop: '15px' }}>
             <Column>
                <Link href={siteConfig.socials.linkedin} style={{...footer.link, ...footer.social}}>
-                <Img src={`${baseUrl}/linkedin-icon.png`} width="20" height="20" alt="LinkedIn" />
+                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.linkedinIcon}`} width="24" height="24" alt="LinkedIn" />
               </Link>
                <Link href={siteConfig.socials.instagram} style={{...footer.link, ...footer.social}}>
-                <Img src={`${baseUrl}/instagram-icon.png`} width="20" height="20" alt="Instagram" />
+                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.instagramIcon}`} width="24" height="24" alt="Instagram" />
               </Link>
                <Link href={siteConfig.socials.twitter} style={{...footer.link, ...footer.social}}>
-                <Img src={`${baseUrl}/twitter-icon.png`} width="20" height="20" alt="Twitter" />
+                <Img src={`${siteConfig.assets.baseUrl}${siteConfig.assets.twitterIcon}`} width="24" height="24" alt="Twitter" />
               </Link>
             </Column>
           </Row>
@@ -205,10 +204,12 @@ const statusFailure = {
 };
 
 const footer = {
-  backgroundColor: '#0a192f',
-  color: '#a8b2d1',
-  padding: '25px',
-  textAlign: 'left' as const,
+  container: {
+    backgroundColor: '#0a192f',
+    color: '#a8b2d1',
+    padding: '25px 40px',
+    textAlign: 'left' as const,
+  },
   heading: {
     color: '#ffffff',
     fontSize: '16px',
@@ -225,16 +226,10 @@ const footer = {
     color: '#a8b2d1',
     textDecoration: 'none',
     fontSize: '12px',
-    display: 'inline-flex',
-    alignItems: 'center',
-  },
-  separator: {
-    color: '#a8b2d1',
-    margin: '0 10px',
   },
   social: {
     display: 'inline-block',
-    margin: '0 5px',
+    marginRight: '10px',
   },
   copyright: {
     color: '#8892b0',
