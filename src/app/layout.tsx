@@ -38,25 +38,29 @@ export default function RootLayout({
         <link rel="icon" href="/logo.png" />
       </head>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
+        {isClient ? (
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+          >
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <AiChatbot />
+            <WhatsAppButton />
+            <BackToTopButton />
+            <Toaster />
+          </ThemeProvider>
+        ) : (
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
-          {isClient ? (
-            <>
-              <AiChatbot />
-              <WhatsAppButton />
-              <BackToTopButton />
-            </>
-          ) : null}
-          <Toaster />
-        </ThemeProvider>
+        )}
       </body>
     </html>
   );
