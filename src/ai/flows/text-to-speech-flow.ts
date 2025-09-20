@@ -67,10 +67,10 @@ const textToSpeechFlow = ai.defineFlow(
       config: {
         responseModalities: ['AUDIO'],
         speechConfig: {
-          customVoiceConfig: {
+          voiceConfig: {
             languageCode: 'en-IN',
             name: 'en-IN-Standard-A',
-          }
+          },
         },
       },
       prompt: query,
@@ -92,4 +92,5 @@ const textToSpeechFlow = ai.defineFlow(
     };
   }
 );
+
 
