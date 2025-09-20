@@ -229,7 +229,7 @@ export function AiChatbot() {
             <div 
               className="absolute inset-0 bg-repeat" 
               style={{ 
-                backgroundImage: "url('https://firebasestudio-hosting.web.app/subtle-pattern.svg')",
+                backgroundImage: "url('/subtle-pattern.svg')",
                 opacity: 0.1,
               }}
             />
