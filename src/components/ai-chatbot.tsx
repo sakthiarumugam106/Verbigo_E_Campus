@@ -163,7 +163,7 @@ export function AiChatbot() {
         const stream = await grammarCoachStream({ history: newHistory, message });
         let fullResponse = '';
         for await (const chunk of stream) {
-            fullResponse += chunk;
+            fullResponse += chunk.text;
             setHistory(prev => {
                 const newHist = [...prev];
                 newHist[newHist.length-1].content = fullResponse;
@@ -184,7 +184,11 @@ export function AiChatbot() {
       } catch (error) {
         console.error('AI chat error:', error);
         const errorMessage = "I'm sorry, I encountered an error. Please try again.";
-        setHistory((prev) => [...prev, { role: 'model', content: errorMessage }]);
+        setHistory((prev) => {
+          const newHist = [...prev];
+          newHist[newHist.length-1].content = errorMessage;
+          return newHist;
+        });
         const audioResult = await textToSpeech(errorMessage);
         setAudioUrl(audioResult.audio);
       }
