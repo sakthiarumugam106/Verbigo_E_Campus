@@ -2,16 +2,17 @@
 'use client';
 
 import { grammarCoach } from '@/ai/flows/grammar-coach-flow';
+import { textToSpeech } from '@/ai/flows/text-to-speech-flow';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
-import { Loader2, MessageCircle, Send, X } from 'lucide-react';
-import { useEffect, useRef, useState, useTransition } from 'react';
-import { VerbigoTutorLogo } from './verbigo-tutor-logo';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
+import { Loader2, Mic, MicOff, Send, X } from 'lucide-react';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { VerbigoTutorLogo } from './verbigo-tutor-logo';
 
 type Message = {
   role: 'user' | 'model';
@@ -26,8 +27,13 @@ export function AiChatbot() {
   const [history, setHistory] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isPending, startTransition] = useTransition();
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const chatCardRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
   const [isClient, setIsClient] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const isMobile = useIsMobile();
@@ -108,6 +114,12 @@ export function AiChatbot() {
     }
   }, [history, isClient]);
 
+  useEffect(() => {
+    if (audioUrl && audioRef.current) {
+        audioRef.current.play().catch(e => console.error("Audio playback failed", e));
+    }
+  }, [audioUrl]);
+
   const handleToggle = () => {
     if (isOpen) {
       setIsOpen(false);
@@ -133,9 +145,17 @@ export function AiChatbot() {
         const aiHistory = newHistory.map(({ role, content }) => ({ role, content }));
         const result = await grammarCoach({ history: aiHistory, message });
         setHistory((prev) => [...prev, { role: 'model', content: result.response }]);
+
+        // Generate and play audio for the response
+        const audioResult = await textToSpeech(result.response);
+        setAudioUrl(audioResult.audio);
+
       } catch (error) {
         console.error('AI chat error:', error);
-        setHistory((prev) => [...prev, { role: 'model', content: "I'm sorry, I encountered an error. Please try again." }]);
+        const errorMessage = "I'm sorry, I encountered an error. Please try again.";
+        setHistory((prev) => [...prev, { role: 'model', content: errorMessage }]);
+        const audioResult = await textToSpeech(errorMessage);
+        setAudioUrl(audioResult.audio);
       }
     });
   };
@@ -145,6 +165,11 @@ export function AiChatbot() {
       scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
     }
   }, [history]);
+  
+  const handleMicClick = () => {
+    // Placeholder for Speech-to-Text logic
+    setIsRecording(!isRecording); 
+  }
 
   if (!isClient) {
     return null;
@@ -218,6 +243,9 @@ export function AiChatbot() {
                 autoComplete="off"
                 disabled={isPending}
               />
+              <Button type="button" size="icon" variant="outline" onClick={handleMicClick} disabled={isPending}>
+                {isRecording ? <MicOff className="h-4 w-4 text-destructive" /> : <Mic className="h-4 w-4" />}
+              </Button>
               <Button type="submit" size="icon" disabled={isPending || !input.trim()}>
                 <Send className="h-4 w-4" />
               </Button>
@@ -225,6 +253,8 @@ export function AiChatbot() {
           </CardFooter>
         </Card>
       </div>
+      
+      <audio ref={audioRef} src={audioUrl ?? undefined} />
 
       <button
         onClick={handleToggle}
