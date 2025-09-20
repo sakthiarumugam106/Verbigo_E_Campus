@@ -127,10 +127,6 @@ export default function HomePage() {
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
                   Learn english through your native language
                 </h1>
-                <blockquote className="text-center">
-                    <p className="text-lg font-medium text-primary-foreground/80">"To have another language is to possess a second soul."</p>
-                    <footer className="mt-2 text-sm text-primary-foreground/60">- Charlemagne</footer>
-                </blockquote>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
                  <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
@@ -145,14 +141,18 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-             <div className="relative h-80 lg:h-96 w-full group">
+            <div className="relative h-80 lg:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
                <Image
                 src="/Images/World_Languages.png"
                 alt="World map of official languages"
                 fill
-                className="rounded-xl object-contain shadow-2xl border-4 border-white/80"
+                className="object-cover"
                 data-ai-hint="world language map"
                 />
+                 <blockquote className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm p-4 text-center">
+                    <p className="text-lg font-medium text-white">"To have another language is to possess a second soul."</p>
+                    <footer className="mt-2 text-sm text-gray-300">- Charlemagne</footer>
+                </blockquote>
             </div>
           </div>
         </div>
