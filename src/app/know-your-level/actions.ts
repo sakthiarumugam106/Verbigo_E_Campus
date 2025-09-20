@@ -49,22 +49,25 @@ export async function sendAssessmentReport(data: SendReportData): Promise<{ succ
   const { report, userDetails } = validatedFields.data;
   const resend = new Resend(process.env.RESEND_API_KEY);
 
+  // NOTE: The 'from' address must be from a domain you have verified in Resend (e.g., 'hello@verbigo.in')
+  // to successfully send emails to users. Using 'onboarding@resend.dev' is for development only.
+  const fromAddress = 'Verbigo <onboarding@resend.dev>';
+
   try {
-    // Send to Admin
+    // Attempt to send email to the admin
     const adminEmailPromise = resend.emails.send({
-      from: 'Verbigo Assessment <onboarding@resend.dev>',
+      from: fromAddress,
       to: siteConfig.email,
       subject: `New English Assessment Report for ${userDetails.name}`,
       react: AssessmentReportAdminEmail({ report, userDetails }),
     });
 
-    // Send to User
-    // IMPORTANT: For development, this sends to the admin's verified email.
-    // Once your domain is verified in Resend, change `to: siteConfig.email` 
-    // to `to: userDetails.email` to send to the actual user.
+    // Attempt to send email to the user
+    // IMPORTANT: This will FAIL until you verify your domain with Resend and use a 'from' address
+    // from that domain. On the free/dev plan, Resend only allows sending TO verified emails.
     const userEmailPromise = resend.emails.send({
-      from: 'Verbigo <onboarding@resend.dev>',
-      to: siteConfig.email, 
+      from: fromAddress,
+      to: userDetails.email, 
       subject: 'Your Verbigo English Assessment Report',
       react: AssessmentReportUserEmail({ report, name: userDetails.name }),
     });
@@ -75,13 +78,15 @@ export async function sendAssessmentReport(data: SendReportData): Promise<{ succ
         console.error("Failed to send admin email:", adminResult.reason);
     }
     if (userResult.status === 'rejected') {
-        console.error("Failed to send user email:", userResult.reason);
+        console.error("Failed to send user email (This is expected until domain is verified):", userResult.reason);
     }
     
-    // We can consider it a success if at least the admin email went through.
-    // Let's return success and just log errors for now.
-    
-    return { success: true };
+    // We consider it a success if the admin email is sent, as the user email is expected to fail without domain verification.
+    if (adminResult.status === 'fulfilled') {
+      return { success: true };
+    } else {
+      return { success: false, error: 'Failed to send admin notification email.' };
+    }
 
   } catch (error: any) {
     console.error('Error in sendAssessmentReport function:', error);
