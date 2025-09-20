@@ -33,30 +33,25 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
       <body>
-        {isClient ? (
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-          >
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-            <AiChatbot />
-            <WhatsAppButton />
-            <BackToTopButton />
-            <Toaster />
-          </ThemeProvider>
-        ) : (
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
           <div className="flex min-h-screen flex-col">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />
-            <Toaster />
           </div>
-        )}
+          {isClient && (
+            <>
+              <AiChatbot />
+              <WhatsAppButton />
+              <BackToTopButton />
+            </>
+          )}
+          <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   );
