@@ -21,6 +21,11 @@ type Message = {
 
 const CHAT_STORAGE_KEY = 'verbigo-chat-history';
 
+const initialMessage: Message = {
+    role: 'model',
+    content: "Hi there! 👋\n\nI'm Malar, your friendly English teacher from Verbigo.\n\nHow can I help you improve your English today?\n\nOr perhaps you have a question about our amazing courses? 😊"
+};
+
 export function AiChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpening, setIsOpening] = useState(false);
@@ -43,10 +48,18 @@ export function AiChatbot() {
     try {
       const storedHistory = localStorage.getItem(CHAT_STORAGE_KEY);
       if (storedHistory) {
-        setHistory(JSON.parse(storedHistory));
+        const parsedHistory = JSON.parse(storedHistory);
+        if (parsedHistory.length === 0) {
+          setHistory([initialMessage]);
+        } else {
+          setHistory(parsedHistory);
+        }
+      } else {
+        setHistory([initialMessage]);
       }
     } catch (error) {
       console.error("Could not load chat history from localStorage", error);
+      setHistory([initialMessage]);
     }
   }, []);
 
@@ -107,7 +120,11 @@ export function AiChatbot() {
   useEffect(() => {
     if(isClient) {
       try {
-        localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(history));
+        if (history.length > 0) {
+            localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(history));
+        } else {
+            localStorage.removeItem(CHAT_STORAGE_KEY);
+        }
       } catch (error) {
         console.error("Could not save chat history to localStorage", error);
       }
