@@ -6,7 +6,6 @@ import {
   Heading,
   Hr,
   Html,
-  Img,
   Preview,
   Section,
   Text,
@@ -41,13 +40,7 @@ const TutorRequestEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Section style={header}>
-            <Img
-                src={`${baseUrl}/logo-for-email.png`}
-                width="200"
-                height="42"
-                alt="Verbigo"
-                style={logo}
-            />
+          <Heading style={logoText}>Verbigo</Heading>
         </Section>
         <Section style={content}>
           <Heading style={heading}>New Tutor Request</Heading>
@@ -104,13 +97,17 @@ const header = {
   backgroundColor: '#2e378c',
   padding: '20px',
   textAlign: 'center' as const,
-  backgroundImage: `url('${baseUrl}/subtle-pattern.svg')`,
+  backgroundImage: `url('https://firebasestudio-hosting.web.app/subtle-pattern.svg')`,
   backgroundRepeat: 'repeat',
   backgroundPosition: 'center',
 };
 
-const logo = {
-    margin: '0 auto',
+const logoText = {
+  color: '#ffffff',
+  fontSize: '32px',
+  fontWeight: 'bold',
+  margin: '0 auto',
+  fontFamily: 'Poppins, sans-serif',
 };
 
 const content = {
