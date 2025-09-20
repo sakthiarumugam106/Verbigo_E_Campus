@@ -104,6 +104,9 @@ const header = {
   backgroundColor: '#2e378c',
   padding: '20px',
   textAlign: 'center' as const,
+  backgroundImage: `url('${baseUrl}/subtle-pattern.svg')`,
+  backgroundRepeat: 'repeat',
+  backgroundPosition: 'center',
 };
 
 const logo = {
