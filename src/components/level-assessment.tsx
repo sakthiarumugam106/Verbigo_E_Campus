@@ -64,6 +64,7 @@ export function LevelAssessment() {
   });
   const [currentAnswer, setCurrentAnswer] = useState('');
   const [isPending, startTransition] = useTransition();
+  const [isSendingReport, startReportTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const [isClient, setIsClient] = useState(false);
@@ -162,36 +163,40 @@ export function LevelAssessment() {
       const phone = formData.get('phone') as string;
       const email = formData.get('email') as string;
 
-      if(name && phone && email) {
-          setAssessmentState(prev => ({
-              ...prev,
-              userDetails: { name, phone, email },
-              view: 'showing_report'
-          }));
+      if(name && phone && email && report) {
+        const currentUserDetails = { name, phone, email };
+
+        startReportTransition(async () => {
+            const result = await sendAssessmentReport({ report, userDetails: currentUserDetails });
+
+            if (result.success) {
+                toast({
+                    title: 'Report Sent!',
+                    description: 'Your assessment report has been emailed to you and our admin.',
+                });
+                setAssessmentState(prev => ({
+                    ...prev,
+                    userDetails: currentUserDetails,
+                    view: 'showing_report'
+                }));
+            } else {
+                 toast({
+                    title: 'Error',
+                    description: result.error || 'Failed to send the report email. Please try again.',
+                    variant: 'destructive',
+                });
+            }
+        });
       }
   }
 
   const handleDiscussWithTutor = () => {
-    if (!report || !userDetails) return;
-    
-    startTransition(async () => {
-        const result = await sendAssessmentReport({ report, userDetails });
-
-        if (result.success) {
-            const whatsappUrl = whatsapp.getReportDiscussionUrl(report);
-            window.open(whatsappUrl, '_blank');
-
-            toast({
-                title: 'Redirecting to WhatsApp!',
-                description: 'Your report has been emailed to you and the admin. Please send the prepared message on WhatsApp to connect with a tutor.',
-            });
-        } else {
-             toast({
-                title: 'Error',
-                description: result.error || 'Failed to send the report email. Please try again.',
-                variant: 'destructive',
-            });
-        }
+    if (!report) return;
+    const whatsappUrl = whatsapp.getReportDiscussionUrl(report);
+    window.open(whatsappUrl, '_blank');
+    toast({
+        title: 'Redirecting to WhatsApp!',
+        description: 'Please send the prepared message to connect with a tutor.',
     });
   };
 
@@ -244,8 +249,8 @@ export function LevelAssessment() {
             </CardContent>
             <CardFooter className="flex-col sm:flex-row gap-4 pt-6">
                 <Button onClick={handleStart} variant="outline" className="w-full sm:w-auto">Start Over</Button>
-                <Button onClick={handleDiscussWithTutor} className="w-full sm:w-auto bg-green-600 hover:bg-green-700" disabled={isPending}>
-                    {isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending...</> : <><WhatsAppButtonIcon className="h-5 w-5"/> Discuss with Tutor</>}
+                <Button onClick={handleDiscussWithTutor} className="w-full sm:w-auto bg-green-600 hover:bg-green-700">
+                    <WhatsAppButtonIcon className="h-5 w-5"/> Discuss with Tutor
                 </Button>
             </CardFooter>
         </Card>
@@ -257,23 +262,25 @@ export function LevelAssessment() {
           <Card>
               <CardHeader className="text-center">
                   <CardTitle className="text-2xl font-bold text-primary">One Last Step!</CardTitle>
-                  <CardDescription>Your report is ready. Please provide your details to view it.</CardDescription>
+                  <CardDescription>Your report is ready. Please provide your details to view it and get a copy via email.</CardDescription>
               </CardHeader>
               <CardContent>
                   <form onSubmit={handleUserInfoSubmit} className="space-y-4">
                       <div className="space-y-2">
                           <Label htmlFor="name">Full Name</Label>
-                          <Input id="name" name="name" placeholder="Jane Doe" required />
+                          <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSendingReport} />
                       </div>
                       <div className="space-y-2">
                           <Label htmlFor="email">Email Address</Label>
-                          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required />
+                          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSendingReport} />
                       </div>
                       <div className="space-y-2">
                           <Label htmlFor="phone">Phone Number</Label>
-                          <Input id="phone" name="phone" type="tel" placeholder="+91 12345 67890" required />
+                          <Input id="phone" name="phone" type="tel" placeholder="+91 12345 67890" required disabled={isSendingReport} />
                       </div>
-                      <Button type="submit" className="w-full">View My Report</Button>
+                      <Button type="submit" className="w-full" disabled={isSendingReport}>
+                         {isSendingReport ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending Report...</> : 'View My Report'}
+                      </Button>
                   </form>
               </CardContent>
           </Card>
@@ -345,3 +352,5 @@ export function LevelAssessment() {
       </div>
     );
 }
+
+    
