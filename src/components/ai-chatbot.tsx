@@ -151,7 +151,9 @@ export function AiChatbot() {
     e.preventDefault();
     if (!input.trim() || isPending) return;
 
-    const newHistory = [...history, { role: 'user' as const, content: input }];
+    const userMessage: Message = { role: 'user', content: input };
+    const newHistory = [...history, userMessage];
+    
     setHistory(newHistory);
     setHistory(prev => [...prev, { role: 'model', content: '' }]);
     
@@ -160,15 +162,19 @@ export function AiChatbot() {
 
     startTransition(async () => {
       try {
-        const stream = await grammarCoachStream({ history: newHistory, message });
+        // Pass the history and the new message separately
+        const stream = await grammarCoachStream({ history, message });
         let fullResponse = '';
         for await (const chunk of stream) {
-            fullResponse += chunk.text;
-            setHistory(prev => {
-                const newHist = [...prev];
-                newHist[newHist.length-1].content = fullResponse;
-                return newHist;
-            });
+            const textChunk = chunk.text;
+            if (textChunk) {
+                fullResponse += textChunk;
+                setHistory(prev => {
+                    const newHist = [...prev];
+                    newHist[newHist.length-1].content = fullResponse;
+                    return newHist;
+                });
+            }
         }
 
         // Generate and play audio in parallel
