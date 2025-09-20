@@ -39,47 +39,45 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
   const { name, email, whatsapp, state, language, schedule } = validatedFields.data;
 
   try {
-    // Send notification to admin
-    const adminEmailPromise = resend.emails.send({
-      from: 'Verbigo Tutor Request <hello@verbigo.in>',
-      to: siteConfig.email,
-      subject: 'New Tutor Request from Verbigo Website',
-      react: TutorRequestEmail({
-        name,
-        email,
-        whatsapp,
-        state,
-        language,
-        schedule,
-      }),
-    });
-
-    // Send confirmation to user
-    const userEmailPromise = resend.emails.send({
-        from: 'Verbigo <hello@verbigo.in>',
-        // IMPORTANT: For this to work with dynamic user emails, you must have a
-        // verified domain in your Resend account. In the free/dev tier,
-        // Resend only allows sending TO your verified admin email.
-        to: email,
-        subject: 'Thanks for Choosing Verbigo!',
-        react: TutorConfirmationEmail({ name }),
-    });
-    
-    const [adminResult, userResult] = await Promise.allSettled([adminEmailPromise, userEmailPromise]);
-
-    if (adminResult.status === 'rejected') {
-        console.error('Resend API Error (Admin):', adminResult.reason);
-        // Don't block success for this, but log it. It might be a non-critical failure.
-    }
-     if (userResult.status === 'rejected') {
-        console.error('Resend API Error (User):', userResult.reason);
-        // Don't block success for user email failure, but log it
+    // Attempt to send notification to admin
+    try {
+        await resend.emails.send({
+            from: 'Verbigo Tutor Request <hello@verbigo.in>',
+            to: siteConfig.email,
+            subject: 'New Tutor Request from Verbigo Website',
+            react: TutorRequestEmail({
+                name,
+                email,
+                whatsapp,
+                state,
+                language,
+                schedule,
+            }),
+        });
+    } catch (adminEmailError) {
+        console.error('Resend API Error (Admin):', adminEmailError);
+        // Do not block the entire process if admin email fails
     }
 
+    // Attempt to send confirmation to user
+    try {
+        await resend.emails.send({
+            from: 'Verbigo <hello@verbigo.in>',
+            // IMPORTANT: For this to work with dynamic user emails, you must have a
+            // verified domain in your Resend account.
+            to: email, 
+            subject: 'Thanks for Choosing Verbigo!',
+            react: TutorConfirmationEmail({ name }),
+        });
+    } catch (userEmailError) {
+        console.error('Resend API Error (User):', userEmailError);
+        // Do not block the entire process if user email fails
+    }
 
     return { success: true };
   } catch (error: any) {
-    console.error('Error sending email:', error);
-    return { success: false, error: error.message };
+    console.error('Error in sendTutorRequestEmail function:', error);
+    // This will catch any other unexpected errors in the function
+    return { success: false, error: 'An unexpected error occurred.' };
   }
 }
