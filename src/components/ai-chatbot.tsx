@@ -184,6 +184,11 @@ export function AiChatbot() {
   }, [history]);
   
   const handleMicClick = () => {
+    if (audioRef.current && !audioRef.current.paused) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setAudioUrl(null);
+    }
     // Placeholder for Speech-to-Text logic
     setIsRecording(!isRecording); 
   }
