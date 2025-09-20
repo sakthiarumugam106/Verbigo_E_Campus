@@ -167,7 +167,7 @@ export function FindTutorForm() {
                     Submitting...
                 </>
             ) : (
-                'Submit & chat'
+                'Submit & Chat'
             )}
         </Button>
       </div>
