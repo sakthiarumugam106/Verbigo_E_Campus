@@ -127,6 +127,9 @@ export default function HomePage() {
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
                   Learn english through your native language
                 </h1>
+                <p className="text-lg text-primary-foreground/80 md:text-xl">
+                  "To have another language is to possess a second soul." - Charlemagne
+                </p>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
                  <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
@@ -141,15 +144,14 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-            <div className="mx-auto aspect-video overflow-hidden rounded-xl shadow-2xl border-4 border-white/80">
-              <video
-                src="https://cdn.pixabay.com/video/2024/05/29/213054_large.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-              />
+             <div className="relative h-80 lg:h-96 w-full">
+               <Image
+                src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1974&auto=format&fit=crop"
+                alt="People learning"
+                fill
+                className="rounded-xl object-cover shadow-2xl border-4 border-white/80"
+                data-ai-hint="happy diverse people"
+                />
             </div>
           </div>
         </div>
@@ -328,9 +330,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
-
-    
-
-    
