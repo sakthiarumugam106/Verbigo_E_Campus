@@ -6,6 +6,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Preview,
   Section,
   Text,
@@ -21,6 +22,11 @@ interface TutorRequestEmailProps {
   schedule: string;
 }
 
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'https://firebasestudio-hosting.web.app';
+
+
 const TutorRequestEmail = ({
   name,
   email,
@@ -34,10 +40,18 @@ const TutorRequestEmail = ({
     <Preview>New Tutor Request from {name}</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={heading}>New Tutor Request</Heading>
-        <Text style={paragraph}>You have received a new tutor request from the Verbigo website.</Text>
-        <Hr style={hr} />
-        <Section>
+        <Section style={header}>
+            <Img
+                src={`${baseUrl}/logo-for-email.png`}
+                width="200"
+                height="42"
+                alt="Verbigo"
+                style={logo}
+            />
+        </Section>
+        <Section style={content}>
+          <Heading style={heading}>New Tutor Request</Heading>
+          
           <Text style={label}>Name:</Text>
           <Text style={value}>{name}</Text>
 
@@ -55,9 +69,13 @@ const TutorRequestEmail = ({
 
           <Text style={label}>Schedule Preference:</Text>
           <Text style={value}>{schedule}</Text>
+
+          <Hr style={hr} />
+
+          <Text style={footer}>
+            This email was sent from the "Find Your Tutor" form on the Verbigo website.
+          </Text>
         </Section>
-        <Hr style={hr} />
-        <Text style={footer}>This email was sent from the Verbigo "Find Your Tutor" form.</Text>
       </Container>
     </Body>
   </Html>
@@ -66,57 +84,69 @@ const TutorRequestEmail = ({
 export default TutorRequestEmail;
 
 const main = {
-  backgroundColor: '#f6f9fc',
+  backgroundColor: '#f0f5ff',
   fontFamily:
     '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+  padding: '20px 0',
 };
 
 const container = {
   backgroundColor: '#ffffff',
   margin: '0 auto',
-  padding: '20px 0 48px',
-  marginBottom: '64px',
-  border: '1px solid #f0f0f0',
-  borderRadius: '4px',
+  width: '100%',
+  maxWidth: '600px',
+  border: '1px solid #e0e0e0',
+  borderRadius: '8px',
+  overflow: 'hidden',
+};
+
+const header = {
+  backgroundColor: '#2e378c',
+  padding: '20px',
+  textAlign: 'center' as const,
+};
+
+const logo = {
+    margin: '0 auto',
+};
+
+const content = {
+  padding: '30px 40px',
 };
 
 const heading = {
-  fontSize: '28px',
+  fontSize: '24px',
   fontWeight: 'bold',
-  marginTop: '48px',
-  textAlign: 'center' as const,
   color: '#333',
-};
-
-const paragraph = {
-    fontSize: '16px',
-    lineHeight: '24px',
-    textAlign: 'center' as const,
-    color: '#555',
-    padding: '0 40px',
+  textAlign: 'center' as const,
+  marginBottom: '30px',
 };
 
 const label = {
     fontSize: '14px',
-    fontWeight: 'bold',
-    color: '#333',
-    margin: '20px 0 5px 40px',
+    fontWeight: '600',
+    color: '#555',
+    margin: '0',
 };
 
 const value = {
     fontSize: '16px',
-    color: '#555',
-    margin: '0 0 20px 40px',
+    color: '#333',
+    marginTop: '4px',
+    marginBottom: '20px',
+    lineHeight: '24px',
+    borderLeft: '3px solid #2e378c',
+    paddingLeft: '12px'
 };
+
 
 const hr = {
   borderColor: '#e6ebf1',
-  margin: '20px 0',
+  margin: '30px 0',
 };
 
 const footer = {
   color: '#8898aa',
   fontSize: '12px',
   lineHeight: '16px',
-  textAlign: 'center' as const,
 };
