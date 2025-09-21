@@ -14,7 +14,7 @@ import { useLoading } from '@/components/loading-provider';
 export default function CoursePage({ params }: { params: { slug: string } }) {
   const course = courses.find((c) => c.slug === params.slug);
   const router = useRouter();
-  const { showLoader, hideLoader } = useLoading();
+  const { showLoader } = useLoading();
 
   if (!course) {
     notFound();
@@ -24,7 +24,6 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
     e.preventDefault();
     showLoader();
     router.push(href);
-    setTimeout(hideLoader, 1000);
   };
 
 

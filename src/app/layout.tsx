@@ -12,7 +12,8 @@ import { AiChatbot } from '@/components/ai-chatbot';
 import { ThemeProvider } from '@/components/theme-provider';
 import { BackToTopButton } from '@/components/back-to-top-button';
 import { useEffect, useState } from 'react';
-import { LoadingProvider, GlobalLoader } from '@/components/loading-provider';
+import { LoadingProvider, GlobalLoader, useLoading } from '@/components/loading-provider';
+import { usePathname } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -28,6 +29,31 @@ const poppins = Poppins({
 //   description:
 //     'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
 // };
+
+function AppContent({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const { hideLoader } = useLoading();
+
+  useEffect(() => {
+    hideLoader();
+  }, [pathname, hideLoader]);
+
+  return (
+    <>
+      <GlobalLoader />
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </div>
+      <AiChatbot />
+      <WhatsAppButton />
+      <BackToTopButton />
+      <Toaster />
+    </>
+  );
+}
+
 
 export default function RootLayout({
   children,
@@ -49,20 +75,7 @@ export default function RootLayout({
             defaultTheme="system"
             enableSystem
           >
-            {isClient && (
-              <>
-                <GlobalLoader />
-                <div className="flex min-h-screen flex-col">
-                  <Header />
-                  <main className="flex-1">{children}</main>
-                  <Footer />
-                </div>
-                <AiChatbot />
-                <WhatsAppButton />
-                <BackToTopButton />
-                <Toaster />
-              </>
-            )}
+            {isClient ? <AppContent>{children}</AppContent> : null}
           </ThemeProvider>
         </LoadingProvider>
       </body>

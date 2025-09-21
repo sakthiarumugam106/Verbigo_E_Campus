@@ -256,14 +256,13 @@ export default function HomePage() {
   const isMobile = useIsMobile();
 
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
-  const { showLoader, hideLoader } = useLoading();
+  const { showLoader } = useLoading();
   const router = useRouter();
   
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     showLoader();
     router.push(href);
-    setTimeout(hideLoader, 1000); // Simulate loading time
   };
 
 

@@ -11,7 +11,7 @@ import { useLoading } from '@/components/loading-provider';
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = blogPosts.find((p) => p.slug === params.slug);
-  const { showLoader, hideLoader } = useLoading();
+  const { showLoader } = useLoading();
   const router = useRouter();
 
   if (!post) {
@@ -22,7 +22,6 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     e.preventDefault();
     showLoader();
     router.push(href);
-    setTimeout(hideLoader, 1000);
   };
 
   return (

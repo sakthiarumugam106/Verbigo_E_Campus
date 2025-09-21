@@ -14,7 +14,7 @@ import { useLoading } from '@/components/loading-provider';
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
-  const { showLoader, hideLoader } = useLoading();
+  const { showLoader } = useLoading();
 
   const filteredBlogPosts = blogPosts.filter(post => 
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -25,7 +25,6 @@ export default function BlogPage() {
     e.preventDefault();
     showLoader();
     router.push(href);
-    setTimeout(hideLoader, 1000);
   };
 
 

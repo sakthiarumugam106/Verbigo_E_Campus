@@ -23,16 +23,13 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { showLoader, hideLoader } = useLoading();
+  const { showLoader } = useLoading();
   const router = useRouter();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     showLoader();
     router.push(href);
-    // The loader will be hidden by a global effect or route change handler in a real app,
-    // for now, let's hide it after a short delay to simulate navigation.
-    setTimeout(hideLoader, 1000); 
   };
   
    const handleSheetLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -40,7 +37,6 @@ export function Header() {
     setIsOpen(false);
     showLoader();
     router.push(href);
-    setTimeout(hideLoader, 1000);
   };
 
 

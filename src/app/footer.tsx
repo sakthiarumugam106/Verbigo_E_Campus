@@ -8,14 +8,13 @@ import { useLoading } from '@/components/loading-provider';
 import { useRouter } from 'next/navigation';
 
 export function Footer() {
-    const { showLoader, hideLoader } = useLoading();
+    const { showLoader } = useLoading();
     const router = useRouter();
 
     const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         showLoader();
         router.push(href);
-        setTimeout(hideLoader, 1000);
     };
 
   return (
