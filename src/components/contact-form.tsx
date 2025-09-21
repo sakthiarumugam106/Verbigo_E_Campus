@@ -9,6 +9,9 @@ import { useToast } from '@/hooks/use-toast';
 import { appendContactToGoogleSheet } from '@/app/actions/appendContactToGoogleSheet';
 import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
+import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 const countryCodes = {
   '91': { label: 'IN', length: 10 },
@@ -26,6 +29,8 @@ export function ContactForm() {
   const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -54,6 +59,18 @@ export function ContactForm() {
     }
   };
 
+  const resetForm = () => {
+    setForm({ name: '', email: '', phoneNumber: '', message: '' });
+    setCountryCode('91');
+    setOtherCountryCode('');
+    setErrors({});
+  };
+
+  const handleConfirmation = () => {
+    setShowConfirmation(false);
+    resetForm();
+  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,14 +86,7 @@ export function ContactForm() {
     setIsSubmitting(false);
 
     if (result.success) {
-      toast({
-        title: 'Success!',
-        description: 'Your message has been sent. We will get back to you soon.',
-      });
-      setForm({ name: '', email: '', phoneNumber: '', message: '' });
-      setCountryCode('91');
-      setOtherCountryCode('');
-      setErrors({});
+      setShowConfirmation(true);
     } else {
        if (result.error && typeof result.error === 'object') {
         setErrors(result.error);
@@ -99,6 +109,7 @@ export function ContactForm() {
 
 
   return (
+    <>
     <form onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid gap-2 text-left">
         <Label htmlFor="name">Name</Label>
@@ -175,5 +186,45 @@ export function ContactForm() {
         {isSubmitting ? 'Submitting...' : 'Submit'}
       </Button>
     </form>
+    <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+                <div className="flex justify-center items-center">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                            type: 'spring',
+                            stiffness: 260,
+                            damping: 20,
+                            delay: 0.2,
+                        }}
+                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                    >
+                         <motion.div
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{
+                                type: 'spring',
+                                stiffness: 260,
+                                damping: 20,
+                                delay: 0.4,
+                            }}
+                        >
+                            <Check className="h-12 w-12 text-green-600" />
+                        </motion.div>
+                    </motion.div>
+                </div>
+                <AlertDialogTitle className="text-center text-2xl pt-4">Message Sent!</AlertDialogTitle>
+                <AlertDialogDescription className="text-center">
+                    Thank you for reaching out. We will get back to you shortly.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="sm:justify-center">
+                <AlertDialogAction onClick={handleConfirmation}>OK</AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }

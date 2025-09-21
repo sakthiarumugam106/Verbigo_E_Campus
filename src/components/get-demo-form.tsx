@@ -9,6 +9,9 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { submitDemoRequest, type DemoFormState } from '@/app/get-demo/actions';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
+import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 const initialState: DemoFormState = {
   message: '',
@@ -39,20 +42,19 @@ export function GetDemoForm() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState<CountryCode | 'Other'>('91');
   const [otherCountryCode, setOtherCountryCode] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
-    if (state.message) {
-      toast({
-        title: state.success ? 'Success!' : 'Error',
-        description: state.message,
-        variant: state.success ? 'default' : 'destructive',
-      });
-      if (state.success) {
-        formRef.current?.reset();
-        setPhoneNumber('');
-        setCountryCode('91');
-        setOtherCountryCode('');
-      }
+    if(state.message === '') return;
+    
+    if (state.success) {
+      setShowConfirmation(true);
+    } else {
+        toast({
+            title: 'Error',
+            description: state.message,
+            variant: 'destructive',
+        });
     }
   }, [state, toast]);
 
@@ -83,7 +85,16 @@ export function GetDemoForm() {
   
   const phoneMaxLength = countryCode !== 'Other' ? countryCodes[countryCode as CountryCode]?.length : undefined;
 
+  const handleConfirmation = () => {
+    setShowConfirmation(false);
+    formRef.current?.reset();
+    setPhoneNumber('');
+    setCountryCode('91');
+    setOtherCountryCode('');
+  };
+
   return (
+    <>
     <form ref={formRef} action={handleFormAction} className="space-y-6">
       <input type="hidden" name="phoneNumber" />
       <div className="space-y-2">
@@ -154,5 +165,45 @@ export function GetDemoForm() {
       </div>
       <SubmitButton />
     </form>
+    <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+                <div className="flex justify-center items-center">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                            type: 'spring',
+                            stiffness: 260,
+                            damping: 20,
+                            delay: 0.2,
+                        }}
+                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                    >
+                         <motion.div
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{
+                                type: 'spring',
+                                stiffness: 260,
+                                damping: 20,
+                                delay: 0.4,
+                            }}
+                        >
+                            <Check className="h-12 w-12 text-green-600" />
+                        </motion.div>
+                    </motion.div>
+                </div>
+                <AlertDialogTitle className="text-center text-2xl pt-4">Request Submitted!</AlertDialogTitle>
+                <AlertDialogDescription className="text-center">
+                    Thank you for your interest. Our team will contact you shortly to schedule your demo.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="sm:justify-center">
+                <AlertDialogAction onClick={handleConfirmation}>OK</AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }

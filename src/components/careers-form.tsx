@@ -13,8 +13,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { storage } from '@/lib/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Progress } from './ui/progress';
-import { File, Link as LinkIcon, Loader2 } from 'lucide-react';
+import { File, Link as LinkIcon, Loader2, Check } from 'lucide-react';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const initialState: ApplicationFormState = {
   message: '',
@@ -45,7 +48,7 @@ export function CareersForm() {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [educationValue, setEducationValue] = useState('');
   const [resumeOption, setResumeOption] = useState<'upload' | 'link'>('upload');
   const [resumeFile, setResumeFile] = useState<File | null>(null);
@@ -53,32 +56,41 @@ export function CareersForm() {
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const resumeInputRef = useRef<HTMLInputElement>(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const router = useRouter();
+
+
+  const resetForm = () => {
+    formRef.current?.reset();
+    setEducationValue('');
+    setResumeOption('upload');
+    setResumeFile(null);
+    setResumeLink('');
+    if (resumeInputRef.current) resumeInputRef.current.value = '';
+    setIsUploading(false);
+    setUploadProgress(null);
+  }
 
   useEffect(() => {
-    if (!isOpen) {
-        // Reset form state when dialog is closed
-        formRef.current?.reset();
-        setEducationValue('');
-        setResumeOption('upload');
-        setResumeFile(null);
-        setResumeLink('');
-        if (resumeInputRef.current) resumeInputRef.current.value = '';
-        setIsUploading(false);
-        setUploadProgress(null);
+    if (!isFormOpen) {
+       resetForm();
     }
-  }, [isOpen])
+  }, [isFormOpen])
 
   useEffect(() => {
-    if (state.message) {
-      toast({
-        title: state.success ? 'Success!' : 'Error',
-        description: state.message,
-        variant: state.success ? 'default' : 'destructive',
-      });
-      if (state.success) {
-        setIsOpen(false);
-      }
+    if (state.message === '') return;
+
+    if (state.success) {
+      setIsFormOpen(false);
+      setShowConfirmation(true);
+    } else {
+        toast({
+            title: 'Error',
+            description: state.message,
+            variant: 'destructive',
+        });
     }
+    
     setIsUploading(false);
     setUploadProgress(null);
   }, [state, toast]);
@@ -164,8 +176,15 @@ export function CareersForm() {
   
   const isSubmitDisabled = isUploading || isPending;
 
+  const handleConfirmation = () => {
+    setShowConfirmation(false);
+    resetForm();
+    router.push('/');
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <>
+    <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
       <DialogTrigger asChild>
         <Button>Apply Now</Button>
       </DialogTrigger>
@@ -269,5 +288,46 @@ export function CareersForm() {
             </form>
       </DialogContent>
     </Dialog>
+
+    <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+                <div className="flex justify-center items-center">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                            type: 'spring',
+                            stiffness: 260,
+                            damping: 20,
+                            delay: 0.2,
+                        }}
+                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                    >
+                         <motion.div
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{
+                                type: 'spring',
+                                stiffness: 260,
+                                damping: 20,
+                                delay: 0.4,
+                            }}
+                        >
+                            <Check className="h-12 w-12 text-green-600" />
+                        </motion.div>
+                    </motion.div>
+                </div>
+                <AlertDialogTitle className="text-center text-2xl pt-4">Application Submitted!</AlertDialogTitle>
+                <AlertDialogDescription className="text-center">
+                    Thank you for your interest in joining Verbigo. We have received your application and will review it shortly.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="sm:justify-center">
+                <AlertDialogAction onClick={handleConfirmation}>OK</AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }
