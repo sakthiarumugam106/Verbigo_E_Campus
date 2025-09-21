@@ -23,7 +23,7 @@ const CHAT_STORAGE_KEY = 'verbigo-chat-history';
 
 const initialMessage: Message = {
     role: 'model',
-    content: "Hi there! 👋\n\nI'm Malar, your friendly English teacher from Verbigo.\n\nHow can I help you improve your English today?\n\nOr perhaps you have a question about our amazing courses? 😊"
+    content: "Hi there! 👋\n\nI'm Verbi, your friendly English teacher from Verbigo.\n\nHow can I help you improve your English today?\n\nOr perhaps you have a question about our amazing courses? 😊"
 };
 
 export function AiChatbot() {
@@ -244,7 +244,7 @@ export function AiChatbot() {
                     <VerbigoTutorLogo width={32} height={32} />
                </div>
                <div className="space-y-1">
-                <CardTitle className="text-lg">Malar Teacher</CardTitle>
+                <CardTitle className="text-lg">Verbi Teacher</CardTitle>
                 <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
                </div>
             </div>
