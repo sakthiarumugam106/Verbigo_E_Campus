@@ -1,4 +1,3 @@
-'use client'; 
 
 import type { Metadata } from 'next';
 import './globals.css';
@@ -10,9 +9,8 @@ import { Inter, Poppins } from 'next/font/google';
 import { AiChatbot } from '@/components/ai-chatbot';
 import { ThemeProvider } from '@/components/theme-provider';
 import { BackToTopButton } from '@/components/back-to-top-button';
-import { useEffect } from 'react';
-import { LoadingProvider, GlobalLoader, useLoading } from '@/components/loading-provider';
-import { usePathname } from 'next/navigation';
+import { LoadingProvider, GlobalLoader } from '@/components/loading-provider';
+import { AppContent } from '@/components/app-content';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -21,37 +19,17 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
-function AppContent({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const { hideLoader } = useLoading();
-
-  useEffect(() => {
-    hideLoader();
-  }, [pathname, hideLoader]);
-
-  return (
-    <>
-      <GlobalLoader />
-      <div className="flex min-h-screen flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </div>
-      <AiChatbot />
-      <WhatsAppButton />
-      <BackToTopButton />
-      <Toaster />
-    </>
-  );
-}
-
+export const metadata: Metadata = {
+  title: 'Verbigo | Master Your Language Skills',
+  description:
+    'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
       <body>
