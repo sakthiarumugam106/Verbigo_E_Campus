@@ -131,7 +131,7 @@ export function FindTutorForm() {
 
   };
 
-  const phoneMaxLength = countryCode !== 'Other' ? countryCodes[countryCode]?.length : undefined;
+  const phoneMaxLength = countryCode !== 'Other' ? countryCodes[countryCode as CountryCode]?.length : undefined;
 
 
   return (
@@ -175,7 +175,7 @@ export function FindTutorForm() {
                   id="whatsapp"
                   type="tel" 
                   name="whatsapp"
-                  placeholder={phoneMaxLength ? 'X'.repeat(phoneMaxLength) : '1234567890'}
+                  placeholder="1234567890"
                   value={formData.whatsapp} 
                   onChange={handlePhoneNumberChange} 
                   maxLength={phoneMaxLength}
@@ -271,5 +271,7 @@ export function FindTutorForm() {
     </form>
   );
 }
+
+    
 
     
