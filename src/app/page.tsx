@@ -29,6 +29,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { whatsapp } from '@/lib/config';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const benefits = [
   {
@@ -98,6 +99,64 @@ const faqItems = [
       "Absolutely. Our 'Grammar Essentials' course is a great starting point for non-native speakers looking to solidify their understanding of English grammar.",
   },
 ];
+
+function MobileValuesSection() {
+    const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    const handleItemClick = (index: number, event: React.MouseEvent) => {
+        event.stopPropagation();
+        setActiveIndex(activeIndex === index ? null : index);
+    };
+
+    React.useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setActiveIndex(null);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    return (
+        <div ref={containerRef} className="mx-auto mt-12 max-w-3xl space-y-4">
+            {values.map((value, index) => (
+                <div 
+                    key={index}
+                    className={cn(
+                        "bg-background/60 backdrop-blur-sm border-accent/20 rounded-lg shadow-md overflow-hidden transition-all duration-300",
+                        activeIndex === index && "ring-2 ring-primary border-primary"
+                    )}
+                    onClick={(e) => handleItemClick(index, e)}
+                >
+                    <div className="flex items-center gap-4 p-4 text-left cursor-pointer">
+                        <div className="flex-shrink-0">{value.icon}</div>
+                        <span className="flex-1 text-lg font-semibold text-primary dark:text-primary-foreground">{value.title}</span>
+                    </div>
+                    <AnimatePresence>
+                        {activeIndex === index && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="overflow-hidden"
+                            >
+                                <div className="p-4 pt-0">
+                                    <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
+            ))}
+        </div>
+    );
+}
 
 export default function HomePage() {
   const coursesPlugin = React.useRef(
@@ -249,21 +308,7 @@ export default function HomePage() {
               </p>
           </div>
             {isMobile ? (
-              <div className="mx-auto mt-12 max-w-3xl">
-                <Accordion type="single" collapsible className="w-full space-y-4">
-                  {values.map((value, index) => (
-                    <AccordionItem key={index} value={`item-${index}`} className="bg-background/60 backdrop-blur-sm border-accent/20 rounded-lg shadow-md overflow-hidden">
-                      <AccordionTrigger className="flex items-center gap-4 p-4 text-left hover:no-underline">
-                        <div className="flex-shrink-0">{value.icon}</div>
-                        <span className="flex-1 text-lg font-semibold text-primary dark:text-primary-foreground">{value.title}</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="p-4 pt-0">
-                        <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
+              <MobileValuesSection />
             ) : (
             <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
                 {values.map((value, index) => (
