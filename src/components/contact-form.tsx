@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const countryCodes = {
   '91': { label: 'IN', length: 10 },
@@ -30,6 +31,7 @@ export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const router = useRouter();
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -69,6 +71,7 @@ export function ContactForm() {
   const handleConfirmation = () => {
     setShowConfirmation(false);
     resetForm();
+    router.push('/');
   };
 
 

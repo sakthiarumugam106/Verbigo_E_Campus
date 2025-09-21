@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const initialState: DemoFormState = {
   message: '',
@@ -43,6 +44,7 @@ export function GetDemoForm() {
   const [countryCode, setCountryCode] = useState<CountryCode | 'Other'>('91');
   const [otherCountryCode, setOtherCountryCode] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if(state.message === '') return;
@@ -91,6 +93,7 @@ export function GetDemoForm() {
     setPhoneNumber('');
     setCountryCode('91');
     setOtherCountryCode('');
+    router.push('/');
   };
 
   return (
