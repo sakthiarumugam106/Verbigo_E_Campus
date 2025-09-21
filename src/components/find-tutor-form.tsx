@@ -134,7 +134,7 @@ export function FindTutorForm() {
         <Label htmlFor="email">Email Address</Label>
         <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} />
       </div>
-      <div className="space-y-2 md:col-span-2">
+      <div className="space-y-2">
         <Label htmlFor="whatsapp">WhatsApp Number</Label>
         <div className="flex items-center">
             <Select value={countryCode} onValueChange={handleCountryCodeChange}>
@@ -175,8 +175,8 @@ export function FindTutorForm() {
             )}
         </div>
       </div>
-      {countryCode === 'Other' && (
-        <div className="space-y-2 md:col-span-2">
+      {countryCode === 'Other' ? (
+        <div className="space-y-2">
            <Label htmlFor="whatsappNumberOther">Phone Number</Label>
            <Input 
               id="whatsappNumberOther"
@@ -188,7 +188,7 @@ export function FindTutorForm() {
               required 
             />
         </div>
-      )}
+      ) : <div />}
        <div className="space-y-2">
         <Label htmlFor="state">State</Label>
         <Select name="state" required onValueChange={(value) => handleChange('state', value)}>
