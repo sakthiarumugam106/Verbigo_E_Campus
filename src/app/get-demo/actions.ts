@@ -60,26 +60,26 @@ export async function submitDemoRequest(
   prevState: DemoFormState,
   formData: FormData
 ): Promise<DemoFormState> {
-  const rawFormData = {
-    name: formData.get('name'),
-    email: formData.get('email'),
-    phoneNumber: formData.get('phoneNumber'),
-  };
-
-  const validatedFields = demoRequestSchema.safeParse(rawFormData);
-
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Invalid fields. Please check your submission.',
-      success: false,
-    };
-  }
-
-  const { name, email, phoneNumber } = validatedFields.data;
-  const submissionTime = new Date();
-
   try {
+    const rawFormData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phoneNumber: formData.get('phoneNumber'),
+    };
+
+    const validatedFields = demoRequestSchema.safeParse(rawFormData);
+
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        message: 'Invalid fields. Please check your submission.',
+        success: false,
+      };
+    }
+
+    const { name, email, phoneNumber } = validatedFields.data;
+    const submissionTime = new Date();
+
     // Run all operations in parallel
     const [firestoreResult, sheetResult, emailResult] = await Promise.all([
       addDoc(collection(db, 'demo-requests'), {
