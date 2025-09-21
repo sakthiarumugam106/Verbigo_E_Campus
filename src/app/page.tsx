@@ -246,6 +246,22 @@ function DesktopValuesSection() {
     );
 }
 
+function ValuesSection() {
+    const [isClient, setIsClient] = React.useState(false);
+    const isMobile = useIsMobile();
+
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        // Render a placeholder or nothing on the server
+        return <div style={{ height: '500px' }} />; // Or a skeleton loader
+    }
+
+    return isMobile ? <MobileValuesSection /> : <DesktopValuesSection />;
+}
+
 
 export default function HomePage() {
   const coursesPlugin = React.useRef(
@@ -253,8 +269,7 @@ export default function HomePage() {
   );
 
   const [courseFilter, setCourseFilter] = React.useState('Professional');
-  const isMobile = useIsMobile();
-
+  
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
   const { showLoader } = useLoading();
   const router = useRouter();
@@ -404,11 +419,7 @@ export default function HomePage() {
                   At Verbigo, our core values shape every lesson and interaction.
               </p>
           </div>
-            {isMobile ? (
-              <MobileValuesSection />
-            ) : (
-             <DesktopValuesSection />
-          )}
+          <ValuesSection />
         </div>
       </section>
 
