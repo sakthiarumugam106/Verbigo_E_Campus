@@ -1,3 +1,4 @@
+
 'use client'; // Required for useEffect
 
 import type { Metadata } from 'next';
@@ -11,6 +12,7 @@ import { AiChatbot } from '@/components/ai-chatbot';
 import { ThemeProvider } from '@/components/theme-provider';
 import { BackToTopButton } from '@/components/back-to-top-button';
 import { useEffect, useState } from 'react';
+import { LoadingProvider, GlobalLoader } from '@/components/loading-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -41,25 +43,28 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
-          {isClient && (
-            <>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
-              <AiChatbot />
-              <WhatsAppButton />
-              <BackToTopButton />
-              <Toaster />
-            </>
-          )}
-        </ThemeProvider>
+        <LoadingProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+          >
+            {isClient && (
+              <>
+                <GlobalLoader />
+                <div className="flex min-h-screen flex-col">
+                  <Header />
+                  <main className="flex-1">{children}</main>
+                  <Footer />
+                </div>
+                <AiChatbot />
+                <WhatsAppButton />
+                <BackToTopButton />
+                <Toaster />
+              </>
+            )}
+          </ThemeProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

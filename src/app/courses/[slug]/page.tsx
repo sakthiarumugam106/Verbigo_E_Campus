@@ -1,19 +1,32 @@
 
+'use client';
+
 import { courses } from '@/lib/courses';
 import { Button } from '@/components/ui/button';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
 import { CheckCircle2, BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import { whatsapp } from '@/lib/config';
+import { useLoading } from '@/components/loading-provider';
 
 export default function CoursePage({ params }: { params: { slug: string } }) {
   const course = courses.find((c) => c.slug === params.slug);
+  const router = useRouter();
+  const { showLoader, hideLoader } = useLoading();
 
   if (!course) {
     notFound();
   }
+  
+  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    showLoader();
+    router.push(href);
+    setTimeout(hideLoader, 1000);
+  };
+
 
   return (
     <div className="bg-primary/5">
@@ -21,7 +34,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-6">
             <div className="space-y-4">
-               <Link href="/#courses" className="text-sm font-medium text-primary dark:text-primary-foreground hover:underline">
+               <Link href="/#courses" onClick={handleLinkClick('/#courses')} className="text-sm font-medium text-primary dark:text-primary-foreground hover:underline">
                 &larr; Back to Courses
               </Link>
               <div className="flex items-center gap-3">

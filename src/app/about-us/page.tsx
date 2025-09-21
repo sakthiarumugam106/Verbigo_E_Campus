@@ -1,11 +1,24 @@
 
+'use client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Briefcase, Building, Target, Users } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useLoading } from '@/components/loading-provider';
 
 export default function AboutUsPage() {
+  const router = useRouter();
+  const { showLoader, hideLoader } = useLoading();
+
+  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    showLoader();
+    router.push(href);
+    setTimeout(hideLoader, 1000); // Simulate loading
+  };
+
   return (
     <div className="bg-primary/5 min-h-screen">
       
@@ -23,7 +36,7 @@ export default function AboutUsPage() {
                 Verbigo was founded on a simple yet powerful idea: that language intelligence is the key to unlocking human potential. We are an e-campus dedicated to helping individuals master the art of language through expert-led courses, personalized feedback, and cutting-edge technology. Our mission is to blend education with technology to create a learner-centric environment where everyone can thrive.
               </p>
                <Button asChild size="lg">
-                    <Link href="/#contact">Get in Touch</Link>
+                    <Link href="/#contact" onClick={handleLinkClick('/#contact')}>Get in Touch</Link>
                 </Button>
             </div>
              <div className="relative h-80 lg:h-96 w-full">

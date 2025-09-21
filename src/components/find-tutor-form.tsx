@@ -15,6 +15,7 @@ import { sendTutorRequestEmail } from '@/app/find-tutor/actions';
 import { Loader2, Check } from 'lucide-react';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
+import { useLoading } from './loading-provider';
 
 const countryCodes = {
   '91': { label: 'IN', length: 10 },
@@ -42,6 +43,7 @@ export function FindTutorForm() {
   const [isPending, startTransition] = useTransition();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const router = useRouter();
+  const { showLoader, hideLoader } = useLoading();
 
 
   useEffect(() => {
@@ -105,7 +107,9 @@ export function FindTutorForm() {
   const handleConfirmation = () => {
     setShowConfirmation(false);
     resetForm();
+    showLoader();
     router.push('/');
+    setTimeout(hideLoader, 1000);
   };
 
 
@@ -136,6 +140,8 @@ export function FindTutorForm() {
       return;
     }
     
+    showLoader();
+    
     // Open WhatsApp link immediately for the user
     const whatsappUrl = whatsapp.getTutorInquiryUrl(finalFormData);
     window.open(whatsappUrl, '_blank');
@@ -150,6 +156,7 @@ export function FindTutorForm() {
     // Send email in the background
     startTransition(async () => {
         const result = await sendTutorRequestEmail(finalFormData);
+        hideLoader();
         if (result.success) {
             console.log('Tutor request email sent successfully.');
         } else {
@@ -215,20 +222,6 @@ export function FindTutorForm() {
             )}
         </div>
       </div>
-      {countryCode === 'Other' ? (
-        <div className="space-y-2">
-           <Label htmlFor="whatsappNumberOther">Phone Number</Label>
-           <Input 
-              id="whatsappNumberOther"
-              type="tel" 
-              name="whatsapp"
-              placeholder="1234567890"
-              value={formData.whatsapp} 
-              onChange={handlePhoneNumberChange}
-              required 
-            />
-        </div>
-      ) : null}
        <div className="space-y-2">
         <Label htmlFor="state">State</Label>
         <Select name="state" required onValueChange={(value) => handleChange('state', value)} value={formData.state}>

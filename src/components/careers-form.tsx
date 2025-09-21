@@ -18,6 +18,7 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { useLoading } from './loading-provider';
 
 const initialState: ApplicationFormState = {
   message: '',
@@ -58,6 +59,7 @@ export function CareersForm() {
   const resumeInputRef = useRef<HTMLInputElement>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const router = useRouter();
+  const { showLoader, hideLoader } = useLoading();
 
 
   const resetForm = () => {
@@ -125,11 +127,14 @@ export function CareersForm() {
     }
     
     formData.set('resumeOption', resumeOption);
+    
+    showLoader();
 
     if (resumeOption === 'link') {
         formData.set('resume', resumeLink);
         startTransition(() => {
             formAction(formData);
+            hideLoader();
         });
         return;
     }
@@ -163,6 +168,7 @@ export function CareersForm() {
           
           startTransition(() => {
             formAction(formData);
+            hideLoader();
           });
 
       } catch (error) {
@@ -170,6 +176,7 @@ export function CareersForm() {
           toast({ title: 'Error uploading file', description: 'Could not upload your resume. Please try again.', variant: 'destructive' });
           setIsUploading(false);
           setUploadProgress(null);
+          hideLoader();
       }
     }
   };
@@ -179,7 +186,9 @@ export function CareersForm() {
   const handleConfirmation = () => {
     setShowConfirmation(false);
     resetForm();
+    showLoader();
     router.push('/');
+    setTimeout(hideLoader, 1000);
   }
 
   return (

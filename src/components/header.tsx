@@ -9,7 +9,8 @@ import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { whatsapp } from '@/lib/config';
 import { ThemeToggle } from './theme-toggle';
-
+import { useLoading } from './loading-provider';
+import { useRouter } from 'next/navigation';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -22,12 +23,32 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { showLoader, hideLoader } = useLoading();
+  const router = useRouter();
+
+  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    showLoader();
+    router.push(href);
+    // The loader will be hidden by a global effect or route change handler in a real app,
+    // for now, let's hide it after a short delay to simulate navigation.
+    setTimeout(hideLoader, 1000); 
+  };
+  
+   const handleSheetLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsOpen(false);
+    showLoader();
+    router.push(href);
+    setTimeout(hideLoader, 1000);
+  };
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container relative flex h-16 items-center justify-between px-4 md:px-6">
         <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground">
+            <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
                 <VerbigoLogo />
                 <div className="flex flex-col">
                     <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
@@ -41,6 +62,7 @@ export function Header() {
                 <Link
                 key={link.name}
                 href={link.href}
+                onClick={handleLinkClick(link.href)}
                 className="transition-colors hover:text-foreground/80 text-foreground/60"
                 >
                 {link.name}
@@ -51,7 +73,7 @@ export function Header() {
         <div className="flex items-center gap-2">
             <div className="hidden sm:flex items-center gap-2">
                 <Button asChild>
-                    <Link href="/get-demo">Book Demo</Link>
+                    <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>Book Demo</Link>
                 </Button>
             </div>
           <ThemeToggle />
@@ -77,7 +99,7 @@ export function Header() {
                 <Link
                     href="/"
                     className="flex items-center gap-2 text-primary dark:text-primary-foreground mb-6"
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleSheetLinkClick('/')}
                 >
                     <VerbigoLogo />
                     <div className="flex flex-col">
@@ -90,18 +112,18 @@ export function Header() {
                     <Link
                         key={link.name}
                         href={link.href}
-                        onClick={() => setIsOpen(false)}
+                        onClick={handleSheetLinkClick(link.href)}
                         className="text-lg font-medium text-foreground/80 hover:text-foreground"
                     >
                         {link.name}
                     </Link>
                     ))}
-                    <Link href="/careers" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
-                    <Link href="#contact" onClick={() => setIsOpen(false)} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
+                    <Link href="/careers" onClick={handleSheetLinkClick('/careers')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
+                    <Link href="#contact" onClick={handleSheetLinkClick('#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
                 </nav>
                 <div className="mt-8 space-y-4">
                     <Button asChild size="lg" className="w-full">
-                        <Link href="/get-demo">Book Demo</Link>
+                        <Link href="/get-demo" onClick={handleSheetLinkClick('/get-demo')}>Book Demo</Link>
                     </Button>
                 </div>
                 </SheetContent>

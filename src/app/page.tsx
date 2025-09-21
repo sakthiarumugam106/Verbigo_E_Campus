@@ -30,6 +30,8 @@ import { whatsapp } from '@/lib/config';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
+import { useLoading } from '@/components/loading-provider';
+import { useRouter } from 'next/navigation';
 
 const benefits = [
   {
@@ -135,7 +137,7 @@ function MobileValueItem({ value, isExpanded }: { value: (typeof values)[0], isE
 }
 
 function MobileValuesSection() {
-    const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
+    const [activeIndex, setActiveIndex] = React.useState<number | null>(0);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {
@@ -254,6 +256,15 @@ export default function HomePage() {
   const isMobile = useIsMobile();
 
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
+  const { showLoader, hideLoader } = useLoading();
+  const router = useRouter();
+  
+  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    showLoader();
+    router.push(href);
+    setTimeout(hideLoader, 1000); // Simulate loading time
+  };
 
 
   return (
@@ -279,12 +290,12 @@ export default function HomePage() {
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
                  <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
-                  <Link href="/find-tutor">
+                  <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
                     Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-primary-foreground/20">
-                  <Link href="/know-your-level">
+                  <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
                     Know Your Level <GraduationCap className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -347,7 +358,7 @@ export default function HomePage() {
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
                     <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col bg-background/80 backdrop-blur-sm border-primary/10">
-                      <Link href={`/courses/${course.slug}`} className="flex flex-col h-full">
+                      <Link href={`/courses/${course.slug}`} onClick={handleLinkClick(`/courses/${course.slug}`)} className="flex flex-col h-full">
                         <div className="overflow-hidden">
                           <Image
                             src={course.image}
