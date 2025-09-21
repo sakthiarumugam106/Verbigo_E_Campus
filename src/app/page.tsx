@@ -144,7 +144,7 @@ function MobileValueItem({ value, isActive, onInView }: { value: (typeof values)
 }
 
 function MobileValuesSection() {
-    const [activeIndex, setActiveIndex] = React.useState<number | null>(0);
+    const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
 
     return (
         <div className="mx-auto mt-12 max-w-3xl space-y-4">
