@@ -11,7 +11,7 @@ import { Inter, Poppins } from 'next/font/google';
 import { AiChatbot } from '@/components/ai-chatbot';
 import { ThemeProvider } from '@/components/theme-provider';
 import { BackToTopButton } from '@/components/back-to-top-button';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { LoadingProvider, GlobalLoader, useLoading } from '@/components/loading-provider';
 import { usePathname } from 'next/navigation';
 
@@ -60,11 +60,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
@@ -75,7 +70,7 @@ export default function RootLayout({
             defaultTheme="system"
             enableSystem
           >
-            {isClient ? <AppContent>{children}</AppContent> : null}
+            <AppContent>{children}</AppContent>
           </ThemeProvider>
         </LoadingProvider>
       </body>
