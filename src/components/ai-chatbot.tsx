@@ -252,27 +252,39 @@ export function AiChatbot() {
                 <X className="h-5 w-5" />
             </Button>
           </CardHeader>
-          <CardContent className="p-0 flex-1 overflow-hidden">
+          <CardContent className="relative p-0 flex-1 overflow-hidden bg-primary/5">
+            <div 
+              className="absolute inset-0 bg-repeat" 
+              style={{ 
+                backgroundImage: "url('/subtle-pattern.svg')",
+                opacity: 0.05,
+              }}
+            />
              <ScrollArea className="h-full" ref={scrollAreaRef}>
                  <div className="p-4 space-y-4">
                     {history.map((msg, index) => (
                         <div key={index} className={cn("flex items-end gap-2", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
                            {msg.role === 'model' && (
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0 self-start">
                                 <VerbigoTutorLogo width={24} height={24} />
                             </div>
                            )}
-                            <div className={cn("max-w-[80%] rounded-xl px-4 py-2 text-sm prose prose-sm", msg.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted')}>
-                                {msg.role === 'model' ? <ReactMarkdown className="text-foreground [&_p]:m-0">{msg.content.replace(/\\n/g, '  \n')}</ReactMarkdown> : msg.content}
+                            <div className={cn(
+                                "max-w-[80%] rounded-xl px-3 py-2 text-sm prose prose-sm shadow-md",
+                                msg.role === 'user' 
+                                  ? 'bg-primary text-primary-foreground rounded-br-none' 
+                                  : 'bg-background text-foreground rounded-bl-none'
+                            )}>
+                                <ReactMarkdown className="[&_p]:m-0">{msg.content.replace(/\\n/g, '  \n')}</ReactMarkdown>
                             </div>
                         </div>
                     ))}
                     {isPending && (
                         <div className="flex items-end gap-2 justify-start">
-                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0">
+                             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0 self-start">
                                 <VerbigoTutorLogo width={24} height={24} />
                              </div>
-                             <div className="max-w-[80%] rounded-xl px-4 py-2 text-sm bg-muted flex items-center gap-2">
+                             <div className="max-w-[80%] rounded-xl px-4 py-2 text-sm bg-background flex items-center gap-2 shadow-md rounded-bl-none">
                                 <Loader2 className="h-4 w-4 animate-spin" />
                                 <span>Thinking...</span>
                              </div>
@@ -281,7 +293,7 @@ export function AiChatbot() {
                  </div>
              </ScrollArea>
           </CardContent>
-          <CardFooter className="p-4 border-t">
+          <CardFooter className="p-4 border-t bg-background">
             <form onSubmit={handleSubmit} className="flex w-full items-center gap-2">
               <Input
                 value={input}
@@ -318,5 +330,3 @@ export function AiChatbot() {
     </>
   );
 }
-
-    
