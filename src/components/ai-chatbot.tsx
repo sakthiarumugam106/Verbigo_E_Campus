@@ -268,20 +268,22 @@ export function AiChatbot() {
              <ScrollArea className="h-full" ref={scrollAreaRef}>
                  <div className="p-4 space-y-4">
                     {history.map((msg, index) => (
-                        <div key={index} className={cn("flex items-end gap-2", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
-                           {msg.role === 'model' && (
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0 self-start">
-                                <VerbigoTutorLogo width={24} height={24} />
-                            </div>
-                           )}
-                            <div className={cn(
-                                "max-w-[80%] rounded-xl px-3 py-2 text-sm prose prose-sm shadow-md",
-                                msg.role === 'user' 
-                                  ? 'bg-primary text-primary-foreground rounded-br-none' 
-                                  : 'bg-background text-foreground rounded-bl-none'
-                            )}>
-                                <ReactMarkdown className="[&_p]:m-0">{msg.content.replace(/\\n/g, '  \n')}</ReactMarkdown>
-                            </div>
+                        <div key={index} className={cn("flex w-full", msg.role === 'user' ? 'justify-end' : 'justify-start')}>
+                          <div className={cn("flex items-end gap-2", msg.role === 'user' ? 'flex-row-reverse' : 'flex-row')}>
+                            {msg.role === 'model' && (
+                              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary dark:text-primary-foreground shrink-0 self-start">
+                                  <VerbigoTutorLogo width={24} height={24} />
+                              </div>
+                            )}
+                              <div className={cn(
+                                  "max-w-[80%] rounded-xl px-3 py-2 text-sm prose prose-sm shadow-md",
+                                  msg.role === 'user' 
+                                    ? 'bg-primary text-primary-foreground rounded-br-none' 
+                                    : 'bg-background text-foreground rounded-bl-none'
+                              )}>
+                                  <ReactMarkdown className="[&_p]:m-0">{msg.content.replace(/\\n/g, '  \n')}</ReactMarkdown>
+                              </div>
+                          </div>
                         </div>
                     ))}
                     {isPending && (
