@@ -333,8 +333,8 @@ export function FindTutorForm() {
                     Your request has been sent. We'll be in touch with you shortly on WhatsApp.
                 </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
-                <AlertDialogAction onClick={handleConfirmation} className="w-full">OK</AlertDialogAction>
+            <AlertDialogFooter className="sm:justify-center">
+                <AlertDialogAction onClick={handleConfirmation}>OK</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
