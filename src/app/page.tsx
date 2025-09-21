@@ -255,8 +255,7 @@ function ValuesSection() {
     }, []);
 
     if (!isClient) {
-        // Render a placeholder on the server to prevent layout shift
-        return <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12" style={{ visibility: 'hidden', height: '400px' }} />;
+        return <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12" style={{ visibility: 'hidden', minHeight: '400px' }} />;
     }
 
     return isMobile ? <MobileValuesSection /> : <DesktopValuesSection />;
