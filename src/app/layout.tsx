@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/header';
@@ -5,6 +6,11 @@ import { Footer } from '@/app/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { WhatsAppButton } from '@/components/whatsapp-button';
 import { Inter, Poppins } from 'next/font/google';
+import { AiChatbot } from '@/components/ai-chatbot';
+import { ThemeProvider } from '@/components/theme-provider';
+import { BackToTopButton } from '@/components/back-to-top-button';
+import { LoadingProvider, GlobalLoader } from '@/components/loading-provider';
+import { AppContent } from '@/components/app-content';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -26,14 +32,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
-      <body className="font-body-container antialiased">
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </div>
-        <WhatsAppButton />
-        <Toaster />
+      <body>
+        <LoadingProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+          >
+            <AppContent>{children}</AppContent>
+          </ThemeProvider>
+        </LoadingProvider>
       </body>
     </html>
   );

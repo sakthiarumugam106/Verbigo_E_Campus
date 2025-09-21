@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp } from 'lucide-react';
+import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp, Users, Target, Lightbulb, Globe } from 'lucide-react';
 import { ContactForm } from '@/components/contact-form';
 import { Testimonials } from '@/components/testimonials';
 import * as React from 'react';
@@ -25,20 +25,27 @@ import {
 } from '@/components/ui/carousel';
 import { courses } from '@/lib/courses';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { whatsapp } from '@/lib/config';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
+import { useLoading } from '@/components/loading-provider';
+import { useRouter } from 'next/navigation';
 
 const benefits = [
   {
-    icon: <BookOpen className="h-8 w-8 text-primary" />,
+    icon: <BookOpen className="h-8 w-8 text-primary dark:text-primary-foreground" />,
     title: 'Expert-Led Instruction',
     description: 'Learn from seasoned linguists and certified language coaches.',
   },
   {
-    icon: <Feather className="h-8 w-8 text-primary" />,
+    icon: <Feather className="h-8 w-8 text-primary dark:text-primary-foreground" />,
     title: 'Practical Writing Exercises',
     description: 'Apply what you learn with hands-on assignments and real-world scenarios.',
   },
   {
-    icon: <MessageCircle className="h-8 w-8 text-primary" />,
+    icon: <MessageCircle className="h-8 w-8 text-primary dark:text-primary-foreground" />,
     title: 'Interactive Feedback',
     description: 'Receive personalized feedback to refine your grammar and style.',
   },
@@ -46,29 +53,29 @@ const benefits = [
 
 const values = [
     {
-        icon: <MessageSquareQuote className="h-10 w-10 text-primary" />,
-        title: 'Empower through communication',
-        description: 'Clear communication transforms lives. It builds confidence, opens opportunities, and fuels personal growth.',
+        icon: <Users className="h-10 w-10 text-primary dark:text-primary-foreground" />,
+        title: 'Learner-centric Environment',
+        description: "We tailor every aspect of learning to the individual student's needs, pace, and goals, ensuring a personalized and effective journey.",
     },
     {
-        icon: <Languages className="h-10 w-10 text-primary" />,
-        title: 'Bridge gaps through language',
-        description: 'Language should connect, not divide. We make English approachable for those left behind by traditional methods.',
+        icon: <BookOpen className="h-10 w-10 text-primary dark:text-primary-foreground" />,
+        title: 'Foundational Literacy',
+        description: "We focus on building strong literacy fundamentals, providing the essential building blocks for lifelong learning and communication.",
     },
     {
-        icon: <TrendingUp className="h-10 w-10 text-primary" />,
-        title: 'Treat language as a tool for growth',
-        description: "English isn't just a subject. It's a skill that can unlock better opportunities, whether it's for work, study, or self-expression.",
+        icon: <Lightbulb className="h-10 w-10 text-primary dark:text-primary-foreground" />,
+        title: 'Experiential & Competency-Based Education',
+        description: "Our approach is hands-on and practical, focusing on developing real-world skills and measurable competencies, not just theoretical knowledge.",
     },
     {
-        icon: <GraduationCap className="h-10 w-10 text-primary" />,
-        title: 'Learner First approach',
-        description: 'We design every course around the person learning it. Their pace, their comfort, their goals. Learning works best when it adapts to the learner.',
+        icon: <Globe className="h-10 w-10 text-primary dark:text-primary-foreground" />,
+        title: 'Global Competence & 21st Century Skills',
+        description: 'We equip learners with the language skills and cultural understanding needed to thrive in an interconnected, 21st-century world.',
     },
     {
-        icon: <Laptop className="h-10 w-10 text-primary" />,
+        icon: <Laptop className="h-10 w-10 text-primary dark:text-primary-foreground" />,
         title: 'Blending Education & Technology',
-        description: "As a language hub we're trying to utilize technology to its best and become a game changer in the field of language learning.",
+        description: "As a language hub, we leverage cutting-edge technology to create innovative, engaging, and accessible learning experiences.",
     },
 ];
 
@@ -95,80 +102,259 @@ const faqItems = [
   },
 ];
 
-export default function HomePage() {
-  const phoneNumber = '7708071872';
-  const message = "Hello Verbigo, I am interested in your courses and would like to know more. Please let me know the next steps.";
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+function MobileValueItem({ value, isExpanded }: { value: (typeof values)[0], isExpanded: boolean }) {
+    const ref = React.useRef(null);
+    
+    return (
+        <div 
+            ref={ref}
+            className={cn(
+                "bg-background/60 backdrop-blur-sm border rounded-lg shadow-md overflow-hidden transition-all duration-500",
+                 isExpanded ? "bg-primary/10 border-primary/30" : "border-transparent"
+            )}
+        >
+            <div className="flex items-center gap-4 p-4 text-left">
+                <div className={cn("flex-shrink-0 transition-colors duration-500", isExpanded ? "text-primary dark:text-primary-foreground" : "text-primary/70 dark:text-primary-foreground/70")}>{value.icon}</div>
+                <span className={cn("flex-1 text-lg font-semibold transition-colors duration-500", isExpanded ? "text-primary dark:text-primary-foreground" : "text-primary/80 dark:text-primary-foreground/80")}>{value.title}</span>
+            </div>
+            <AnimatePresence>
+                {isExpanded && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                    >
+                        <div className="px-4 pb-4 pt-0">
+                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+}
 
+function MobileValuesSection() {
+    const [activeIndex, setActiveIndex] = React.useState<number | null>(0);
+    const containerRef = React.useRef<HTMLDivElement>(null);
+
+    React.useEffect(() => {
+        const handleScroll = () => {
+            if (!containerRef.current) return;
+            
+            const itemElements = Array.from(containerRef.current.children) as HTMLElement[];
+            const viewportCenter = window.innerHeight / 2;
+
+            let closestItemIndex: number | null = null;
+            let smallestDistance = Infinity;
+
+            itemElements.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                const itemCenter = rect.top + rect.height / 2;
+                const distance = Math.abs(viewportCenter - itemCenter);
+                
+                if (distance < smallestDistance) {
+                    smallestDistance = distance;
+                    closestItemIndex = index;
+                }
+            });
+            
+            // Only highlight if the item is reasonably close to the center
+            if (smallestDistance < window.innerHeight / 4) {
+                 setActiveIndex(closestItemIndex);
+            } else {
+                 setActiveIndex(null);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Initial check
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    return (
+        <div ref={containerRef} className="mx-auto mt-12 max-w-3xl space-y-4">
+            {values.map((value, index) => (
+                <MobileValueItem 
+                    key={index} 
+                    value={value}
+                    isExpanded={activeIndex === index}
+                />
+            ))}
+        </div>
+    );
+}
+
+
+function DesktopValuesSection() {
+    const ref = React.useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: {
+                staggerChildren: 0.1,
+            },
+        },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+            },
+        },
+    };
+
+    return (
+         <motion.div
+            ref={ref}
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12"
+        >
+            {values.map((value, index) => (
+                 <motion.div key={index} variants={itemVariants}>
+                    <Card className="h-full flex flex-col justify-start bg-background/60 backdrop-blur-sm border-primary/10 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                        <CardHeader className="flex flex-row items-center gap-4 pb-4">
+                            {value.icon}
+                            <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                        </CardContent>
+                    </Card>
+                 </motion.div>
+            ))}
+             <motion.div variants={itemVariants}>
+                <Card className="h-full flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-primary/10 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                    <CardContent className="p-4 md:p-6 text-center">
+                        <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
+                        <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
+                    </CardContent>
+                </Card>
+            </motion.div>
+        </motion.div>
+    );
+}
+
+function ValuesSection() {
+    const [isClient, setIsClient] = React.useState(false);
+    const isMobile = useIsMobile();
+
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12" style={{ minHeight: '400px' }} />;
+    }
+
+    return isMobile ? <MobileValuesSection /> : <DesktopValuesSection />;
+}
+
+
+export default function HomePage() {
   const coursesPlugin = React.useRef(
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
+
+  const [courseFilter, setCourseFilter] = React.useState('Professional');
+  
+  const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
+  const { showLoader } = useLoading();
+  const router = useRouter();
+  
+  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    showLoader();
+    router.push(href);
+  };
+
 
   return (
     <>
       <section
         id="hero"
-        className="w-full overflow-hidden bg-primary/5 pt-20 pb-20 md:pt-32 md:pb-24"
+        className="relative w-full overflow-hidden bg-primary py-12 md:py-20"
       >
-        <div className="container mx-auto px-4 md:px-6">
+        <div 
+          className="absolute inset-0 bg-repeat" 
+          style={{ 
+            backgroundImage: "url('/subtle-pattern.svg')",
+            opacity: 0.1,
+          }}
+        />
+        <div className="container relative mx-auto px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-4">
+            <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
-                <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl xl:text-6xl/none">
-                  Master the Art of Language with Verbigo
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
+                  Learn english through your native language
                 </h1>
-                <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                  Elevate your writing, perfect your grammar, and communicate with confidence. Our expert-led courses are designed for learners at every level.
-                </p>
               </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                 <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                  <Link href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                    <WhatsAppButtonIcon className="h-5 w-5"/>
-                    WhatsApp Now
+              <div className="flex flex-col gap-4 sm:flex-row">
+                 <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
+                  <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
+                    Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="hover:bg-primary hover:text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                  <Link href="/#courses">Explore Courses</Link>
+                <Button asChild size="lg" variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-background hover:text-primary dark:hover:text-white">
+                  <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
+                    Know Your Level <GraduationCap className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
             </div>
-            <Image
-              src="https://images.unsplash.com/photo-1462536943532-57a629f6cc60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxlZHVjYXRpb258ZW58MHx8fHwxNzU2NjI4MjMwfDA&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Hero"
-              width={1200}
-              height={800}
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover w-full"
-              data-ai-hint="language learning"
-            />
-          </div>
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-start space-x-4">
-                <div className="flex-shrink-0">{benefit.icon}</div>
-                <div>
-                  <h3 className="text-lg font-semibold">{benefit.title}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {benefit.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+            <div className="relative h-80 lg:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
+               <Image
+                src="/images/World_Languages.png"
+                alt="World map of official languages"
+                fill
+                className="object-cover"
+                data-ai-hint="world language map"
+                />
+                 <blockquote className="absolute bottom-0 left-0 right-0 bg-background/70 backdrop-blur-sm p-4 text-center rounded-b-xl">
+                    <p className="text-lg font-medium text-foreground">"To have another language is to possess a second soul."</p>
+                    <footer className="mt-2 text-sm text-muted-foreground">- Charlemagne</footer>
+                </blockquote>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="courses" className="w-full bg-background py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
+      <section id="courses" className="relative w-full bg-secondary py-16 md:py-24 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-repeat" 
+          style={{ 
+            backgroundImage: "url('/subtle-pattern.svg')",
+            opacity: 0.05,
+          }}
+        />
+        <div className="container mx-auto px-4 md:px-6 relative">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Our Language & Writing Courses
+              <h2 className="text-3xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-4xl md:text-5xl">
+                Our Courses
               </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-foreground/80">
                 Whether you're starting from scratch or honing your expertise, we have a course for you.
               </p>
             </div>
+            <Tabs value={courseFilter} onValueChange={setCourseFilter} className="mt-8">
+               <TabsList className="grid w-full grid-cols-2 bg-primary/20 text-primary-foreground p-1 h-auto rounded-lg">
+                <TabsTrigger value="Professional" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md py-2 font-medium">For Professionals</TabsTrigger>
+                <TabsTrigger value="Kids" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md py-2 font-medium">For Kids</TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
            <Carousel
             plugins={[coursesPlugin.current]}
@@ -181,11 +367,11 @@ export default function HomePage() {
             }}
           >
             <CarouselContent className="-ml-4">
-              {courses.map((course) => (
+              {filteredCourses.map((course) => (
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
-                    <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col">
-                      <Link href={`/courses/${course.slug}`} className="flex flex-col h-full">
+                    <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col bg-background/80 backdrop-blur-sm border-primary/10">
+                      <Link href={`/courses/${course.slug}`} onClick={handleLinkClick(`/courses/${course.slug}`)} className="flex flex-col h-full">
                         <div className="overflow-hidden">
                           <Image
                             src={course.image}
@@ -196,10 +382,10 @@ export default function HomePage() {
                             data-ai-hint={course.aiHint}
                           />
                         </div>
-                        <CardContent className="p-6 flex flex-col flex-grow">
-                          <CardTitle className="text-xl font-bold text-primary group-hover:text-accent">{course.title}</CardTitle>
-                          <p className="mt-2 text-muted-foreground text-sm flex-grow">{course.description}</p>
-                           <div className="flex items-center mt-4 text-primary font-medium">
+                        <CardContent className="p-4 md:p-6 flex flex-col flex-grow">
+                          <CardTitle className="text-lg md:text-xl font-bold text-primary group-hover:text-primary dark:text-primary-foreground">{course.title}</CardTitle>
+                          <p className="mt-2 text-muted-foreground text-sm flex-grow dark:text-foreground/80">{course.description}</p>
+                           <div className="flex items-center mt-4 text-primary font-medium dark:text-primary-foreground">
                             Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                           </div>
                         </CardContent>
@@ -209,51 +395,40 @@ export default function HomePage() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2" />
-            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2" />
+            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hover:bg-primary hover:text-primary-foreground" />
+            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hover:bg-primary hover:text-primary-foreground" />
           </Carousel>
         </div>
       </section>
 
-      <section id="values" className="w-full bg-primary/5 py-16 md:py-24 lg:py-32">
-        <div className="container mx-auto px-4 md:px-6">
+      <section id="values" className="relative w-full bg-primary/10 py-16 md:py-24 lg:py-32 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-repeat" 
+          style={{ 
+            backgroundImage: "url('/subtle-pattern.svg')",
+            opacity: 0.05,
+          }}
+        />
+        <div className="container mx-auto px-4 md:px-6 relative">
           <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-primary">
-                  Our Core <span className="text-destructive">Values</span>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary dark:text-primary-foreground">
+                  Our Core Values
               </h2>
-              <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+              <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
                   At Verbigo, our core values shape every lesson and interaction.
               </p>
           </div>
-          <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
-              {values.map((value, index) => (
-                  <Card key={index} className="flex flex-col justify-start transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                      <CardHeader className="flex flex-row items-center gap-4 pb-4">
-                          {value.icon}
-                          <CardTitle className="text-xl font-semibold text-primary">{value.title}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                          <p className="text-muted-foreground">{value.description}</p>
-                      </CardContent>
-                  </Card>
-              ))}
-               <Card className="flex flex-col justify-center items-center bg-background/50 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                  <CardContent className="text-center p-6">
-                      <h3 className="text-xl font-bold text-primary mb-2">And so much more...</h3>
-                      <p className="text-muted-foreground">We are constantly evolving to meet the needs of our learners.</p>
-                  </CardContent>
-              </Card>
-          </div>
+          <ValuesSection />
         </div>
       </section>
 
       <section id="testimonials" className="w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center">
-                <h2 className="text-3xl font-bold tracking-tighter text-primary sm:text-5xl">
-                    What Our Students Say
+                <h2 className="text-3xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-4xl md:text-5xl">
+                    Testimonials
                 </h2>
-                <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+                <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
                     Hear directly from learners who have transformed their skills with Verbigo.
                 </p>
             </div>
@@ -264,10 +439,10 @@ export default function HomePage() {
       <section id="faq" className="w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Frequently Asked Questions
             </h2>
-            <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
+            <p className="mt-4 text-muted-foreground md:text-xl/relaxed dark:text-foreground/80">
               Find answers to common questions about our language and grammar courses.
             </p>
           </div>
@@ -278,7 +453,7 @@ export default function HomePage() {
                   <AccordionTrigger className="text-lg font-medium text-left">
                     {item.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-base text-muted-foreground">
+                  <AccordionContent className="text-base text-muted-foreground dark:text-foreground/80">
                     {item.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -295,13 +470,13 @@ export default function HomePage() {
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
                 Contact Our Team
               </h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-foreground/80">
                 Have a question about a course? We're here to help. For demo requests, please use our dedicated demo form.
               </p>
             </div>
             <div className="mx-auto w-full max-w-sm space-y-2">
               <ContactForm />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground dark:text-foreground/80">
                 Our language experts will get back to you shortly.
               </p>
             </div>

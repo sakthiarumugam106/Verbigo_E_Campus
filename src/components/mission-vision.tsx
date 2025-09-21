@@ -16,17 +16,17 @@ import { Target, Eye, Briefcase } from 'lucide-react';
 
 const missionVisionItems = [
     {
-    icon: <Briefcase className="h-12 w-12 text-primary" />,
+    icon: <Briefcase className="h-12 w-12 text-primary dark:text-primary-foreground" />,
     title: 'Join Our Team',
     text: "We're on a mission to make language learning accessible. If you're passionate about education and technology, we'd love to hear from you.",
   },
   {
-    icon: <Target className="h-12 w-12 text-primary" />,
+    icon: <Target className="h-12 w-12 text-primary dark:text-primary-foreground" />,
     title: 'Our Mission',
     text: "To empower individuals by making high-quality language education accessible, engaging, and effective through innovative technology.",
   },
   {
-    icon: <Eye className="h-12 w-12 text-primary" />,
+    icon: <Eye className="h-12 w-12 text-primary dark:text-primary-foreground" />,
     title: 'Our Vision',
     text: "To become a world leader in language intelligence, creating a global community of confident and proficient communicators.",
   },
@@ -58,7 +58,7 @@ export function MissionVision() {
                             {item.icon}
                         </div>
                         <CardContent className="p-6 text-center flex-grow flex flex-col items-center justify-start gap-4">
-                            <h3 className="text-2xl font-bold text-primary">{item.title}</h3>
+                            <h3 className="text-2xl font-bold text-primary dark:text-primary-foreground">{item.title}</h3>
                             <p className="text-md text-muted-foreground flex-grow">{item.text}</p>
                         </CardContent>
                     </Card>

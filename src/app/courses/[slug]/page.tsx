@@ -1,28 +1,31 @@
 
+'use client';
+
 import { courses } from '@/lib/courses';
 import { Button } from '@/components/ui/button';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
 import { CheckCircle2, BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
+import { whatsapp } from '@/lib/config';
+import { useLoading } from '@/components/loading-provider';
 
 export default function CoursePage({ params }: { params: { slug: string } }) {
   const course = courses.find((c) => c.slug === params.slug);
+  const router = useRouter();
+  const { showLoader } = useLoading();
 
   if (!course) {
     notFound();
   }
+  
+  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    showLoader();
+    router.push(href);
+  };
 
-  const phoneNumber = '7708071872';
-  const enrollMessage = `Hello Verbigo! I'm interested in the ${course.title} course.`;
-  const demoMessage = `Hello Verbigo, I would like to book a demo for the ${course.title} course. Please let me know the next steps.`;
-  const whatsappEnrollUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-    enrollMessage
-  )}`;
-   const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-    demoMessage
-  )}`;
 
   return (
     <div className="bg-primary/5">
@@ -30,7 +33,7 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-6">
             <div className="space-y-4">
-               <Link href="/#courses" className="text-sm font-medium text-primary hover:underline">
+               <Link href="/#courses" onClick={handleLinkClick('/#courses')} className="text-sm font-medium text-primary dark:text-primary-foreground hover:underline">
                 &larr; Back to Courses
               </Link>
               <div className="flex items-center gap-3">
@@ -38,34 +41,34 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
                   Language Course
                 </div>
               </div>
-              <h1 className="text-4xl font-bold tracking-tighter text-primary sm:text-5xl">
+              <h1 className="text-4xl font-bold tracking-tighter text-primary dark:text-primary-foreground sm:text-5xl">
                 {course.title}
               </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl">
+              <p className="max-w-[600px] text-muted-foreground md:text-xl dark:text-foreground/80">
                 {course.description}
               </p>
             </div>
             <ul className="grid gap-4">
-              <li className="flex items-center gap-3 font-semibold text-lg text-primary">
+              <li className="flex items-center gap-3 font-semibold text-lg text-primary dark:text-primary-foreground">
                   <BookOpen className="h-6 w-6" />
                   What You'll Learn
               </li>
               {course.features?.map((feature, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <CheckCircle2 className="mt-1 h-5 w-5 flex-shrink-0 text-green-500" />
-                  <span className="text-muted-foreground">{feature}</span>
+                  <span className="text-muted-foreground dark:text-foreground/80">{feature}</span>
                 </li>
               ))}
             </ul>
             <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
               <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <Link href={whatsappEnrollUrl} target="_blank" rel="noopener noreferrer">
+                <Link href={whatsapp.getCourseInquiryUrl(course.title)} target="_blank" rel="noopener noreferrer">
                   <WhatsAppButtonIcon className="h-5 w-5"/>
                   Enroll via WhatsApp
                 </Link>
               </Button>
                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">
+                <Link href={whatsapp.getCourseDemoUrl(course.title)} target="_blank" rel="noopener noreferrer">
                   Book a Demo
                 </Link>
               </Button>

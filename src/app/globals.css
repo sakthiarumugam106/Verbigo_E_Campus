@@ -81,6 +81,9 @@
   }
   html {
     scroll-behavior: smooth;
+    /* Set smaller base font size for mobile, and larger for tablets and desktops */
+    @apply text-[90%];
+    @apply sm:text-[100%];
   }
   body {
     @apply bg-background text-foreground;

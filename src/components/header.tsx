@@ -7,96 +7,124 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Menu } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
+import { whatsapp } from '@/lib/config';
+import { ThemeToggle } from './theme-toggle';
+import { useLoading } from './loading-provider';
+import { useRouter } from 'next/navigation';
 
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Courses', href: '/#courses' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Know Your Level', href: '/know-your-level' },
   { name: 'Our Values', href: '/#values' },
-  { name: 'Careers', href: '/careers' },
   { name: 'FAQ', href: '/#faq' },
-  { name: 'Contact', href: '/#contact' },
 ];
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const phoneNumber = '7708071872';
-  const message = "Hello Verbigo, I am interested in your courses and would like to schedule a demo. Please let me know the next steps.";
-  const whatsappDemoUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const { showLoader } = useLoading();
+  const router = useRouter();
+
+  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    showLoader();
+    router.push(href);
+  };
+  
+   const handleSheetLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsOpen(false);
+    showLoader();
+    router.push(href);
+  };
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-        <div className="flex flex-1 items-center gap-6">
-            <Link href="/" className="flex items-center gap-2 text-primary">
+      <div className="container relative flex h-16 items-center justify-between px-4 md:px-6">
+        <div className="flex items-center">
+            <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
                 <VerbigoLogo />
                 <div className="flex flex-col">
                     <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
-                    <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
+                    <span className="text-[10px] font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
                 </div>
             </Link>
-            <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
-                {navLinks.map((link) => (
-                    <Link
-                    key={link.name}
-                    href={link.href}
-                    className="transition-colors hover:text-foreground/80 text-foreground/60"
-                    >
-                    {link.name}
-                    </Link>
-                ))}
-            </nav>
         </div>
-
-        <div className="flex items-center gap-4">
-           <Button asChild className="hidden sm:flex">
-            <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
-          </Button>
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="md:hidden hover:bg-primary hover:text-primary-foreground"
-                aria-label="Open navigation menu"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-                <SheetHeader>
-                    <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
-                    <SheetDescription className="sr-only">
-                        Navigation links for Verbigo.
-                    </SheetDescription>
-                </SheetHeader>
-              <Link
-                href="/"
-                className="flex items-center gap-2 text-primary mb-6"
-                onClick={() => setIsOpen(false)}
-              >
-                <VerbigoLogo />
-                 <div className="flex flex-col">
-                    <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
-                    <span className="text-xs font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
+        
+        <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
+            {navLinks.map((link) => (
+                <Link
+                key={link.name}
+                href={link.href}
+                onClick={handleLinkClick(link.href)}
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                >
+                {link.name}
+                </Link>
+            ))}
+        </nav>
+        
+        <div className="flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2">
+                <Button asChild>
+                    <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>Book Demo</Link>
+                </Button>
+            </div>
+          <ThemeToggle />
+          <div className="md:hidden">
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <SheetTrigger asChild>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    className="hover:bg-primary hover:text-primary-foreground"
+                    aria-label="Open navigation menu"
+                >
+                    <Menu className="h-5 w-5" />
+                </Button>
+                </SheetTrigger>
+                <SheetContent side="left">
+                    <SheetHeader>
+                        <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                        <SheetDescription className="sr-only">
+                            Navigation links for Verbigo.
+                        </SheetDescription>
+                    </SheetHeader>
+                <Link
+                    href="/"
+                    className="flex items-center gap-2 text-primary dark:text-primary-foreground mb-6"
+                    onClick={handleSheetLinkClick('/')}
+                >
+                    <VerbigoLogo />
+                    <div className="flex flex-col">
+                        <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
+                        <span className="text-[10px] font-medium text-muted-foreground leading-none mt-1">E-Campus for Language Intelligence</span>
+                    </div>
+                </Link>
+                <nav className="grid gap-4">
+                    {navLinks.map((link) => (
+                    <Link
+                        key={link.name}
+                        href={link.href}
+                        onClick={handleSheetLinkClick(link.href)}
+                        className="text-lg font-medium text-foreground/80 hover:text-foreground"
+                    >
+                        {link.name}
+                    </Link>
+                    ))}
+                    <Link href="/careers" onClick={handleSheetLinkClick('/careers')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
+                    <Link href="#contact" onClick={handleSheetLinkClick('#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
+                </nav>
+                <div className="mt-8 space-y-4">
+                    <Button asChild size="lg" className="w-full">
+                        <Link href="/get-demo" onClick={handleSheetLinkClick('/get-demo')}>Book Demo</Link>
+                    </Button>
                 </div>
-              </Link>
-              <nav className="grid gap-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className="text-lg font-medium text-foreground/80 hover:text-foreground"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </nav>
-              <Button asChild size="lg" className="w-full mt-8">
-                  <Link href={whatsappDemoUrl} target="_blank" rel="noopener noreferrer">Book a Demo</Link>
-              </Button>
-            </SheetContent>
-          </Sheet>
+                </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>
