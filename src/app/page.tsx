@@ -27,6 +27,8 @@ import { courses } from '@/lib/courses';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { whatsapp } from '@/lib/config';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 const benefits = [
   {
@@ -103,6 +105,7 @@ export default function HomePage() {
   );
 
   const [courseFilter, setCourseFilter] = React.useState('Professional');
+  const isMobile = useIsMobile();
 
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
 
@@ -245,25 +248,43 @@ export default function HomePage() {
                   At Verbigo, our core values shape every lesson and interaction.
               </p>
           </div>
-          <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
-              {values.map((value, index) => (
-                  <Card key={index} className="flex flex-col justify-start bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                      <CardHeader className="flex flex-row items-center gap-4 pb-4">
-                          {value.icon}
-                          <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                          <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
-                      </CardContent>
-                  </Card>
-              ))}
-               <Card className="flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                  <CardContent className="p-4 md:p-6 text-center">
-                      <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
-                      <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
-                  </CardContent>
-              </Card>
-          </div>
+            {isMobile ? (
+              <div className="mx-auto mt-12 max-w-3xl">
+                <Accordion type="single" collapsible className="w-full space-y-4">
+                  {values.map((value, index) => (
+                    <AccordionItem key={index} value={`item-${index}`} className="bg-background/60 backdrop-blur-sm border-accent/20 rounded-lg shadow-md overflow-hidden">
+                      <AccordionTrigger className="flex items-center gap-4 p-4 text-left hover:no-underline">
+                        <div className="flex-shrink-0">{value.icon}</div>
+                        <span className="flex-1 text-lg font-semibold text-primary dark:text-primary-foreground">{value.title}</span>
+                      </AccordionTrigger>
+                      <AccordionContent className="p-4 pt-0">
+                        <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            ) : (
+            <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
+                {values.map((value, index) => (
+                    <Card key={index} className="flex flex-col justify-start bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                        <CardHeader className="flex flex-row items-center gap-4 pb-4">
+                            {value.icon}
+                            <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                        </CardContent>
+                    </Card>
+                ))}
+                <Card className="flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                    <CardContent className="p-4 md:p-6 text-center">
+                        <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
+                        <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
+                    </CardContent>
+                </Card>
+            </div>
+          )}
         </div>
       </section>
 
