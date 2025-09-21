@@ -307,7 +307,7 @@ export default function HomePage() {
                     Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-background hover:text-primary">
+                <Button asChild size="lg" variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-background hover:text-primary dark:hover:text-white">
                   <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
                     Know Your Level <GraduationCap className="ml-2 h-4 w-4" />
                   </Link>
