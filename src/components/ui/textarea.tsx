@@ -12,6 +12,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, React.ComponentProps<'tex
         )}
         ref={ref}
         {...props}
+        spellCheck="false"
       />
     );
   }
