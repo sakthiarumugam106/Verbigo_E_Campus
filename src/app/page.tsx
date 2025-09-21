@@ -116,13 +116,13 @@ function MobileValueItem({ value, isActive, onInView }: { value: (typeof values)
         <div 
             ref={ref}
             className={cn(
-                "bg-background/60 backdrop-blur-sm border border-accent/20 rounded-lg shadow-md overflow-hidden transition-all duration-300",
-                 isExpanded && "bg-primary/10 border-primary/50"
+                "bg-background/60 backdrop-blur-sm border border-primary/10 rounded-lg shadow-md overflow-hidden transition-all duration-500",
+                 isExpanded ? "bg-primary/10 border-primary/30" : "border-transparent"
             )}
         >
             <div className="flex items-center gap-4 p-4 text-left">
-                <div className={cn("flex-shrink-0 transition-colors", isExpanded && "text-primary dark:text-primary-foreground")}>{value.icon}</div>
-                <span className={cn("flex-1 text-lg font-semibold text-primary/80 dark:text-primary-foreground/80 transition-colors", isExpanded && "text-primary dark:text-primary-foreground")}>{value.title}</span>
+                <div className={cn("flex-shrink-0 transition-colors duration-500", isExpanded ? "text-primary dark:text-primary-foreground" : "text-primary/70 dark:text-primary-foreground/70")}>{value.icon}</div>
+                <span className={cn("flex-1 text-lg font-semibold transition-colors duration-500", isExpanded ? "text-primary dark:text-primary-foreground" : "text-primary/80 dark:text-primary-foreground/80")}>{value.title}</span>
             </div>
             <AnimatePresence>
                 {isExpanded && (
@@ -130,7 +130,7 @@ function MobileValueItem({ value, isActive, onInView }: { value: (typeof values)
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
                         <div className="px-4 pb-4 pt-0">
@@ -144,7 +144,7 @@ function MobileValueItem({ value, isActive, onInView }: { value: (typeof values)
 }
 
 function MobileValuesSection() {
-    const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
+    const [activeIndex, setActiveIndex] = React.useState<number | null>(0);
 
     return (
         <div className="mx-auto mt-12 max-w-3xl space-y-4">
@@ -195,7 +195,7 @@ function DesktopValuesSection() {
         >
             {values.map((value, index) => (
                  <motion.div key={index} variants={itemVariants}>
-                    <Card className="h-full flex flex-col justify-start bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                    <Card className="h-full flex flex-col justify-start bg-background/60 backdrop-blur-sm border-primary/10 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
                         <CardHeader className="flex flex-row items-center gap-4 pb-4">
                             {value.icon}
                             <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
@@ -207,7 +207,7 @@ function DesktopValuesSection() {
                  </motion.div>
             ))}
              <motion.div variants={itemVariants}>
-                <Card className="h-full flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                <Card className="h-full flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-primary/10 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
                     <CardContent className="p-4 md:p-6 text-center">
                         <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
                         <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
