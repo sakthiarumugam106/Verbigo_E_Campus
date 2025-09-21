@@ -4,6 +4,7 @@
 import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { VerbigoLogo } from './verbigo-logo';
+import { cn } from '@/lib/utils';
 
 interface LoadingContextType {
   isLoading: boolean;
@@ -58,17 +59,27 @@ export function GlobalLoader() {
                     className="fixed inset-0 z-[200] flex items-center justify-center bg-background/80 backdrop-blur-sm"
                 >
                     <motion.div
-                         animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.7, 1, 0.7],
-                        }}
-                        transition={{
-                            duration: 1.5,
-                            ease: "easeInOut",
-                            repeat: Infinity,
-                        }}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8 }}
+                        transition={{ duration: 0.3 }}
+                        className="relative w-24 h-24"
                     >
-                       <VerbigoLogo />
+                        <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{
+                                duration: 1,
+                                ease: "linear",
+                                repeat: Infinity,
+                            }}
+                            className="absolute inset-0 rounded-full"
+                            style={{
+                                background: 'conic-gradient(from 0deg, hsl(var(--primary)), hsl(var(--accent)), transparent 60%)',
+                            }}
+                        />
+                        <div className="absolute inset-[3px] bg-white dark:bg-background rounded-full flex items-center justify-center p-2">
+                           <VerbigoLogo />
+                        </div>
                     </motion.div>
                 </motion.div>
             )}
