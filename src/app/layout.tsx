@@ -1,5 +1,5 @@
 
-'use client'; // Required for useEffect
+'use client'; 
 
 import './globals.css';
 import { Header } from '@/components/header';
