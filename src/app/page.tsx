@@ -29,7 +29,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { whatsapp } from '@/lib/config';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useInView } from 'framer-motion';
 
 const benefits = [
   {
@@ -134,14 +134,14 @@ function MobileValuesSection() {
                 <div 
                     key={index}
                     className={cn(
-                        "bg-background/60 backdrop-blur-sm border-accent/20 rounded-lg shadow-md overflow-hidden transition-all duration-300",
-                        activeIndex === index && "ring-2 ring-primary border-primary"
+                        "bg-background/60 backdrop-blur-sm border border-accent/20 rounded-lg shadow-md overflow-hidden transition-all duration-300",
+                         activeIndex === index && "bg-primary/10 border-primary/50"
                     )}
                     onClick={(e) => handleItemClick(index, e)}
                 >
                     <div className="flex items-center gap-4 p-4 text-left cursor-pointer">
-                        <div className="flex-shrink-0">{value.icon}</div>
-                        <span className="flex-1 text-lg font-semibold text-primary dark:text-primary-foreground">{value.title}</span>
+                        <div className={cn("flex-shrink-0 transition-colors", activeIndex === index && "text-primary dark:text-primary-foreground")}>{value.icon}</div>
+                        <span className={cn("flex-1 text-lg font-semibold text-primary/80 dark:text-primary-foreground/80 transition-colors", activeIndex === index && "text-primary dark:text-primary-foreground")}>{value.title}</span>
                     </div>
                     <AnimatePresence>
                         {activeIndex === index && (
@@ -152,7 +152,7 @@ function MobileValuesSection() {
                                 transition={{ duration: 0.3 }}
                                 className="overflow-hidden"
                             >
-                                <div className="p-4 pt-0">
+                                <div className="px-4 pb-4 pt-0">
                                     <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
                                 </div>
                             </motion.div>
@@ -163,6 +163,65 @@ function MobileValuesSection() {
         </div>
     );
 }
+
+
+function DesktopValuesSection() {
+    const ref = React.useRef(null);
+    const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+    const containerVariants = {
+        hidden: {},
+        visible: {
+            transition: {
+                staggerChildren: 0.1,
+            },
+        },
+    };
+
+    const itemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                duration: 0.5,
+            },
+        },
+    };
+
+    return (
+         <motion.div
+            ref={ref}
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12"
+        >
+            {values.map((value, index) => (
+                 <motion.div key={index} variants={itemVariants}>
+                    <Card className="h-full flex flex-col justify-start bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                        <CardHeader className="flex flex-row items-center gap-4 pb-4">
+                            {value.icon}
+                            <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                        </CardContent>
+                    </Card>
+                 </motion.div>
+            ))}
+             <motion.div variants={itemVariants}>
+                <Card className="h-full flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                    <CardContent className="p-4 md:p-6 text-center">
+                        <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
+                        <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
+                    </CardContent>
+                </Card>
+            </motion.div>
+        </motion.div>
+    );
+}
+
 
 export default function HomePage() {
   const coursesPlugin = React.useRef(
@@ -316,25 +375,7 @@ export default function HomePage() {
             {isMobile ? (
               <MobileValuesSection />
             ) : (
-            <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12">
-                {values.map((value, index) => (
-                    <Card key={index} className="flex flex-col justify-start bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                        <CardHeader className="flex flex-row items-center gap-4 pb-4">
-                            {value.icon}
-                            <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
-                        </CardContent>
-                    </Card>
-                ))}
-                <Card className="flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-accent/20 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
-                    <CardContent className="p-4 md:p-6 text-center">
-                        <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
-                        <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
-                    </CardContent>
-                </Card>
-            </div>
+             <DesktopValuesSection />
           )}
         </div>
       </section>
