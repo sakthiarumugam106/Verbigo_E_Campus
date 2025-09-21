@@ -21,7 +21,7 @@ export default function TermsOfServicePage() {
             <CardTitle className="text-3xl font-bold text-primary dark:text-primary-foreground">Terms of Service</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6 text-muted-foreground prose prose-lg max-w-none">
-            <p>Last updated: {isClient ? lastUpdated : '...'}</p>
+            {isClient ? <p>Last updated: {lastUpdated}</p> : <p>Last updated: ...</p>}
 
             <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Verbigo website (the "Service") operated by Verbigo ("us", "we", or "our").</p>
             <p>Your access to and use of the Service is conditioned upon your acceptance of and compliance with these Terms. These Terms apply to all visitors, users, and others who wish to access or use the Service.</p>
