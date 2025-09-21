@@ -102,7 +102,7 @@ const faqItems = [
 
 function MobileValueItem({ value, isActive, onInView }: { value: (typeof values)[0], isActive: boolean, onInView: () => void }) {
     const ref = React.useRef(null);
-    const isInView = useInView(ref, { margin: "-40% 0px -40% 0px" });
+    const isInView = useInView(ref, { margin: "-45% 0px -45% 0px" });
 
     React.useEffect(() => {
         if (isInView) {
