@@ -1,5 +1,5 @@
 
-'use client'; // Required for useEffect
+'use client'; 
 
 import type { Metadata } from 'next';
 import './globals.css';
