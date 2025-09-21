@@ -100,65 +100,46 @@ const faqItems = [
   },
 ];
 
-function MobileValuesSection() {
-    const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
-    const containerRef = React.useRef<HTMLDivElement>(null);
-
-    const handleItemClick = (index: number, event: React.MouseEvent) => {
-        event.stopPropagation();
-        setActiveIndex(activeIndex === index ? null : index);
-    };
-
-    React.useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setActiveIndex(null);
-            }
-        };
-        
-        const handleScroll = () => {
-            setActiveIndex(null);
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        window.addEventListener('scroll', handleScroll, true);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            window.removeEventListener('scroll', handleScroll, true);
-        };
-    }, []);
+function MobileValueItem({ value }: { value: (typeof values)[0] }) {
+    const ref = React.useRef(null);
+    const isInView = useInView(ref, { margin: "-40% 0px -40% 0px" });
 
     return (
-        <div ref={containerRef} className="mx-auto mt-12 max-w-3xl space-y-4">
+        <div 
+            ref={ref}
+            className={cn(
+                "bg-background/60 backdrop-blur-sm border border-accent/20 rounded-lg shadow-md overflow-hidden transition-all duration-300",
+                 isInView && "bg-primary/10 border-primary/50"
+            )}
+        >
+            <div className="flex items-center gap-4 p-4 text-left">
+                <div className={cn("flex-shrink-0 transition-colors", isInView && "text-primary dark:text-primary-foreground")}>{value.icon}</div>
+                <span className={cn("flex-1 text-lg font-semibold text-primary/80 dark:text-primary-foreground/80 transition-colors", isInView && "text-primary dark:text-primary-foreground")}>{value.title}</span>
+            </div>
+            <AnimatePresence>
+                {isInView && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.4, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                    >
+                        <div className="px-4 pb-4 pt-0">
+                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+}
+
+function MobileValuesSection() {
+    return (
+        <div className="mx-auto mt-12 max-w-3xl space-y-4">
             {values.map((value, index) => (
-                <div 
-                    key={index}
-                    className={cn(
-                        "bg-background/60 backdrop-blur-sm border border-accent/20 rounded-lg shadow-md overflow-hidden transition-all duration-300",
-                         activeIndex === index && "bg-primary/10 border-primary/50"
-                    )}
-                    onClick={(e) => handleItemClick(index, e)}
-                >
-                    <div className="flex items-center gap-4 p-4 text-left cursor-pointer">
-                        <div className={cn("flex-shrink-0 transition-colors", activeIndex === index && "text-primary dark:text-primary-foreground")}>{value.icon}</div>
-                        <span className={cn("flex-1 text-lg font-semibold text-primary/80 dark:text-primary-foreground/80 transition-colors", activeIndex === index && "text-primary dark:text-primary-foreground")}>{value.title}</span>
-                    </div>
-                    <AnimatePresence>
-                        {activeIndex === index && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="overflow-hidden"
-                            >
-                                <div className="px-4 pb-4 pt-0">
-                                    <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                <MobileValueItem key={index} value={value} />
             ))}
         </div>
     );
