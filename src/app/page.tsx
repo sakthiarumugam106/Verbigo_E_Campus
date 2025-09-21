@@ -100,24 +100,32 @@ const faqItems = [
   },
 ];
 
-function MobileValueItem({ value }: { value: (typeof values)[0] }) {
+function MobileValueItem({ value, isActive, onInView }: { value: (typeof values)[0], isActive: boolean, onInView: () => void }) {
     const ref = React.useRef(null);
     const isInView = useInView(ref, { margin: "-40% 0px -40% 0px" });
+
+    React.useEffect(() => {
+        if (isInView) {
+            onInView();
+        }
+    }, [isInView, onInView]);
+
+    const isExpanded = isActive && isInView;
 
     return (
         <div 
             ref={ref}
             className={cn(
                 "bg-background/60 backdrop-blur-sm border border-accent/20 rounded-lg shadow-md overflow-hidden transition-all duration-300",
-                 isInView && "bg-primary/10 border-primary/50"
+                 isExpanded && "bg-primary/10 border-primary/50"
             )}
         >
             <div className="flex items-center gap-4 p-4 text-left">
-                <div className={cn("flex-shrink-0 transition-colors", isInView && "text-primary dark:text-primary-foreground")}>{value.icon}</div>
-                <span className={cn("flex-1 text-lg font-semibold text-primary/80 dark:text-primary-foreground/80 transition-colors", isInView && "text-primary dark:text-primary-foreground")}>{value.title}</span>
+                <div className={cn("flex-shrink-0 transition-colors", isExpanded && "text-primary dark:text-primary-foreground")}>{value.icon}</div>
+                <span className={cn("flex-1 text-lg font-semibold text-primary/80 dark:text-primary-foreground/80 transition-colors", isExpanded && "text-primary dark:text-primary-foreground")}>{value.title}</span>
             </div>
             <AnimatePresence>
-                {isInView && (
+                {isExpanded && (
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
@@ -136,10 +144,17 @@ function MobileValueItem({ value }: { value: (typeof values)[0] }) {
 }
 
 function MobileValuesSection() {
+    const [activeIndex, setActiveIndex] = React.useState<number | null>(0);
+
     return (
         <div className="mx-auto mt-12 max-w-3xl space-y-4">
             {values.map((value, index) => (
-                <MobileValueItem key={index} value={value} />
+                <MobileValueItem 
+                    key={index} 
+                    value={value}
+                    isActive={activeIndex === index}
+                    onInView={() => setActiveIndex(index)}
+                />
             ))}
         </div>
     );
