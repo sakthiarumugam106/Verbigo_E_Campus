@@ -77,7 +77,7 @@ export function GlobalLoader() {
                                 background: 'conic-gradient(from 0deg, hsl(var(--primary)), hsl(var(--accent)), transparent 60%)',
                             }}
                         />
-                        <div className="absolute inset-[3px] bg-white dark:bg-background rounded-full flex items-center justify-center p-2">
+                        <div className="absolute inset-[3px] bg-white rounded-full flex items-center justify-center p-2">
                            <VerbigoLogo />
                         </div>
                     </motion.div>
