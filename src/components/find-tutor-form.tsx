@@ -98,6 +98,16 @@ export function FindTutorForm() {
       });
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(finalFormData.email)) {
+      toast({
+        title: 'Invalid Email',
+        description: 'Please enter a valid email address.',
+        variant: 'destructive',
+      });
+      return;
+    }
     
     // Open WhatsApp link immediately for the user
     const whatsappUrl = whatsapp.getTutorInquiryUrl(finalFormData);
@@ -188,7 +198,7 @@ export function FindTutorForm() {
               required 
             />
         </div>
-      ) : <div />}
+      ) : null}
        <div className="space-y-2">
         <Label htmlFor="state">State</Label>
         <Select name="state" required onValueChange={(value) => handleChange('state', value)}>
@@ -261,3 +271,5 @@ export function FindTutorForm() {
     </form>
   );
 }
+
+    
