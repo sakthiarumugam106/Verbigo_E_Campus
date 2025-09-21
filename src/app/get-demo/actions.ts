@@ -55,6 +55,31 @@ async function sendNotificationEmail(data: DemoRequestData) {
   }
 }
 
+async function handlePostSubmissionTasks(data: DemoRequestData) {
+    const { name, email, phoneNumber } = data;
+    const submissionTime = new Date();
+
+    try {
+        await Promise.all([
+            addDoc(collection(db, 'demo-requests'), {
+                name,
+                email,
+                phoneNumber,
+                submittedAt: submissionTime,
+            }),
+            appendToGoogleSheet({
+                name,
+                email,
+                contact: phoneNumber,
+            }),
+            sendNotificationEmail(data),
+        ]);
+        console.log('All post-submission tasks completed successfully.');
+    } catch (error) {
+        console.error('Error during post-submission tasks:', error);
+    }
+}
+
 
 export async function submitDemoRequest(
   prevState: DemoFormState,
@@ -76,33 +101,11 @@ export async function submitDemoRequest(
         success: false,
       };
     }
+    
+    // Start background tasks but don't wait for them
+    handlePostSubmissionTasks(validatedFields.data);
 
-    const { name, email, phoneNumber } = validatedFields.data;
-    const submissionTime = new Date();
-
-    // Run all operations in parallel
-    const [firestoreResult, sheetResult, emailResult] = await Promise.all([
-      addDoc(collection(db, 'demo-requests'), {
-        name,
-        email,
-        phoneNumber,
-        submittedAt: submissionTime,
-      }),
-      appendToGoogleSheet({
-        name,
-        email,
-        contact: phoneNumber,
-      }),
-      sendNotificationEmail(validatedFields.data),
-    ]);
-
-    // Optional: Check results if needed, though for now we assume success if no errors are thrown
-    // For example, if email fails, we might not want to block the user.
-    if (!emailResult.success) {
-        // Log the email error but still return success to the user
-        console.error("Email notification failed to send, but other operations succeeded.");
-    }
-
+    // Return success to the user immediately
     return { 
       success: true, 
       message: 'Your demo request has been submitted successfully!',
