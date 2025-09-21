@@ -255,8 +255,8 @@ function ValuesSection() {
     }, []);
 
     if (!isClient) {
-        // Render a placeholder or nothing on the server
-        return <div style={{ height: '500px' }} />; // Or a skeleton loader
+        // Render a placeholder or nothing on the server to avoid hydration mismatch
+        return <div style={{ height: '500px' }} />;
     }
 
     return isMobile ? <MobileValuesSection /> : <DesktopValuesSection />;
