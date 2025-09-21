@@ -3,7 +3,7 @@
 
 import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
+import { VerbigoLogo } from './verbigo-logo';
 
 interface LoadingContextType {
   isLoading: boolean;
@@ -58,12 +58,17 @@ export function GlobalLoader() {
                     className="fixed inset-0 z-[200] flex items-center justify-center bg-background/80 backdrop-blur-sm"
                 >
                     <motion.div
-                        initial={{ scale: 0.5, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.5, opacity: 0 }}
-                        transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                         animate={{
+                            scale: [1, 1.2, 1],
+                            opacity: [0.7, 1, 0.7],
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            ease: "easeInOut",
+                            repeat: Infinity,
+                        }}
                     >
-                        <Loader2 className="h-16 w-16 text-primary animate-spin" />
+                       <VerbigoLogo />
                     </motion.div>
                 </motion.div>
             )}
