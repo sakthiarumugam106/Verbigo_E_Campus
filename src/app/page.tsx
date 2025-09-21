@@ -115,10 +115,16 @@ function MobileValuesSection() {
                 setActiveIndex(null);
             }
         };
+        
+        const handleScroll = () => {
+            setActiveIndex(null);
+        };
 
         document.addEventListener('mousedown', handleClickOutside);
+        window.addEventListener('scroll', handleScroll, true);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('scroll', handleScroll, true);
         };
     }, []);
 
@@ -397,5 +403,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
