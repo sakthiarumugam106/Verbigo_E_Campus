@@ -1,4 +1,6 @@
 
+'use client';
+
 import { FindTutorForm } from '@/components/find-tutor-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 

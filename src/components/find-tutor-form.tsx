@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -11,7 +12,9 @@ import { useToast } from '@/hooks/use-toast';
 import { IndianStatesAndLanguages } from '@/lib/india-states-languages';
 import { whatsapp } from '@/lib/config';
 import { sendTutorRequestEmail } from '@/app/find-tutor/actions';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Check } from 'lucide-react';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
+import { motion } from 'framer-motion';
 
 const countryCodes = {
   '91': { label: 'IN', length: 10 },
@@ -37,6 +40,9 @@ export function FindTutorForm() {
   const [otherCountryCode, setOtherCountryCode] = useState('');
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const router = useRouter();
+
 
   useEffect(() => {
     if (formData.state) {
@@ -55,7 +61,7 @@ export function FindTutorForm() {
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const currentMaxLength = countryCode !== 'Other' ? countryCodes[countryCode]?.length : undefined;
+    const currentMaxLength = countryCode !== 'Other' ? countryCodes[countryCode as CountryCode]?.length : undefined;
     // Only allow numbers and limit length
     if (/^\d*$/.test(value) && (!currentMaxLength || value.length <= currentMaxLength)) {
       handleChange('whatsapp', value);
@@ -82,13 +88,34 @@ export function FindTutorForm() {
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      whatsapp: '',
+      state: '',
+      language: '',
+      schedule: '',
+    });
+    setOtherLanguage('');
+    setCountryCode('91');
+    setOtherCountryCode('');
+  };
+
+  const handleConfirmation = () => {
+    setShowConfirmation(false);
+    resetForm();
+    router.push('/');
+  };
+
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const finalLanguage = formData.language === 'Other' ? otherLanguage : formData.language;
     const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
     
-    const finalFormData = { ...formData, language: finalLanguage, whatsapp: `${finalCountryCode} ${formData.whatsapp}` };
+    const finalFormData = { ...formData, language: finalLanguage, whatsapp: `+${finalCountryCode} ${formData.whatsapp}` };
 
     if (!finalFormData.name || !finalFormData.email || !formData.whatsapp || !finalFormData.state || !finalFormData.language || !finalFormData.schedule) {
       toast({
@@ -118,6 +145,8 @@ export function FindTutorForm() {
         description: 'Your message has been prepared. Please send it to connect with us.',
     });
 
+    setShowConfirmation(true);
+
     // Send email in the background
     startTransition(async () => {
         const result = await sendTutorRequestEmail(finalFormData);
@@ -135,14 +164,15 @@ export function FindTutorForm() {
 
 
   return (
+    <>
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-2">
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} />
+        <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name}/>
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} />
+        <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email}/>
       </div>
       <div className="space-y-2">
         <Label htmlFor="whatsapp">WhatsApp Number</Label>
@@ -201,7 +231,7 @@ export function FindTutorForm() {
       ) : null}
        <div className="space-y-2">
         <Label htmlFor="state">State</Label>
-        <Select name="state" required onValueChange={(value) => handleChange('state', value)}>
+        <Select name="state" required onValueChange={(value) => handleChange('state', value)} value={formData.state}>
           <SelectTrigger>
             <SelectValue placeholder="Select your state" />
           </SelectTrigger>
@@ -241,7 +271,7 @@ export function FindTutorForm() {
         )}
       <div className="space-y-2 md:col-span-2">
         <Label>Schedule Preference</Label>
-        <RadioGroup name="schedule" required className="flex flex-col sm:flex-row gap-4 pt-2" onValueChange={(value) => handleChange('schedule', value)}>
+        <RadioGroup name="schedule" required className="flex flex-col sm:flex-row gap-4 pt-2" onValueChange={(value) => handleChange('schedule', value)} value={formData.schedule}>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="Weekends" id="weekends" />
             <Label htmlFor="weekends">Weekends</Label>
@@ -269,9 +299,45 @@ export function FindTutorForm() {
         </Button>
       </div>
     </form>
+    <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+                <div className="flex justify-center items-center">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                            type: 'spring',
+                            stiffness: 260,
+                            damping: 20,
+                            delay: 0.2,
+                        }}
+                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                    >
+                         <motion.div
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{
+                                type: 'spring',
+                                stiffness: 260,
+                                damping: 20,
+                                delay: 0.4,
+                            }}
+                        >
+                            <Check className="h-12 w-12 text-green-600" />
+                        </motion.div>
+                    </motion.div>
+                </div>
+                <AlertDialogTitle className="text-center text-2xl pt-4">Thanks for choosing Verbigo!</AlertDialogTitle>
+                <AlertDialogDescription className="text-center">
+                    Your request has been sent. We'll be in touch with you shortly on WhatsApp.
+                </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+                <AlertDialogAction onClick={handleConfirmation} className="w-full">OK</AlertDialogAction>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }
-
-    
-
-    
