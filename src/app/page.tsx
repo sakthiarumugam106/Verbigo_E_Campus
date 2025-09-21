@@ -255,7 +255,8 @@ function ValuesSection() {
     }, []);
 
     if (!isClient) {
-        return <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12" style={{ visibility: 'hidden', minHeight: '400px' }} />;
+        // Render a placeholder or null on the server to avoid hydration mismatch
+        return <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12" style={{ minHeight: '400px' }} />;
     }
 
     return isMobile ? <MobileValuesSection /> : <DesktopValuesSection />;

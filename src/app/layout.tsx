@@ -22,14 +22,6 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
-// We can't export metadata from a client component, so we'll leave this here.
-// The metadata from the previous version of the file will still be used.
-// export const metadata: Metadata = {
-//   title: 'Verbigo | Master Your Language Skills',
-//   description:
-//     'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
-// };
-
 function AppContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { hideLoader } = useLoading();
