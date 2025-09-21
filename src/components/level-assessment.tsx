@@ -14,6 +14,7 @@ import { CheckCircle, GraduationCap, Loader2, MessageSquare, Star, User, Phone }
 import { useEffect, useState, useTransition } from 'react';
 import { WhatsAppButtonIcon } from './whatsapp-button-icon';
 import { sendAssessmentReport } from '@/app/know-your-level/actions';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 type Question = {
   question: string;
@@ -34,6 +35,15 @@ type AssessmentState = {
   view: 'idle' | 'assessing' | 'collecting_info' | 'showing_report';
 }
 
+const countryCodes = {
+  '91': { label: 'IN', length: 10 },
+  '1': { label: 'US', length: 10 },
+  '44': { label: 'UK', length: 10 },
+  '61': { label: 'AU', length: 9 },
+};
+type CountryCode = keyof typeof countryCodes;
+
+
 const ASSESSMENT_STORAGE_KEY = 'verbigo-assessment-state';
 const MIN_WORDS = 10;
 
@@ -52,6 +62,121 @@ const StarRating = ({ level }: { level: 'Beginner' | 'Intermediate' | 'Advanced'
     </div>
   );
 };
+
+
+function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: UserDetails) => void, isSubmitting: boolean }) {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [countryCode, setCountryCode] = useState<CountryCode | 'Other'>('91');
+  const [otherCountryCode, setOtherCountryCode] = useState('');
+
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const currentMaxLength = countryCode !== 'Other' ? countryCodes[countryCode as CountryCode]?.length : undefined;
+    if (/^\d*$/.test(value) && (!currentMaxLength || value.length <= currentMaxLength)) {
+      setPhoneNumber(value);
+    }
+  };
+
+  const handleCountryCodeChange = (value: string) => {
+    setPhoneNumber('');
+    if (value === 'Other') {
+      setCountryCode(value as 'Other');
+      setOtherCountryCode('');
+    } else {
+      setCountryCode(value as CountryCode);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    
+    const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
+    const fullPhoneNumber = `+${finalCountryCode} ${phoneNumber}`;
+
+    if (name && email && fullPhoneNumber) {
+        onFormSubmit({ name, email, phone: fullPhoneNumber });
+    }
+  };
+
+  const phoneMaxLength = countryCode !== 'Other' ? countryCodes[countryCode as CountryCode]?.length : undefined;
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-2">
+          <Label htmlFor="name">Full Name</Label>
+          <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSubmitting} />
+      </div>
+      <div className="space-y-2">
+          <Label htmlFor="email">Email Address</Label>
+          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSubmitting} />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="phone">Phone Number</Label>
+        <div className="flex items-center">
+          <Select value={countryCode} onValueChange={handleCountryCodeChange} disabled={isSubmitting}>
+            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
+                <SelectValue>
+                  {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+                {Object.entries(countryCodes).map(([code, {label}]) => (
+                    <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                ))}
+                <SelectItem value="Other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+          {countryCode === 'Other' ? (
+              <Input
+                id="otherCountryCode"
+                name="otherCountryCode"
+                placeholder="Code"
+                value={otherCountryCode}
+                onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                className="rounded-l-none border-l-0 w-[80px]"
+                required
+                disabled={isSubmitting}
+              />
+          ) : (
+              <Input 
+                id="phone"
+                type="tel" 
+                name="phoneInput"
+                placeholder="1234567890"
+                value={phoneNumber} 
+                onChange={handlePhoneNumberChange} 
+                maxLength={phoneMaxLength}
+                className="rounded-l-none"
+                required 
+                disabled={isSubmitting}
+              />
+          )}
+        </div>
+        {countryCode === 'Other' && (
+          <div className="grid gap-2 text-left mt-2">
+            <Label htmlFor="phoneNumberOther">Phone Number</Label>
+            <Input 
+                id="phoneNumberOther"
+                type="tel" 
+                name="phoneInput"
+                placeholder="1234567890"
+                value={phoneNumber} 
+                onChange={handlePhoneNumberChange}
+                required 
+                disabled={isSubmitting}
+              />
+          </div>
+        )}
+      </div>
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending Report...</> : 'View My Report'}
+      </Button>
+    </form>
+  );
+}
 
 
 export function LevelAssessment() {
@@ -156,16 +281,8 @@ export function LevelAssessment() {
     getNextQuestion(newHistory);
   };
   
-  const handleUserInfoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const formData = new FormData(e.currentTarget);
-      const name = formData.get('name') as string;
-      const phone = formData.get('phone') as string;
-      const email = formData.get('email') as string;
-
-      if(name && phone && email && report) {
-        const currentUserDetails = { name, phone, email };
-
+  const handleUserInfoSubmit = (currentUserDetails: UserDetails) => {
+      if(report) {
         startReportTransition(async () => {
             const result = await sendAssessmentReport({ report, userDetails: currentUserDetails });
 
@@ -265,23 +382,7 @@ export function LevelAssessment() {
                   <CardDescription>Your report is ready. Please provide your details to view it and get a copy via email.</CardDescription>
               </CardHeader>
               <CardContent>
-                  <form onSubmit={handleUserInfoSubmit} className="space-y-4">
-                      <div className="space-y-2">
-                          <Label htmlFor="name">Full Name</Label>
-                          <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSendingReport} />
-                      </div>
-                      <div className="space-y-2">
-                          <Label htmlFor="email">Email Address</Label>
-                          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSendingReport} />
-                      </div>
-                      <div className="space-y-2">
-                          <Label htmlFor="phone">Phone Number</Label>
-                          <Input id="phone" name="phone" type="tel" placeholder="+91 12345 67890" required disabled={isSendingReport} />
-                      </div>
-                      <Button type="submit" className="w-full" disabled={isSendingReport}>
-                         {isSendingReport ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending Report...</> : 'View My Report'}
-                      </Button>
-                  </form>
+                 <UserInfoForm onFormSubmit={handleUserInfoSubmit} isSubmitting={isSendingReport} />
               </CardContent>
           </Card>
       )
@@ -352,5 +453,3 @@ export function LevelAssessment() {
       </div>
     );
 }
-
-    

@@ -21,7 +21,7 @@ type CountryCode = keyof typeof countryCodes;
 
 export function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', phoneNumber: '', message: '' });
-  const [countryCode, setCountryCode] = useState<CountryCode>('91');
+  const [countryCode, setCountryCode] = useState<CountryCode | 'Other'>('91');
   const [otherCountryCode, setOtherCountryCode] = useState('');
   const [errors, setErrors] = useState<any>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,7 +37,7 @@ export function ContactForm() {
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const currentMaxLength = countryCodes[countryCode]?.length;
+    const currentMaxLength = countryCode !== 'Other' ? countryCodes[countryCode as CountryCode]?.length : undefined;
     // Only allow numbers and limit length
     if (/^\d*$/.test(value) && (!currentMaxLength || value.length <= currentMaxLength)) {
       setForm({ ...form, phoneNumber: value });
@@ -47,7 +47,7 @@ export function ContactForm() {
   const handleCountryCodeChange = (value: string) => {
     setForm({ ...form, phoneNumber: '' }); // Reset phone number on country change
     if (value === 'Other') {
-      setCountryCode(value as CountryCode);
+      setCountryCode(value as 'Other');
       setOtherCountryCode('');
     } else {
       setCountryCode(value as CountryCode);
@@ -63,7 +63,7 @@ export function ContactForm() {
     const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
     const result = await appendContactToGoogleSheet({
       ...form,
-      phoneNumber: `${finalCountryCode} ${form.phoneNumber}`,
+      phoneNumber: `+${finalCountryCode} ${form.phoneNumber}`,
     });
 
     setIsSubmitting(false);
@@ -95,7 +95,8 @@ export function ContactForm() {
     }
   };
 
-  const phoneMaxLength = countryCodes[countryCode]?.length;
+  const phoneMaxLength = countryCode !== 'Other' ? countryCodes[countryCode as CountryCode]?.length : undefined;
+
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-4">
@@ -115,7 +116,7 @@ export function ContactForm() {
             <Select value={countryCode} onValueChange={handleCountryCodeChange}>
                 <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
                     <SelectValue>
-                      {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode]?.label} (+${countryCode})`}
+                      {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
                     </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
@@ -140,7 +141,7 @@ export function ContactForm() {
                   id="phoneNumber"
                   type="tel" 
                   name="phoneNumber"
-                  placeholder={phoneMaxLength ? 'X'.repeat(phoneMaxLength) : '1234567890'}
+                  placeholder={'1234567890'}
                   value={form.phoneNumber} 
                   onChange={handlePhoneNumberChange} 
                   maxLength={phoneMaxLength}

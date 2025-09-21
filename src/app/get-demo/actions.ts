@@ -12,7 +12,8 @@ import type DemoRequestEmail from '@/emails/demo-request-email';
 const demoRequestSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
-  phoneNumber: z.string().min(10, { message: 'Please enter a valid phone number.' }),
+  phoneNumber: z.string().min(10, { message: 'Please enter a valid phone number.' })
+    .regex(/^\+\d+ \d+$/, 'Invalid phone number format. Expected "+<code> <number>".'),
 });
 
 type DemoRequestData = z.infer<typeof demoRequestSchema>;
