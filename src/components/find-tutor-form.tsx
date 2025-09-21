@@ -13,6 +13,15 @@ import { whatsapp } from '@/lib/config';
 import { sendTutorRequestEmail } from '@/app/find-tutor/actions';
 import { Loader2 } from 'lucide-react';
 
+const countryCodes = {
+  '91': { label: 'IN', length: 10 },
+  '1': { label: 'US', length: 10 },
+  '44': { label: 'UK', length: 10 },
+  '61': { label: 'AU', length: 9 },
+};
+
+type CountryCode = keyof typeof countryCodes;
+
 export function FindTutorForm() {
   const [formData, setFormData] = useState({
     name: '',
@@ -24,6 +33,8 @@ export function FindTutorForm() {
   });
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([]);
   const [otherLanguage, setOtherLanguage] = useState('');
+  const [countryCode, setCountryCode] = useState<CountryCode | 'Other'>('91');
+  const [otherCountryCode, setOtherCountryCode] = useState('');
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
 
@@ -42,6 +53,26 @@ export function FindTutorForm() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const currentMaxLength = countryCode !== 'Other' ? countryCodes[countryCode]?.length : undefined;
+    // Only allow numbers and limit length
+    if (/^\d*$/.test(value) && (!currentMaxLength || value.length <= currentMaxLength)) {
+      handleChange('whatsapp', value);
+    }
+  };
+
+  const handleCountryCodeChange = (value: string) => {
+    handleChange('whatsapp', ''); // Reset phone number on country change
+    if (value === 'Other') {
+      setCountryCode(value as 'Other');
+      setOtherCountryCode('');
+    } else {
+      setCountryCode(value as CountryCode);
+    }
+  };
+
+
   const handleLanguageChange = (value: string) => {
     if (value === 'Other') {
       setFormData(prev => ({ ...prev, language: 'Other' }));
@@ -55,9 +86,11 @@ export function FindTutorForm() {
     e.preventDefault();
 
     const finalLanguage = formData.language === 'Other' ? otherLanguage : formData.language;
-    const finalFormData = { ...formData, language: finalLanguage };
+    const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
+    
+    const finalFormData = { ...formData, language: finalLanguage, whatsapp: `${finalCountryCode} ${formData.whatsapp}` };
 
-    if (!finalFormData.name || !finalFormData.email || !finalFormData.whatsapp || !finalFormData.state || !finalFormData.language || !finalFormData.schedule) {
+    if (!finalFormData.name || !finalFormData.email || !formData.whatsapp || !finalFormData.state || !finalFormData.language || !finalFormData.schedule) {
       toast({
         title: 'Error',
         description: 'Please fill out all the fields.',
@@ -88,6 +121,9 @@ export function FindTutorForm() {
 
   };
 
+  const phoneMaxLength = countryCode !== 'Other' ? countryCodes[countryCode]?.length : undefined;
+
+
   return (
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-2">
       <div className="space-y-2">
@@ -98,10 +134,61 @@ export function FindTutorForm() {
         <Label htmlFor="email">Email Address</Label>
         <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} />
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 md:col-span-2">
         <Label htmlFor="whatsapp">WhatsApp Number</Label>
-        <Input id="whatsapp" name="whatsapp" type="tel" placeholder="+91 98765 43210" required onChange={(e) => handleChange('whatsapp', e.target.value)} />
+        <div className="flex items-center">
+            <Select value={countryCode} onValueChange={handleCountryCodeChange}>
+                <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
+                    <SelectValue>
+                      {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                    </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                    {Object.entries(countryCodes).map(([code, {label}]) => (
+                        <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                    ))}
+                    <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+            </Select>
+            {countryCode === 'Other' ? (
+                <Input
+                  id="otherCountryCode"
+                  name="otherCountryCode"
+                  placeholder="Code"
+                  value={otherCountryCode}
+                  onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                  className="rounded-l-none border-l-0 w-[80px]"
+                  required
+                />
+            ) : (
+                <Input 
+                  id="whatsapp"
+                  type="tel" 
+                  name="whatsapp"
+                  placeholder={phoneMaxLength ? 'X'.repeat(phoneMaxLength) : '1234567890'}
+                  value={formData.whatsapp} 
+                  onChange={handlePhoneNumberChange} 
+                  maxLength={phoneMaxLength}
+                  className="rounded-l-none"
+                  required 
+                />
+            )}
+        </div>
       </div>
+      {countryCode === 'Other' && (
+        <div className="space-y-2 md:col-span-2">
+           <Label htmlFor="whatsappNumberOther">Phone Number</Label>
+           <Input 
+              id="whatsappNumberOther"
+              type="tel" 
+              name="whatsapp"
+              placeholder="1234567890"
+              value={formData.whatsapp} 
+              onChange={handlePhoneNumberChange}
+              required 
+            />
+        </div>
+      )}
        <div className="space-y-2">
         <Label htmlFor="state">State</Label>
         <Select name="state" required onValueChange={(value) => handleChange('state', value)}>
