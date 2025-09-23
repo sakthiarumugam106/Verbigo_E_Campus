@@ -32,6 +32,7 @@ import { useLoading } from '@/components/loading-provider';
 import { useRouter } from 'next/navigation';
 import { CourseCategoryToggle } from '@/components/course-category-toggle';
 import './sparkle-button.css';
+import './io-button.css';
 import { Balancer } from 'react-wrap-balancer';
 
 const benefits = [
@@ -305,14 +306,27 @@ export default function HomePage() {
                 </h1>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
-                 <Button asChild size="lg" useNeumorphic={false} className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg">
-                  <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
-                    Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+                 <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
+                    <button className="cssbuttons-io-button">
+                        Find your tutor
+                        <div className="icon">
+                            <svg
+                            height="24"
+                            width="24"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                            <path
+                                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                                fill="currentColor"
+                            ></path>
+                            </svg>
+                        </div>
+                    </button>
+                </Link>
                 <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
                     <button className="sparkle-button" type="button">
-                        <span className="dots_border"></span>
                         <span className="sparkle">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="sparkle_path">
                                 <path
@@ -336,6 +350,7 @@ export default function HomePage() {
                             </svg>
                         </span>
                         <span className="backdrop"></span>
+                        <span className="dots_border"></span>
                         <span className="text_button">Know Your Level</span>
                     </button>
                 </Link>
