@@ -134,7 +134,7 @@
 }
 
 .sparkle-button .sparkle .path {
-    stroke: hsl(var(--foreground));
+    stroke: hsl(var(--primary-foreground));
 }
 
 .dark .sparkle-button .sparkle .path {
