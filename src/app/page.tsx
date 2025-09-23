@@ -312,6 +312,7 @@ export default function HomePage() {
                 </Button>
                 <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
                     <button className="sparkle-button" type="button">
+                        <span className="dots_border"></span>
                         <span className="sparkle">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="sparkle_path">
                                 <path

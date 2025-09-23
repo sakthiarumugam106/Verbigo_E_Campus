@@ -54,7 +54,7 @@
 }
 
 
-.sparkle-button::after {
+.sparkle-button .backdrop {
   content: "";
   position: absolute;
   top: 50%;
