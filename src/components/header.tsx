@@ -7,11 +7,9 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Menu } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
-import { whatsapp } from '@/lib/config';
 import { ThemeToggle } from './theme-toggle';
 import { useLoading } from './loading-provider';
 import { useRouter } from 'next/navigation';
-import { cn } from '@/lib/utils';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -71,7 +69,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+      <div className="flex h-16 w-full items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
             <VerbigoLogo />
             <div className="flex flex-col">
