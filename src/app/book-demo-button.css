@@ -14,7 +14,7 @@
 }
 
 .btn span {
-  font-size: 14px; /* Adjusted for better visibility */
+  font-size: 12px; /* Adjusted for better visibility */
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: top 0.5s;
