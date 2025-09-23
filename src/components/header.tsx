@@ -30,8 +30,7 @@ export function Header() {
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (href.startsWith('/#')) {
-        const id = href.substring(2);
-        const element = document.getElementById(id);
+        const element = document.getElementById(href.substring(2));
         if (element) {
             showLoader();
             element.scrollIntoView({ behavior: 'smooth' });
@@ -48,13 +47,29 @@ export function Header() {
    const handleSheetLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsOpen(false);
-    handleLinkClick(href)(e);
+    
+    // Use a small timeout to allow the sheet to close before navigation
+    setTimeout(() => {
+        if (href.startsWith('/#')) {
+            const element = document.getElementById(href.substring(2));
+            if (element) {
+                showLoader();
+                element.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(hideLoader, 800);
+            } else {
+                router.push('/');
+            }
+        } else {
+            showLoader();
+            router.push(href);
+        }
+    }, 150);
   };
 
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container relative flex h-16 items-center justify-between px-4 md:px-6">
+      <div className="container flex h-16 items-center px-4 md:px-6">
         <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
                 <VerbigoLogo />
@@ -65,7 +80,7 @@ export function Header() {
             </Link>
         </div>
         
-        <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
+        <nav className="hidden flex-1 items-center justify-center gap-6 text-sm font-medium md:flex">
             {navLinks.map((link) => (
                 <Link
                 key={link.name}
@@ -78,7 +93,7 @@ export function Header() {
             ))}
         </nav>
         
-        <div className="flex items-center">
+        <div className="flex items-center justify-end">
             <div className="hidden sm:flex items-center mr-2">
                 <Button asChild>
                     <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>Book Demo</Link>
