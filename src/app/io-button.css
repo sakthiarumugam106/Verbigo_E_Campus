@@ -42,7 +42,7 @@
   height: 2.2em;
   width: 2.2em;
   border-radius: 9999px;
-  box-shadow: 0.1em 0.1em 0.6em 0.2em hsla(var(--primary) / 0.5);
+  box-shadow: 0.1em 0.1em 0.6em 0.2em hsla(var(--accent) / 0.5);
   right: 0.3em;
   transition: all 0.3s;
 }
