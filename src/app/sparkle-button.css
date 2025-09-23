@@ -1,6 +1,5 @@
 
 
-
 .sparkle-button {
   --black-700: hsl(var(--secondary));
   --border_radius: 9999px;
@@ -141,6 +140,7 @@
   font-weight: 500;
   color: hsl(var(--foreground));
   transition: color var(--transition);
+  white-space: nowrap;
 }
 
 .sparkle-button:is(:hover, :focus-visible) .text_button {
