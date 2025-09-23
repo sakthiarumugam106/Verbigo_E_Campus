@@ -1,6 +1,5 @@
 
 .cssbuttons-io-button {
-  background: transparent;
   color: hsl(var(--foreground));
   font-family: inherit;
   padding: 0.35em;
