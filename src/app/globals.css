@@ -103,7 +103,7 @@
         position: absolute;
         top: 0.25rem;
         left: 0.25rem;
-        width: 50%;
+        width: calc(50% - 0.25rem);
         height: calc(100% - 0.5rem);
         background-color: #2A3C9F;
         border-radius: 9999px;
