@@ -87,6 +87,63 @@
   }
 }
 
+@layer components {
+  .course-toggle-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: #394a56;
+  }
+
+  .course-toggle {
+    isolation: isolate;
+    position: relative;
+    height: 38px;
+    width: 240px;
+    border-radius: 19px;
+    overflow: hidden;
+    box-shadow: -8px -4px 8px 0px #ffffff,
+      8px 4px 12px 0px #d1d9e6,
+      4px 4px 4px 0px #d1d9e6 inset,
+      -4px -4px 4px 0px #ffffff inset;
+  }
+
+  .course-toggle-state {
+    display: none;
+  }
+
+  .course-toggle-indicator {
+    height: 100%;
+    width: 200%;
+    background: #ecf0f3;
+    border-radius: 19px;
+    transform: translate3d(-75%, 0, 0);
+    transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+    box-shadow: -8px -4px 8px 0px #ffffff,
+      8px 4px 12px 0px #d1d9e6;
+  }
+
+  .course-toggle-state:checked ~ .course-toggle > .course-toggle-indicator {
+    transform: translate3d(25%, 0, 0);
+  }
+
+  .course-toggle-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(var(--primary));
+    font-weight: 500;
+    font-size: 14px;
+    user-select: none;
+  }
+}
+
+
 @layer utilities {
   .neumorphic-outer {
     background: hsl(var(--background));

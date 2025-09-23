@@ -25,13 +25,12 @@ import {
 } from '@/components/ui/carousel';
 import { courses } from '@/lib/courses';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { whatsapp } from '@/lib/config';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { useLoading } from '@/components/loading-provider';
 import { useRouter } from 'next/navigation';
+import { CourseCategoryToggle } from '@/components/course-category-toggle';
 
 const benefits = [
   {
@@ -267,7 +266,7 @@ export default function HomePage() {
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
 
-  const [courseFilter, setCourseFilter] = React.useState('Professional');
+  const [courseFilter, setCourseFilter] = React.useState<'Professional' | 'Kids'>('Professional');
   
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
   const { showLoader } = useLoading();
@@ -302,12 +301,12 @@ export default function HomePage() {
                 </h1>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
-                 <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 rounded-full shadow-lg">
+                 <Button asChild size="lg" useNeumorphic={false} className="bg-secondary text-secondary-foreground hover:bg-secondary/90 rounded-full shadow-lg">
                   <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
                     Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-background hover:text-primary dark:hover:text-white">
+                <Button asChild size="lg" useNeumorphic={false} variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-background hover:text-primary dark:hover:text-white">
                   <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
                     Know Your Level <GraduationCap className="ml-2 h-4 w-4" />
                   </Link>
@@ -342,12 +341,9 @@ export default function HomePage() {
                 Whether you're starting from scratch or honing your expertise, we have a course for you.
               </p>
             </div>
-            <Tabs value={courseFilter} onValueChange={setCourseFilter} className="mt-8">
-               <TabsList className="grid w-full grid-cols-2 p-1 h-auto rounded-lg neumorphic-inner">
-                <TabsTrigger value="Professional" className="data-[state=active]:neumorphic-outer data-[state=active]:text-primary rounded-md py-2 font-medium">For Professionals</TabsTrigger>
-                <TabsTrigger value="Kids" className="data-[state=active]:neumorphic-outer data-[state=active]:text-primary rounded-md py-2 font-medium">For Kids</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <div className="pt-8">
+              <CourseCategoryToggle value={courseFilter} onChange={setCourseFilter} />
+            </div>
           </div>
            <Carousel
             plugins={[coursesPlugin.current]}
