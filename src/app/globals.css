@@ -88,85 +88,47 @@
 }
 
 @layer components {
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 200px;
-    height: 44px;
-    background-color: hsl(var(--muted));
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    padding: 4px;
-    user-select: none;
-    @apply neumorphic-inner;
-  }
+    .course-toggle {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        background-color: hsl(var(--muted));
+        border-radius: 9999px;
+        padding: 0.25rem;
+        @apply neumorphic-inner;
+    }
 
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
+    .course-toggle-bg {
+        position: absolute;
+        top: 0.25rem;
+        left: 0.25rem;
+        width: 50%;
+        height: calc(100% - 0.5rem);
+        background-color: hsl(var(--primary));
+        border-radius: 9999px;
+        transition: transform 0.3s ease-in-out;
+        z-index: 0;
+    }
 
-  .switch span {
-    position: absolute;
-    top: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: calc(50% - 4px);
-    height: calc(100% - 8px);
-    font-size: 1rem;
-    font-weight: 600;
-    color: hsl(var(--muted-foreground));
-    transition: color 0.3s ease-in-out;
-    z-index: 1;
-  }
-  
-  .switch span.active {
-    color: hsl(var(--primary-foreground));
-  }
+    .course-toggle-button {
+        position: relative;
+        z-index: 1;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: hsl(var(--muted-foreground));
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        transition: color 0.3s ease-in-out;
+        border-radius: 9999px;
+        min-width: 120px;
+        text-align: center;
+    }
 
-  .switch span:nth-of-type(1) {
-    left: 4px;
-  }
-
-  .switch span:nth-of-type(2) {
-    right: 4px;
-  }
-
-  .switch::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: calc(50% - 4px);
-    height: calc(100% - 8px);
-    background-color: hsl(var(--primary));
-    border-radius: 9999px;
-    transition: transform 0.3s ease-in-out;
-    z-index: 0;
-  }
-
-  .switch input:checked ~ span:nth-of-type(1) {
-    color: hsl(var(--muted-foreground));
-  }
-  
-  .switch input:checked ~ span:nth-of-type(2) {
-    color: hsl(var(--primary-foreground));
-  }
-  
-  .switch input:not(:checked) ~ span:nth-of-type(1) {
-    color: hsl(var(--primary-foreground));
-  }
-  
-  .switch input:not(:checked) ~ span:nth-of-type(2) {
-    color: hsl(var(--muted-foreground));
-  }
-  
-  .switch input:checked::before {
-    transform: translateX(calc(100% + 4px));
-  }
+    .course-toggle-button.active {
+        color: hsl(var(--primary-foreground));
+    }
 }
 
 

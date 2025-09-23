@@ -1,7 +1,7 @@
 'use client';
 
-import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface CourseCategoryToggleProps {
   value: 'Professional' | 'Kids';
@@ -12,20 +12,21 @@ interface CourseCategoryToggleProps {
 export function CourseCategoryToggle({ value, onChange, className }: CourseCategoryToggleProps) {
   const isKidsSelected = value === 'Kids';
 
-  const handleToggle = () => {
-    onChange(isKidsSelected ? 'Professional' : 'Kids');
-  };
-
   return (
-    <label htmlFor="course-filter" className={cn('switch', className)} aria-label="Toggle course category">
-      <input 
-        type="checkbox" 
-        id="course-filter" 
-        checked={isKidsSelected} 
-        onChange={handleToggle}
-      />
-      <span className={cn({ 'active': !isKidsSelected })}>Professional</span>
-      <span className={cn({ 'active': isKidsSelected })}>Kids</span>
-    </label>
+    <div className={cn('course-toggle', className)}>
+      <div className="course-toggle-bg" style={{ transform: isKidsSelected ? 'translateX(100%)' : 'translateX(0)' }} />
+      <button
+        onClick={() => onChange('Professional')}
+        className={cn('course-toggle-button', { 'active': value === 'Professional' })}
+      >
+        Professional
+      </button>
+      <button
+        onClick={() => onChange('Kids')}
+        className={cn('course-toggle-button', { 'active': value === 'Kids' })}
+      >
+        Kids
+      </button>
+    </div>
   );
 }
