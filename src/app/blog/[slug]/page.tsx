@@ -8,8 +8,10 @@ import Link from 'next/link';
 import { Calendar, Clock } from 'lucide-react';
 import { SocialShareButtons } from '@/components/social-share-buttons';
 import { useLoading } from '@/components/loading-provider';
+import { use } from 'react';
 
-export default function BlogPostPage({ params: { slug } }: { params: { slug: string } }) {
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const post = blogPosts.find((p) => p.slug === slug);
   const { showLoader } = useLoading();
   const router = useRouter();
