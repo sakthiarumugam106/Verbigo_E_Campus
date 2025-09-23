@@ -30,7 +30,8 @@ export function Header() {
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (href.startsWith('/#')) {
-        const element = document.getElementById(href.substring(2));
+        const id = href.substring(2);
+        const element = document.getElementById(id);
         if (element) {
             showLoader();
             element.scrollIntoView({ behavior: 'smooth' });
@@ -51,7 +52,8 @@ export function Header() {
     // Use a small timeout to allow the sheet to close before navigation
     setTimeout(() => {
         if (href.startsWith('/#')) {
-            const element = document.getElementById(href.substring(2));
+            const id = href.substring(2);
+            const element = document.getElementById(id);
             if (element) {
                 showLoader();
                 element.scrollIntoView({ behavior: 'smooth' });
@@ -70,7 +72,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center px-4 md:px-6">
-        <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
+        <Link href="/" className="mr-6 flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
             <VerbigoLogo />
             <div className="flex flex-col">
                 <span className="font-brand text-xl font-bold leading-none">Verbigo</span>
@@ -78,7 +80,7 @@ export function Header() {
             </div>
         </Link>
         
-        <nav className="hidden flex-1 items-center justify-center gap-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
             {navLinks.map((link) => (
                 <Link
                 key={link.name}
@@ -91,7 +93,7 @@ export function Header() {
             ))}
         </nav>
         
-        <div className="flex flex-1 items-center justify-end gap-2">
+        <div className="ml-auto flex items-center gap-2">
             <div className="hidden sm:flex">
                 <Button asChild>
                     <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>Book Demo</Link>
