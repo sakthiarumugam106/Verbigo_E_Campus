@@ -89,57 +89,43 @@
 
 @layer components {
   .course-toggle-label {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    color: #394a56;
-  }
-
-  .course-toggle {
-    isolation: isolate;
-    position: relative;
-    height: 38px;
-    width: 240px;
-    border-radius: 19px;
-    overflow: hidden;
-    box-shadow: -8px -4px 8px 0px #ffffff,
-      8px 4px 12px 0px #d1d9e6,
-      4px 4px 4px 0px #d1d9e6 inset,
-      -4px -4px 4px 0px #ffffff inset;
+    @apply inline-flex items-center cursor-pointer;
   }
 
   .course-toggle-state {
-    display: none;
+    @apply hidden;
+  }
+
+  .course-toggle {
+    @apply relative w-[240px] h-[38px] p-1 rounded-full flex items-center justify-around;
+    background: hsl(var(--background));
+    box-shadow: inset 4px 4px 6px hsl(var(--shadow-dark)), 
+                inset -4px -4px 6px var(--shadow-light);
+  }
+
+  .course-toggle-option {
+    @apply relative z-10 text-sm font-medium transition-colors duration-300;
+  }
+
+  .course-toggle-state:not(:checked) ~ .course-toggle .professional,
+  .course-toggle-state:checked ~ .course-toggle .kids {
+    color: hsl(var(--primary));
+  }
+
+  .course-toggle-state:checked ~ .course-toggle .professional,
+  .course-toggle-state:not(:checked) ~ .course-toggle .kids {
+    color: hsl(var(--muted-foreground));
   }
 
   .course-toggle-indicator {
-    height: 100%;
-    width: 200%;
-    background: #ecf0f3;
-    border-radius: 19px;
-    transform: translate3d(-75%, 0, 0);
-    transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
-    box-shadow: -8px -4px 8px 0px #ffffff,
-      8px 4px 12px 0px #d1d9e6;
+    @apply absolute top-1 left-1 w-[calc(50%-4px)] h-[calc(100%-8px)] rounded-full transition-transform duration-300 ease-in-out;
+    background: hsl(var(--background));
+    box-shadow: 4px 2px 8px hsl(var(--shadow-dark)), 
+                -4px -2px 8px var(--shadow-light);
   }
 
-  .course-toggle-state:checked ~ .course-toggle > .course-toggle-indicator {
-    transform: translate3d(25%, 0, 0);
-  }
-
-  .course-toggle-text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: hsl(var(--primary));
-    font-weight: 500;
-    font-size: 14px;
-    user-select: none;
+  .course-toggle-state:checked ~ .course-toggle .course-toggle-indicator {
+    transform: translateX(100%);
   }
 }
 

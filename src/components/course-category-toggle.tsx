@@ -9,10 +9,10 @@ interface CourseCategoryToggleProps {
 }
 
 export function CourseCategoryToggle({ value, onChange }: CourseCategoryToggleProps) {
-  const isProfessional = value === 'Professional';
+  const isKidsSelected = value === 'Kids';
 
   const handleChange = () => {
-    onChange(isProfessional ? 'Kids' : 'Professional');
+    onChange(isKidsSelected ? 'Professional' : 'Kids');
   };
 
   return (
@@ -20,14 +20,13 @@ export function CourseCategoryToggle({ value, onChange }: CourseCategoryTogglePr
       <input
         type="checkbox"
         className="course-toggle-state"
-        checked={!isProfessional}
+        checked={isKidsSelected}
         onChange={handleChange}
       />
       <div className="course-toggle">
+        <span className="course-toggle-option professional">Professional</span>
+        <span className="course-toggle-option kids">Kids</span>
         <div className="course-toggle-indicator" />
-        <div className="course-toggle-text">
-          {value}
-        </div>
       </div>
     </label>
   );
