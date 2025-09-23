@@ -173,7 +173,7 @@
   }
   .neumorphic-outer-hover:hover {
      box-shadow: calc(var(--shadow-distance) / 2) calc(var(--shadow-distance) / 2) calc(var(--shadow-distance)) var(--shadow-dark),
-                calc(var(--shadow-distance) / -2) calc(var(--shadow-distance) / -2) calc(var(--shadow-distance)) var(--shadow-light);
+                calc(var(--shadow-distance) / -2) calc(var(--shadow-distance) / -2) calc(var(--shadow-distance)) var(--light);
   }
   .neumorphic-inner {
     background: hsl(var(--background));

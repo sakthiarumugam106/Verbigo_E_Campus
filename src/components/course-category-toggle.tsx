@@ -30,3 +30,4 @@ export function CourseCategoryToggle({ value, onChange, className }: CourseCateg
     </label>
   );
 }
+
