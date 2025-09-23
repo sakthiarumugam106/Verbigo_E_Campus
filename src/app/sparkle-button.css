@@ -130,12 +130,12 @@
 .sparkle-button .sparkle {
   position: relative;
   z-index: 10;
-  width: 1.75rem;
+  width: 1.25rem;
 }
 
 .sparkle-button .sparkle .path {
-    stroke: hsl(var(--primary-foreground));
-    fill: hsl(var(--primary-foreground));
+  fill: hsl(var(--primary-foreground));
+  stroke: hsl(var(--primary-foreground));
 }
 
 .sparkle-button:is(:hover, :focus-visible) .sparkle .path {
@@ -177,6 +177,7 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: hsl(var(--foreground));
+  transition: color var(--transition);
 }
 
 .sparkle-button:is(:hover, :focus-visible) .text_button {
