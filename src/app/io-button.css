@@ -1,7 +1,7 @@
 
 .cssbuttons-io-button {
   background: transparent;
-  color: hsl(var(--secondary-foreground));
+  color: hsl(var(--foreground));
   font-family: inherit;
   padding: 0.35em;
   padding-left: 1.2em;
@@ -77,4 +77,8 @@
 
 .cssbuttons-io-button:active .icon {
   transform: scale(0.95);
+}
+
+.dark .cssbuttons-io-button {
+  color: hsl(var(--primary-foreground));
 }
