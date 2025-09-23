@@ -31,6 +31,8 @@ import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { useLoading } from '@/components/loading-provider';
 import { useRouter } from 'next/navigation';
 import { CourseCategoryToggle } from '@/components/course-category-toggle';
+import './sparkle-button.css';
+import { Balancer } from 'react-wrap-balancer';
 
 const benefits = [
   {
@@ -297,7 +299,9 @@ export default function HomePage() {
             <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
-                  Learn english through your native language
+                  <Balancer>
+                    Learn english through your native language
+                  </Balancer>
                 </h1>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
@@ -306,11 +310,17 @@ export default function HomePage() {
                     Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" useNeumorphic={false} variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-background hover:text-primary dark:hover:text-white">
-                  <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
-                    Know Your Level <GraduationCap className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+                <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
+                    <button className="sparkle-button" type="button">
+                        <span className="sparkle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 146 152" fill="none" className="path">
+                                <path d="M73 0L95.2433 50.4132L146 58.6487L103.25 91.5868L119.457 146L73 114.15L26.5433 146L42.75 91.5868L0 58.6487L50.7567 50.4132L73 0Z" />
+                            </svg>
+                        </span>
+                        <span className="backdrop"></span>
+                        <span className="text_button">Know Your Level</span>
+                    </button>
+                </Link>
               </div>
             </div>
             <div className="relative h-80 lg:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
