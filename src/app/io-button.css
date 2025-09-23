@@ -13,6 +13,8 @@
   align-items: center;
   position: relative;
   height: 2.75rem;
+  width: 170px; /* Ensure both buttons have same width */
+  justify-content: center;
   padding-right: 3.3em;
   cursor: pointer;
   transition: all 0.3s;
