@@ -72,7 +72,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center px-4 md:px-6">
-        <div className="flex-1 flex justify-start">
+        <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
                 <VerbigoLogo />
                 <div className="flex flex-col">
@@ -82,7 +82,7 @@ export function Header() {
             </Link>
         </div>
         
-        <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center justify-center flex-1 gap-6 text-sm font-medium md:flex">
             {navLinks.map((link) => (
                 <Link
                 key={link.name}
@@ -95,14 +95,14 @@ export function Header() {
             ))}
         </nav>
         
-        <div className="flex-1 flex items-center justify-end gap-2">
-            <div className="hidden sm:flex">
+        <div className="flex items-center justify-end">
+            <div className="hidden sm:flex mr-2">
                 <Button asChild>
                     <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>Book Demo</Link>
                 </Button>
             </div>
             <ThemeToggle />
-            <div className="md:hidden">
+            <div className="md:hidden ml-2">
                 <Sheet open={isOpen} onOpenChange={setIsOpen}>
                     <SheetTrigger asChild>
                     <Button
