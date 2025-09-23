@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -11,6 +10,7 @@ import { ThemeToggle } from './theme-toggle';
 import { useLoading } from './loading-provider';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import '../app/book-demo-button.css';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -92,11 +92,14 @@ export function Header() {
             ))}
         </nav>
         
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-4">
             <div className="hidden sm:flex">
-                <Button asChild>
-                    <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>Book Demo</Link>
-                </Button>
+                <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>
+                  <button className="btn">
+                      <span className="btn-text-one">Book Demo</span>
+                      <span className="btn-text-two">Now</span>
+                  </button>
+                </Link>
             </div>
             <ThemeToggle />
             <div className="md:hidden">
@@ -144,9 +147,12 @@ export function Header() {
                         <Link href="#contact" onClick={handleSheetLinkClick('/#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
                     </nav>
                     <div className="mt-8 space-y-4">
-                        <Button asChild size="lg" className="w-full">
-                            <Link href="/get-demo" onClick={handleSheetLinkClick('/get-demo')}>Book Demo</Link>
-                        </Button>
+                         <Link href="/get-demo" onClick={handleSheetLinkClick('/get-demo')}>
+                            <button className="btn w-full">
+                                <span className="btn-text-one">Book Demo</span>
+                                <span className="btn-text-two">Now</span>
+                            </button>
+                        </Link>
                     </div>
                     </SheetContent>
                 </Sheet>

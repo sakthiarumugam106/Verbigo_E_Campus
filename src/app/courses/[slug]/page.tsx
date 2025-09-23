@@ -1,4 +1,3 @@
-
 'use client';
 
 import { courses } from '@/lib/courses';
@@ -10,6 +9,8 @@ import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
 import { whatsapp } from '@/lib/config';
 import { useLoading } from '@/components/loading-provider';
+import '../../book-demo-button.css';
+
 
 export default function CoursePage({ params: { slug } }: { params: { slug: string } }) {
   const course = courses.find((c) => c.slug === slug);
@@ -60,18 +61,19 @@ export default function CoursePage({ params: { slug } }: { params: { slug: strin
                 </li>
               ))}
             </ul>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
+            <div className="flex flex-col gap-4 min-[400px]:flex-row pt-4">
               <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
                 <Link href={whatsapp.getCourseInquiryUrl(course.title)} target="_blank" rel="noopener noreferrer">
                   <WhatsAppButtonIcon className="h-5 w-5"/>
                   Enroll via WhatsApp
                 </Link>
               </Button>
-               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <Link href={whatsapp.getCourseDemoUrl(course.title)} target="_blank" rel="noopener noreferrer">
-                  Book a Demo
-                </Link>
-              </Button>
+               <Link href={whatsapp.getCourseDemoUrl(course.title)} target="_blank" rel="noopener noreferrer">
+                  <button className="btn h-11">
+                      <span className="btn-text-one">Book a Demo</span>
+                      <span className="btn-text-two">Now</span>
+                  </button>
+               </Link>
             </div>
           </div>
           <div className="flex items-center justify-center rounded-xl overflow-hidden shadow-2xl">
