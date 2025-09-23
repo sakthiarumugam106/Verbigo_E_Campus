@@ -1,4 +1,3 @@
-
 .cssbuttons-io-button {
   color: hsl(var(--foreground));
   font-family: inherit;
@@ -97,7 +96,7 @@
 .cssbuttons-io-button .dots_border::before {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform-origin: left;
   width: 100%;
