@@ -13,30 +13,20 @@ interface CourseCategoryToggleProps {
 export function CourseCategoryToggle({ value, onChange, className }: CourseCategoryToggleProps) {
   const isKidsSelected = value === 'Kids';
 
+  const handleToggle = () => {
+    onChange(isKidsSelected ? 'Professional' : 'Kids');
+  };
+
   return (
-    <div
-      className={cn("course-toggle neumorphic-inner", className)}
-      data-selected={isKidsSelected ? 'kids' : 'professional'}
-    >
-      <div className="course-toggle-indicator" />
-      <div
-        className={cn(
-          'course-toggle-option',
-          !isKidsSelected ? 'text-primary dark:text-primary-foreground' : 'text-muted-foreground'
-        )}
-        onClick={() => onChange('Professional')}
-      >
-        Professional
-      </div>
-      <div
-        className={cn(
-          'course-toggle-option',
-          isKidsSelected ? 'text-primary dark:text-primary-foreground' : 'text-muted-foreground'
-        )}
-        onClick={() => onChange('Kids')}
-      >
-        Kids
-      </div>
-    </div>
+    <label htmlFor="course-filter" className={cn('switch', className)} aria-label="Toggle course category">
+      <input 
+        type="checkbox" 
+        id="course-filter" 
+        checked={isKidsSelected} 
+        onChange={handleToggle}
+      />
+      <span className={cn({ 'active': !isKidsSelected })}>Professional</span>
+      <span className={cn({ 'active': isKidsSelected })}>Kids</span>
+    </label>
   );
 }

@@ -88,25 +88,77 @@
 }
 
 @layer components {
- .course-toggle {
-    @apply relative w-80 h-14 p-2 rounded-full flex items-center transition-all duration-300;
-    background: hsl(var(--muted));
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 44px;
+    background-color: hsl(var(--muted));
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 4px;
+    user-select: none;
+    @apply neumorphic-inner;
   }
 
-  .dark .course-toggle {
-    background: hsl(var(--secondary));
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
   }
 
-  .course-toggle-option {
-    @apply w-1/2 h-full flex items-center justify-center text-center cursor-pointer font-semibold z-10 transition-colors duration-300;
+  .switch span {
+    position: absolute;
+    top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    font-size: 1rem;
+    font-weight: 600;
+    color: hsl(var(--muted-foreground));
+    transition: color 0.3s ease-in-out;
+    z-index: 1;
+  }
+  
+  .switch span.active {
+    color: hsl(var(--primary-foreground));
   }
 
-  .course-toggle-indicator {
-    @apply absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full shadow-md transition-transform duration-300;
-    background: hsl(var(--background));
+  .switch span:nth-of-type(1) {
+    left: 4px;
   }
 
-  .course-toggle[data-selected="kids"] .course-toggle-indicator {
+  .switch span:nth-of-type(2) {
+    right: 4px;
+  }
+
+  .switch::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background-color: hsl(var(--primary));
+    border-radius: 9999px;
+    transition: transform 0.3s ease-in-out;
+    z-index: 0;
+  }
+
+  .switch input:checked + span + span {
+    color: hsl(var(--primary-foreground));
+  }
+  .switch input:not(:checked) + span {
+    color: hsl(var(--primary-foreground));
+  }
+  .switch input:checked ~ span:nth-of-type(1) {
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .switch input:checked::before {
     transform: translateX(calc(100% + 4px));
   }
 }
