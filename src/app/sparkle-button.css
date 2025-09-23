@@ -137,12 +137,7 @@
     stroke: hsl(var(--primary-foreground));
 }
 
-.dark .sparkle-button .sparkle .path {
-    stroke: hsl(var(--primary-foreground));
-}
-
 .sparkle-button:is(:hover, :focus-visible) .sparkle .path {
-    stroke: hsl(var(--primary-foreground));
     animation: path 1.5s linear 0.5s infinite;
 }
 
@@ -198,4 +193,3 @@
 .dark .sparkle-button .text_button {
    color: hsl(var(--primary-foreground));
 }
-
