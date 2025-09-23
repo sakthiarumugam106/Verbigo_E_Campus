@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useTransition } from 'react';
@@ -16,6 +15,7 @@ import { Loader2, Check } from 'lucide-react';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
 import { useLoading } from './loading-provider';
+import { cn } from '@/lib/utils';
 
 const countryCodes = {
   '91': { label: 'IN', length: 10 },
@@ -175,17 +175,17 @@ export function FindTutorForm() {
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-2">
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name}/>
+        <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name} className="neumorphic-inner"/>
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email}/>
+        <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email} className="neumorphic-inner"/>
       </div>
       <div className="space-y-2">
         <Label htmlFor="whatsapp">WhatsApp Number</Label>
-        <div className="flex items-center">
+        <div className={cn("flex items-center rounded-md", countryCode !== 'Other' && 'neumorphic-inner')}>
             <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-                <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
+                <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
                     <SelectValue>
                       {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
                     </SelectValue>
@@ -204,7 +204,7 @@ export function FindTutorForm() {
                   placeholder="Code"
                   value={otherCountryCode}
                   onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                  className="rounded-l-none border-l-0 w-[80px]"
+                  className="rounded-l-none border-l-0 w-[80px] neumorphic-inner"
                   required
                 />
             ) : (
@@ -259,6 +259,7 @@ export function FindTutorForm() {
             required
             value={otherLanguage}
             onChange={(e) => setOtherLanguage(e.target.value)}
+            className="neumorphic-inner"
             />
         </div>
         )}

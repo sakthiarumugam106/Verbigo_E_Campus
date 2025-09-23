@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useActionState, useEffect, useRef, useState } from 'react';
@@ -13,6 +12,7 @@ import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, A
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 const initialState: DemoFormState = {
   message: '',
@@ -102,19 +102,19 @@ export function GetDemoForm() {
       <input type="hidden" name="phoneNumber" />
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <Input id="name" name="name" placeholder="Jane Austen" required />
+        <Input id="name" name="name" placeholder="Jane Austen" required className="neumorphic-inner" />
         {state.errors?.name && <p className="text-sm text-destructive mt-1">{state.errors.name[0]}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required />
+        <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required className="neumorphic-inner"/>
         {state.errors?.email && <p className="text-sm text-destructive mt-1">{state.errors.email[0]}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="phoneNumberInput">Phone Number</Label>
-        <div className="flex items-center">
+        <div className={cn("flex items-center rounded-md", countryCode !== 'Other' && 'neumorphic-inner')}>
           <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
+            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
                 <SelectValue>
                   {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
                 </SelectValue>
@@ -133,7 +133,7 @@ export function GetDemoForm() {
                 placeholder="Code"
                 value={otherCountryCode}
                 onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                className="rounded-l-none border-l-0 w-[80px]"
+                className="rounded-l-none border-l-0 w-[80px] neumorphic-inner"
                 required
               />
           ) : (
@@ -161,6 +161,7 @@ export function GetDemoForm() {
                 value={phoneNumber} 
                 onChange={handlePhoneNumberChange}
                 required 
+                className="neumorphic-inner"
               />
           </div>
         )}

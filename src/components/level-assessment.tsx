@@ -1,4 +1,3 @@
-
 'use client';
 
 import { assessLevel, LevelAssessmentOutput } from '@/ai/flows/level-assessment-flow';
@@ -107,17 +106,17 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
-          <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSubmitting} />
+          <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSubmitting} className="neumorphic-inner"/>
       </div>
       <div className="space-y-2">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSubmitting} />
+          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSubmitting} className="neumorphic-inner"/>
       </div>
       <div className="space-y-2">
         <Label htmlFor="phone">Phone Number</Label>
-        <div className="flex items-center">
+        <div className={cn("flex items-center rounded-md", countryCode !== 'Other' && 'neumorphic-inner')}>
           <Select value={countryCode} onValueChange={handleCountryCodeChange} disabled={isSubmitting}>
-            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
+            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
                 <SelectValue>
                   {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
                 </SelectValue>
@@ -136,7 +135,7 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
                 placeholder="Code"
                 value={otherCountryCode}
                 onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                className="rounded-l-none border-l-0 w-[80px]"
+                className="rounded-l-none border-l-0 w-[80px] neumorphic-inner"
                 required
                 disabled={isSubmitting}
               />
@@ -167,6 +166,7 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
                 onChange={handlePhoneNumberChange}
                 required 
                 disabled={isSubmitting}
+                className="neumorphic-inner"
               />
           </div>
         )}
@@ -419,6 +419,7 @@ export function LevelAssessment() {
                 required
                 disabled={isPending}
                 autoComplete="off"
+                className="neumorphic-inner"
               />
                <div className="text-xs text-right text-muted-foreground pr-1">
                 <span className={cn(wordCount < MIN_WORDS ? "text-destructive" : "text-green-600")}>
