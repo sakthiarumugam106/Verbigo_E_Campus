@@ -1,5 +1,6 @@
 
 
+
 .sparkle-button {
   --black-700: hsl(var(--secondary));
   --border_radius: 9999px;
@@ -172,7 +173,7 @@
   transition: opacity 0.3s;
 }
 
-.sparkle-button:hover .dots_border {
+.sparkle-button:hover .dots_border, .sparkle-button.default-animated .dots_border {
     opacity: 1;
 }
 
