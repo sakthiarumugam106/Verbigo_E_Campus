@@ -11,6 +11,7 @@ import { whatsapp } from '@/lib/config';
 import { ThemeToggle } from './theme-toggle';
 import { useLoading } from './loading-provider';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -34,7 +35,6 @@ export function Header() {
         if (element) {
             showLoader();
             element.scrollIntoView({ behavior: 'smooth' });
-            // The hideLoader will be called by the AppContent component on path change, but for anchors we can hide it after a short delay
             setTimeout(hideLoader, 800); 
         } else {
              router.push('/');
@@ -78,13 +78,15 @@ export function Header() {
             ))}
         </nav>
         
-        <div className="flex items-center gap-2">
-            <div className="hidden sm:flex items-center gap-2">
+        <div className="flex items-center">
+            <div className="hidden sm:flex items-center mr-2">
                 <Button asChild>
                     <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>Book Demo</Link>
                 </Button>
             </div>
-          <ThemeToggle />
+          <div className="md:mr-2">
+            <ThemeToggle />
+          </div>
           <div className="md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger asChild>
