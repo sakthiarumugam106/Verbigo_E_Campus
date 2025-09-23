@@ -302,7 +302,7 @@ export default function HomePage() {
                 </h1>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
-                 <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
+                 <Button asChild size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 rounded-full shadow-lg">
                   <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
                     Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -472,5 +472,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
