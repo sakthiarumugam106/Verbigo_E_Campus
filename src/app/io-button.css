@@ -57,6 +57,10 @@
   color: hsl(var(--primary));
 }
 
+.dark .cssbuttons-io-button .icon svg {
+  color: hsl(var(--primary-foreground));
+}
+
 .cssbuttons-io-button:hover .icon svg {
   transform: translateX(0.1em);
 }
