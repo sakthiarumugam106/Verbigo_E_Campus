@@ -88,60 +88,26 @@
 }
 
 @layer components {
-  .course-toggle-label {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-    color: #394a56;
-  }
-
-  .course-toggle-text {
-    margin-left: 16px;
-  }
-
-  .course-toggle {
-    isolation: isolate;
-    position: relative;
-    height: 30px;
-    width: 60px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: -8px -4px 8px 0px #ffffff,
-      8px 4px 12px 0px #d1d9e6,
-      4px 4px 4px 0px #d1d9e6 inset,
-      -4px -4px 4px 0px #ffffff inset;
+ .course-toggle {
+    @apply relative w-80 h-14 p-2 rounded-full flex items-center transition-all duration-300;
+    background: hsl(var(--muted));
   }
 
   .dark .course-toggle {
-     box-shadow: calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light), 
-                 var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark), 
-                 inset var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark), 
-                 inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
+    background: hsl(var(--secondary));
   }
 
-  .course-toggle-state {
-    display: none;
+  .course-toggle-option {
+    @apply w-1/2 h-full flex items-center justify-center text-center cursor-pointer font-semibold z-10 transition-colors duration-300;
   }
 
-  .course-toggle .indicator {
-    height: 100%;
-    width: 200%;
-    background: #ecf0f3;
-    border-radius: 15px;
-    transform: translate3d(-75%, 0, 0);
-    transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
-    box-shadow: -8px -4px 8px 0px #ffffff,
-      8px 4px 12px 0px #d1d9e6;
+  .course-toggle-indicator {
+    @apply absolute top-1 left-1 h-[calc(100%-8px)] w-[calc(50%-4px)] rounded-full shadow-md transition-transform duration-300;
+    background: hsl(var(--background));
   }
 
-  .dark .course-toggle .indicator {
-      background: hsl(var(--background));
-      box-shadow: var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
-                calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
-  }
-
-  .course-toggle-state:checked ~ .course-toggle .indicator {
-    transform: translate3d(25%, 0, 0);
+  .course-toggle[data-selected="kids"] .course-toggle-indicator {
+    transform: translateX(calc(100% + 4px));
   }
 }
 
@@ -165,7 +131,7 @@
   }
   .neumorphic-pressed {
      box-shadow: inset calc(var(--shadow-distance) / 2) calc(var(--shadow-distance) / 2) calc(var(--shadow-distance)) var(--shadow-dark),
-                inset calc(var(--shadow-distance) / -2) calc(var(--shadow-distance) / -2) calc(var(--shadow-distance)) var(--shadow-light);
+                inset calc(var(--shadow-distance) / -2) calc(var(--shadow-distance) / -2) calc(var(--shadow-distance)) var(--light);
   }
   .animated-glow {
     position: absolute;

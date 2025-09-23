@@ -13,29 +13,30 @@ interface CourseCategoryToggleProps {
 export function CourseCategoryToggle({ value, onChange, className }: CourseCategoryToggleProps) {
   const isKidsSelected = value === 'Kids';
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.checked ? 'Kids' : 'Professional');
-  };
-
   return (
-    <div className={cn("flex items-center gap-4", className)}>
-        <span className={cn("font-medium", isKidsSelected ? 'text-muted-foreground' : 'text-primary dark:text-primary-foreground')}>
-            Professional
-        </span>
-        <label className="course-toggle-label">
-            <input
-                type="checkbox"
-                className="course-toggle-state"
-                checked={isKidsSelected}
-                onChange={handleChange}
-            />
-            <div className="course-toggle">
-                <div className="indicator"></div>
-            </div>
-        </label>
-        <span className={cn("font-medium", isKidsSelected ? 'text-primary dark:text-primary-foreground' : 'text-muted-foreground')}>
-            Kids
-        </span>
+    <div
+      className={cn("course-toggle neumorphic-inner", className)}
+      data-selected={isKidsSelected ? 'kids' : 'professional'}
+    >
+      <div className="course-toggle-indicator" />
+      <div
+        className={cn(
+          'course-toggle-option',
+          !isKidsSelected ? 'text-primary dark:text-primary-foreground' : 'text-muted-foreground'
+        )}
+        onClick={() => onChange('Professional')}
+      >
+        Professional
+      </div>
+      <div
+        className={cn(
+          'course-toggle-option',
+          isKidsSelected ? 'text-primary dark:text-primary-foreground' : 'text-muted-foreground'
+        )}
+        onClick={() => onChange('Kids')}
+      >
+        Kids
+      </div>
     </div>
   );
 }
