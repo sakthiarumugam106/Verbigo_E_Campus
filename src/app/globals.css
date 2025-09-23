@@ -167,4 +167,33 @@
      box-shadow: inset calc(var(--shadow-distance) / 2) calc(var(--shadow-distance) / 2) calc(var(--shadow-distance)) var(--shadow-dark),
                 inset calc(var(--shadow-distance) / -2) calc(var(--shadow-distance) / -2) calc(var(--shadow-distance)) var(--shadow-light);
   }
+  .animated-glow {
+    position: absolute;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    top: -2px;
+    left: -2px;
+    border-radius: 9999px;
+    z-index: -1;
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      hsla(0, 0%, 100%, 0) 0deg,
+      hsla(0, 0%, 100%, 0.8) 5deg,
+      hsla(0, 0%, 100%, 0) 10deg,
+      hsla(0, 0%, 100%, 0) 360deg
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .animated-hero-button:hover .animated-glow {
+    opacity: 1;
+    animation: rotate 2s linear infinite;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
