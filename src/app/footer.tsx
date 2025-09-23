@@ -8,13 +8,25 @@ import { useLoading } from '@/components/loading-provider';
 import { useRouter } from 'next/navigation';
 
 export function Footer() {
-    const { showLoader } = useLoading();
+    const { showLoader, hideLoader } = useLoading();
     const router = useRouter();
 
     const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
-        showLoader();
-        router.push(href);
+        if (href.startsWith('/#')) {
+            const id = href.substring(2);
+            const element = document.getElementById(id);
+            if (element) {
+                showLoader();
+                element.scrollIntoView({ behavior: 'smooth' });
+                 setTimeout(hideLoader, 800);
+            } else {
+                router.push('/');
+            }
+        } else {
+            showLoader();
+            router.push(href);
+        }
     };
 
   return (
