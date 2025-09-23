@@ -95,6 +95,7 @@
         background-color: hsl(var(--muted));
         border-radius: 9999px;
         padding: 0.25rem;
+        overflow: hidden;
         @apply neumorphic-inner;
     }
 
