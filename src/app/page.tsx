@@ -104,16 +104,25 @@ const faqItems = [
   },
 ];
 
-function MobileValueItem({ value, isExpanded }: { value: (typeof values)[0], isExpanded: boolean }) {
-    const ref = React.useRef(null);
-    
+function MobileValueItem({ 
+    value, 
+    isExpanded,
+    onMouseEnter,
+    onClick 
+}: { 
+    value: (typeof values)[0], 
+    isExpanded: boolean,
+    onMouseEnter: () => void,
+    onClick: () => void,
+}) {
     return (
         <div 
-            ref={ref}
             className={cn(
                 "bg-background border rounded-lg overflow-hidden transition-all duration-500 neumorphic-outer",
                  isExpanded ? "neumorphic-pressed" : ""
             )}
+            onMouseEnter={onMouseEnter}
+            onClick={onClick}
         >
             <div className="flex items-center gap-4 p-4 text-left">
                 <div className={cn("flex-shrink-0 transition-colors duration-500", isExpanded ? "text-primary dark:text-primary-foreground" : "text-primary/70 dark:text-primary-foreground/70")}>{value.icon}</div>
@@ -140,50 +149,16 @@ function MobileValueItem({ value, isExpanded }: { value: (typeof values)[0], isE
 
 function MobileValuesSection() {
     const [activeIndex, setActiveIndex] = React.useState<number | null>(0);
-    const containerRef = React.useRef<HTMLDivElement>(null);
-
-    React.useEffect(() => {
-        const handleScroll = () => {
-            if (!containerRef.current) return;
-            
-            const itemElements = Array.from(containerRef.current.children) as HTMLElement[];
-            const viewportCenter = window.innerHeight / 2;
-
-            let closestItemIndex: number | null = null;
-            let smallestDistance = Infinity;
-
-            itemElements.forEach((item, index) => {
-                const rect = item.getBoundingClientRect();
-                const itemCenter = rect.top + rect.height / 2;
-                const distance = Math.abs(viewportCenter - itemCenter);
-                
-                if (distance < smallestDistance) {
-                    smallestDistance = distance;
-                    closestItemIndex = index;
-                }
-            });
-            
-            // Only highlight if the item is reasonably close to the center
-            if (smallestDistance < window.innerHeight / 4) {
-                 setActiveIndex(closestItemIndex);
-            } else {
-                 setActiveIndex(null);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll(); // Initial check
-
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     return (
-        <div ref={containerRef} className="mx-auto mt-12 max-w-3xl space-y-4">
+        <div className="mx-auto mt-12 max-w-3xl space-y-4">
             {values.map((value, index) => (
                 <MobileValueItem 
                     key={index} 
                     value={value}
                     isExpanded={activeIndex === index}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    onClick={() => setActiveIndex(index)}
                 />
             ))}
         </div>
