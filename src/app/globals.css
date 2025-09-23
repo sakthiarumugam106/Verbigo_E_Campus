@@ -105,7 +105,7 @@
         left: 0.25rem;
         width: 50%;
         height: calc(100% - 0.5rem);
-        background-color: hsl(var(--primary));
+        background-color: #2A3C9F;
         border-radius: 9999px;
         transition: transform 0.3s ease-in-out;
         z-index: 0;
