@@ -23,20 +23,32 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { showLoader } = useLoading();
+  const { showLoader, hideLoader } = useLoading();
   const router = useRouter();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    showLoader();
-    router.push(href);
+    if (href.startsWith('/#')) {
+        const id = href.substring(2);
+        const element = document.getElementById(id);
+        if (element) {
+            showLoader();
+            element.scrollIntoView({ behavior: 'smooth' });
+            // The hideLoader will be called by the AppContent component on path change, but for anchors we can hide it after a short delay
+            setTimeout(hideLoader, 800); 
+        } else {
+             router.push('/');
+        }
+    } else {
+      showLoader();
+      router.push(href);
+    }
   };
   
    const handleSheetLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsOpen(false);
-    showLoader();
-    router.push(href);
+    handleLinkClick(href)(e);
   };
 
 
@@ -115,7 +127,7 @@ export function Header() {
                     </Link>
                     ))}
                     <Link href="/careers" onClick={handleSheetLinkClick('/careers')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
-                    <Link href="#contact" onClick={handleSheetLinkClick('#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
+                    <Link href="#contact" onClick={handleSheetLinkClick('/#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
                 </nav>
                 <div className="mt-8 space-y-4">
                     <Button asChild size="lg" className="w-full">

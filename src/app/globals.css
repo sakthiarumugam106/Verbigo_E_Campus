@@ -88,6 +88,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  body.loading-active {
+    overflow: hidden;
+  }
   section {
     @apply w-full;
   }
