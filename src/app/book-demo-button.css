@@ -4,7 +4,7 @@
   height: 44px; /* Adjusted to match header height */
   background: linear-gradient(to top, #00154c, #12376e, #23487f);
   color: #fff;
-  border-radius: 50px;
+  border-radius: 15px;
   border: none;
   outline: none;
   cursor: pointer;
