@@ -329,7 +329,7 @@ export function FindTutorForm() {
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-                <AlertDialogAction onClick={handleConfirmation} className="w-full">OK</AlertDialogAction>
+                <AlertDialogAction onClick={handleConfirmation}>OK</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
