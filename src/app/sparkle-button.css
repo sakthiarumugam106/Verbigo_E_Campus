@@ -134,18 +134,19 @@
 }
 
 .sparkle-button .sparkle_path {
-    fill: white;
-    stroke: white;
+    fill: hsl(var(--foreground));
+    stroke: hsl(var(--foreground));
 }
 
 
-.dark .sparkle-button .sparkle_path {
+.dark .sparkle-button .sparkle_path,
+.sparkle-button:is(:hover, :focus-visible) .sparkle_path {
     fill: hsl(var(--primary-foreground));
     stroke: hsl(var(--primary-foreground));
 }
 
 
-.sparkle-button:is(:hover, :focus) .sparkle .path {
+.sparkle-button:is(:hover, :focus-visible) .sparkle .path {
   animation: path 1.5s linear 0.5s infinite;
 }
 
@@ -180,23 +181,23 @@
 .sparkle-button .text_button {
   position: relative;
   z-index: 10;
-  background-image: linear-gradient(
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+}
+
+.sparkle-button:is(:hover, :focus-visible) .text_button {
+   background-image: linear-gradient(
     90deg,
-    hsl(var(--foreground)) 0%,
-    hsl(0, 0%, 100%, var(--active, 0)) 120%
+    hsl(0, 0%, 100%) 0%,
+    hsl(0, 0%, 100%) 120%
   );
   -webkit-background-clip: text;
   background-clip: text;
-  font-size: 0.875rem;
-  font-weight: 500;
   color: transparent;
 }
 
 
 .dark .sparkle-button .text_button {
-   background-image: linear-gradient(
-    90deg,
-    hsl(var(--primary-foreground)) 0%,
-    hsl(var(--primary-foreground)) 120%
-  );
+   color: hsl(var(--primary-foreground));
 }
