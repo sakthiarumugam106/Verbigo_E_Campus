@@ -24,8 +24,8 @@ export function CourseCategoryToggle({ value, onChange }: CourseCategoryTogglePr
         onChange={handleChange}
       />
       <div className="course-toggle">
-        <span className="course-toggle-option professional">Professional</span>
-        <span className="course-toggle-option kids">Kids</span>
+        <span className="professional">Professional</span>
+        <span className="kids">Kids</span>
         <div className="course-toggle-indicator" />
       </div>
     </label>

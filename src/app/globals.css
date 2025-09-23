@@ -88,44 +88,83 @@
 }
 
 @layer components {
-  .course-toggle-label {
-    @apply inline-flex items-center cursor-pointer;
+ .course-toggle-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: #394a56;
   }
 
-  .course-toggle-state {
-    @apply hidden;
+  .course-toggle-text {
+    margin-left: 16px;
   }
 
   .course-toggle {
-    @apply relative w-[240px] h-[38px] p-1 rounded-full flex items-center justify-around;
+    isolation: isolate;
+    position: relative;
+    height: 38px;
+    width: 240px;
+    border-radius: 9999px;
+    overflow: hidden;
     background: hsl(var(--background));
-    box-shadow: inset 4px 4px 6px hsl(var(--shadow-dark)), 
-                inset -4px -4px 6px var(--shadow-light);
+    box-shadow: 4px 4px 6px hsl(var(--shadow-dark)) inset,
+                -4px -4px 6px var(--shadow-light) inset;
   }
 
-  .course-toggle-option {
-    @apply relative z-10 text-sm font-medium transition-colors duration-300;
+  .course-toggle-state {
+    display: none;
+  }
+  
+  .course-toggle .professional, .course-toggle .kids {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.4s ease;
+  }
+  
+  .course-toggle .professional {
+    left: 30px;
+  }
+  
+  .course-toggle .kids {
+    right: 45px;
   }
 
-  .course-toggle-state:not(:checked) ~ .course-toggle .professional,
-  .course-toggle-state:checked ~ .course-toggle .kids {
+  .course-toggle-state:checked ~ .course-toggle .professional {
+    color: hsl(var(--muted-foreground));
+  }
+  
+  .course-toggle-state:not(:checked) ~ .course-toggle .professional {
     color: hsl(var(--primary));
   }
 
-  .course-toggle-state:checked ~ .course-toggle .professional,
+  .course-toggle-state:checked ~ .course-toggle .kids {
+    color: hsl(var(--primary));
+  }
+  
   .course-toggle-state:not(:checked) ~ .course-toggle .kids {
-    color: hsl(var(--muted-foreground));
+     color: hsl(var(--muted-foreground));
   }
 
+
   .course-toggle-indicator {
-    @apply absolute top-1 left-1 w-[calc(50%-4px)] h-[calc(100%-8px)] rounded-full transition-transform duration-300 ease-in-out;
+    height: calc(100% - 8px);
+    width: calc(50% - 4px);
+    position: absolute;
+    top: 4px;
+    left: 4px;
     background: hsl(var(--background));
+    border-radius: 9999px;
+    transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
     box-shadow: 4px 2px 8px hsl(var(--shadow-dark)), 
                 -4px -2px 8px var(--shadow-light);
   }
 
   .course-toggle-state:checked ~ .course-toggle .course-toggle-indicator {
-    transform: translateX(100%);
+    transform: translate3d(100%, 0, 0);
   }
 }
 
