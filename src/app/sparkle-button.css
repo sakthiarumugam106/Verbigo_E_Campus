@@ -135,6 +135,7 @@
 
 .sparkle-button .sparkle .path {
     stroke: hsl(var(--primary-foreground));
+    fill: hsl(var(--primary-foreground));
 }
 
 .sparkle-button:is(:hover, :focus-visible) .sparkle .path {
