@@ -261,7 +261,7 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="relative w-full overflow-hidden bg-[#2e378c] py-12 md:py-20"
+        className="relative w-full overflow-hidden bg-[#2A3C9F] py-12 md:py-20"
       >
         <div 
           className="absolute inset-0 bg-repeat" 
