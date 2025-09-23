@@ -11,8 +11,8 @@ import { notFound, useRouter } from 'next/navigation';
 import { whatsapp } from '@/lib/config';
 import { useLoading } from '@/components/loading-provider';
 
-export default function CoursePage({ params }: { params: { slug: string } }) {
-  const course = courses.find((c) => c.slug === params.slug);
+export default function CoursePage({ params: { slug } }: { params: { slug: string } }) {
+  const course = courses.find((c) => c.slug === slug);
   const router = useRouter();
   const { showLoader } = useLoading();
 
