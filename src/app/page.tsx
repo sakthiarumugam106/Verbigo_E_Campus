@@ -109,8 +109,8 @@ function MobileValueItem({ value, isExpanded }: { value: (typeof values)[0], isE
         <div 
             ref={ref}
             className={cn(
-                "bg-background/60 backdrop-blur-sm border rounded-lg shadow-md overflow-hidden transition-all duration-500",
-                 isExpanded ? "bg-primary/10 border-primary/30" : "border-transparent"
+                "bg-background border rounded-lg overflow-hidden transition-all duration-500 neumorphic-outer",
+                 isExpanded ? "neumorphic-pressed" : ""
             )}
         >
             <div className="flex items-center gap-4 p-4 text-left">
@@ -223,7 +223,7 @@ function DesktopValuesSection() {
         >
             {values.map((value, index) => (
                  <motion.div key={index} variants={itemVariants}>
-                    <Card className="h-full flex flex-col justify-start bg-background/60 backdrop-blur-sm border-primary/10 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                    <Card className="h-full flex flex-col justify-start neumorphic-outer neumorphic-outer-hover transition-transform hover:-translate-y-1">
                         <CardHeader className="flex flex-row items-center gap-4 pb-4">
                             {value.icon}
                             <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
@@ -235,7 +235,7 @@ function DesktopValuesSection() {
                  </motion.div>
             ))}
              <motion.div variants={itemVariants}>
-                <Card className="h-full flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-primary/10 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                <Card className="h-full flex flex-col justify-center items-center neumorphic-outer neumorphic-outer-hover transition-transform hover:-translate-y-1">
                     <CardContent className="p-4 md:p-6 text-center">
                         <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
                         <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
@@ -331,14 +331,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="courses" className="relative w-full bg-secondary py-16 md:py-24 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-repeat" 
-          style={{ 
-            backgroundImage: "url('/subtle-pattern.svg')",
-            opacity: 0.05,
-          }}
-        />
+      <section id="courses" className="relative w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -350,9 +343,9 @@ export default function HomePage() {
               </p>
             </div>
             <Tabs value={courseFilter} onValueChange={setCourseFilter} className="mt-8">
-               <TabsList className="grid w-full grid-cols-2 bg-primary/20 text-primary-foreground p-1 h-auto rounded-lg">
-                <TabsTrigger value="Professional" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md py-2 font-medium">For Professionals</TabsTrigger>
-                <TabsTrigger value="Kids" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md py-2 font-medium">For Kids</TabsTrigger>
+               <TabsList className="grid w-full grid-cols-2 p-1 h-auto rounded-lg neumorphic-inner">
+                <TabsTrigger value="Professional" className="data-[state=active]:neumorphic-outer data-[state=active]:text-primary rounded-md py-2 font-medium">For Professionals</TabsTrigger>
+                <TabsTrigger value="Kids" className="data-[state=active]:neumorphic-outer data-[state=active]:text-primary rounded-md py-2 font-medium">For Kids</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -370,9 +363,9 @@ export default function HomePage() {
               {filteredCourses.map((course) => (
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
-                    <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col bg-background/80 backdrop-blur-sm border-primary/10">
+                    <Card className="group h-full overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
                       <Link href={`/courses/${course.slug}`} onClick={handleLinkClick(`/courses/${course.slug}`)} className="flex flex-col h-full">
-                        <div className="overflow-hidden">
+                        <div className="overflow-hidden rounded-t-lg">
                           <Image
                             src={course.image}
                             alt={course.title}
@@ -395,20 +388,13 @@ export default function HomePage() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hover:bg-primary hover:text-primary-foreground" />
-            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hover:bg-primary hover:text-primary-foreground" />
+            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
+            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
           </Carousel>
         </div>
       </section>
 
-      <section id="values" className="relative w-full bg-primary/10 py-16 md:py-24 lg:py-32 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-repeat" 
-          style={{ 
-            backgroundImage: "url('/subtle-pattern.svg')",
-            opacity: 0.05,
-          }}
-        />
+      <section id="values" className="relative w-full bg-secondary py-16 md:py-24 lg:py-32">
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary dark:text-primary-foreground">
@@ -446,11 +432,11 @@ export default function HomePage() {
               Find answers to common questions about our language and grammar courses.
             </p>
           </div>
-          <div className="mx-auto mt-12 max-w-3xl">
+          <div className="mx-auto mt-12 max-w-3xl neumorphic-outer rounded-lg p-2">
             <Accordion type="single" collapsible className="w-full">
               {faqItems.map((item, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-lg font-medium text-left">
+                <AccordionItem key={index} value={`item-${index}`} className="border-b-0">
+                  <AccordionTrigger className="text-lg font-medium text-left p-4 hover:no-underline rounded-md hover:bg-primary/5">
                     {item.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-base text-muted-foreground dark:text-foreground/80">
@@ -463,7 +449,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="contact" className="w-full bg-primary/5 py-16 md:py-24">
+      <section id="contact" className="w-full bg-secondary py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid items-center justify-center gap-4 text-center">
             <div className="space-y-3">

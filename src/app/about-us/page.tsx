@@ -19,7 +19,7 @@ export default function AboutUsPage() {
   };
 
   return (
-    <div className="bg-primary/5 min-h-screen">
+    <div className="bg-background min-h-screen">
       
       <section className="py-16 md:py-24 lg:py-32">
         <div className="container mx-auto px-4 md:px-6">
@@ -38,12 +38,12 @@ export default function AboutUsPage() {
                     <Link href="/#contact" onClick={handleLinkClick('/#contact')}>Get in Touch</Link>
                 </Button>
             </div>
-             <div className="relative h-80 lg:h-96 w-full">
+             <div className="relative h-80 lg:h-96 w-full rounded-xl neumorphic-outer">
                <Image
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"
                 alt="Our Team"
                 fill
-                className="rounded-xl object-cover shadow-2xl"
+                className="rounded-xl object-cover"
                 data-ai-hint="diverse team working"
                 />
             </div>
@@ -51,7 +51,7 @@ export default function AboutUsPage() {
         </div>
       </section>
 
-       <section className="py-16 md:py-24 bg-primary/5">
+       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
             <div className="mx-auto max-w-3xl text-center mb-12">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary dark:text-primary-foreground">
@@ -59,17 +59,17 @@ export default function AboutUsPage() {
                 </h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-primary/20">
+                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4">
                     <Target className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Mission</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">To empower individuals by making high-quality language education accessible, engaging, and effective through innovative technology.</p>
                 </Card>
-                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-primary/20">
+                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4">
                     <Building className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Vision</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">To become a world leader in language intelligence, creating a global community of confident and proficient communicators.</p>
                 </Card>
-                <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 bg-background/60 backdrop-blur-sm border-primary/20 md:col-span-2 lg:col-span-1">
+                <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 md:col-span-2 lg:col-span-1">
                     <Users className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Team</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">A dedicated group of educators, technologists, and innovators committed to your success.</p>

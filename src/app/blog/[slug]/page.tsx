@@ -25,13 +25,13 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <div className="bg-primary/5 py-16 md:py-24">
+    <div className="bg-background py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <article className="prose prose-lg mx-auto max-w-4xl bg-background p-6 md:p-10 rounded-xl shadow-lg dark:prose-invert">
+        <article className="prose prose-lg mx-auto max-w-4xl neumorphic-outer p-6 md:p-10 rounded-xl dark:prose-invert">
           <div className="mb-8">
             <Link href="/blog" onClick={handleLinkClick('/blog')} className="text-primary dark:text-primary-foreground hover:underline">&larr; Back to Blog</Link>
           </div>
-          <div className="relative w-full h-64 md:h-96 mb-8 rounded-lg overflow-hidden">
+          <div className="relative w-full h-64 md:h-96 mb-8 rounded-lg overflow-hidden neumorphic-inner">
              <Image
                 src={post.image}
                 alt={post.title}
