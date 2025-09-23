@@ -204,8 +204,8 @@ export function GetDemoForm() {
                     Thank you for your interest. Our team will contact you shortly to schedule your demo.
                 </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter className="sm:justify-center">
-                <AlertDialogAction onClick={handleConfirmation}>OK</AlertDialogAction>
+            <AlertDialogFooter>
+                <AlertDialogAction onClick={handleConfirmation} className="w-full">OK</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>

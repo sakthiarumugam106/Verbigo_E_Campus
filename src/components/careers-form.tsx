@@ -332,8 +332,8 @@ export function CareersForm() {
                     Thank you for your interest in joining Verbigo. We have received your application and will review it shortly.
                 </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter className="sm:justify-center">
-                <AlertDialogAction onClick={handleConfirmation}>OK</AlertDialogAction>
+            <AlertDialogFooter>
+                <AlertDialogAction onClick={handleConfirmation} className="w-full">OK</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
     </AlertDialog>
