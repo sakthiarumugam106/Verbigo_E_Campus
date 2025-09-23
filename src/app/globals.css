@@ -79,7 +79,7 @@
   body {
     @apply bg-background text-foreground;
   }
-  body.loading-active {
+  body.loading-active, body.chatbot-open {
     overflow: hidden;
   }
   section {
@@ -88,7 +88,7 @@
 }
 
 @layer components {
- .course-toggle-label {
+  .course-toggle-label {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
@@ -113,10 +113,10 @@
   }
 
   .dark .course-toggle {
-     box-shadow: -8px -4px 8px 0px hsl(var(--shadow-dark)),
-      8px 4px 12px 0px hsl(var(--shadow-light)),
-      4px 4px 4px 0px hsl(var(--shadow-light)) inset,
-      -4px -4px 4px 0px hsl(var(--shadow-dark)) inset;
+     box-shadow: calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light), 
+                 var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark), 
+                 inset var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark), 
+                 inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
   }
 
   .course-toggle-state {
@@ -136,8 +136,8 @@
 
   .dark .course-toggle .indicator {
       background: hsl(var(--background));
-      box-shadow: -8px -4px 8px 0px hsl(var(--shadow-dark)),
-        8px 4px 12px 0px hsl(var(--shadow-light));
+      box-shadow: var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+                calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
   }
 
   .course-toggle-state:checked ~ .course-toggle .indicator {
