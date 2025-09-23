@@ -14,7 +14,9 @@
 
   transform-origin: center;
 
-  padding: 1rem 2rem;
+  padding: 0.625rem 2rem; /* h-11 is 2.75rem, py-2 is 0.5rem. 2.75-1(text) = 1.75/2 = 0.875rem. Input is h-10/2.5rem */
+  height: 2.75rem; /* h-11 */
+
   background-color: transparent;
 
   border: none;
@@ -180,7 +182,8 @@
   -webkit-background-clip: text;
   background-clip: text;
 
-  font-size: 1rem;
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
   color: transparent;
 }
 .dark .sparkle-button .text_button {
