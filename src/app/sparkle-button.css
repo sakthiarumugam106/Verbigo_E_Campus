@@ -1,4 +1,5 @@
 
+
 .sparkle-button {
   --black-700: hsl(var(--secondary));
   --border_radius: 9999px;
@@ -153,4 +154,46 @@
 
 .dark .sparkle-button .text_button {
    color: hsl(var(--primary-foreground));
+}
+
+.sparkle-button .dots_border {
+  --size_border: calc(100% + 2px);
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--size_border);
+  height: var(--size_border);
+  background-color: transparent;
+  border-radius: 9999px;
+  z-index: -10;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.sparkle-button:hover .dots_border {
+    opacity: 1;
+}
+
+.sparkle-button .dots_border::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform-origin: left;
+  width: 100%;
+  height: 2rem;
+  background-color: white;
+  mask: linear-gradient(transparent 0%, white 120%);
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }

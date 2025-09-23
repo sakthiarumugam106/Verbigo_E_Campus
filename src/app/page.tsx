@@ -308,7 +308,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-4 sm:flex-row">
                  <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
                     <button className="cssbuttons-io-button animated-hero-button">
-                        <span className="animated-glow"></span>
+                        <span className="dots_border"></span>
                         Find your tutor
                         <div className="icon">
                             <svg
@@ -328,7 +328,7 @@ export default function HomePage() {
                 </Link>
                 <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
                     <button className="sparkle-button animated-hero-button" type="button">
-                        <span className="animated-glow"></span>
+                        <div className="dots_border"></div>
                         <span className="sparkle">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="sparkle_path">
                                 <path
