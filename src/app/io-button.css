@@ -97,7 +97,7 @@
 .cssbuttons-io-button .dots_border::before {
   content: "";
   position: absolute;
-  top: 30%;
+  top: 50%;
   left: 50%;
   transform-origin: left;
   width: 100%;
