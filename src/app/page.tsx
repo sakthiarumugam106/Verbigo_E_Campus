@@ -307,7 +307,7 @@ export default function HomePage() {
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
                  <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
-                    <button className="cssbuttons-io-button">
+                    <button className="cssbuttons-io-button neumorphic-outer neumorphic-outer-hover">
                         Find your tutor
                         <div className="icon">
                             <svg
