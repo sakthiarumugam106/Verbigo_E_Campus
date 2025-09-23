@@ -12,7 +12,8 @@ import { useLoading } from '@/components/loading-provider';
 import '../../book-demo-button.css';
 
 
-export default function CoursePage({ params: { slug } }: { params: { slug: string } }) {
+export default function CoursePage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const course = courses.find((c) => c.slug === slug);
   const router = useRouter();
   const { showLoader } = useLoading();
