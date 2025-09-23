@@ -70,7 +70,7 @@ export default function CoursePage(props: { params: { slug: string } }) {
                   Enroll via WhatsApp
                 </Link>
               </Button>
-               <Link href={whatsapp.getCourseDemoUrl(course.title)} target="_blank" rel="noopener noreferrer">
+               <Link href={whatsapp.getCourseDemoUrl(course.title)} target="_blank" rel="noopener noreferrer" className="md:hidden">
                   <button className="btn h-11">
                       <span className="btn-text-one">Book a Demo</span>
                       <span className="btn-text-two">Now</span>
