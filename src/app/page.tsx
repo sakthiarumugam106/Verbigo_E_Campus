@@ -323,6 +323,7 @@ export default function HomePage() {
                             ></path>
                             </svg>
                         </div>
+                        <span className="dots_border"></span>
                     </button>
                 </Link>
                 <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
