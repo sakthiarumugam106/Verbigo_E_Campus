@@ -49,7 +49,7 @@
 
 .cssbuttons-io-button:hover .icon {
   width: calc(100% - 0.6em);
-  height: 100%;
+  height: calc(100% - 0.6em);
   border-radius: inherit;
 }
 
