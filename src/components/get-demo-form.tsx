@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useActionState, useEffect, useRef, useState } from 'react';
@@ -182,7 +183,7 @@ export function GetDemoForm() {
                             damping: 20,
                             delay: 0.2,
                         }}
-                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                        className="h-20 w-20 bg-background neumorphic-outer rounded-full flex items-center justify-center"
                     >
                          <motion.div
                             initial={{ scale: 0.5, opacity: 0 }}

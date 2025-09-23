@@ -1,3 +1,4 @@
+
 'use client';
 
 import { assessLevel, LevelAssessmentOutput } from '@/ai/flows/level-assessment-flow';
@@ -14,6 +15,8 @@ import { useEffect, useState, useTransition } from 'react';
 import { WhatsAppButtonIcon } from './whatsapp-button-icon';
 import { sendAssessmentReport } from '@/app/know-your-level/actions';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Check } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 type Question = {
   question: string;
@@ -332,8 +335,34 @@ export function LevelAssessment() {
     return (
         <Card className="border-green-500/50">
             <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-bold text-green-600 flex items-center justify-center gap-2">
-                    <CheckCircle /> Assessment Complete!
+                <div className="flex justify-center items-center">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                            type: 'spring',
+                            stiffness: 260,
+                            damping: 20,
+                            delay: 0.2,
+                        }}
+                        className="h-20 w-20 bg-background neumorphic-outer rounded-full flex items-center justify-center"
+                    >
+                         <motion.div
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{
+                                type: 'spring',
+                                stiffness: 260,
+                                damping: 20,
+                                delay: 0.4,
+                            }}
+                        >
+                            <Check className="h-12 w-12 text-green-600" />
+                        </motion.div>
+                    </motion.div>
+                </div>
+                <CardTitle className="text-2xl font-bold text-green-600 flex items-center justify-center gap-2 pt-4">
+                     Assessment Complete!
                 </CardTitle>
                 <CardDescription>Here is your proficiency report{userDetails ? `, ${userDetails.name}`: ''}.</CardDescription>
             </CardHeader>
