@@ -253,7 +253,7 @@ export function AiChatbot() {
             </Button>
           </CardHeader>
            <CardContent 
-              className="relative p-0 flex-1 chat-background"
+              className="relative p-0 flex-1 chat-background overflow-y-auto"
             >
              <ScrollArea className="h-full" ref={scrollAreaRef}>
                  <div className="p-4 space-y-4">
