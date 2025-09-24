@@ -147,6 +147,10 @@
     background-position: center;
     background-repeat: no-repeat;
   }
+  .chat-card {
+    background-color: hsl(var(--background));
+    box-shadow: none;
+  }
   .neumorphic-outer {
     background: hsl(var(--background));
     box-shadow: var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
