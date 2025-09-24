@@ -47,7 +47,7 @@ export const whatsapp = {
     return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
   },
   getTutorInquiryUrl(details: { name: string, email: string, whatsapp: string, state: string, language: string, schedule: string }) {
-     const whatsappPhoneNumber = details.whatsapp.replace('+', '').trim();
+     const whatsappPhoneNumber = details.whatsapp.replace(/\D/g, '');
      const message = `
       New Tutor Request!
       -----------------------------
