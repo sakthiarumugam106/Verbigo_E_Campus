@@ -228,7 +228,7 @@ export function AiChatbot() {
         )}
       >
         <Card 
-          className="chat-card w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] flex flex-col rounded-xl overflow-hidden"
+          className="chat-card w-[calc(100vw-3rem)] mx-auto h-[70vh] max-h-[500px] md:w-[340px] md:h-[450px] flex flex-col rounded-xl"
           ref={chatCardRef}
         >
           <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
@@ -327,3 +327,5 @@ export function AiChatbot() {
     </>
   );
 }
+
+    
