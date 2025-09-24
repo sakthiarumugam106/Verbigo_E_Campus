@@ -228,7 +228,7 @@ export function AiChatbot() {
         )}
       >
         <Card 
-          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] shadow-2xl flex flex-col rounded-xl overflow-hidden"
+          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] flex flex-col rounded-xl overflow-hidden"
           ref={chatCardRef}
         >
           <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
