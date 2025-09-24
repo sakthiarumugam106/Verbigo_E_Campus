@@ -31,14 +31,17 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
   
   const { name, email, phoneNumber, message } = validatedFields.data;
   
-  // The phone number is already formatted as "+<code> <number>"
-  const payloadPhoneNumber = phoneNumber;
+  // Phone number for emails (with +)
+  const emailPhoneNumber = phoneNumber;
+  // Phone number for Google Sheet (without +)
+  const sheetPhoneNumber = phoneNumber.replace('+', '').trim();
 
-  // rename phoneNumber → contact
+
+  // The payload for Google Sheets.
   const payload = {
     name,
     email,
-    contact: payloadPhoneNumber,
+    contact: sheetPhoneNumber,
     message,
   };
 
@@ -72,7 +75,7 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
         from: fromAddress,
         to: siteConfig.email,
         subject: `New Contact Form Submission from ${name}`,
-        react: ContactFormAdminEmail({ name, email, phoneNumber, message, sheetSuccess }),
+        react: ContactFormAdminEmail({ name, email, phoneNumber: emailPhoneNumber, message, sheetSuccess }),
       });
     } catch (adminEmailError) {
       console.error("Resend API Error (Admin):", adminEmailError);

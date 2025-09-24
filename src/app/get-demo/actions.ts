@@ -29,7 +29,7 @@ export type DemoFormState = {
 };
 
 // Helper function to isolate the email sending logic and the react-email import
-async function sendNotificationEmail(data: DemoRequestData) {
+async function sendNotificationEmail(data: { name: string; email: string; phoneNumber: string; }) {
   if (!process.env.RESEND_API_KEY) {
     console.error("Resend API Key is not set. Email not sent.");
     // Fail silently on the server but log the error.
@@ -58,21 +58,30 @@ async function sendNotificationEmail(data: DemoRequestData) {
 async function handlePostSubmissionTasks(data: DemoRequestData) {
     const { name, email, phoneNumber } = data;
     const submissionTime = new Date();
+    
+    // Phone number for emails (with +)
+    const emailPhoneNumber = phoneNumber;
+    // Phone number for Google Sheet (without +)
+    const sheetPhoneNumber = phoneNumber.replace('+', '').trim();
 
     try {
         await Promise.all([
             addDoc(collection(db, 'demo-requests'), {
                 name,
                 email,
-                phoneNumber,
+                phoneNumber: emailPhoneNumber, // Store with + in Firestore
                 submittedAt: submissionTime,
             }),
             appendToGoogleSheet({
                 name,
                 email,
-                contact: phoneNumber,
+                contact: sheetPhoneNumber, // Send without + to Google Sheet
             }),
-            sendNotificationEmail(data),
+            sendNotificationEmail({
+                name,
+                email,
+                phoneNumber: emailPhoneNumber, // Send with + in email
+            }),
         ]);
         console.log('All post-submission tasks completed successfully.');
     } catch (error) {
