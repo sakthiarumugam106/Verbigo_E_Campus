@@ -228,7 +228,7 @@ export function AiChatbot() {
         )}
       >
         <Card 
-          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] flex flex-col rounded-xl overflow-hidden shadow-none"
+          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] flex flex-col rounded-xl shadow-none bg-background"
           ref={chatCardRef}
         >
           <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
@@ -253,7 +253,7 @@ export function AiChatbot() {
             </Button>
           </CardHeader>
            <CardContent 
-              className="relative p-0 flex-1 overflow-hidden bg-background chat-background"
+              className="relative p-0 flex-1 overflow-hidden chat-background"
             >
              <ScrollArea className="h-full" ref={scrollAreaRef}>
                  <div className="p-4 space-y-4">
@@ -327,5 +327,3 @@ export function AiChatbot() {
     </>
   );
 }
-
-    
