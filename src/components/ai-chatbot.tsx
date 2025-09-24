@@ -228,10 +228,10 @@ export function AiChatbot() {
         )}
       >
         <Card 
-          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] flex flex-col rounded-xl overflow-hidden"
+          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] flex flex-col rounded-xl overflow-hidden shadow-none bg-transparent"
           ref={chatCardRef}
         >
-          <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
+          <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4 neumorphic-outer">
             <div 
               className="absolute inset-0 bg-repeat" 
               style={{ 
@@ -252,7 +252,7 @@ export function AiChatbot() {
                 <X className="h-5 w-5" />
             </Button>
           </CardHeader>
-           <CardContent className="relative p-0 flex-1 overflow-hidden bg-primary/5">
+           <CardContent className="relative p-0 flex-1 overflow-hidden bg-primary/5 neumorphic-inner">
             <div
               className="absolute inset-0 bg-cover bg-center dark:hidden"
               style={{
@@ -300,7 +300,7 @@ export function AiChatbot() {
                  </div>
              </ScrollArea>
           </CardContent>
-          <CardFooter className="p-4 border-t bg-background">
+          <CardFooter className="p-4 border-t bg-background neumorphic-outer">
             <form onSubmit={handleSubmit} className="flex w-full items-center gap-2">
               <Input
                 value={input}
