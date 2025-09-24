@@ -21,11 +21,11 @@ export const siteConfig = {
   },
   assets: {
     baseUrl: 'https://firebasestudio-hosting.web.app',
-    emailIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/new-post.png',
-    phoneIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/phone.png',
-    linkedinIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/linkedin.png',
-    instagramIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/instagram-new.png',
-    twitterIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/twitterx.png',
+    emailIcon: 'https://img.icons8.com/plasticine/100/new-post.png',
+    phoneIcon: 'https://img.icons8.com/plasticine/100/phone.png',
+    linkedinIcon: 'https://img.icons8.com/fluency/48/linkedin.png',
+    instagramIcon: 'https://img.icons8.com/fluency/48/instagram-new.png',
+    twitterIcon: 'https://img.icons8.com/fluency/48/twitterx.png',
   }
 };
 
@@ -47,7 +47,7 @@ export const whatsapp = {
     return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
   },
   getTutorInquiryUrl(details: { name: string, email: string, whatsapp: string, state: string, language: string, schedule: string }) {
-     const whatsappPhoneNumber = details.whatsapp.replace(/\+/g, '').trim();
+     const whatsappPhoneNumber = details.whatsapp.replace(/\D/g, '');
      const message = `
       New Tutor Request!
       -----------------------------

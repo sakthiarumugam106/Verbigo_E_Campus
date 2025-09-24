@@ -55,40 +55,34 @@ const ContactFormUserEmail = ({ name }: ContactFormUserEmailProps) => (
         </Section>
         
         <Section style={footer.container}>
-          <Row>
-            <Column>
-              <Text style={footer.heading}>Verbigo</Text>
-              <Text style={footer.subheading}>E-Campus for Language Intelligence</Text>
-            </Column>
-          </Row>
-          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '15px' }}>
+          <Text style={footer.contactTitle}>Contact Us:</Text>
+          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
             <tr>
-              <td valign="top" style={{ width: '50%' }}>
-                <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
-                  <Img src={siteConfig.assets.emailIcon} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
-                  <span style={{verticalAlign: 'middle'}}>{siteConfig.email}</span>
-                </Link>
-              </td>
-              <td valign="top" style={{ width: '50%' }}>
+              <td align="center">
                 <Link href={`https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, '')}`} style={footer.link}>
-                  <Img src={siteConfig.assets.phoneIcon} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
-                  <span style={{verticalAlign: 'middle'}}>+{siteConfig.whatsappNumber}</span>
+                  <Img src={siteConfig.assets.phoneIcon} width="18" height="18" alt="Phone" style={footer.icon} />
+                  <span style={footer.linkText}>+{siteConfig.whatsappNumber}</span>
+                </Link>
+                <span style={footer.separator}>|</span>
+                <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
+                  <Img src={siteConfig.assets.emailIcon} width="18" height="18" alt="Email" style={footer.icon} />
+                  <span style={footer.linkText}>{siteConfig.email}</span>
                 </Link>
               </td>
             </tr>
           </table>
           
-          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '15px' }}>
+          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '10px' }}>
             <tr>
-              <td>
-                <Link href={siteConfig.socials.linkedin} style={{...footer.link, ...footer.social}}>
-                  <Img src={siteConfig.assets.linkedinIcon} width="24" height="24" alt="LinkedIn" />
+              <td align="center">
+                <Link href={siteConfig.socials.linkedin} style={footer.social}>
+                  <Img src={siteConfig.assets.linkedinIcon} width="28" height="28" alt="LinkedIn" />
                 </Link>
-                <Link href={siteConfig.socials.instagram} style={{...footer.link, ...footer.social}}>
-                  <Img src={siteConfig.assets.instagramIcon} width="24" height="24" alt="Instagram" />
+                <Link href={siteConfig.socials.twitter} style={footer.social}>
+                  <Img src={siteConfig.assets.twitterIcon} width="28" height="28" alt="Twitter" />
                 </Link>
-                <Link href={siteConfig.socials.twitter} style={{...footer.link, ...footer.social}}>
-                  <Img src={siteConfig.assets.twitterIcon} width="24" height="24" alt="Twitter" />
+                <Link href={siteConfig.socials.instagram} style={footer.social}>
+                  <Img src={siteConfig.assets.instagramIcon} width="28" height="28" alt="Instagram" />
                 </Link>
               </td>
             </tr>
@@ -187,39 +181,46 @@ const tipExample = {
 
 const footer = {
   container: {
-    backgroundColor: '#0a192f',
-    color: '#a8b2d1',
-    padding: '25px 40px',
+    backgroundColor: '#f4f6f8',
+    color: '#555',
+    padding: '20px 40px',
+    textAlign: 'center' as const,
   },
-  heading: {
-    color: '#ffffff',
-    fontSize: '20px',
-    fontWeight: 'bold',
-    margin: '0',
-    padding: '0',
-    fontFamily: "'Poppins', sans-serif",
-  },
-  subheading: {
-    color: '#a8b2d1',
-    fontSize: '12px',
-    margin: '4px 0 0',
-    padding: '0',
+  contactTitle: {
+    color: '#555',
+    fontSize: '14px',
+    margin: '0 0 10px',
   },
   link: {
-    color: '#a8b2d1',
+    color: '#555',
     textDecoration: 'none',
-    fontSize: '12px',
+    fontSize: '14px',
+    display: 'inline-flex',
+    alignItems: 'center',
+  },
+  linkText: {
+    verticalAlign: 'middle',
+  },
+  icon: {
+    display: 'inline-block',
+    marginRight: '8px',
+    verticalAlign: 'middle',
+  },
+  separator: {
+    display: 'inline-block',
+    margin: '0 10px',
+    color: '#ccc',
+    verticalAlign: 'middle',
   },
   social: {
     display: 'inline-block',
-    marginRight: '10px',
+    margin: '0 8px',
   },
   copyright: {
-    color: '#8892b0',
-    fontSize: '10px',
+    color: '#777',
+    fontSize: '12px',
     textAlign: 'center' as const,
     paddingTop: '15px',
-    borderTop: '1px solid #1a2c4e',
     marginTop: '15px',
   },
 };
