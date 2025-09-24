@@ -52,7 +52,14 @@
   width: calc(100% - 0.6em);
   height: calc(100% - 0.6em);
   border-radius: inherit;
-  background: hsla(var(--accent) / 0.75);
+  background-image: radial-gradient(
+      at 51% 89%,
+      hsla(266, 45%, 74%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 100% 100%, hsla(266, 36%, 60%, 1) 0px, transparent 50%),
+    radial-gradient(at 22% 91%, hsla(266, 36%, 60%, 1) 0px, transparent 50%);
+  background-color: hsla(var(--accent) / 0.75);
   box-shadow: none;
 }
 
