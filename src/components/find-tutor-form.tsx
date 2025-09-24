@@ -120,7 +120,8 @@ export function FindTutorForm() {
     const finalLanguage = formData.language === 'Other' ? otherLanguage : formData.language;
     const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
     
-    const finalFormData = { ...formData, language: finalLanguage, whatsapp: `+${finalCountryCode} ${formData.whatsapp}` };
+    const finalFormData = { ...formData, language: finalLanguage, whatsapp: `+${finalCountryCode}${formData.whatsapp}` };
+    const sheetPhoneNumber = `${finalCountryCode}${formData.whatsapp}`;
 
     if (!finalFormData.name || !finalFormData.email || !formData.whatsapp || !finalFormData.state || !finalFormData.language || !finalFormData.schedule) {
       toast({
@@ -144,7 +145,7 @@ export function FindTutorForm() {
     showLoader();
     
     // Open WhatsApp link immediately for the user
-    const whatsappUrl = whatsapp.getTutorInquiryUrl(finalFormData);
+    const whatsappUrl = whatsapp.getTutorInquiryUrl({...finalFormData, whatsapp: sheetPhoneNumber});
     window.open(whatsappUrl, '_blank');
 
     toast({
@@ -188,9 +189,10 @@ export function FindTutorForm() {
       </div>
       <div className="space-y-2">
         <Label htmlFor="whatsapp">WhatsApp Number</Label>
-        <div className={cn("flex items-center rounded-md", countryCode !== 'Other' && 'neumorphic-inner')}>
+        <div className="flex items-center">
+          <div className="neumorphic-inner rounded-md rounded-r-none w-[130px]">
             <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-                <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
+                <SelectTrigger useNeumorphic={false} className="w-full rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
                     <SelectValue>
                       {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
                     </SelectValue>
@@ -202,8 +204,9 @@ export function FindTutorForm() {
                     <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
             </Select>
+          </div>
             {countryCode === 'Other' ? (
-              <div className="neumorphic-inner rounded-md rounded-l-none w-full">
+              <div className="neumorphic-inner rounded-md rounded-l-none w-full flex">
                 <Input
                   id="otherCountryCode"
                   name="otherCountryCode"
@@ -213,8 +216,19 @@ export function FindTutorForm() {
                   className="rounded-l-none border-l-0 w-[80px]"
                   required
                 />
+                <Input 
+                  id="whatsapp"
+                  type="tel" 
+                  name="whatsapp"
+                  placeholder="1234567890"
+                  value={formData.whatsapp} 
+                  onChange={handlePhoneNumberChange} 
+                  className="rounded-l-none"
+                  required 
+                />
               </div>
             ) : (
+              <div className="neumorphic-inner rounded-md rounded-l-none w-full">
                 <Input 
                   id="whatsapp"
                   type="tel" 
@@ -226,6 +240,7 @@ export function FindTutorForm() {
                   className="rounded-l-none"
                   required 
                 />
+              </div>
             )}
         </div>
       </div>
@@ -276,15 +291,15 @@ export function FindTutorForm() {
         <RadioGroup name="schedule" required className="flex flex-col sm:flex-row gap-4 pt-2" onValueChange={(value) => handleChange('schedule', value)} value={formData.schedule}>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="Weekends" id="weekends" />
-            <Label htmlFor="weekends">Weekends</Label>
+            <Label htmlFor="weekends" className="font-normal">Weekends</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="Weekdays" id="weekdays" />
-            <Label htmlFor="weekdays">Weekdays</Label>
+            <Label htmlFor="weekdays" className="font-normal">Weekdays</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="Any" id="any" />
-            <Label htmlFor="any">Any Time</Label>
+            <Label htmlFor="any" className="font-normal">Any Time</Label>
           </div>
         </RadioGroup>
       </div>

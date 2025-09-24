@@ -121,65 +121,49 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
       </div>
       <div className="space-y-2">
         <Label htmlFor="phone">Phone Number</Label>
-        <div className={cn("flex items-center rounded-md", countryCode !== 'Other' && 'neumorphic-inner')}>
-          <Select value={countryCode} onValueChange={handleCountryCodeChange} disabled={isSubmitting}>
-            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
-                <SelectValue>
-                  {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
-                </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-                {Object.entries(countryCodes).map(([code, {label}]) => (
-                    <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
-                ))}
-                <SelectItem value="Other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-          {countryCode === 'Other' ? (
-            <div className="neumorphic-inner rounded-md rounded-l-none w-full">
-              <Input
-                id="otherCountryCode"
-                name="otherCountryCode"
-                placeholder="Code"
-                value={otherCountryCode}
-                onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                className="rounded-l-none border-l-0 w-[80px]"
-                required
-                disabled={isSubmitting}
-              />
+        <div className="flex items-center">
+            <div className="neumorphic-inner rounded-md rounded-r-none w-[130px]">
+                <Select value={countryCode} onValueChange={handleCountryCodeChange} disabled={isSubmitting}>
+                    <SelectTrigger useNeumorphic={false} className="w-full rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
+                        <SelectValue>
+                          {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                        </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Object.entries(countryCodes).map(([code, {label}]) => (
+                            <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                        ))}
+                        <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
-          ) : (
-              <Input 
-                id="phone"
-                type="tel" 
-                name="phoneInput"
-                placeholder="1234567890"
-                value={phoneNumber} 
-                onChange={handlePhoneNumberChange} 
-                maxLength={phoneMaxLength}
-                className="rounded-l-none"
-                required 
-                disabled={isSubmitting}
-              />
-          )}
-        </div>
-        {countryCode === 'Other' && (
-          <div className="grid gap-2 text-left mt-2">
-            <Label htmlFor="phoneNumberOther">Phone Number</Label>
-            <div className="neumorphic-inner rounded-md">
-              <Input 
-                  id="phoneNumberOther"
-                  type="tel" 
-                  name="phoneInput"
-                  placeholder="1234567890"
-                  value={phoneNumber} 
-                  onChange={handlePhoneNumberChange}
-                  required 
-                  disabled={isSubmitting}
+            <div className="neumorphic-inner rounded-md rounded-l-none w-full flex">
+                {countryCode === 'Other' && (
+                    <Input
+                        id="otherCountryCode"
+                        name="otherCountryCode"
+                        placeholder="Code"
+                        value={otherCountryCode}
+                        onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                        className="rounded-l-none border-l-0 w-[80px]"
+                        required
+                        disabled={isSubmitting}
+                      />
+                )}
+                <Input 
+                    id="phone"
+                    type="tel" 
+                    name="phoneInput"
+                    placeholder="1234567890"
+                    value={phoneNumber} 
+                    onChange={handlePhoneNumberChange} 
+                    maxLength={phoneMaxLength}
+                    className={cn("rounded-l-none", countryCode === 'Other' && 'border-l-0')}
+                    required 
+                    disabled={isSubmitting}
                 />
             </div>
-          </div>
-        )}
+        </div>
       </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending Report...</> : 'View My Report'}
@@ -414,7 +398,7 @@ export function LevelAssessment() {
       return (
           <Card className="neumorphic-outer">
               <CardHeader className="text-center">
-                  <CardTitle className="text-2xl font-bold text-primary">One Last Step!</CardTitle>
+                  <CardTitle className="text-2xl font-bold text-primary dark:text-primary-foreground">One Last Step!</CardTitle>
                   <CardDescription>Your report is ready. Please provide your details to view it and get a copy via email.</CardDescription>
               </CardHeader>
               <CardContent>

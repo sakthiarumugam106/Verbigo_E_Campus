@@ -11,7 +11,7 @@ import { submitDemoRequest, type DemoFormState } from '@/app/get-demo/actions';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -32,7 +32,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" className="w-full" disabled={pending}>
-      {pending ? 'Submitting...' : 'Submit'}
+      {pending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/>Submitting...</> : 'Submit'}
     </Button>
   );
 }
@@ -117,62 +117,47 @@ export function GetDemoForm() {
       </div>
       <div className="space-y-2">
         <Label htmlFor="phoneNumberInput">Phone Number</Label>
-        <div className={cn("flex items-center rounded-md", countryCode !== 'Other' && 'neumorphic-inner')}>
-          <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
-                <SelectValue>
-                  {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
-                </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-                {Object.entries(countryCodes).map(([code, {label}]) => (
-                    <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
-                ))}
-                <SelectItem value="Other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-          {countryCode === 'Other' ? (
-            <div className="neumorphic-inner rounded-md rounded-l-none w-full">
-              <Input
-                id="otherCountryCode"
-                name="otherCountryCode"
-                placeholder="Code"
-                value={otherCountryCode}
-                onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                className="rounded-l-none border-l-0 w-[80px]"
-                required
-              />
-            </div>
-          ) : (
-              <Input 
-                id="phoneNumberInput"
-                type="tel" 
-                name="phoneNumberInput"
-                placeholder="1234567890"
-                value={phoneNumber} 
-                onChange={handlePhoneNumberChange} 
-                maxLength={phoneMaxLength}
-                className="rounded-l-none"
-                required 
-              />
-          )}
-        </div>
-        {countryCode === 'Other' && (
-          <div className="grid gap-2 text-left mt-2">
-            <Label htmlFor="phoneNumberOther">Phone Number</Label>
-            <div className="neumorphic-inner rounded-md">
-              <Input 
-                  id="phoneNumberOther"
-                  type="tel" 
-                  name="phoneNumberInput"
-                  placeholder="1234567890"
-                  value={phoneNumber} 
-                  onChange={handlePhoneNumberChange}
-                  required 
-                />
-            </div>
+        <div className="flex items-center">
+          <div className="neumorphic-inner rounded-md rounded-r-none w-[130px]">
+            <Select value={countryCode} onValueChange={handleCountryCodeChange}>
+              <SelectTrigger useNeumorphic={false} className="w-full rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
+                  <SelectValue>
+                    {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                  </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                  {Object.entries(countryCodes).map(([code, {label}]) => (
+                      <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                  ))}
+                  <SelectItem value="Other">Other</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        )}
+          <div className="neumorphic-inner rounded-md rounded-l-none w-full flex">
+            {countryCode === 'Other' && (
+                <Input
+                  id="otherCountryCode"
+                  name="otherCountryCode"
+                  placeholder="Code"
+                  value={otherCountryCode}
+                  onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                  className="rounded-l-none border-l-0 w-[80px]"
+                  required
+                />
+            )}
+            <Input 
+              id="phoneNumberInput"
+              type="tel" 
+              name="phoneNumberInput"
+              placeholder="1234567890"
+              value={phoneNumber} 
+              onChange={handlePhoneNumberChange} 
+              maxLength={phoneMaxLength}
+              className={cn("rounded-l-none", countryCode === 'Other' && 'border-l-0')}
+              required 
+            />
+          </div>
+        </div>
         {state.errors?.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber[0]}</p>}
       </div>
       <SubmitButton />
