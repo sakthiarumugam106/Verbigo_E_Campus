@@ -1,3 +1,4 @@
+
 'use client';
 
 import { grammarCoach } from '@/ai/flows/grammar-coach-flow';
@@ -227,7 +228,7 @@ export function AiChatbot() {
         )}
       >
         <Card 
-          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] flex flex-col rounded-xl overflow-hidden shadow-2xl"
+          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] flex flex-col rounded-xl overflow-hidden shadow-none"
           ref={chatCardRef}
         >
           <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
@@ -251,7 +252,14 @@ export function AiChatbot() {
                 <X className="h-5 w-5" />
             </Button>
           </CardHeader>
-           <CardContent className="relative p-0 flex-1 overflow-hidden bg-background">
+           <CardContent 
+              className="relative p-0 flex-1 overflow-hidden bg-background shadow-inner"
+              style={{
+                backgroundImage: "url('/subtle-pattern.svg')",
+                backgroundBlendMode: 'overlay',
+                backgroundColor: 'hsla(var(--background), 0.7)',
+              }}
+            >
              <ScrollArea className="h-full" ref={scrollAreaRef}>
                  <div className="p-4 space-y-4">
                     {history.map((msg, index) => (
