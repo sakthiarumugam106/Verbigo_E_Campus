@@ -12,7 +12,7 @@ const contactSchema = z.object({
   email: z.string().email('Please enter a valid email address.'),
   phoneNumber: z.string()
     .min(10, 'Phone number must be at least 10 characters.')
-    .regex(/^\d+ \d+$/, 'Please enter a valid phone number with country code.'),
+    .regex(/^\+\d+ \d+$/, 'Please enter a valid phone number with country code.'),
   message: z.string().min(10, 'Message must be at least 10 characters long.'),
 });
 
@@ -31,7 +31,7 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
   
   const { name, email, phoneNumber, message } = validatedFields.data;
   
-  // The phone number is already formatted as "<code> <number>"
+  // The phone number is already formatted as "+<code> <number>"
   const payloadPhoneNumber = phoneNumber;
 
   // rename phoneNumber → contact
