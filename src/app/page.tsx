@@ -463,23 +463,8 @@ export default function HomePage() {
       </section>
 
       <section id="contact" className="w-full bg-secondary py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid items-center justify-center gap-4 text-center">
-            <div className="space-y-3">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                Contact Our Team
-              </h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-foreground/80">
-                Have a question about a course? We're here to help. For demo requests, please use our dedicated demo form.
-              </p>
-            </div>
-            <div className="mx-auto w-full max-w-sm space-y-2">
-              <ContactForm />
-              <p className="text-xs text-muted-foreground dark:text-foreground/80">
-                Our language experts will get back to you shortly.
-              </p>
-            </div>
-          </div>
+        <div className="container mx-auto px-4 md:px-6 flex justify-center">
+          <ContactForm />
         </div>
       </section>
     </>
