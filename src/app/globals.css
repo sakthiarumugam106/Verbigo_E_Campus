@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -143,7 +144,7 @@
     background-color: var(--chat-bg-color);
     background-blend-mode: overlay;
     box-shadow: inset 0 0 100px hsla(0,0%,0%,0.1);
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
   }
