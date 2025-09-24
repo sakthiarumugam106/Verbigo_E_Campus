@@ -1,3 +1,4 @@
+
 'use client';
 
 import { assessLevel, LevelAssessmentOutput } from '@/ai/flows/level-assessment-flow';
@@ -108,11 +109,15 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
-          <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSubmitting} className="neumorphic-inner"/>
+          <div className="neumorphic-inner rounded-md">
+            <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSubmitting} />
+          </div>
       </div>
       <div className="space-y-2">
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSubmitting} className="neumorphic-inner"/>
+          <div className="neumorphic-inner rounded-md">
+            <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSubmitting} />
+          </div>
       </div>
       <div className="space-y-2">
         <Label htmlFor="phone">Phone Number</Label>
@@ -131,16 +136,18 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
             </SelectContent>
           </Select>
           {countryCode === 'Other' ? (
+            <div className="neumorphic-inner rounded-md rounded-l-none w-full">
               <Input
                 id="otherCountryCode"
                 name="otherCountryCode"
                 placeholder="Code"
                 value={otherCountryCode}
                 onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                className="rounded-l-none border-l-0 w-[80px] neumorphic-inner"
+                className="rounded-l-none border-l-0 w-[80px]"
                 required
                 disabled={isSubmitting}
               />
+            </div>
           ) : (
               <Input 
                 id="phone"
@@ -159,17 +166,18 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
         {countryCode === 'Other' && (
           <div className="grid gap-2 text-left mt-2">
             <Label htmlFor="phoneNumberOther">Phone Number</Label>
-            <Input 
-                id="phoneNumberOther"
-                type="tel" 
-                name="phoneInput"
-                placeholder="1234567890"
-                value={phoneNumber} 
-                onChange={handlePhoneNumberChange}
-                required 
-                disabled={isSubmitting}
-                className="neumorphic-inner"
-              />
+            <div className="neumorphic-inner rounded-md">
+              <Input 
+                  id="phoneNumberOther"
+                  type="tel" 
+                  name="phoneInput"
+                  placeholder="1234567890"
+                  value={phoneNumber} 
+                  onChange={handlePhoneNumberChange}
+                  required 
+                  disabled={isSubmitting}
+                />
+            </div>
           </div>
         )}
       </div>
@@ -438,17 +446,18 @@ export function LevelAssessment() {
                  <MessageSquare className="h-5 w-5 text-primary dark:text-primary-foreground mt-1 flex-shrink-0" />
                 <span>{currentQuestion}</span>
               </Label>
-              <Input
-                id="answer"
-                name="answer"
-                value={currentAnswer}
-                onChange={handleAnswerChange}
-                placeholder="Type your answer here..."
-                required
-                disabled={isPending}
-                autoComplete="off"
-                className="neumorphic-inner"
-              />
+              <div className="neumorphic-inner rounded-md">
+                <Input
+                  id="answer"
+                  name="answer"
+                  value={currentAnswer}
+                  onChange={handleAnswerChange}
+                  placeholder="Type your answer here..."
+                  required
+                  disabled={isPending}
+                  autoComplete="off"
+                />
+              </div>
                <div className="text-xs text-right text-muted-foreground pr-1">
                 <span className={cn(wordCount < MIN_WORDS ? "text-destructive" : "text-green-600")}>
                     {wordCount} / {MIN_WORDS} words

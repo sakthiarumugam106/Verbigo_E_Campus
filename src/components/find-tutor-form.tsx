@@ -176,11 +176,15 @@ export function FindTutorForm() {
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-2">
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name} className="neumorphic-inner"/>
+        <div className="neumorphic-inner rounded-md">
+          <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name} />
+        </div>
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email} className="neumorphic-inner"/>
+        <div className="neumorphic-inner rounded-md">
+          <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email} />
+        </div>
       </div>
       <div className="space-y-2">
         <Label htmlFor="whatsapp">WhatsApp Number</Label>
@@ -199,15 +203,17 @@ export function FindTutorForm() {
                 </SelectContent>
             </Select>
             {countryCode === 'Other' ? (
+              <div className="neumorphic-inner rounded-md rounded-l-none w-full">
                 <Input
                   id="otherCountryCode"
                   name="otherCountryCode"
                   placeholder="Code"
                   value={otherCountryCode}
                   onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                  className="rounded-l-none border-l-0 w-[80px] neumorphic-inner"
+                  className="rounded-l-none border-l-0 w-[80px]"
                   required
                 />
+              </div>
             ) : (
                 <Input 
                   id="whatsapp"
@@ -253,15 +259,16 @@ export function FindTutorForm() {
        {formData.language === 'Other' && (
         <div className="space-y-2">
             <Label htmlFor="otherLanguage">Please specify your language</Label>
-            <Input
-            id="otherLanguage"
-            name="otherLanguage"
-            placeholder="Your language"
-            required
-            value={otherLanguage}
-            onChange={(e) => setOtherLanguage(e.target.value)}
-            className="neumorphic-inner"
-            />
+            <div className="neumorphic-inner rounded-md">
+              <Input
+                id="otherLanguage"
+                name="otherLanguage"
+                placeholder="Your language"
+                required
+                value={otherLanguage}
+                onChange={(e) => setOtherLanguage(e.target.value)}
+              />
+            </div>
         </div>
         )}
       <div className="space-y-2 md:col-span-2">

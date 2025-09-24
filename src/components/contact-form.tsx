@@ -117,12 +117,16 @@ export function ContactForm() {
     <form onSubmit={handleSubmit} className="grid gap-4">
       <div className="grid gap-2 text-left">
         <Label htmlFor="name">Name</Label>
-        <Input id="name" name="name" placeholder="Your Name" value={form.name} onChange={handleInputChange} required className="neumorphic-inner"/>
+        <div className="neumorphic-inner rounded-md">
+          <Input id="name" name="name" placeholder="Your Name" value={form.name} onChange={handleInputChange} required />
+        </div>
         {errors.name && <p className="text-destructive text-xs">{errors.name[0]}</p>}
       </div>
       <div className="grid gap-2 text-left">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" name="email" placeholder="you@example.com" value={form.email} onChange={handleInputChange} required className="neumorphic-inner"/>
+        <div className="neumorphic-inner rounded-md">
+          <Input id="email" type="email" name="email" placeholder="you@example.com" value={form.email} onChange={handleInputChange} required />
+        </div>
         {errors.email && <p className="text-destructive text-xs">{errors.email[0]}</p>}
       </div>
       <div className="grid gap-2 text-left">
@@ -142,15 +146,17 @@ export function ContactForm() {
                 </SelectContent>
             </Select>
             {countryCode === 'Other' ? (
+              <div className="neumorphic-inner rounded-md rounded-l-none w-full">
                 <Input
                   id="otherCountryCode"
                   name="otherCountryCode"
                   placeholder="Code"
                   value={otherCountryCode}
                   onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                  className="rounded-l-none border-l-0 w-[80px] neumorphic-inner"
+                  className="rounded-l-none border-l-0 w-[80px]"
                   required
                 />
+              </div>
             ) : (
                 <Input 
                   id="phoneNumber"
@@ -170,16 +176,17 @@ export function ContactForm() {
       {countryCode === 'Other' && (
         <div className="grid gap-2 text-left">
            <Label htmlFor="phoneNumberOther">Phone Number</Label>
-           <Input 
-              id="phoneNumberOther"
-              type="tel" 
-              name="phoneNumber"
-              placeholder="1234567890"
-              value={form.phoneNumber} 
-              onChange={handlePhoneNumberChange}
-              required 
-              className="neumorphic-inner"
-            />
+           <div className="neumorphic-inner rounded-md">
+            <Input 
+                id="phoneNumberOther"
+                type="tel" 
+                name="phoneNumber"
+                placeholder="1234567890"
+                value={form.phoneNumber} 
+                onChange={handlePhoneNumberChange}
+                required 
+              />
+            </div>
         </div>
       )}
       <div className="grid gap-2 text-left">

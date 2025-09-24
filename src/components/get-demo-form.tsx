@@ -103,12 +103,16 @@ export function GetDemoForm() {
       <input type="hidden" name="phoneNumber" />
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <Input id="name" name="name" placeholder="Jane Austen" required className="neumorphic-inner" />
+        <div className="neumorphic-inner rounded-md">
+          <Input id="name" name="name" placeholder="Jane Austen" required />
+        </div>
         {state.errors?.name && <p className="text-sm text-destructive mt-1">{state.errors.name[0]}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required className="neumorphic-inner"/>
+        <div className="neumorphic-inner rounded-md">
+          <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required />
+        </div>
         {state.errors?.email && <p className="text-sm text-destructive mt-1">{state.errors.email[0]}</p>}
       </div>
       <div className="space-y-2">
@@ -128,15 +132,17 @@ export function GetDemoForm() {
             </SelectContent>
           </Select>
           {countryCode === 'Other' ? (
+            <div className="neumorphic-inner rounded-md rounded-l-none w-full">
               <Input
                 id="otherCountryCode"
                 name="otherCountryCode"
                 placeholder="Code"
                 value={otherCountryCode}
                 onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                className="rounded-l-none border-l-0 w-[80px] neumorphic-inner"
+                className="rounded-l-none border-l-0 w-[80px]"
                 required
               />
+            </div>
           ) : (
               <Input 
                 id="phoneNumberInput"
@@ -154,16 +160,17 @@ export function GetDemoForm() {
         {countryCode === 'Other' && (
           <div className="grid gap-2 text-left mt-2">
             <Label htmlFor="phoneNumberOther">Phone Number</Label>
-            <Input 
-                id="phoneNumberOther"
-                type="tel" 
-                name="phoneNumberInput"
-                placeholder="1234567890"
-                value={phoneNumber} 
-                onChange={handlePhoneNumberChange}
-                required 
-                className="neumorphic-inner"
-              />
+            <div className="neumorphic-inner rounded-md">
+              <Input 
+                  id="phoneNumberOther"
+                  type="tel" 
+                  name="phoneNumberInput"
+                  placeholder="1234567890"
+                  value={phoneNumber} 
+                  onChange={handlePhoneNumberChange}
+                  required 
+                />
+            </div>
           </div>
         )}
         {state.errors?.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber[0]}</p>}
