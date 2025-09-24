@@ -83,13 +83,11 @@ export function ContactForm() {
     setErrors({});
     
     const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
-    const sheetPhoneNumber = `${finalCountryCode} ${form.phoneNumber}`;
-    const emailPhoneNumber = `+${finalCountryCode} ${form.phoneNumber}`;
+    const fullPhoneNumber = `${finalCountryCode} ${form.phoneNumber}`;
 
     const result = await appendContactToGoogleSheet({
       ...form,
-      sheetPhoneNumber,
-      emailPhoneNumber,
+      phoneNumber: fullPhoneNumber,
     });
 
     setIsSubmitting(false);
@@ -191,7 +189,9 @@ export function ContactForm() {
             </div>
             <div className="grid gap-2 text-left">
                 <Label htmlFor="message">Message</Label>
-                <Textarea id="message" name="message" placeholder="Your Message..." value={form.message} onChange={handleInputChange} required className="min-h-[120px]" />
+                 <div className="neumorphic-inner rounded-md">
+                    <Textarea id="message" name="message" placeholder="Your Message..." value={form.message} onChange={handleInputChange} required className="min-h-[120px]" />
+                 </div>
                 {errors.message && <p className="text-destructive text-xs">{errors.message[0]}</p>}
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>

@@ -10,9 +10,7 @@ import ContactFormUserEmail from '@/emails/contact-form-user-email';
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
   email: z.string().email('Please enter a valid email address.'),
-  phoneNumber: z.string()
-    .min(10, 'Phone number must be at least 10 characters.')
-    .regex(/^\+\d+ \d+$/, 'Please enter a valid phone number with country code.'),
+  phoneNumber: z.string().min(10, 'Phone number must be at least 10 characters.'),
   message: z.string().min(10, 'Message must be at least 10 characters long.'),
 });
 
@@ -32,9 +30,9 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
   const { name, email, phoneNumber, message } = validatedFields.data;
   
   // Phone number for emails (with +)
-  const emailPhoneNumber = phoneNumber;
+  const emailPhoneNumber = `+${phoneNumber}`;
   // Phone number for Google Sheet (without +)
-  const sheetPhoneNumber = phoneNumber.replace('+', '').trim();
+  const sheetPhoneNumber = phoneNumber;
 
 
   // The payload for Google Sheets.
