@@ -253,12 +253,7 @@ export function AiChatbot() {
             </Button>
           </CardHeader>
            <CardContent 
-              className="relative p-0 flex-1 overflow-hidden bg-background shadow-inner"
-              style={{
-                backgroundImage: "url('/subtle-pattern.svg')",
-                backgroundBlendMode: 'overlay',
-                backgroundColor: 'hsla(var(--background), 0.7)',
-              }}
+              className="relative p-0 flex-1 overflow-hidden bg-background chat-background"
             >
              <ScrollArea className="h-full" ref={scrollAreaRef}>
                  <div className="p-4 space-y-4">
@@ -332,5 +327,3 @@ export function AiChatbot() {
     </>
   );
 }
-
-    
