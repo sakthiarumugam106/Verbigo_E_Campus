@@ -4,15 +4,13 @@ import {
   Container,
   Head,
   Heading,
-  Hr,
   Html,
   Preview,
   Section,
   Text,
-  Img,
   Link,
-  Row,
-  Column,
+  Button,
+  Img,
 } from '@react-email/components';
 import * as React from 'react';
 import { siteConfig } from '@/lib/config';
@@ -21,66 +19,42 @@ interface TutorConfirmationEmailProps {
   name: string;
 }
 
-const TutorConfirmationEmail = ({
-  name,
-}: TutorConfirmationEmailProps) => (
+const TutorConfirmationEmail = ({ name }: TutorConfirmationEmailProps) => (
   <Html>
     <Head />
-    <Preview>We've received your request!</Preview>
+    <Preview>We've received your tutor request!</Preview>
     <Body style={main}>
       <Container style={container}>
         <Section style={header}>
-           <Heading style={logoText}>Verbigo</Heading>
+          <Heading as="h1" style={headerH1}>🎉 Request Received!</Heading>
+          <Text style={headerP}>Thank you for choosing Verbigo</Text>
         </Section>
         <Section style={content}>
-          <Heading style={heading}>Thank You for Choosing Verbigo, {name}!</Heading>
-          
+          <Heading as="h2" style={contentH2}>Hello {name},</Heading>
           <Text style={paragraph}>
-            We've successfully received your request to find a tutor. Our team is now looking for the perfect match for your learning needs.
+            Thank you for submitting your request to find a tutor. We have received your details, and our team is already working on finding the perfect match for your learning needs.
           </Text>
-          
           <Text style={paragraph}>
-            One of our language experts will reach out to you via WhatsApp shortly to discuss the next steps.
+            One of our language experts will reach out to you via WhatsApp very soon to discuss the next steps. We're excited to be a part of your language learning journey!
           </Text>
-
-          <Text style={paragraph}>
-            We're excited to be a part of your language learning journey!
-          </Text>
+          <Button href="https://verbigo.in/#courses" style={button}>Explore Our Courses</Button>
         </Section>
-        <Section style={footer.container}>
-          <Text style={footer.contactTitle}>Contact Us:</Text>
-          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '10px', paddingBottom: '10px' }}>
-            <tr>
-              <td align="center">
-                <Link href={`https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, '')}`} style={footer.link}>
-                  <Img src={siteConfig.assets.phoneIcon} width="18" height="18" alt="Phone" style={footer.icon} />
-                  <span style={footer.linkText}>+{siteConfig.whatsappNumber}</span>
-                </Link>
-                <span style={footer.separator}>|</span>
-                <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
-                  <Img src={siteConfig.assets.emailIcon} width="18" height="18" alt="Email" style={footer.icon} />
-                  <span style={footer.linkText}>{siteConfig.email}</span>
-                </Link>
-              </td>
-            </tr>
-          </table>
-          
-          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '10px' }}>
-            <tr>
-              <td align="center">
-                <Link href={siteConfig.socials.linkedin} style={footer.social}>
-                  <Img src={siteConfig.assets.linkedinIcon} width="28" height="28" alt="LinkedIn" />
-                </Link>
-                <Link href={siteConfig.socials.twitter} style={footer.social}>
-                  <Img src={siteConfig.assets.twitterIcon} width="28" height="28" alt="Twitter" />
-                </Link>
-                <Link href={siteConfig.socials.instagram} style={footer.social}>
-                  <Img src={siteConfig.assets.instagramIcon} width="28" height="28" alt="Instagram" />
-                </Link>
-              </td>
-            </tr>
-          </table>
-          <Text style={footer.copyright}>© {new Date().getFullYear()} Verbigo. All Rights Reserved.</Text>
+        
+        <Section style={footer}>
+          <Text>Contact Us:</Text>
+          <Text>📞 {siteConfig.whatsappNumber} | ✉️ {siteConfig.email}</Text>
+          <Section style={socialIcons}>
+            <Link href={siteConfig.socials.linkedin}>
+              <Img src={siteConfig.assets.linkedinIcon} alt="LinkedIn" style={socialIconImg} />
+            </Link>
+            <Link href={siteConfig.socials.twitter}>
+              <Img src={siteConfig.assets.twitterIcon} alt="Twitter" style={socialIconImg} />
+            </Link>
+            <Link href={siteConfig.socials.instagram}>
+              <Img src={siteConfig.assets.instagramIcon} alt="Instagram" style={socialIconImg} />
+            </Link>
+          </Section>
+          <Text>&copy; {new Date().getFullYear()} Verbigo. All rights reserved.</Text>
         </Section>
       </Container>
     </Body>
@@ -89,101 +63,82 @@ const TutorConfirmationEmail = ({
 
 export default TutorConfirmationEmail;
 
-
 const main = {
-  backgroundColor: '#f0f5ff',
-  fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
-  padding: '20px 0',
+  margin: 0,
+  padding: 0,
+  fontFamily: 'Arial, sans-serif',
+  backgroundColor: '#f4f6f8',
 };
 
 const container = {
-  backgroundColor: '#ffffff',
-  margin: '0 auto',
-  width: '100%',
   maxWidth: '600px',
-  border: '1px solid #e0e0e0',
-  borderRadius: '8px',
-  overflow: 'hidden',
+  margin: 'auto',
+  backgroundColor: 'white',
+  borderRadius: '10px',
+  overflow: 'hidden' as const,
+  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
 };
 
 const header = {
-  backgroundColor: '#2e378c',
-  padding: '24px',
+  background: 'linear-gradient(135deg, #0047AB, #4700FF)',
+  padding: '25px',
   textAlign: 'center' as const,
-  backgroundImage: `url('https://firebasestudio-hosting.web.app/subtle-pattern.svg')`,
-  backgroundRepeat: 'repeat',
-  backgroundPosition: 'center',
+  color: 'white',
 };
 
-const logoText = {
-  color: '#ffffff',
-  fontSize: '32px',
-  fontWeight: 'bold',
-  margin: '0 auto',
-  fontFamily: 'Poppins, sans-serif',
+const headerH1 = {
+  margin: 0,
+  fontSize: '28px',
+};
+
+const headerP = {
+  margin: '5px 0 0',
+  fontSize: '16px',
+  opacity: 0.9,
 };
 
 const content = {
-  padding: '30px 40px',
+  padding: '30px',
 };
 
-const heading = {
-  fontSize: '24px',
-  fontWeight: 'bold',
-  color: '#333',
-  textAlign: 'center' as const,
-  marginBottom: '30px',
+const contentH2 = {
+  color: '#0047AB',
+  fontSize: '22px',
+  marginBottom: '10px',
 };
 
 const paragraph = {
   fontSize: '16px',
-  lineHeight: '26px',
-  color: '#555',
+  lineHeight: '1.6',
+  color: '#3c4858',
+};
+
+const button = {
+  display: 'inline-block',
+  background: '#0047AB',
+  color: 'white',
+  padding: '12px 25px',
+  borderRadius: '50px',
+  textDecoration: 'none',
+  fontWeight: 'bold' as const,
+  marginTop: '20px',
 };
 
 const footer = {
-  container: {
-    backgroundColor: '#f4f6f8',
-    color: '#555',
-    padding: '20px 40px',
-    textAlign: 'center' as const,
-  },
-  contactTitle: {
-    color: '#555',
-    fontSize: '14px',
-    margin: '0 0 10px',
-  },
-  link: {
-    color: '#555',
-    textDecoration: 'none',
-    fontSize: '14px',
-    display: 'inline-flex',
-    alignItems: 'center',
-  },
-  linkText: {
-    verticalAlign: 'middle',
-  },
-  icon: {
-    display: 'inline-block',
-    marginRight: '8px',
-    verticalAlign: 'middle',
-  },
-  separator: {
-    display: 'inline-block',
-    margin: '0 10px',
-    color: '#ccc',
-    verticalAlign: 'middle',
-  },
-  social: {
-    display: 'inline-block',
-    margin: '0 8px',
-  },
-  copyright: {
-    color: '#777',
-    fontSize: '12px',
-    textAlign: 'center' as const,
-    paddingTop: '15px',
-    marginTop: '15px',
-  },
+  backgroundColor: '#f4f6f8',
+  padding: '15px',
+  textAlign: 'center' as const,
+  fontSize: '14px',
+  color: '#777',
+};
+
+const socialIcons = {
+  margin: '10px 0',
+};
+
+const socialIconImg = {
+  width: '24px',
+  height: '24px',
+  margin: '0 8px',
+  display: 'inline-block',
 };
