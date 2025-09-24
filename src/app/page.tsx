@@ -283,7 +283,7 @@ export default function HomePage() {
               <div className="flex flex-col gap-4 sm:flex-row">
                  <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
                     <button className="cssbuttons-io-button">
-                        Find your tutor
+                        <span>Find your tutor</span>
                         <div className="icon">
                             <svg
                             height="24"

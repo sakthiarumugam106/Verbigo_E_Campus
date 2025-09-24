@@ -33,6 +33,15 @@
   transform: scale(1.05);
 }
 
+.cssbuttons-io-button > span {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.cssbuttons-io-button:hover > span {
+  opacity: 0;
+}
+
 .cssbuttons-io-button .icon {
   background: hsl(var(--background));
   margin-left: 1em;
