@@ -9,7 +9,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-lg neumorphic-outer",
+      "rounded-lg",
       className
     )}
     {...props}

@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CareersForm } from '@/components/careers-form';
@@ -28,7 +27,7 @@ export default function CareersPage() {
           </h2>
           <div className="mx-auto max-w-3xl space-y-8">
             {jobOpenings.map((job, index) => (
-              <Card key={index} className="transition-shadow duration-300">
+              <Card key={index} className="neumorphic-outer transition-shadow duration-300">
                 <CardHeader>
                   <div className="space-y-1">
                     <CardTitle className="text-2xl text-primary dark:text-primary-foreground">{job.title}</CardTitle>

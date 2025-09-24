@@ -1,4 +1,3 @@
-
 'use client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -59,17 +58,17 @@ export default function AboutUsPage() {
                 </h2>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4">
+                 <Card className="neumorphic-outer p-4 md:p-6 flex flex-col items-center text-center gap-4">
                     <Target className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Mission</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">To empower individuals by making high-quality language education accessible, engaging, and effective through innovative technology.</p>
                 </Card>
-                 <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4">
+                 <Card className="neumorphic-outer p-4 md:p-6 flex flex-col items-center text-center gap-4">
                     <Building className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Vision</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">To become a world leader in language intelligence, creating a global community of confident and proficient communicators.</p>
                 </Card>
-                <Card className="p-4 md:p-6 flex flex-col items-center text-center gap-4 md:col-span-2 lg:col-span-1">
+                <Card className="neumorphic-outer p-4 md:p-6 flex flex-col items-center text-center gap-4 md:col-span-2 lg:col-span-1">
                     <Users className="h-12 w-12 text-primary dark:text-primary-foreground"/>
                     <h3 className="text-xl font-bold text-primary dark:text-primary-foreground">Our Team</h3>
                     <p className="text-muted-foreground text-sm dark:text-foreground/80">A dedicated group of educators, technologists, and innovators committed to your success.</p>

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { assessLevel, LevelAssessmentOutput } from '@/ai/flows/level-assessment-flow';
@@ -333,7 +332,7 @@ export function LevelAssessment() {
 
   if (view === 'showing_report' && report) {
     return (
-        <Card className="border-green-500/50">
+        <Card className="neumorphic-outer border-green-500/50">
             <CardHeader className="text-center">
                 <div className="flex justify-center items-center">
                     <motion.div
@@ -405,7 +404,7 @@ export function LevelAssessment() {
 
   if (view === 'collecting_info') {
       return (
-          <Card>
+          <Card className="neumorphic-outer">
               <CardHeader className="text-center">
                   <CardTitle className="text-2xl font-bold text-primary">One Last Step!</CardTitle>
                   <CardDescription>Your report is ready. Please provide your details to view it and get a copy via email.</CardDescription>

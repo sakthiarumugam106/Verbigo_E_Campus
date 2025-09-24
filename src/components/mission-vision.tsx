@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -53,7 +52,7 @@ export function MissionVision() {
                 {missionVisionItems.map((item, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
                     <div className="p-1 h-full">
-                    <Card className="h-full transition-transform duration-300 ease-in-out hover:-translate-y-1 overflow-hidden flex flex-col">
+                    <Card className="neumorphic-outer h-full transition-transform duration-300 ease-in-out hover:-translate-y-1 overflow-hidden flex flex-col">
                         <div className="bg-secondary p-8 flex justify-center items-center">
                             {item.icon}
                         </div>

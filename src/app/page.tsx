@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -377,7 +376,7 @@ export default function HomePage() {
               {filteredCourses.map((course) => (
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
-                    <Card className="group h-full overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
+                    <Card className="neumorphic-outer group h-full overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
                       <Link href={`/courses/${course.slug}`} onClick={handleLinkClick(`/courses/${course.slug}`)} className="flex flex-col h-full">
                         <div className="overflow-hidden rounded-t-lg">
                           <Image

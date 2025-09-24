@@ -1,4 +1,3 @@
-
 'use client';
 
 import { blogPosts } from '@/lib/blog';

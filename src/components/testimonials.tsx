@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -50,7 +49,7 @@ export function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-4 h-full">
-                  <Card className="flex flex-col justify-between h-full neumorphic-outer-hover">
+                  <Card className="neumorphic-outer flex flex-col justify-between h-full neumorphic-outer-hover">
                     <CardContent className="flex flex-col items-center text-center p-6 gap-4">
                         <Quote className="w-10 h-10 text-primary/20" />
                         <StarRating rating={testimonial.rating} />

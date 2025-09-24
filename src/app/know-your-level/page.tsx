@@ -1,4 +1,3 @@
-
 import { LevelAssessment } from '@/components/level-assessment';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Languages } from 'lucide-react';
@@ -6,7 +5,7 @@ import { Languages } from 'lucide-react';
 export default function KnowYourLevelPage() {
   return (
     <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center bg-background p-4 py-12">
-      <Card className="w-full max-w-3xl z-10">
+      <Card className="neumorphic-outer w-full max-w-3xl z-10">
         <CardHeader className="text-center space-y-4">
             <div className="flex justify-center">
                 <div className="bg-primary/10 p-3 rounded-full">

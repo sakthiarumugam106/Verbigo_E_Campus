@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -56,7 +55,7 @@ export default function BlogPage() {
         {filteredBlogPosts.length > 0 ? (
           <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {filteredBlogPosts.map((post, index) => (
-              <Card key={index} className="group overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
+              <Card key={index} className="neumorphic-outer group overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
                  <Link href={`/blog/${post.slug}`} onClick={handleLinkClick(`/blog/${post.slug}`)} className="flex flex-col h-full">
                   <div className="overflow-hidden rounded-t-lg">
                       <Image
