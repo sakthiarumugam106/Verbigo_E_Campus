@@ -20,6 +20,15 @@ interface DemoRequestEmailProps {
   phoneNumber: string;
 }
 
+const emailStyles = `
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+  }
+`;
+
 const DemoRequestEmail = ({
   name,
   email,
@@ -27,23 +36,13 @@ const DemoRequestEmail = ({
 }: DemoRequestEmailProps) => (
   <Html>
     <Head>
-      <style>
-        {`
-          body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-          }
-        `}
-      </style>
+      <style>{emailStyles}</style>
     </Head>
     <Preview>New Demo Request from {name}</Preview>
     <Body style={main}>
       <Container style={emailContainer}>
         <Section style={header}>
           <Heading as="h1" style={headerH1}>🗓️ New Demo Request</Heading>
-          <Text style={headerP}>A new user has requested a demo.</Text>
         </Section>
         <Section style={bodyContent}>
           <Heading as="h2" style={bodyH2}>User Details</Heading>
@@ -104,12 +103,6 @@ const header = {
 const headerH1 = {
   margin: 0,
   fontSize: '28px',
-};
-
-const headerP = {
-  margin: '5px 0 0',
-  fontSize: '16px',
-  opacity: 0.9,
 };
 
 const bodyContent = {

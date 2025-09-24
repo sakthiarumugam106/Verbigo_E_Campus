@@ -8,8 +8,6 @@ import {
   Preview,
   Section,
   Text,
-  Column,
-  Row,
   Link,
   Img,
 } from '@react-email/components';
@@ -24,6 +22,15 @@ interface ContactFormAdminEmailProps {
   sheetSuccess: boolean;
 }
 
+const emailStyles = `
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+  }
+`;
+
 const ContactFormAdminEmail = ({
   name,
   email,
@@ -33,36 +40,48 @@ const ContactFormAdminEmail = ({
 }: ContactFormAdminEmailProps) => (
   <Html>
     <Head>
-      <style>
-        {`
-          body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-          }
-        `}
-      </style>
+      <style>{emailStyles}</style>
     </Head>
     <Preview>New Contact Inquiry from {name}</Preview>
     <Body style={main}>
       <Container style={emailContainer}>
         <Section style={header}>
-          <Heading as="h1" style={headerH1}>📬 New Contact Form Submission</Heading>
-          <Text style={headerP}>You have a new form submission from your website.</Text>
+          <Heading as="h1" style={headerH1}>
+            📬 New Contact Form Submission
+          </Heading>
         </Section>
         <Section style={bodyContent}>
-          <Heading as="h2" style={bodyH2}>User Details</Heading>
+          <Heading as="h2" style={bodyH2}>
+            User Details
+          </Heading>
           <Text>Hello Admin,</Text>
-          <Text>The following user has submitted their details via the contact form:</Text>
+          <Text>
+            The following user has submitted their details via the contact
+            form:
+          </Text>
           <Section style={userDetails}>
-            <Text style={detailItem}><strong>Name:</strong> {name}</Text>
-            <Text style={detailItem}><strong>Email:</strong> {email}</Text>
-            <Text style={detailItem}><strong>Phone:</strong> {phoneNumber}</Text>
-            <Text style={detailItem}><strong>Message:</strong><br />{message}</Text>
+            <Text style={detailItem}>
+              <strong>Name:</strong> {name}
+            </Text>
+            <Text style={detailItem}>
+              <strong>Email:</strong> {email}
+            </Text>
+            <Text style={detailItem}>
+              <strong>Phone:</strong> {phoneNumber}
+            </Text>
+            <Text style={detailItem}>
+              <strong>Message:</strong>
+              <br />
+              {message}
+            </Text>
             <Text style={detailItem}>
               <strong>Saved to Google Sheet:</strong>
-              <span style={{ color: sheetSuccess ? '#28a745' : '#dc3545', fontWeight: 'bold' }}>
+              <span
+                style={{
+                  color: sheetSuccess ? '#28a745' : '#dc3545',
+                  fontWeight: 'bold',
+                }}
+              >
                 {sheetSuccess ? ' ✔ Yes' : ' ✖ No'}
               </span>
             </Text>
@@ -117,12 +136,6 @@ const header = {
 const headerH1 = {
   margin: 0,
   fontSize: '28px',
-};
-
-const headerP = {
-  margin: '5px 0 0',
-  fontSize: '16px',
-  opacity: 0.9,
 };
 
 const bodyContent = {

@@ -23,6 +23,15 @@ interface CareerApplicationEmailProps {
   resume: string;
 }
 
+const emailStyles = `
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+  }
+`;
+
 const CareerApplicationEmail = ({
   name,
   email,
@@ -33,28 +42,18 @@ const CareerApplicationEmail = ({
 }: CareerApplicationEmailProps) => (
   <Html>
     <Head>
-      <style>
-        {`
-          body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-          }
-        `}
-      </style>
+      <style>{emailStyles}</style>
     </Head>
     <Preview>New Application for Language Tutor from {name}</Preview>
     <Body style={main}>
       <Container style={emailContainer}>
         <Section style={header}>
           <Heading as="h1" style={headerH1}>💼 New Career Application</Heading>
-          <Text style={headerP}>New application for the Language Tutor position.</Text>
         </Section>
         <Section style={bodyContent}>
           <Heading as="h2" style={bodyH2}>Applicant Details</Heading>
           <Text>Hello Admin,</Text>
-          <Text>The following user has submitted an application:</Text>
+          <Text>The following user has submitted an application for the Language Tutor position:</Text>
           <Section style={userDetails}>
             <Text style={detailItem}><strong>Name:</strong> {name}</Text>
             <Text style={detailItem}><strong>Email:</strong> {email}</Text>
@@ -113,12 +112,6 @@ const header = {
 const headerH1 = {
   margin: 0,
   fontSize: '28px',
-};
-
-const headerP = {
-  margin: '5px 0 0',
-  fontSize: '16px',
-  opacity: 0.9,
 };
 
 const bodyContent = {

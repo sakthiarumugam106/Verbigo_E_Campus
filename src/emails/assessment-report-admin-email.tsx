@@ -32,39 +32,38 @@ interface EmailProps {
   userDetails: UserDetails;
 }
 
+const emailStyles = `
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+  }
+`;
+
 const AssessmentReportAdminEmail = ({ report, userDetails }: EmailProps) => (
   <Html>
     <Head>
-      <style>
-        {`
-          body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-          }
-        `}
-      </style>
+      <style>{emailStyles}</style>
     </Head>
     <Preview>New Assessment Report for {userDetails.name}</Preview>
     <Body style={main}>
       <Container style={emailContainer}>
         <Section style={header}>
           <Heading as="h1" style={headerH1}>📊 New Assessment Report</Heading>
-          <Text style={headerP}>A user has completed the level assessment.</Text>
         </Section>
         <Section style={bodyContent}>
           <Heading as="h2" style={bodyH2}>User & Report Details</Heading>
           <Text>Hello Admin,</Text>
           <Text>The following user has completed the English proficiency assessment:</Text>
           
-          <Section style={userDetails}>
+          <Section style={userDetailsSection}>
             <Text style={detailItem}><strong>Name:</strong> {userDetails.name}</Text>
             <Text style={detailItem}><strong>Email:</strong> {userDetails.email}</Text>
             <Text style={detailItem}><strong>Phone:</strong> {userDetails.phone}</Text>
           </Section>
 
-          <Section style={userDetails}>
+          <Section style={userDetailsSection}>
             <Text style={detailItem}><strong>Level:</strong> {report.level} ({report.score}%)</Text>
             <Text style={detailItem}><strong>Summary:</strong> {report.summary}</Text>
             <Text style={detailItem}><strong>Skill Breakdown:</strong></Text>
@@ -126,12 +125,6 @@ const headerH1 = {
   fontSize: '28px',
 };
 
-const headerP = {
-  margin: '5px 0 0',
-  fontSize: '16px',
-  opacity: 0.9,
-};
-
 const bodyContent = {
   padding: '20px',
 };
@@ -142,7 +135,7 @@ const bodyH2 = {
   marginBottom: '10px',
 };
 
-const userDetails = {
+const userDetailsSection = {
   background: '#f9f9f9',
   borderRadius: '8px',
   padding: '15px',
