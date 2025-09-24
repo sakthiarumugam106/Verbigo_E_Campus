@@ -225,7 +225,7 @@ export function ContactForm() {
                     Thank you for reaching out. We will get back to you shortly.
                 </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter>
+            <AlertDialogFooter className="sm:justify-center">
                 <AlertDialogAction onClick={handleConfirmation}>OK</AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>
