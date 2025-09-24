@@ -304,7 +304,7 @@ export default function HomePage() {
                     <button className="sparkle-button default-animated" type="button">
                         <div className="dots_border"></div>
                         <span className="sparkle">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="sparkle_path">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="sparkle_path">
                                 <path
                                 className="path"
                                 strokeLinejoin="round"
