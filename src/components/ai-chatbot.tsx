@@ -1,4 +1,3 @@
-
 'use client';
 
 import { grammarCoach } from '@/ai/flows/grammar-coach-flow';
@@ -252,17 +251,11 @@ export function AiChatbot() {
                 <X className="h-5 w-5" />
             </Button>
           </CardHeader>
-           <CardContent className="relative p-0 flex-1 overflow-hidden bg-primary/5 neumorphic-inner">
+           <CardContent className="relative p-0 flex-1 overflow-hidden bg-secondary/50">
             <div
-              className="absolute inset-0 bg-cover bg-center dark:hidden"
+              className="absolute inset-0 bg-repeat opacity-70"
               style={{
-                backgroundImage: "url('/images/bg_light.jpg')",
-              }}
-            />
-             <div
-              className="absolute inset-0 bg-cover bg-center hidden dark:block"
-              style={{
-                backgroundImage: "url('/images/bg_dark.jpg')",
+                backgroundImage: "url('/images/chat-bg.png')",
               }}
             />
              <ScrollArea className="h-full" ref={scrollAreaRef}>
