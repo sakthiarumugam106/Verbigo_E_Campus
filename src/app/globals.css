@@ -33,7 +33,7 @@
     --shadow-light: #ffffff;
     --shadow-dark: hsl(220 20% 75%);
     --shadow-distance: 6px;
-    --chat-bg-image: url('/light-chat-bg.png');
+    --chat-bg-image: url('/images/bg_light.jpg');
     --chat-bg-color: hsla(var(--background), 0.7);
   }
 
@@ -66,7 +66,7 @@
     --shadow-light: hsl(222.2 44% 18%);
     --shadow-dark: hsl(222.2 44% 8%);
     --shadow-distance: 6px;
-    --chat-bg-image: url('/dark-chat-bg.png');
+    --chat-bg-image: url('/images/bg_dark.jpg');
     --chat-bg-color: hsla(var(--background), 0.7);
   }
 }
