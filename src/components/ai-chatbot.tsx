@@ -290,7 +290,7 @@ export function AiChatbot() {
                  </div>
              </ScrollArea>
           </CardContent>
-          <CardFooter className="p-4 border-t bg-background">
+          <CardFooter className="p-4 border-t bg-muted">
             <form onSubmit={handleSubmit} className="flex w-full items-center gap-2">
               <Input
                 value={input}
