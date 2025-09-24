@@ -92,17 +92,17 @@
 .sparkle-button .sparkle {
   position: relative;
   z-index: 10;
-  width: 1.5rem;
+  width: 1.25rem;
 }
 
 .sparkle-button .sparkle .path {
-  fill: hsl(var(--primary));
-  stroke: hsl(var(--primary));
+  fill: white;
+  stroke: white;
 }
 
 .dark .sparkle-button .sparkle .path {
-  fill: hsl(var(--primary-foreground));
-  stroke: hsl(var(--primary-foreground));
+  fill: white;
+  stroke: white;
 }
 
 
