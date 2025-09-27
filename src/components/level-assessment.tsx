@@ -159,7 +159,7 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
             </div>
         </div>
       </div>
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button type="submit" className="w-full" disabled={isSubmitting} useNeumorphic={false}>
           {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending Report...</> : 'View My Report'}
       </Button>
     </form>
@@ -379,8 +379,8 @@ export function LevelAssessment() {
                 </div>
             </CardContent>
             <CardFooter className="flex-col sm:flex-row gap-4 pt-6">
-                <Button onClick={handleStart} variant="outline" className="w-full sm:w-auto">Start Over</Button>
-                <Button onClick={handleDiscussWithTutor} className="w-full sm:w-auto bg-green-600 hover:bg-green-700">
+                <Button onClick={handleStart} variant="outline" className="w-full sm:w-auto" useNeumorphic={false}>Start Over</Button>
+                <Button onClick={handleDiscussWithTutor} className="w-full sm:w-auto bg-green-600 hover:bg-green-700" useNeumorphic={false}>
                     <WhatsAppButtonIcon className="h-5 w-5"/> Discuss with Tutor
                 </Button>
             </CardFooter>
@@ -443,7 +443,7 @@ export function LevelAssessment() {
              {answerError && <p className="text-destructive text-sm">{answerError}</p>}
              {error && <p className="text-destructive text-sm">{error}</p>}
             <div className="flex justify-end">
-              <Button type="submit" disabled={isPending || !currentAnswer.trim() || wordCount < MIN_WORDS}>
+              <Button type="submit" disabled={isPending || !currentAnswer.trim() || wordCount < MIN_WORDS} useNeumorphic={false}>
                 {isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -461,7 +461,7 @@ export function LevelAssessment() {
 
   return (
       <div className="text-center">
-        <Button onClick={handleStart} size="lg">
+        <Button onClick={handleStart} size="lg" useNeumorphic={false}>
           <GraduationCap className="mr-2 h-5 w-5" /> Start Assessment
         </Button>
       </div>

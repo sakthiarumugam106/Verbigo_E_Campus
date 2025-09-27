@@ -30,7 +30,7 @@ function SubmitButton({ disabled }: { disabled?: boolean }) {
   const isDisabled = pending || disabled;
 
   return (
-    <Button type="submit" className="w-full" disabled={isDisabled}>
+    <Button type="submit" className="w-full" disabled={isDisabled} useNeumorphic={false}>
       {isDisabled ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />

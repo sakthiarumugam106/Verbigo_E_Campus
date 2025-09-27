@@ -296,7 +296,7 @@ export function FindTutorForm() {
         </RadioGroup>
       </div>
       <div className="md:col-span-2 text-center mt-4">
-        <Button type="submit" className="w-full max-w-xs" size="lg" disabled={isPending}>
+        <Button type="submit" className="w-full max-w-xs" size="lg" disabled={isPending} useNeumorphic={false}>
             {isPending ? (
                 <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

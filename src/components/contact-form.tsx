@@ -184,7 +184,7 @@ export function ContactForm() {
                 <Textarea id="message" name="message" placeholder="Your Message..." value={form.message} onChange={handleInputChange} required className="min-h-[120px]" />
                 {errors.message && <p className="text-destructive text-xs">{errors.message[0]}</p>}
             </div>
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
+            <Button type="submit" className="w-full" disabled={isSubmitting} useNeumorphic={false}>
                 {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/>Submitting...</> : 'Submit'}
             </Button>
             </form>

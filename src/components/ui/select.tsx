@@ -16,7 +16,7 @@ const SelectValue = SelectPrimitive.Value
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & { useNeumorphic?: boolean }
->(({ className, children, useNeumorphic = false, ...props }, ref) => (
+>(({ className, children, useNeumorphic = true, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(

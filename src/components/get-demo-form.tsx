@@ -31,7 +31,7 @@ type CountryCode = keyof typeof countryCodes;
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" className="w-full" disabled={pending}>
+    <Button type="submit" className="w-full" disabled={pending} useNeumorphic={false}>
       {pending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/>Submitting...</> : 'Submit'}
     </Button>
   );
