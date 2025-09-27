@@ -43,7 +43,6 @@ export async function assessLevel(input: LevelAssessmentInput): Promise<LevelAss
 
 const prompt = ai.definePrompt({
   name: 'levelAssessmentPrompt',
-  model: googleAI.model('gemini-1.5-flash'),
   input: {schema: LevelAssessmentInputSchema},
   output: {schema: LevelAssessmentOutputSchema},
   prompt: `You are an expert English language tutor conducting a proficiency assessment. Your goal is to determine if a user is a Beginner, Intermediate, or Advanced speaker by asking a series of 3 questions.
@@ -80,7 +79,7 @@ const levelAssessmentFlow = ai.defineFlow(
     outputSchema: LevelAssessmentOutputSchema,
   },
   async (input) => {
-    const {output} = await prompt(input);
+    const {output} = await prompt(input, { model: 'gemini-1.5-flash' });
     return output!;
   }
 );

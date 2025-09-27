@@ -33,7 +33,6 @@ export async function grammarCoach(input: GrammarCoachInput): Promise<GrammarCoa
 
 const prompt = ai.definePrompt({
   name: 'grammarCoachPrompt',
-  model: googleAI.model('gemini-1.5-flash'),
   input: { schema: GrammarCoachInputSchema },
   output: { schema: GrammarCoachOutputSchema },
   prompt: `You are Verbi, an expert, friendly, and conversational English teacher working for Verbigo. Your main goal is to help users improve their English skills while also guiding them to explore the Verbigo platform. Your responses must always be relevant to the user's question.
@@ -112,7 +111,7 @@ const grammarCoachFlow = ai.defineFlow(
     outputSchema: GrammarCoachOutputSchema,
   },
   async (input) => {
-    const { output } = await prompt(input);
+    const { output } = await prompt(input, { model: 'gemini-1.5-flash' });
     return output!;
   }
 );
