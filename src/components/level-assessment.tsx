@@ -109,35 +109,29 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
-          <div className="neumorphic-inner rounded-md">
-            <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSubmitting} />
-          </div>
+          <Input id="name" name="name" placeholder="Jane Doe" required disabled={isSubmitting} />
       </div>
       <div className="space-y-2">
           <Label htmlFor="email">Email Address</Label>
-          <div className="neumorphic-inner rounded-md">
-            <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSubmitting} />
-          </div>
+          <Input id="email" name="email" type="email" placeholder="jane.doe@example.com" required disabled={isSubmitting} />
       </div>
       <div className="space-y-2">
         <Label htmlFor="phone">Phone Number</Label>
         <div className="flex items-center">
-            <div className="neumorphic-inner rounded-md rounded-r-none w-[130px]">
-                <Select value={countryCode} onValueChange={handleCountryCodeChange} disabled={isSubmitting}>
-                    <SelectTrigger useNeumorphic={false} className="w-full rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
-                        <SelectValue>
-                          {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
-                        </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                        {Object.entries(countryCodes).map(([code, {label}]) => (
-                            <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
-                        ))}
-                        <SelectItem value="Other">Other</SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
-            <div className="neumorphic-inner rounded-md rounded-l-none w-full flex">
+            <Select value={countryCode} onValueChange={handleCountryCodeChange} disabled={isSubmitting}>
+                <SelectTrigger useNeumorphic={false} className="w-[130px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r">
+                    <SelectValue>
+                      {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                    </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                    {Object.entries(countryCodes).map(([code, {label}]) => (
+                        <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                    ))}
+                    <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+            </Select>
+            <div className="flex w-full">
                 {countryCode === 'Other' && (
                     <Input
                         id="otherCountryCode"
@@ -145,7 +139,7 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
                         placeholder="Code"
                         value={otherCountryCode}
                         onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                        className="rounded-l-none border-l-0 w-[80px]"
+                        className="rounded-none border-l-0 w-[80px]"
                         required
                         disabled={isSubmitting}
                       />
@@ -430,18 +424,16 @@ export function LevelAssessment() {
                  <MessageSquare className="h-5 w-5 text-primary dark:text-primary-foreground mt-1 flex-shrink-0" />
                 <span>{currentQuestion}</span>
               </Label>
-              <div className="neumorphic-inner rounded-md">
-                <Input
-                  id="answer"
-                  name="answer"
-                  value={currentAnswer}
-                  onChange={handleAnswerChange}
-                  placeholder="Type your answer here..."
-                  required
-                  disabled={isPending}
-                  autoComplete="off"
-                />
-              </div>
+              <Input
+                id="answer"
+                name="answer"
+                value={currentAnswer}
+                onChange={handleAnswerChange}
+                placeholder="Type your answer here..."
+                required
+                disabled={isPending}
+                autoComplete="off"
+              />
                <div className="text-xs text-right text-muted-foreground pr-1">
                 <span className={cn(wordCount < MIN_WORDS ? "text-destructive" : "text-green-600")}>
                     {wordCount} / {MIN_WORDS} words

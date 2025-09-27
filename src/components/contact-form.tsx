@@ -128,50 +128,43 @@ export function ContactForm() {
             <form onSubmit={handleSubmit} className="grid gap-4">
             <div className="grid gap-2 text-left">
                 <Label htmlFor="name">Name</Label>
-                <div className="neumorphic-inner rounded-md">
                 <Input id="name" name="name" placeholder="Your Name" value={form.name} onChange={handleInputChange} required />
-                </div>
                 {errors.name && <p className="text-destructive text-xs">{errors.name[0]}</p>}
             </div>
             <div className="grid gap-2 text-left">
                 <Label htmlFor="email">Email</Label>
-                <div className="neumorphic-inner rounded-md">
                 <Input id="email" type="email" name="email" placeholder="you@example.com" value={form.email} onChange={handleInputChange} required />
-                </div>
                 {errors.email && <p className="text-destructive text-xs">{errors.email[0]}</p>}
             </div>
             <div className="grid gap-2 text-left">
                 <Label htmlFor="phoneNumber">Phone Number</Label>
                 <div className="flex items-center">
-                    <div className="neumorphic-inner rounded-md rounded-r-none w-[130px]">
-                      <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-                          <SelectTrigger useNeumorphic={false} className="w-full rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
-                              <SelectValue>
-                                {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
-                              </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent>
-                              {Object.entries(countryCodes).map(([code, {label}]) => (
-                                  <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
-                              ))}
-                              <SelectItem value="Other">Other</SelectItem>
-                          </SelectContent>
-                      </Select>
-                    </div>
+                    <Select value={countryCode} onValueChange={handleCountryCodeChange}>
+                        <SelectTrigger useNeumorphic={false} className="w-[130px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r">
+                            <SelectValue>
+                              {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                            </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.entries(countryCodes).map(([code, {label}]) => (
+                                <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                            ))}
+                            <SelectItem value="Other">Other</SelectItem>
+                        </SelectContent>
+                    </Select>
                      {countryCode === 'Other' && (
-                        <div className="neumorphic-inner rounded-md rounded-l-none w-[90px] border-l">
+                        <div className="border border-input border-l-0">
                             <Input
                             id="otherCountryCode"
                             name="otherCountryCode"
                             placeholder="Code"
                             value={otherCountryCode}
                             onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                            className="rounded-l-none border-l-0"
+                            className="rounded-none w-[80px]"
                             required
                             />
                         </div>
                      )}
-                    <div className="neumorphic-inner rounded-md rounded-l-none w-full border-l">
                       <Input 
                         id="phoneNumber"
                         type="tel" 
@@ -183,15 +176,12 @@ export function ContactForm() {
                         className="rounded-l-none"
                         required 
                       />
-                    </div>
                 </div>
                 {errors.phoneNumber && <p className="text-destructive text-xs">{errors.phoneNumber[0]}</p>}
             </div>
             <div className="grid gap-2 text-left">
                 <Label htmlFor="message">Message</Label>
-                 <div className="neumorphic-inner rounded-md">
-                    <Textarea id="message" name="message" placeholder="Your Message..." value={form.message} onChange={handleInputChange} required className="min-h-[120px]" />
-                 </div>
+                <Textarea id="message" name="message" placeholder="Your Message..." value={form.message} onChange={handleInputChange} required className="min-h-[120px]" />
                 {errors.message && <p className="text-destructive text-xs">{errors.message[0]}</p>}
             </div>
             <Button type="submit" className="w-full" disabled={isSubmitting}>

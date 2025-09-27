@@ -177,22 +177,17 @@ export function FindTutorForm() {
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-2">
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <div className="neumorphic-inner rounded-md">
-          <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name} />
-        </div>
+        <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name} />
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <div className="neumorphic-inner rounded-md">
-          <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email} />
-        </div>
+        <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email} />
       </div>
       <div className="space-y-2">
         <Label htmlFor="whatsapp">WhatsApp Number</Label>
         <div className="flex items-center">
-          <div className="neumorphic-inner rounded-md rounded-r-none w-[130px]">
             <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-                <SelectTrigger useNeumorphic={false} className="w-full rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
+                <SelectTrigger useNeumorphic={false} className="w-[130px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r">
                     <SelectValue>
                       {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
                     </SelectValue>
@@ -204,50 +199,49 @@ export function FindTutorForm() {
                     <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
             </Select>
-          </div>
-            {countryCode === 'Other' ? (
-              <div className="neumorphic-inner rounded-md rounded-l-none w-full flex">
-                <Input
-                  id="otherCountryCode"
-                  name="otherCountryCode"
-                  placeholder="Code"
-                  value={otherCountryCode}
-                  onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                  className="rounded-l-none border-l-0 w-[80px]"
-                  required
-                />
-                <Input 
-                  id="whatsapp"
-                  type="tel" 
-                  name="whatsapp"
-                  placeholder="1234567890"
-                  value={formData.whatsapp} 
-                  onChange={handlePhoneNumberChange} 
-                  className="rounded-l-none"
-                  required 
-                />
-              </div>
-            ) : (
-              <div className="neumorphic-inner rounded-md rounded-l-none w-full">
-                <Input 
-                  id="whatsapp"
-                  type="tel" 
-                  name="whatsapp"
-                  placeholder="1234567890"
-                  value={formData.whatsapp} 
-                  onChange={handlePhoneNumberChange} 
-                  maxLength={phoneMaxLength}
-                  className="rounded-l-none"
-                  required 
-                />
-              </div>
-            )}
+            <div className="flex w-full">
+                {countryCode === 'Other' ? (
+                  <>
+                    <Input
+                      id="otherCountryCode"
+                      name="otherCountryCode"
+                      placeholder="Code"
+                      value={otherCountryCode}
+                      onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                      className="rounded-none border-l-0 w-[80px]"
+                      required
+                    />
+                    <Input 
+                      id="whatsapp"
+                      type="tel" 
+                      name="whatsapp"
+                      placeholder="1234567890"
+                      value={formData.whatsapp} 
+                      onChange={handlePhoneNumberChange} 
+                      className="rounded-l-none border-l-0"
+                      required 
+                    />
+                  </>
+                ) : (
+                    <Input 
+                      id="whatsapp"
+                      type="tel" 
+                      name="whatsapp"
+                      placeholder="1234567890"
+                      value={formData.whatsapp} 
+                      onChange={handlePhoneNumberChange} 
+                      maxLength={phoneMaxLength}
+                      className="rounded-l-none"
+                      required 
+                    />
+                )}
+            </div>
         </div>
       </div>
        <div className="space-y-2">
         <Label htmlFor="state">State</Label>
         <Select name="state" required onValueChange={(value) => handleChange('state', value)} value={formData.state}>
-          <SelectTrigger>
+          <SelectTrigger useNeumorphic={false}>
             <SelectValue placeholder="Select your state" />
           </SelectTrigger>
           <SelectContent>
@@ -260,7 +254,7 @@ export function FindTutorForm() {
       <div className="space-y-2">
         <Label htmlFor="language">Native Language</Label>
         <Select name="language" required disabled={!formData.state} onValueChange={handleLanguageChange} value={formData.language}>
-          <SelectTrigger>
+          <SelectTrigger useNeumorphic={false}>
             <SelectValue placeholder={formData.state ? "Select your language" : "Select a state first"} />
           </SelectTrigger>
           <SelectContent>
@@ -274,8 +268,7 @@ export function FindTutorForm() {
        {formData.language === 'Other' && (
         <div className="space-y-2">
             <Label htmlFor="otherLanguage">Please specify your language</Label>
-            <div className="neumorphic-inner rounded-md">
-              <Input
+            <Input
                 id="otherLanguage"
                 name="otherLanguage"
                 placeholder="Your language"
@@ -283,7 +276,6 @@ export function FindTutorForm() {
                 value={otherLanguage}
                 onChange={(e) => setOtherLanguage(e.target.value)}
               />
-            </div>
         </div>
         )}
       <div className="space-y-2 md:col-span-2">

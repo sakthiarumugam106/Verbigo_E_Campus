@@ -210,37 +210,29 @@ export function CareersForm() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                     <Label htmlFor="name">Full Name</Label>
-                    <div className="neumorphic-inner rounded-md">
-                        <Input id="name" name="name" placeholder="Jane Austen" required />
-                    </div>
+                    <Input id="name" name="name" placeholder="Jane Austen" required />
                     {state.errors?.name && <p className="text-sm text-destructive mt-1">{state.errors.name[0]}</p>}
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="email">Email Address</Label>
-                    <div className="neumorphic-inner rounded-md">
-                        <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required />
-                    </div>
+                    <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required />
                     {state.errors?.email && <p className="text-sm text-destructive mt-1">{state.errors.email[0]}</p>}
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="age">Age</Label>
-                    <div className="neumorphic-inner rounded-md">
-                        <Input id="age" name="age" type="number" placeholder="30" required />
-                    </div>
+                    <Input id="age" name="age" type="number" placeholder="30" required />
                     {state.errors?.age && <p className="text-sm text-destructive mt-1">{state.errors.age[0]}</p>}
                 </div>
                  <div className="space-y-2">
                     <Label htmlFor="language">Language you specialize in</Label>
-                    <div className="neumorphic-inner rounded-md">
-                        <Input id="language" name="language" placeholder="e.g., Spanish, French" required />
-                    </div>
+                    <Input id="language" name="language" placeholder="e.g., Spanish, French" required />
                     {state.errors?.language && <p className="text-sm text-destructive mt-1">{state.errors.language[0]}</p>}
                 </div>
                  <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="education">Highest Education Level</Label>
                      <input type="hidden" name="education" value={educationValue} />
                     <Select name="education-select" required onValueChange={setEducationValue} value={educationValue}>
-                        <SelectTrigger>
+                        <SelectTrigger useNeumorphic={false}>
                             <SelectValue placeholder="Select your education level" />
                         </SelectTrigger>
                         <SelectContent>
@@ -271,9 +263,7 @@ export function CareersForm() {
                 {resumeOption === 'upload' && (
                     <div className="space-y-2 md:col-span-2">
                         <Label htmlFor="resume-file">Upload Resume (PDF, DOCX, 5MB Max)</Label>
-                        <div className="neumorphic-inner rounded-md">
-                            <Input id="resume-file" name="resume-file" type="file" required accept=".pdf,.doc,.docx" onChange={handleFileChange} ref={resumeInputRef} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 flex items-center" />
-                        </div>
+                        <Input id="resume-file" name="resume-file" type="file" required accept=".pdf,.doc,.docx" onChange={handleFileChange} ref={resumeInputRef} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 flex items-center" />
                         {resumeFile && !isUploading && (
                             <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
                                 <File className="h-4 w-4" />
@@ -295,9 +285,7 @@ export function CareersForm() {
                 {resumeOption === 'link' && (
                     <div className="space-y-2 md:col-span-2">
                         <Label htmlFor="resume-link">Resume Link</Label>
-                        <div className="neumorphic-inner rounded-md">
-                            <Input id="resume-link" name="resume-link" type="url" placeholder="https://linkedin.com/in/..." value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} required />
-                        </div>
+                        <Input id="resume-link" name="resume-link" type="url" placeholder="https://linkedin.com/in/..." value={resumeLink} onChange={(e) => setResumeLink(e.target.value)} required />
                     </div>
                 )}
 

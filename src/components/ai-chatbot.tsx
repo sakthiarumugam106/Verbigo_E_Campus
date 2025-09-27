@@ -249,7 +249,7 @@ export function AiChatbot() {
                     <VerbigoTutorLogo width={32} height={32} />
                </div>
                <div className="space-y-1">
-                <CardTitle className="text-lg">Verbi Teacher</CardTitle>
+                <CardTitle className="text-lg">Verbi</CardTitle>
                 <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
                </div>
             </div>
@@ -302,15 +302,13 @@ export function AiChatbot() {
           </CardContent>
           <CardFooter className="p-4 border-t bg-muted">
             <form onSubmit={handleSubmit} className="flex w-full items-center gap-2">
-              <div className="neumorphic-inner rounded-md w-full">
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask me anything..."
-                  autoComplete="off"
-                  disabled={isPending}
-                />
-              </div>
+              <Input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask me anything..."
+                autoComplete="off"
+                disabled={isPending}
+              />
               <Button type="button" size="icon" variant="outline" onClick={handleMicClick} disabled={isPending}>
                 {isRecording ? <MicOff className="h-4 w-4 text-destructive" /> : <Mic className="h-4 w-4" />}
               </Button>

@@ -103,24 +103,19 @@ export function GetDemoForm() {
       <input type="hidden" name="phoneNumber" />
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <div className="neumorphic-inner rounded-md">
-          <Input id="name" name="name" placeholder="Jane Austen" required />
-        </div>
+        <Input id="name" name="name" placeholder="Jane Austen" required />
         {state.errors?.name && <p className="text-sm text-destructive mt-1">{state.errors.name[0]}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <div className="neumorphic-inner rounded-md">
-          <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required />
-        </div>
+        <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required />
         {state.errors?.email && <p className="text-sm text-destructive mt-1">{state.errors.email[0]}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="phoneNumberInput">Phone Number</Label>
         <div className="flex items-center">
-          <div className="neumorphic-inner rounded-md rounded-r-none w-[130px]">
             <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-              <SelectTrigger useNeumorphic={false} className="w-full rounded-r-none focus:ring-0 focus:ring-offset-0 border-r bg-transparent shadow-none hover:bg-transparent">
+              <SelectTrigger useNeumorphic={false} className="w-[130px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r">
                   <SelectValue>
                     {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
                   </SelectValue>
@@ -132,8 +127,7 @@ export function GetDemoForm() {
                   <SelectItem value="Other">Other</SelectItem>
               </SelectContent>
             </Select>
-          </div>
-          <div className="neumorphic-inner rounded-md rounded-l-none w-full flex">
+          <div className="flex w-full">
             {countryCode === 'Other' && (
                 <Input
                   id="otherCountryCode"
@@ -141,7 +135,7 @@ export function GetDemoForm() {
                   placeholder="Code"
                   value={otherCountryCode}
                   onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                  className="rounded-l-none border-l-0 w-[80px]"
+                  className="rounded-none border-l-0 w-[80px]"
                   required
                 />
             )}
