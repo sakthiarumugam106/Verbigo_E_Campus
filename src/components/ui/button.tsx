@@ -69,7 +69,7 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, useNeumorphic = true, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, useNeumorphic = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     const variants = useNeumorphic ? neumorphicButtonVariants : buttonVariants;
     return (
