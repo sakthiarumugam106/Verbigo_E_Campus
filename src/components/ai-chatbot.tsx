@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { Loader2, Mic, MicOff, Send, X } from 'lucide-react';
+import { Loader2, Mic, MicOff, Send, Trash2, X } from 'lucide-react';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { VerbigoTutorLogo } from './verbigo-tutor-logo';
@@ -151,6 +151,11 @@ export function AiChatbot() {
       setTimeout(() => setIsOpening(false), 500); 
     }
   };
+  
+  const handleClearHistory = () => {
+    setHistory([initialMessage]);
+    localStorage.removeItem(CHAT_STORAGE_KEY);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -248,9 +253,14 @@ export function AiChatbot() {
                 <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
                </div>
             </div>
-            <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80 z-10" onClick={handleToggle}>
-                <X className="h-5 w-5" />
-            </Button>
+            <div className="flex items-center gap-1 z-10">
+              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleClearHistory} title="Clear chat history">
+                  <Trash2 className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleToggle}>
+                  <X className="h-5 w-5" />
+              </Button>
+            </div>
           </CardHeader>
            <CardContent 
               className="relative p-0 flex-1 chat-background overflow-y-auto"
@@ -329,5 +339,3 @@ export function AiChatbot() {
     </>
   );
 }
-
-    
