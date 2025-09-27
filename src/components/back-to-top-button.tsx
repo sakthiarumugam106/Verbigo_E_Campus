@@ -66,7 +66,7 @@ export function BackToTopButton() {
       size="icon"
       onClick={scrollToTop}
       className={cn(
-        'fixed bottom-48 right-6 z-50 h-12 w-12 rounded-full shadow-lg transition-all duration-300 md:bottom-48',
+        'fixed bottom-48 right-6 z-40 h-12 w-12 rounded-full shadow-lg transition-all duration-300 md:bottom-48',
         isButtonVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
       )}
       aria-label="Go to top"
