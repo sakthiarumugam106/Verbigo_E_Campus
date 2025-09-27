@@ -23,7 +23,7 @@ const CHAT_STORAGE_KEY = 'verbigo-chat-history';
 
 const initialMessage: Message = {
     role: 'model',
-    content: "Hi there! 👋\n\nI'm Verbi, your friendly English teacher from Verbigo.\n\nHow can I help you improve your English today?\n\nOr perhaps you have a question about our amazing courses? 😊"
+    content: "Hi there! 👋\n\nI'm Verbi, your friendly English teacher from Verbigo.\n\n**Tip of the Day:** Try to learn one new word and use it in three different sentences. This helps build your vocabulary and understanding.\n\nHow can I help you improve your English today?"
 };
 
 export function AiChatbot() {

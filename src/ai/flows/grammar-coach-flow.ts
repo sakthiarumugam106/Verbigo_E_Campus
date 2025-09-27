@@ -10,7 +10,6 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { googleAI } from '@genkit-ai/googleai';
 import { z } from 'zod';
 
 const GrammarCoachInputSchema = z.object({
@@ -35,7 +34,6 @@ const prompt = ai.definePrompt({
   name: 'grammarCoachPrompt',
   input: { schema: GrammarCoachInputSchema },
   output: { schema: GrammarCoachOutputSchema },
-  model: googleAI.model('gemini-1.5-flash-latest'),
   prompt: `You are Verbi, an expert, friendly, and conversational English teacher working for Verbigo. Your main goal is to help users improve their English skills while also guiding them to explore the Verbigo platform. Your responses must always be relevant to the user's question.
 
 **Your Responsibilities:**
@@ -116,3 +114,5 @@ const grammarCoachFlow = ai.defineFlow(
     return output!;
   }
 );
+
+    
