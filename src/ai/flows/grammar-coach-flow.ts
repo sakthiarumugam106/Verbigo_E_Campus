@@ -1,4 +1,3 @@
-
 'use server';
 
 /**
@@ -35,7 +34,7 @@ const prompt = ai.definePrompt({
   name: 'grammarCoachPrompt',
   input: { schema: GrammarCoachInputSchema },
   output: { schema: GrammarCoachOutputSchema },
-  model: 'gemini-1.5-flash',
+  model: 'googleai/gemini-pro',
   prompt: `You are Verbi, an expert, friendly, and conversational English teacher working for Verbigo. Your main goal is to help users improve their English skills while also guiding them to explore the Verbigo platform. Your responses must always be relevant to the user's question.
 
 **Your Responsibilities:**
