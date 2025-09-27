@@ -63,7 +63,7 @@ const textToSpeechFlow = ai.defineFlow(
   },
   async (query) => {
     const { media } = await ai.generate({
-      model: googleAI.model('gemini-1.5-flash-preview-tts'),
+      model: googleAI.model('text-to-speech-2'),
       config: {
         responseModalities: ['AUDIO'],
         speechConfig: {
