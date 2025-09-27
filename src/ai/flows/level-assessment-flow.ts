@@ -45,7 +45,7 @@ const prompt = ai.definePrompt({
   name: 'levelAssessmentPrompt',
   input: {schema: LevelAssessmentInputSchema},
   output: {schema: LevelAssessmentOutputSchema},
-  model: 'gemini-1.5-flash',
+  model: 'gemini-2.0-flash',
   prompt: `You are an expert English language tutor conducting a proficiency assessment. Your goal is to determine if a user is a Beginner, Intermediate, or Advanced speaker by asking a series of 3 questions.
 
 You will be given a list of previous questions and the user's answers.
