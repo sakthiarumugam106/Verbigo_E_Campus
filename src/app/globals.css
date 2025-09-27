@@ -101,7 +101,6 @@
         border-radius: 9999px;
         padding: 0.25rem;
         overflow: hidden;
-        @apply neumorphic-inner;
     }
 
     .course-toggle-bg {
@@ -155,26 +154,6 @@
     background-color: hsl(var(--background));
     box-shadow: none;
   }
-  .neumorphic-outer {
-    background: hsl(var(--background));
-    box-shadow: var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
-                calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
-    @apply transition-all duration-200;
-  }
-  .neumorphic-outer-hover:hover {
-     box-shadow: calc(var(--shadow-distance) / 2) calc(var(--shadow-distance) / 2) calc(var(--shadow-distance)) var(--shadow-dark),
-                calc(var(--shadow-distance) / -2) calc(var(--shadow-distance) / -2) calc(var(--shadow-distance)) var(--light);
-  }
-  .neumorphic-inner {
-    background: hsl(var(--background));
-    box-shadow: inset var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
-                inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
-    @apply transition-all duration-200;
-  }
-  .neumorphic-pressed {
-     box-shadow: inset calc(var(--shadow-distance) / 2) calc(var(--shadow-distance) / 2) calc(var(--shadow-distance)) var(--shadow-dark),
-                inset calc(var(--shadow-distance) / -2) calc(var(--shadow-distance) / -2) calc(var(--shadow-distance)) var(--light);
-  }
   .animated-glow {
     position: absolute;
     width: calc(100% + 4px);
@@ -203,5 +182,55 @@
     to {
       transform: rotate(360deg);
     }
+  }
+
+  /* Theme Toggle Animations */
+  .theme-toggle-button .sun-and-cloud {
+    transform-origin: center center;
+    transition: transform 0.5s ease;
+  }
+  .theme-toggle-button .moon-and-stars {
+    transform-origin: center center;
+    transition: transform 0.5s ease;
+  }
+
+  .theme-toggle-button .cloud-front,
+  .theme-toggle-button .cloud-back {
+    transition: transform 0.4s ease-in-out;
+    transform: translateX(120%);
+  }
+
+  .theme-toggle-button:hover .cloud-front {
+    transform: translateX(50%);
+  }
+  .theme-toggle-button:hover .cloud-back {
+    transform: translateX(0);
+  }
+
+  .theme-toggle-button .star {
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  .theme-toggle-button:hover .star {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .theme-toggle-button:hover .star:nth-child(1) {
+    animation: sparkle 1.5s infinite 0.2s;
+  }
+  .theme-toggle-button:hover .star:nth-child(2) {
+    animation: sparkle 1.5s infinite 0.5s;
+  }
+  .theme-toggle-button:hover .star:nth-child(3) {
+    animation: sparkle 1.5s infinite 0.8s;
+  }
+
+  @keyframes sparkle {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
   }
 }
