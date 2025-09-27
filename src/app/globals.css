@@ -161,9 +161,6 @@
 
 
 @layer utilities {
-  .theme-toggle-button:hover {
-    @apply bg-primary text-primary-foreground;
-  }
   .chat-background {
     background-image: var(--chat-bg-image);
     background-color: var(--chat-bg-color);
