@@ -9,7 +9,7 @@
  */
 
 import {ai} from '@/ai/genkit';
-import { googleAI } from '@genkit-ai/googleai';
+import { googleAI } from '@gen-kit-ai/googleai';
 import {z} from 'genkit';
 
 const LevelAssessmentInputSchema = z.object({
