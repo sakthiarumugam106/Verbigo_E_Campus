@@ -1,3 +1,4 @@
+
 'use client';
 
 import { courses } from '@/lib/courses';
@@ -64,7 +65,7 @@ export default function CoursePage(props: { params: { slug: string } }) {
               ))}
             </ul>
             <div className="flex flex-col gap-4 min-[400px]:flex-row pt-4">
-              <Button asChild size="lg" className="bg-green-600 text-white hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+              <Button asChild size="lg" className="bg-green-600 text-white hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300" useNeumorphic={false}>
                 <Link href={whatsapp.getCourseInquiryUrl(course.title)} target="_blank" rel="noopener noreferrer" className="group">
                   <WhatsAppButtonIcon />
                   Enroll via WhatsApp
