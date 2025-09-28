@@ -1,21 +1,33 @@
+
 .toggle {
-  background-color: hsl(var(--background));
+  background-color: hsl(var(--card));
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: var(--radius);
   display: grid;
   place-items: center;
   cursor: pointer;
-  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
   line-height: 1;
-  border: 1px solid hsl(var(--border));
-  color: hsl(var(--foreground));
+  transition: box-shadow 0.2s ease-out;
+  box-shadow: 
+    var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+    calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
 }
 
-.dark .toggle {
-    background-color: hsl(var(--secondary));
-    border-color: hsl(var(--border));
+.toggle:hover {
+  box-shadow: 
+    var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+    calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light),
+    inset var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+    inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
 }
+
+.toggle:active {
+  box-shadow: 
+    inset var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+    inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
+}
+
 
 .input {
   display: none;
@@ -26,6 +38,7 @@
   grid-row: 1 / 1;
   transition: transform 500ms;
   line-height: 0.1;
+  color: hsl(var(--foreground));
 }
 
 .icon--moon {
