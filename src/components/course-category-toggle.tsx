@@ -21,7 +21,7 @@ export function CourseCategoryToggle({ value, onChange, className }: CourseCateg
       )}
     >
       <motion.div
-        className="absolute h-[calc(100%-0.5rem)] w-[130px] rounded-md neumorphic-outer"
+        className="absolute h-[calc(100%-0.5rem)] w-[130px] rounded-md bg-primary"
         animate={{ x: value === 'Professional' ? '2px' : '142px' }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       />
@@ -32,7 +32,7 @@ export function CourseCategoryToggle({ value, onChange, className }: CourseCateg
           className={cn(
             'relative z-10 flex-1 py-2 text-center font-semibold transition-colors duration-300',
             value === option
-              ? 'text-primary dark:text-primary-foreground'
+              ? 'text-primary-foreground'
               : 'text-muted-foreground'
           )}
         >
