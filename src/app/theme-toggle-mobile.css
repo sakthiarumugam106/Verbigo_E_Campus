@@ -13,8 +13,8 @@
 }
 
 .dark .toggle {
-    background-color: #2b2b2b;
-    color: #fff;
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
 }
 
 
@@ -45,4 +45,3 @@
   transition-delay: 200ms;
   transform: scale(1) rotate(360deg);
 }
-
