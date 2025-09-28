@@ -9,7 +9,7 @@ import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { ThemeToggle } from './theme-toggle';
 import { useLoading } from './loading-provider';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import '../app/book-demo-button.css';
 import '../app/theme-toggle.css';
@@ -28,9 +28,17 @@ export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { showLoader, hideLoader } = useLoading();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+
+    if (href === pathname) {
+        // If it's the current page, just hide loader and do nothing.
+        hideLoader();
+        return;
+    }
+
     if (href.startsWith('/#')) {
         const id = href.substring(2);
         const element = document.getElementById(id);
@@ -64,6 +72,10 @@ export function Header() {
                 router.push('/');
             }
         } else {
+            if (href === pathname) {
+                hideLoader();
+                return;
+            }
             showLoader();
             router.push(href);
         }
