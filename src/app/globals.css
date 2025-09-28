@@ -32,8 +32,8 @@
     --chart-5: 27 87% 67%;
     
     --shadow-light: #ffffff;
-    --shadow-dark: hsl(220 20% 75%);
-    --shadow-distance: 6px;
+    --shadow-dark: hsl(220 20% 88%);
+    --shadow-distance: 8px;
     --chat-bg-image: url('/images/bg_light.jpg');
     --chat-bg-color: hsla(var(--background), 0.7);
   }
@@ -64,9 +64,9 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    --shadow-light: hsl(222.2 44% 18%);
+    --shadow-light: hsl(222.2 44% 16%);
     --shadow-dark: hsl(222.2 44% 8%);
-    --shadow-distance: 6px;
+    --shadow-distance: 8px;
     --chat-bg-image: url('/images/bg_dark.jpg');
     --chat-bg-color: hsla(var(--background), 0.7);
   }
@@ -94,7 +94,7 @@
 
 @layer components {
     .neumorphic-outer {
-        background-color: hsl(var(--card));
+        background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--card) / 0.9));
         box-shadow: 
             var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
             calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
