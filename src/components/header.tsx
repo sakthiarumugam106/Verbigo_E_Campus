@@ -111,7 +111,6 @@ export function Header() {
                     <Button
                         variant="outline"
                         size="icon"
-                        className="hover:bg-primary hover:text-primary-foreground"
                         aria-label="Open navigation menu"
                     >
                         <Menu className="h-5 w-5" />
@@ -165,5 +164,3 @@ export function Header() {
     </header>
   );
 }
-
-    
