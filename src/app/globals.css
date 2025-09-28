@@ -117,7 +117,7 @@
             inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
     }
     .theme-toggle-button:hover {
-        background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--accent)));
+        background-color: hsl(var(--primary));
         color: hsl(var(--primary-foreground));
     }
 
