@@ -76,6 +76,7 @@ const levelAssessmentFlow = ai.defineFlow(
     name: 'levelAssessmentFlow',
     inputSchema: LevelAssessmentInputSchema,
     outputSchema: LevelAssessmentOutputSchema,
+    retries: 2, // Retry up to 2 times on failure
   },
   async (input) => {
     const {output} = await prompt(input);
