@@ -157,6 +157,15 @@
     .course-toggle-button.active {
         color: hsl(var(--primary-foreground));
     }
+
+    .theme-toggle-button:hover {
+        background-color: hsl(var(--primary));
+        color: hsl(var(--primary-foreground));
+    }
+
+    .theme-toggle-button:hover .dark-icon {
+        color: hsl(var(--primary-foreground));
+    }
 }
 
 
