@@ -1,7 +1,7 @@
+
 'use client';
 
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
 
 interface CourseCategoryToggleProps {
   value: 'Professional' | 'Kids';
@@ -10,20 +10,29 @@ interface CourseCategoryToggleProps {
 }
 
 export function CourseCategoryToggle({ value, onChange, className }: CourseCategoryToggleProps) {
-  const isKidsSelected = value === 'Kids';
-
   return (
-    <div className={cn('course-toggle', className)}>
-      <div className="course-toggle-bg" style={{ transform: isKidsSelected ? 'translateX(100%)' : 'translateX(0)' }} />
+    <div className={cn('flex items-center justify-center gap-4', className)}>
       <button
         onClick={() => onChange('Professional')}
-        className={cn('course-toggle-button', { 'active': value === 'Professional' })}
+        className={cn(
+          'px-6 py-2 rounded-lg transition-all duration-300',
+          'font-semibold min-w-[140px]',
+          value === 'Professional'
+            ? 'neumorphic-pressed text-primary dark:text-primary-foreground'
+            : 'neumorphic-outer text-muted-foreground hover:text-primary'
+        )}
       >
         Professional
       </button>
       <button
         onClick={() => onChange('Kids')}
-        className={cn('course-toggle-button', { 'active': value === 'Kids' })}
+        className={cn(
+          'px-6 py-2 rounded-lg transition-all duration-300',
+          'font-semibold min-w-[140px]',
+          value === 'Kids'
+            ? 'neumorphic-pressed text-primary dark:text-primary-foreground'
+            : 'neumorphic-outer text-muted-foreground hover:text-primary'
+        )}
       >
         Kids
       </button>
