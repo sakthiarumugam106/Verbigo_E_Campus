@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import '../app/book-demo-button.css';
 import '../app/theme-toggle.css';
+import '../app/theme-toggle-mobile.css';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -164,3 +165,5 @@ export function Header() {
     </header>
   );
 }
+
+    
