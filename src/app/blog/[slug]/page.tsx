@@ -9,9 +9,9 @@ import { SocialShareButtons } from '@/components/social-share-buttons';
 import { useLoading } from '@/components/loading-provider';
 import { use } from 'react';
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
-  const post = blogPosts.find((p) => p.slug === slug);
+export default function BlogPostPage({ params: paramsProp }: { params: { slug: string } }) {
+  const params = use(paramsProp);
+  const post = blogPosts.find((p) => p.slug === params.slug);
   const { showLoader } = useLoading();
   const router = useRouter();
 
