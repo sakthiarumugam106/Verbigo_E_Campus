@@ -33,11 +33,16 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
   const { name, email, whatsapp, state, language, schedule } = validatedFields.data;
 
   // 1. Send confirmation email to user via Nodemailer/Gmail
-  await sendEmail({
-    to: email,
-    subject: 'Thanks for Choosing Verbigo!',
-    react: TutorConfirmationEmail({ name }),
-  });
+  try {
+    await sendEmail({
+      to: email,
+      subject: 'Thanks for Choosing Verbigo!',
+      react: TutorConfirmationEmail({ name }),
+    });
+  } catch (userEmailError) {
+    console.error("Nodemailer API Error (User):", userEmailError);
+  }
+
 
   // 2. Send notification to admin via Resend (as a reliable fallback)
   if (process.env.RESEND_API_KEY) {
