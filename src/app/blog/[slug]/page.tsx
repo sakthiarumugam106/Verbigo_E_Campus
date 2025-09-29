@@ -1,3 +1,4 @@
+
 'use client';
 
 import { blogPosts } from '@/lib/blog';
@@ -8,6 +9,7 @@ import { Calendar, Clock } from 'lucide-react';
 import { SocialShareButtons } from '@/components/social-share-buttons';
 import { useLoading } from '@/components/loading-provider';
 import { use } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 export default function BlogPostPage({ params: paramsProp }: { params: { slug: string } }) {
   const params = use(paramsProp);
@@ -59,7 +61,7 @@ export default function BlogPostPage({ params: paramsProp }: { params: { slug: s
                 </div>
             </div>
           </header>
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <ReactMarkdown>{post.content}</ReactMarkdown>
         </article>
       </div>
     </div>

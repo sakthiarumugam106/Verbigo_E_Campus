@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview An AI agent for assessing a user's English proficiency level.
@@ -8,14 +7,16 @@
  * - LevelAssessmentOutput - The return type for the assessLevel function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'zod';
+import { ai } from '@/ai/genkit';
+import { z } from 'zod';
 
 const LevelAssessmentInputSchema = z.object({
-  previousQuestions: z.array(z.object({
-    question: z.string(),
-    answer: z.string(),
-  })).describe('An array of questions already asked and the user\'s answers.'),
+  previousQuestions: z.array(
+    z.object({
+      question: z.string(),
+      answer: z.string(),
+    })
+  ).describe("An array of questions already asked and the user's answers."),
 });
 export type LevelAssessmentInput = z.infer<typeof LevelAssessmentInputSchema>;
 
@@ -24,26 +25,26 @@ const LevelAssessmentOutputSchema = z.object({
   isFinal: z.boolean().describe('Set to true if you have enough information to create a final report.'),
   report: z.object({
     level: z.enum(['Beginner', 'Intermediate', 'Advanced']).describe("The user's assessed English level."),
-    score: z.number().int().min(0).max(100).describe('A percentage score from 0 to 100 representing the user\'s proficiency.'),
-    summary: z.string().describe('A brief, encouraging summary of the user\'s strengths and areas for improvement.'),
-    skillBreakdown: z.array(z.object({
-      skill: z.string().describe('A specific skill area, e.g., "Verb Tense" or "Vocabulary".'),
-      level: z.enum(['Beginner', 'Intermediate', 'Advanced']).describe('The assessed level for this specific skill.'),
-    })).describe('A breakdown of the user\'s performance in different grammatical areas.'),
+    score: z.number().int().min(0).max(100).describe("A percentage score from 0 to 100 representing the user's proficiency."),
+    summary: z.string().describe("A brief, encouraging summary of the user's strengths and areas for improvement."),
+    skillBreakdown: z.array(
+      z.object({
+        skill: z.string().describe('A specific skill area, e.g., "Verb Tense" or "Vocabulary".'),
+        level: z.enum(['Beginner', 'Intermediate', 'Advanced']).describe('The assessed level for this specific skill.'),
+      })
+    ).describe("A breakdown of the user's performance in different grammatical areas."),
   }).optional().describe('The final report. Only include this when isFinal is true.'),
 });
 export type LevelAssessmentOutput = z.infer<typeof LevelAssessmentOutputSchema>;
-
 
 export async function assessLevel(input: LevelAssessmentInput): Promise<LevelAssessmentOutput> {
   return levelAssessmentFlow(input);
 }
 
-
 const prompt = ai.definePrompt({
   name: 'levelAssessmentPrompt',
-  input: {schema: LevelAssessmentInputSchema},
-  output: {schema: LevelAssessmentOutputSchema},
+  input: { schema: LevelAssessmentInputSchema },
+  output: { schema: LevelAssessmentOutputSchema },
   prompt: `You are an expert English language tutor conducting a proficiency assessment. Your goal is to determine if a user is a Beginner, Intermediate, or Advanced speaker by asking a series of 3 questions.
 
 You will be given a list of previous questions and the user's answers.
@@ -70,16 +71,34 @@ A: {{{answer}}}
 `,
 });
 
-
 const levelAssessmentFlow = ai.defineFlow(
   {
     name: 'levelAssessmentFlow',
     inputSchema: LevelAssessmentInputSchema,
     outputSchema: LevelAssessmentOutputSchema,
-    retries: 2, // Retry up to 2 times on failure
   },
   async (input) => {
-    const {output} = await prompt(input);
-    return output!;
+    let attempt = 0;
+    const maxRetries = 2;
+    let lastError;
+
+    while (attempt <= maxRetries) {
+      try {
+        const { output } = await prompt(input);
+        return output!;
+      } catch (err: any) {
+        lastError = err;
+        // Retry only on transient 503 errors
+        if (String(err).includes('503') && attempt < maxRetries) {
+          console.warn(`Gemini API 503 error, retrying (attempt ${attempt + 1})...`);
+          await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt)); // exponential backoff
+          attempt++;
+        } else {
+          throw err;
+        }
+      }
+    }
+
+    throw lastError;
   }
 );
