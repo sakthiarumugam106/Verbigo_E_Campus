@@ -6,6 +6,7 @@ import TutorRequestEmail from '@/emails/tutor-request-email';
 import TutorConfirmationEmail from '@/emails/tutor-confirmation-email';
 import { z } from 'zod';
 import { siteConfig } from '@/lib/config';
+import { sendEmail } from '@/lib/email-service';
 
 
 const tutorRequestSchema = z.object({
@@ -29,17 +30,18 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
     };
   }
 
-  if (!process.env.RESEND_API_KEY) {
-    console.error('Resend API Key is not set. Email not sent.');
-    // Fail silently on the server but log the error. The primary action (WhatsApp) still works.
-    return { success: true, message: 'Primary action complete.' };
-  }
-
-  const resend = new Resend(process.env.RESEND_API_KEY);
   const { name, email, whatsapp, state, language, schedule } = validatedFields.data;
 
-  try {
-    // Attempt to send notification to admin
+  // 1. Send confirmation email to user via Nodemailer/Gmail
+  await sendEmail({
+    to: email,
+    subject: 'Thanks for Choosing Verbigo!',
+    react: TutorConfirmationEmail({ name }),
+  });
+
+  // 2. Send notification to admin via Resend (as a reliable fallback)
+  if (process.env.RESEND_API_KEY) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     try {
         await resend.emails.send({
             from: 'Verbigo Tutor Request <onboarding@resend.dev>',
@@ -58,26 +60,7 @@ export async function sendTutorRequestEmail(data: TutorRequestData) {
         console.error('Resend API Error (Admin):', adminEmailError);
         // Do not block the entire process if admin email fails
     }
-
-    // Attempt to send confirmation to user
-    try {
-        await resend.emails.send({
-            from: 'Verbigo <onboarding@resend.dev>',
-            // HARDCODED FOR DEVELOPMENT: Send to admin's verified email.
-            // Replace with `email` variable after domain is verified in Resend.
-            to: siteConfig.email, 
-            subject: 'Thanks for Choosing Verbigo!',
-            react: TutorConfirmationEmail({ name }),
-        });
-    } catch (userEmailError) {
-        console.error('Resend API Error (User):', userEmailError);
-        // Do not block the entire process if user email fails
-    }
-
-    return { success: true };
-  } catch (error: any) {
-    console.error('Error in sendTutorRequestEmail function:', error);
-    // This will catch any other unexpected errors in the function
-    return { success: false, error: 'An unexpected error occurred.' };
   }
+
+  return { success: true };
 }

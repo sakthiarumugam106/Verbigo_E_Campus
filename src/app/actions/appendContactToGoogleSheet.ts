@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { Resend } from 'resend';
 import ContactFormAdminEmail from '@/emails/contact-form-admin-email';
 import ContactFormUserEmail from '@/emails/contact-form-user-email';
+import { sendEmail } from '@/lib/email-service';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
@@ -62,15 +63,21 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
     console.error("Error in appendContactToGoogleSheet:", error);
   }
 
-  // Send email notifications
+  // --- Email Sending Logic ---
+
+  // 1. Send confirmation email to user via Nodemailer/Gmail
+  await sendEmail({
+    to: email,
+    subject: "We've Received Your Message!",
+    react: ContactFormUserEmail({ name }),
+  });
+
+  // 2. Send notification email to admin via Resend (as a reliable fallback)
   if (process.env.RESEND_API_KEY) {
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const fromAddress = 'Verbigo <onboarding@resend.dev>';
-
-    // Admin notification
     try {
       await resend.emails.send({
-        from: fromAddress,
+        from: 'Verbigo <onboarding@resend.dev>',
         to: siteConfig.email,
         subject: `New Contact Form Submission from ${name}`,
         react: ContactFormAdminEmail({ name, email, phoneNumber: emailPhoneNumber, message, sheetSuccess }),
@@ -78,20 +85,8 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
     } catch (adminEmailError) {
       console.error("Resend API Error (Admin):", adminEmailError);
     }
-
-    // User confirmation
-    try {
-      await resend.emails.send({
-        from: fromAddress,
-        // This will only work if the domain is verified. For testing, you can change `email` to `siteConfig.email`.
-        to: email,
-        subject: "We've Received Your Message!",
-        react: ContactFormUserEmail({ name }),
-      });
-    } catch (userEmailError) {
-       console.error("Resend API Error (User):", userEmailError);
-    }
   }
+
 
   return { success: true, message: "Your message has been sent successfully!" };
 }
