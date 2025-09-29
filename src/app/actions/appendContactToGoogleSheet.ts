@@ -95,3 +95,4 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
 
   return { success: true, message: "Your message has been sent successfully!" };
 }
+
