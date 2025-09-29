@@ -8,6 +8,8 @@ import { appendToGoogleSheet } from './sheet-action';
 import { Resend } from 'resend';
 import { siteConfig } from '@/lib/config';
 import type DemoRequestEmail from '@/emails/demo-request-email';
+import { sendEmail } from '@/lib/email-service';
+import ContactFormUserEmail from '@/emails/contact-form-user-email';
 
 const demoRequestSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
@@ -30,28 +32,32 @@ export type DemoFormState = {
 
 // Helper function to isolate the email sending logic and the react-email import
 async function sendNotificationEmail(data: { name: string; email: string; phoneNumber: string; }) {
-  if (!process.env.RESEND_API_KEY) {
-    console.error("Resend API Key is not set. Email not sent.");
-    // Fail silently on the server but log the error.
-    return { success: true, message: "Primary action complete, but email could not be sent." };
+  // Send to admin via Resend
+  if (process.env.RESEND_API_KEY) {
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        const DemoRequestEmail = (await import('@/emails/demo-request-email')).default;
+        
+        await resend.emails.send({
+          from: 'Verbigo Demo Request <onboarding@resend.dev>',
+          to: siteConfig.email,
+          subject: `New Demo Request from ${data.name}`,
+          react: DemoRequestEmail({ name: data.name, email: data.email, phoneNumber: data.phoneNumber }),
+        });
+      } catch (adminEmailError: any) {
+        console.error("Resend API Error:", adminEmailError);
+      }
   }
-  
+
+  // Send to user via Nodemailer
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    // Dynamically import the email component only when needed
-    const DemoRequestEmail = (await import('@/emails/demo-request-email')).default;
-    
-    await resend.emails.send({
-      from: 'Verbigo Demo Request <onboarding@resend.dev>',
-      to: siteConfig.email,
-      subject: `New Demo Request from ${data.name}`,
-      react: DemoRequestEmail({ name: data.name, email: data.email, phoneNumber: data.phoneNumber }),
-    });
-    return { success: true };
-  } catch (emailError: any) {
-    console.error("Resend API Error:", emailError);
-    // Return an error but don't crash the main flow
-    return { success: false, error: emailError.message };
+      await sendEmail({
+        to: data.email,
+        subject: "We've Received Your Demo Request!",
+        react: ContactFormUserEmail({ name: data.name }),
+      });
+  } catch (userEmailError) {
+      console.error("Nodemailer API Error (User):", userEmailError);
   }
 }
 
