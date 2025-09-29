@@ -67,14 +67,21 @@ export async function appendContactToGoogleSheet(data: ContactFormData) {
 
   // 1. Send confirmation email to user via Nodemailer/Gmail
   try {
-    await sendEmail({
+    const userEmailResult = await sendEmail({
       to: email,
       subject: "We've Received Your Message!",
       react: ContactFormUserEmail({ name }),
     });
+  
+    if (!userEmailResult.success) {
+      console.error("User email failed:", userEmailResult.error);
+    } else {
+      console.log("User confirmation email sent successfully.");
+    }
   } catch (userEmailError) {
-      console.error("Nodemailer API Error (User):", userEmailError);
+    console.error("Error sending user confirmation email:", userEmailError);
   }
+  
 
 
   // 2. Send notification email to admin via Resend (as a reliable fallback)

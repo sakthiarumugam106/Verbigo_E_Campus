@@ -5,6 +5,12 @@ import nodemailer from 'nodemailer';
 import { siteConfig } from './config';
 import { render } from '@react-email/components';
 
+if (!process.env.GMAIL_EMAIL || !process.env.GMAIL_APP_PASSWORD) {
+  console.warn(
+    'Gmail credentials are not set. Skipping email sending. Please set GMAIL_EMAIL and GMAIL_APP_PASSWORD in your .env file.'
+  );
+}
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -21,13 +27,10 @@ interface EmailOptions {
 
 export async function sendEmail(options: EmailOptions) {
   if (!process.env.GMAIL_EMAIL || !process.env.GMAIL_APP_PASSWORD) {
-    console.warn(
-      'Gmail credentials are not set. Skipping email sending. Please set GMAIL_EMAIL and GMAIL_APP_PASSWORD in your .env file.'
-    );
-    // Fallback to Resend for admin notifications if Gmail is not configured.
-    // This part is handled within each action file.
     return { success: false, error: 'Gmail service not configured.' };
   }
+  
+  console.log("Attempting to send email to:", options.to);
 
   try {
     const html = render(options.react);
