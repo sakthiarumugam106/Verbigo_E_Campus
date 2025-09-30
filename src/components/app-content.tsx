@@ -10,6 +10,7 @@ import { AiChatbot } from './ai-chatbot';
 import { WhatsAppButton } from './whatsapp-button';
 import { BackToTopButton } from './back-to-top-button';
 import { Toaster } from './ui/toaster';
+import { ThemeProvider } from './theme-provider';
 
 export function AppContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -35,7 +36,11 @@ export function AppContent({ children }: { children: React.ReactNode }) {
 
   // Once mounted on the client, render the full application UI.
   return (
-    <>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      storageKey="verbigo-theme"
+    >
       <GlobalLoader />
       <div className="flex min-h-screen flex-col">
         <Header />
@@ -46,6 +51,6 @@ export function AppContent({ children }: { children: React.ReactNode }) {
       <WhatsAppButton />
       <BackToTopButton />
       <Toaster />
-    </>
+    </ThemeProvider>
   );
 }

@@ -42,6 +42,8 @@ export function AiChatbot() {
   const [isClient, setIsClient] = useState(false);
   const [isButtonVisible, setIsButtonVisible] = useState(false);
   const isMobile = useIsMobile();
+
+  const isAudioDisabled = process.env.NEXT_PUBLIC_AI_AUDIO_DISABLE === 'True';
   
   useEffect(() => {
     setIsClient(true);
@@ -175,16 +177,18 @@ export function AiChatbot() {
         const aiMessage: Message = { role: 'model', content: aiResponseText };
         setHistory(prev => [...prev, aiMessage]);
         
-        try {
-          const audioResult = await textToSpeech(aiResponseText);
-          setAudioUrl(audioResult.audio);
-        } catch (ttsError: any) {
-          if (ttsError.message && ttsError.message.includes('429')) {
-             console.warn("TTS rate limit exceeded. Audio generation is temporarily unavailable.");
-          } else {
-            console.error('AI TTS error:', ttsError);
+        if (!isAudioDisabled) {
+          try {
+            const audioResult = await textToSpeech(aiResponseText);
+            setAudioUrl(audioResult.audio);
+          } catch (ttsError: any) {
+            if (ttsError.message && ttsError.message.includes('429')) {
+               console.warn("TTS rate limit exceeded. Audio generation is temporarily unavailable.");
+            } else {
+              console.error('AI TTS error:', ttsError);
+            }
+             setAudioUrl(null);
           }
-           setAudioUrl(null);
         }
 
       } catch (error) {
@@ -194,13 +198,16 @@ export function AiChatbot() {
           ...prev,
           { role: 'model', content: errorMessage },
         ]);
-         try {
-           const audioResult = await textToSpeech(errorMessage);
-           setAudioUrl(audioResult.audio);
-         } catch (ttsError) {
-           console.error('Error generating audio for error message:', ttsError);
-           setAudioUrl(null);
-         }
+
+        if (!isAudioDisabled) {
+          try {
+            const audioResult = await textToSpeech(errorMessage);
+            setAudioUrl(audioResult.audio);
+          } catch (ttsError) {
+            console.error('Error generating audio for error message:', ttsError);
+            setAudioUrl(null);
+          }
+        }
       }
     });
   };
@@ -309,9 +316,11 @@ export function AiChatbot() {
                 autoComplete="off"
                 disabled={isPending}
               />
-              <Button type="button" size="icon" variant="outline" onClick={handleMicClick} disabled={isPending}>
-                {isRecording ? <MicOff className="h-4 w-4 text-destructive" /> : <Mic className="h-4 w-4" />}
-              </Button>
+              {!isAudioDisabled && (
+                <Button type="button" size="icon" variant="outline" onClick={handleMicClick} disabled={isPending}>
+                  {isRecording ? <MicOff className="h-4 w-4 text-destructive" /> : <Mic className="h-4 w-4" />}
+                </Button>
+              )}
               <Button type="submit" size="icon" disabled={isPending || !input.trim()}>
                 <Send className="h-4 w-4" />
               </Button>
@@ -320,7 +329,7 @@ export function AiChatbot() {
         </Card>
       </div>
       
-      <audio ref={audioRef} src={audioUrl ?? undefined} />
+      {!isAudioDisabled && <audio ref={audioRef} src={audioUrl ?? undefined} />}
 
       <button
         onClick={handleToggle}

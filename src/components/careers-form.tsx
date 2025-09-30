@@ -266,7 +266,7 @@ export function CareersForm() {
                         <Input id="resume-file" name="resume-file" type="file" required accept=".pdf,.doc,.docx" onChange={handleFileChange} ref={resumeInputRef} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 flex items-center" />
                         {resumeFile && !isUploading && (
                             <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
-                                <File className="h-4 w-4" />
+                                <File className="h-4 h-4" />
                                 <span>{resumeFile.name}</span>
                             </div>
                         )}

@@ -20,12 +20,12 @@ export const siteConfig = {
     careers: "https://script.google.com/macros/s/AKfycbztmUYt4_YyE0ZbAu-_uDLQW6jvMLMy6UKfOtU5D-hLpdNCK1mtVGy-f97q2a4h_qEi/exec",
   },
   assets: {
-    baseUrl: 'https://firebasestudio-hosting.web.app',
-    emailIcon: 'https://img.icons8.com/plasticine/100/new-post.png',
-    phoneIcon: 'https://img.icons8.com/plasticine/100/phone.png',
-    linkedinIcon: 'https://img.icons8.com/fluency/48/linkedin.png',
-    instagramIcon: 'https://img.icons8.com/fluency/48/instagram-new.png',
-    twitterIcon: 'https://img.icons8.com/fluency/48/twitterx.png',
+    baseUrl: '', // Base URL is now local
+    emailIcon: '/icons/new-post.png',
+    phoneIcon: '/icons/phone.png',
+    linkedinIcon: '/icons/linkedin.png',
+    instagramIcon: '/icons/instagram-new.png',
+    twitterIcon: '/icons/twitterx.png',
   }
 };
 

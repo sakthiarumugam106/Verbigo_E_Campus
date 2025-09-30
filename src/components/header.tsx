@@ -2,21 +2,28 @@
 "use client";
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
+import { Menu, ChevronDown, Globe } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { ThemeToggle } from './theme-toggle';
+import { usePathname } from 'next/navigation';
 import { useLoading } from './loading-provider';
-import { useRouter, usePathname } from 'next/navigation';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import '../app/book-demo-button.css';
-import '../app/theme-toggle.css';
-import '../app/theme-toggle-mobile.css';
 
 const navLinks = [
   { name: 'Home', href: '/' },
+  { 
+    name: 'Languages', 
+    isDropdown: true,
+    subLinks: [
+      { name: 'English', href: '/' },
+      { name: 'Tamil', href: '/ta' },
+    ]
+  },
   { name: 'Courses', href: '/#courses' },
   { name: 'Blog', href: '/blog' },
   { name: 'Know Your Level', href: '/know-your-level' },
@@ -26,62 +33,40 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { showLoader, hideLoader } = useLoading();
-  const router = useRouter();
   const pathname = usePathname();
+  const router = useRouter();
+  const { showLoader, hideLoader } = useLoading();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-
-    if (href === pathname) {
-        // If it's the current page, just hide loader and do nothing.
-        hideLoader();
-        return;
-    }
+    setIsOpen(false);
 
     if (href.startsWith('/#')) {
+      if (pathname === '/') {
         const id = href.substring(2);
         const element = document.getElementById(id);
         if (element) {
-            showLoader();
-            element.scrollIntoView({ behavior: 'smooth' });
-             setTimeout(hideLoader, 800); 
-        } else {
-             router.push('/');
+          showLoader();
+          element.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(hideLoader, 500);
         }
+      } else {
+        showLoader();
+        router.push(href);
+      }
     } else {
-      showLoader();
-      router.push(href);
+       if (href === pathname) {
+          if (href === '/') {
+            showLoader();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(hideLoader, 500);
+          }
+          return;
+       }
+       showLoader();
+       router.push(href);
     }
   };
-  
-   const handleSheetLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    setIsOpen(false);
-    
-    // Use a small timeout to allow the sheet to close before navigation
-    setTimeout(() => {
-        if (href.startsWith('/#')) {
-            const id = href.substring(2);
-            const element = document.getElementById(id);
-            if (element) {
-                showLoader();
-                element.scrollIntoView({ behavior: 'smooth' });
-                setTimeout(hideLoader, 800);
-            } else {
-                router.push('/');
-            }
-        } else {
-            if (href === pathname) {
-                hideLoader();
-                return;
-            }
-            showLoader();
-            router.push(href);
-        }
-    }, 150);
-  };
-
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -96,14 +81,32 @@ export function Header() {
         
         <nav className="hidden items-center justify-center gap-6 text-sm font-medium md:flex">
             {navLinks.map((link) => (
-                <Link
-                key={link.name}
-                href={link.href}
-                onClick={handleLinkClick(link.href)}
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
-                >
-                {link.name}
-                </Link>
+                link.isDropdown ? (
+                  <DropdownMenu key={link.name}>
+                    <DropdownMenuTrigger asChild>
+                      <button className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 focus:outline-none">
+                        {link.name}
+                        <ChevronDown className="h-4 w-4" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      {link.subLinks?.map(subLink => (
+                        <DropdownMenuItem key={subLink.name} asChild>
+                          <Link href={subLink.href} onClick={handleLinkClick(subLink.href)}>{subLink.name}</Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={handleLinkClick(link.href)}
+                    className="transition-colors hover:text-foreground/80 text-foreground/60"
+                  >
+                    {link.name}
+                  </Link>
+                )
             ))}
         </nav>
         
@@ -138,7 +141,7 @@ export function Header() {
                     <Link
                         href="/"
                         className="flex items-center gap-2 text-primary dark:text-primary-foreground mb-6"
-                        onClick={handleSheetLinkClick('/')}
+                        onClick={handleLinkClick('/')}
                     >
                         <VerbigoLogo />
                         <div className="flex flex-col">
@@ -147,21 +150,35 @@ export function Header() {
                         </div>
                     </Link>
                     <nav className="grid gap-4">
-                        {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            onClick={handleSheetLinkClick(link.href)}
-                            className="text-lg font-medium text-foreground/80 hover:text-foreground"
-                        >
-                            {link.name}
-                        </Link>
-                        ))}
-                        <Link href="/careers" onClick={handleSheetLinkClick('/careers')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
-                        <Link href="#contact" onClick={handleSheetLinkClick('/#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
+                        <Link href="/" onClick={handleLinkClick('/')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Home</Link>
+                        
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button className="flex items-center justify-between text-lg font-medium text-foreground/80 hover:text-foreground focus:outline-none">
+                              Languages
+                              <ChevronDown className="h-4 w-4" />
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuItem asChild>
+                              <Link href="/" onClick={handleLinkClick('/')}>English</Link>
+                            </DropdownMenuItem>
+                             <DropdownMenuItem asChild>
+                              <Link href="/ta" onClick={handleLinkClick('/ta')}>Tamil</Link>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <Link href="/#courses" onClick={handleLinkClick('/#courses')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Courses</Link>
+                        <Link href="/blog" onClick={handleLinkClick('/blog')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Blog</Link>
+                        <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Know Your Level</Link>
+                        <Link href="/#values" onClick={handleLinkClick('/#values')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Our Values</Link>
+                        <Link href="/#faq" onClick={handleLinkClick('/#faq')} className="text-lg font-medium text-foreground/80 hover:text-foreground">FAQ</Link>
+                        <Link href="/careers" onClick={handleLinkClick('/careers')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
+                        <Link href="#contact" onClick={handleLinkClick('/#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
                     </nav>
                     <div className="mt-8 space-y-4">
-                         <Link href="/get-demo" onClick={handleSheetLinkClick('/get-demo')}>
+                         <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>
                             <button className="btn w-full">
                                 <span className="btn-text-one">Book Demo</span>
                                 <span className="btn-text-two">Now</span>
