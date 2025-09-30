@@ -5,12 +5,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
+import { Menu, ChevronDown, Globe } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { ThemeToggle } from './theme-toggle';
 import { usePathname } from 'next/navigation';
 import { useLoading } from './loading-provider';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -29,6 +30,7 @@ export function Header() {
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    setIsOpen(false);
 
     if (href.startsWith('/#')) {
       if (pathname === '/') {
@@ -43,28 +45,19 @@ export function Header() {
         showLoader();
         router.push(href);
       }
-    } else if (href === '/') {
-       if (pathname === '/') {
-          showLoader();
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          setTimeout(hideLoader, 500);
-       } else {
-          showLoader();
-          router.push(href);
-       }
     } else {
-      if (pathname !== href) {
-        showLoader();
-        router.push(href);
-      }
+       if (href === pathname) {
+          if (href === '/') {
+            showLoader();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(hideLoader, 500);
+          }
+          return;
+       }
+       showLoader();
+       router.push(href);
     }
   };
-  
-   const handleSheetLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    setIsOpen(false);
-    handleLinkClick(href)(e);
-  };
-
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -88,6 +81,23 @@ export function Header() {
                 {link.name}
                 </Link>
             ))}
+             <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="transition-colors hover:text-foreground/80 text-foreground/60">
+                  <Globe className="mr-2 h-4 w-4" />
+                  Available Languages
+                  <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem asChild>
+                  <Link href="/" onClick={handleLinkClick('/')}>English</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/ta" onClick={handleLinkClick('/ta')}>Tamil</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
         </nav>
         
         <div className="flex items-center justify-end gap-4">
@@ -121,7 +131,7 @@ export function Header() {
                     <Link
                         href="/"
                         className="flex items-center gap-2 text-primary dark:text-primary-foreground mb-6"
-                        onClick={handleSheetLinkClick('/')}
+                        onClick={handleLinkClick('/')}
                     >
                         <VerbigoLogo />
                         <div className="flex flex-col">
@@ -134,17 +144,18 @@ export function Header() {
                         <Link
                             key={link.name}
                             href={link.href}
-                            onClick={handleSheetLinkClick(link.href)}
+                            onClick={handleLinkClick(link.href)}
                             className="text-lg font-medium text-foreground/80 hover:text-foreground"
                         >
                             {link.name}
                         </Link>
                         ))}
-                        <Link href="/careers" onClick={handleSheetLinkClick('/careers')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
-                        <Link href="#contact" onClick={handleSheetLinkClick('/#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
+                         <Link href="/careers" onClick={handleLinkClick('/careers')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
+                        <Link href="/ta" onClick={handleLinkClick('/ta')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Tamil</Link>
+                        <Link href="#contact" onClick={handleLinkClick('/#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
                     </nav>
                     <div className="mt-8 space-y-4">
-                         <Link href="/get-demo" onClick={handleSheetLinkClick('/get-demo')}>
+                         <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>
                             <button className="btn w-full">
                                 <span className="btn-text-one">Book Demo</span>
                                 <span className="btn-text-two">Now</span>
