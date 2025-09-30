@@ -43,6 +43,15 @@ export function Header() {
         showLoader();
         router.push(href);
       }
+    } else if (href === '/') {
+       if (pathname === '/') {
+          showLoader();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          setTimeout(hideLoader, 500);
+       } else {
+          showLoader();
+          router.push(href);
+       }
     } else {
       if (pathname !== href) {
         showLoader();
