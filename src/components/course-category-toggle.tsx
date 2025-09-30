@@ -21,7 +21,7 @@ export function CourseCategoryToggle({ value, onChange, className }: CourseCateg
       )}
     >
       <motion.div
-        className="absolute h-[calc(100%-0.5rem)] w-[130px] rounded-md bg-primary"
+        className="absolute h-[calc(100%-0.5rem)] w-[130px] rounded-md bg-primary dark:bg-[#2A3C9F]"
         animate={{ x: value === 'Professional' ? '2px' : '142px' }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       />

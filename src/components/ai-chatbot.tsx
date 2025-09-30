@@ -243,29 +243,24 @@ export function AiChatbot() {
           className="chat-card w-[calc(100vw-3rem)] mx-auto h-[60vh] max-h-[450px] md:w-[340px] md:h-[450px] flex flex-col rounded-xl overflow-hidden"
           ref={chatCardRef}
         >
-          <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
-            <div 
-              className="absolute inset-0 bg-repeat" 
-              style={{ 
-                backgroundImage: "url('/subtle-pattern.svg')",
-                opacity: 0.1,
-              }}
-            />
-            <div className="flex items-center gap-3 z-10">
-               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-                    <VerbigoTutorLogo width={32} height={32} />
+          <CardHeader
+            className="relative flex flex-row items-center justify-between p-1 pr-2 bg-green-600 dark:bg-green-500 text-white"
+          >
+            <div className="flex items-center gap-2 z-10">
+               <div className="w-8 h-8 rounded-full bg-background/20 flex items-center justify-center">
+                    <VerbigoTutorLogo width={24} height={24} />
                </div>
-               <div className="space-y-1">
-                <CardTitle className="text-lg">Verbi</CardTitle>
-                <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
+               <div className="space-y-0.5">
+                <CardTitle className="text-base text-white">Verbi</CardTitle>
+                <CardDescription className="text-white/80 text-xs">Your personal language assistant.</CardDescription>
                </div>
             </div>
-            <div className="flex items-center gap-1 z-10">
-              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleClearHistory} title="Clear chat history">
-                  <Trash2 className="h-5 w-5" />
+            <div className="flex items-center gap-0 z-10">
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-white/80 hover:bg-black/20" onClick={handleClearHistory} title="Clear chat history">
+                  <Trash2 className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleToggle}>
-                  <X className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-white/80 hover:bg-black/20" onClick={handleToggle}>
+                  <X className="h-4 w-4" />
               </Button>
             </div>
           </CardHeader>

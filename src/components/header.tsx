@@ -35,38 +35,44 @@ export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { showLoader, hideLoader } = useLoading();
+  const { showLoader } = useLoading();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsOpen(false);
+    
+    if (href === pathname) {
+      if (href.includes('#')) {
+         const id = href.substring(href.indexOf('#') + 1);
+         const element = document.getElementById(id);
+         if (element) {
+            showLoader();
+            element.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(useLoading().hideLoader, 500);
+         }
+      } else if (href === '/') {
+        showLoader();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(useLoading().hideLoader, 500);
+      }
+      return;
+    }
 
     if (href.startsWith('/#')) {
-      if (pathname === '/') {
-        const id = href.substring(2);
-        const element = document.getElementById(id);
-        if (element) {
-          showLoader();
-          element.scrollIntoView({ behavior: 'smooth' });
-          setTimeout(hideLoader, 500);
-        }
-      } else {
         showLoader();
         router.push(href);
-      }
     } else {
-       if (href === pathname) {
-          if (href === '/') {
-            showLoader();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            setTimeout(hideLoader, 500);
-          }
-          return;
-       }
        showLoader();
        router.push(href);
     }
   };
+  
+  const { hideLoader } = useLoading();
+  React.useEffect(() => {
+    // Hide loader on initial mount and on path changes
+    hideLoader();
+  }, [pathname, hideLoader]);
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -154,7 +160,7 @@ export function Header() {
                         
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <button className="flex items-center justify-between text-lg font-medium text-foreground/80 hover:text-foreground focus:outline-none">
+                            <button className="flex items-center justify-between w-full text-lg font-medium text-foreground/80 hover:text-foreground focus:outline-none">
                               Languages
                               <ChevronDown className="h-4 w-4" />
                             </button>
