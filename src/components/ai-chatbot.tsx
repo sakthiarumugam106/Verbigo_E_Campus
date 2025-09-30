@@ -244,7 +244,7 @@ export function AiChatbot() {
           ref={chatCardRef}
         >
           <CardHeader
-            className="relative flex flex-row items-center justify-between p-1 pr-2 bg-green-600 dark:bg-green-500 text-white"
+            className="relative flex flex-row items-center justify-between p-4 pr-2 bg-green-600 dark:bg-green-500 text-white"
           >
             <div className="flex items-center gap-2 z-10">
                <div className="w-8 h-8 rounded-full bg-background/20 flex items-center justify-center">
@@ -256,10 +256,10 @@ export function AiChatbot() {
                </div>
             </div>
             <div className="flex items-center gap-0 z-10">
-              <Button variant="ghost" size="icon" className="h-6 w-6 text-white/80 hover:bg-black/20" onClick={handleClearHistory} title="Clear chat history">
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-white/80 hover:bg-black/20" onClick={handleClearHistory} title="Clear chat history">
                   <Trash2 className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-6 w-6 text-white/80 hover:bg-black/20" onClick={handleToggle}>
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-white/80 hover:bg-black/20" onClick={handleToggle}>
                   <X className="h-4 w-4" />
               </Button>
             </div>
