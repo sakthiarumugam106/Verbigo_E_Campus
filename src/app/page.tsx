@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -24,6 +25,8 @@ import { courses } from '@/lib/courses';
 import { cn } from '@/lib/utils';
 import { CourseCategoryToggle } from '@/components/course-category-toggle';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useLoading } from '@/components/loading-provider';
+import { useRouter } from 'next/navigation';
 
 const ContactForm = dynamic(() => import('@/components/contact-form').then(mod => mod.ContactForm), {
   loading: () => <Skeleton className="h-[500px] w-full max-w-lg" />,
@@ -122,8 +125,16 @@ export default function HomePage() {
   );
 
   const [courseFilter, setCourseFilter] = React.useState<'Professional' | 'Kids'>('Professional');
+  const { showLoader } = useLoading();
+  const router = useRouter();
   
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
+
+  const handleNavClick = (href: string) => (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    showLoader();
+    router.push(href);
+  }
 
   return (
     <>
@@ -147,8 +158,8 @@ export default function HomePage() {
                 </h1>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
-                 <Link href="/find-tutor">
-                    <button className="cssbuttons-io-button">
+                 
+                    <button className="cssbuttons-io-button" onClick={handleNavClick('/find-tutor')}>
                         <span>Find your tutor</span>
                         <div className="icon">
                             <svg
@@ -165,9 +176,8 @@ export default function HomePage() {
                             </svg>
                         </div>
                     </button>
-                </Link>
-                <Link href="/know-your-level">
-                    <button className="sparkle-button default-animated" type="button">
+                
+                    <button className="sparkle-button default-animated" type="button" onClick={handleNavClick('/know-your-level')}>
                         <div className="dots_border"></div>
                         <span className="sparkle">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="sparkle_path">
@@ -194,7 +204,6 @@ export default function HomePage() {
                         <span className="backdrop"></span>
                         <span className="text_button">Know Your Level</span>
                     </button>
-                </Link>
               </div>
             </div>
             <div className="relative h-80 lg:h-96 w-full rounded-xl overflow-hidden shadow-2xl">

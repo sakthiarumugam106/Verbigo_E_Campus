@@ -2,6 +2,7 @@
 "use client";
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
@@ -9,6 +10,7 @@ import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { ThemeToggle } from './theme-toggle';
 import { usePathname } from 'next/navigation';
+import { useLoading } from './loading-provider';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -22,19 +24,35 @@ const navLinks = [
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { showLoader } = useLoading();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
     if (href.startsWith('/#')) {
-      // Smooth scroll for anchor links on the same page
       if (pathname === '/') {
-        e.preventDefault();
         const id = href.substring(2);
         const element = document.getElementById(id);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+          showLoader();
+          element.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            // Hide loader after scroll, assuming scroll takes ~500ms
+            // In a real app, you might use an intersection observer to be more accurate
+            const { hideLoader } = useLoading();
+            hideLoader();
+          } , 500);
         }
+      } else {
+        showLoader();
+        router.push(href);
       }
-      // For anchor links on other pages, Next.js Link handles it
+    } else {
+      if (pathname !== href) {
+        showLoader();
+        router.push(href);
+      }
     }
   };
   
