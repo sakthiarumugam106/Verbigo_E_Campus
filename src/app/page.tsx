@@ -25,8 +25,8 @@ import { courses } from '@/lib/courses';
 import { cn } from '@/lib/utils';
 import { CourseCategoryToggle } from '@/components/course-category-toggle';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useLoading } from '@/components/loading-provider';
 import { useRouter } from 'next/navigation';
+import { useLoading } from '@/components/loading-provider';
 
 const ContactForm = dynamic(() => import('@/components/contact-form').then(mod => mod.ContactForm), {
   loading: () => <Skeleton className="h-[500px] w-full max-w-lg" />,
@@ -125,8 +125,8 @@ export default function HomePage() {
   );
 
   const [courseFilter, setCourseFilter] = React.useState<'Professional' | 'Kids'>('Professional');
-  const { showLoader } = useLoading();
   const router = useRouter();
+  const { showLoader } = useLoading();
   
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
 

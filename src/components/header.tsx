@@ -25,7 +25,7 @@ export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { showLoader } = useLoading();
+  const { showLoader, hideLoader } = useLoading();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -37,12 +37,7 @@ export function Header() {
         if (element) {
           showLoader();
           element.scrollIntoView({ behavior: 'smooth' });
-          setTimeout(() => {
-            // Hide loader after scroll, assuming scroll takes ~500ms
-            // In a real app, you might use an intersection observer to be more accurate
-            const { hideLoader } = useLoading();
-            hideLoader();
-          } , 500);
+          setTimeout(hideLoader, 500);
         }
       } else {
         showLoader();
