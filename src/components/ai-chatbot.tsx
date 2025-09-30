@@ -243,7 +243,12 @@ export function AiChatbot() {
           className="chat-card w-[calc(100vw-3rem)] mx-auto h-[60vh] max-h-[450px] md:w-[340px] md:h-[450px] flex flex-col rounded-xl overflow-hidden"
           ref={chatCardRef}
         >
-          <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-1 pr-2">
+          <CardHeader
+            className="relative flex flex-row items-center justify-between text-primary-foreground p-1 pr-2"
+            style={{
+              background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))',
+            }}
+          >
             <div 
               className="absolute inset-0 bg-repeat" 
               style={{ 
@@ -261,10 +266,10 @@ export function AiChatbot() {
                </div>
             </div>
             <div className="flex items-center gap-0 z-10">
-              <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-primary/80" onClick={handleClearHistory} title="Clear chat history">
+              <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-white/20" onClick={handleClearHistory} title="Clear chat history">
                   <Trash2 className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-primary/80" onClick={handleToggle}>
+              <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-white/20" onClick={handleToggle}>
                   <X className="h-4 w-4" />
               </Button>
             </div>
