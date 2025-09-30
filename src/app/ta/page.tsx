@@ -13,7 +13,7 @@ export default function TamilComingSoonPage() {
         <div className="max-w-3xl mx-auto flex flex-col items-center gap-8">
             <div className="relative w-full max-w-sm h-64">
                 <Image 
-                    src="https://picsum.photos/seed/construction/600/400"
+                    src="/images/Comming_soon.jpg"
                     alt="Under Construction"
                     fill
                     className="object-cover rounded-xl shadow-lg"
