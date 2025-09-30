@@ -244,22 +244,22 @@ export function AiChatbot() {
           ref={chatCardRef}
         >
           <CardHeader
-            className="relative flex flex-row items-center justify-between p-1 pr-2 bg-accent text-accent-foreground"
+            className="relative flex flex-row items-center justify-between p-1 pr-2 bg-green-600 dark:bg-green-500 text-white"
           >
             <div className="flex items-center gap-2 z-10">
                <div className="w-8 h-8 rounded-full bg-background/20 flex items-center justify-center">
                     <VerbigoTutorLogo width={24} height={24} />
                </div>
                <div className="space-y-0.5">
-                <CardTitle className="text-base text-accent-foreground">Verbi</CardTitle>
-                <CardDescription className="text-accent-foreground/80 text-xs">Your personal language assistant.</CardDescription>
+                <CardTitle className="text-base text-white">Verbi</CardTitle>
+                <CardDescription className="text-white/80 text-xs">Your personal language assistant.</CardDescription>
                </div>
             </div>
             <div className="flex items-center gap-0 z-10">
-              <Button variant="ghost" size="icon" className="h-6 w-6 text-accent-foreground/80 hover:bg-black/10 dark:hover:bg-white/10" onClick={handleClearHistory} title="Clear chat history">
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-white/80 hover:bg-black/20" onClick={handleClearHistory} title="Clear chat history">
                   <Trash2 className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-6 w-6 text-accent-foreground/80 hover:bg-black/10 dark:hover:bg-white/10" onClick={handleToggle}>
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-white/80 hover:bg-black/20" onClick={handleToggle}>
                   <X className="h-4 w-4" />
               </Button>
             </div>
@@ -341,5 +341,3 @@ export function AiChatbot() {
     </>
   );
 }
-
-    
