@@ -244,32 +244,29 @@ export function AiChatbot() {
           ref={chatCardRef}
         >
           <CardHeader
-            className="relative flex flex-row items-center justify-between text-primary-foreground p-1 pr-2"
-            style={{
-              background: 'linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))',
-            }}
+            className="relative flex flex-row items-center justify-between p-1 pr-2 bg-secondary text-secondary-foreground"
           >
             <div 
               className="absolute inset-0 bg-repeat" 
               style={{ 
                 backgroundImage: "url('/subtle-pattern.svg')",
-                opacity: 0.1,
+                opacity: 0.05,
               }}
             />
             <div className="flex items-center gap-2 z-10">
-               <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+               <div className="w-8 h-8 rounded-full bg-background flex items-center justify-center">
                     <VerbigoTutorLogo width={24} height={24} />
                </div>
                <div className="space-y-0.5">
-                <CardTitle className="text-base">Verbi</CardTitle>
-                <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
+                <CardTitle className="text-base text-foreground">Verbi</CardTitle>
+                <CardDescription className="text-muted-foreground text-xs">Your personal language assistant.</CardDescription>
                </div>
             </div>
             <div className="flex items-center gap-0 z-10">
-              <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-white/20" onClick={handleClearHistory} title="Clear chat history">
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:bg-black/10 dark:hover:bg-white/10" onClick={handleClearHistory} title="Clear chat history">
                   <Trash2 className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-6 w-6 hover:bg-white/20" onClick={handleToggle}>
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:bg-black/10 dark:hover:bg-white/10" onClick={handleToggle}>
                   <X className="h-4 w-4" />
               </Button>
             </div>
