@@ -1,37 +1,26 @@
-
-
 'use client';
 
 import { blogPosts } from '@/lib/blog';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Calendar, Clock } from 'lucide-react';
 import { SocialShareButtons } from '@/components/social-share-buttons';
-import { useLoading } from '@/components/loading-provider';
 import ReactMarkdown from 'react-markdown';
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = blogPosts.find((p) => p.slug === params.slug);
-  const { showLoader } = useLoading();
-  const router = useRouter();
 
   if (!post) {
     notFound();
   }
-
-  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    showLoader();
-    router.push(href);
-  };
 
   return (
     <div className="bg-background py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
         <article className="prose prose-lg mx-auto max-w-4xl neumorphic-outer p-6 md:p-10 rounded-xl dark:prose-invert">
           <div className="mb-8">
-            <Link href="/blog" onClick={handleLinkClick('/blog')} className="text-primary dark:text-primary-foreground hover:underline">&larr; Back to Blog</Link>
+            <Link href="/blog" className="text-primary dark:text-primary-foreground hover:underline">&larr; Back to Blog</Link>
           </div>
           <div className="relative w-full h-64 md:h-96 mb-8 rounded-lg overflow-hidden neumorphic-inner">
              <Image

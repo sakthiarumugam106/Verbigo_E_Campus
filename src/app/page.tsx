@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -9,9 +8,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp, Users, Target, Lightbulb, Globe } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, BookOpen, Globe, Laptop, Lightbulb, Users } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import * as React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -23,16 +21,8 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { courses } from '@/lib/courses';
-import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { AnimatePresence, motion, useInView } from 'framer-motion';
-import { useLoading } from '@/components/loading-provider';
-import { useRouter } from 'next/navigation';
 import { CourseCategoryToggle } from '@/components/course-category-toggle';
-import './sparkle-button.css';
-import './io-button.css';
-import { Balancer } from 'react-wrap-balancer';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ContactForm = dynamic(() => import('@/components/contact-form').then(mod => mod.ContactForm), {
@@ -43,23 +33,6 @@ const Testimonials = dynamic(() => import('@/components/testimonials').then(mod 
   loading: () => <Skeleton className="h-[400px] w-full max-w-5xl" />,
 });
 
-const benefits = [
-  {
-    icon: <BookOpen className="h-8 w-8 text-primary dark:text-primary-foreground" />,
-    title: 'Expert-Led Instruction',
-    description: 'Learn from seasoned linguists and certified language coaches.',
-  },
-  {
-    icon: <Feather className="h-8 w-8 text-primary dark:text-primary-foreground" />,
-    title: 'Practical Writing Exercises',
-    description: 'Apply what you learn with hands-on assignments and real-world scenarios.',
-  },
-  {
-    icon: <MessageCircle className="h-8 w-8 text-primary dark:text-primary-foreground" />,
-    title: 'Interactive Feedback',
-    description: 'Receive personalized feedback to refine your grammar and style.',
-  },
-];
 
 const values = [
     {
@@ -112,102 +85,13 @@ const faqItems = [
   },
 ];
 
-function MobileValueItem({ 
-    value, 
-    isExpanded,
-    onMouseEnter,
-    onClick 
-}: { 
-    value: (typeof values)[0], 
-    isExpanded: boolean,
-    onMouseEnter: () => void,
-    onClick: () => void,
-}) {
+function ValuesSection() {
     return (
-        <div 
-            className={cn(
-                "bg-background border rounded-lg overflow-hidden transition-all duration-500 neumorphic-outer",
-                 isExpanded ? "neumorphic-pressed" : ""
-            )}
-            onMouseEnter={onMouseEnter}
-            onClick={onClick}
-        >
-            <div className="flex items-center gap-4 p-4 text-left">
-                <div className={cn("flex-shrink-0 transition-colors duration-500", isExpanded ? "text-primary dark:text-primary-foreground" : "text-primary/70 dark:text-primary-foreground/70")}>{value.icon}</div>
-                <span className={cn("flex-1 text-lg font-semibold transition-colors duration-500", isExpanded ? "text-primary dark:text-primary-foreground" : "text-primary/80 dark:text-primary-foreground/80")}>{value.title}</span>
-            </div>
-            <AnimatePresence>
-                {isExpanded && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                        className="overflow-hidden"
-                    >
-                        <div className="px-4 pb-4 pt-0">
-                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </div>
-    );
-}
-
-function MobileValuesSection() {
-    const [activeIndex, setActiveIndex] = React.useState<number | null>(0);
-
-    return (
-        <div className="mx-auto mt-12 max-w-3xl space-y-4">
-            {values.map((value, index) => (
-                <MobileValueItem 
-                    key={index} 
-                    value={value}
-                    isExpanded={activeIndex === index}
-                    onMouseEnter={() => setActiveIndex(index)}
-                    onClick={() => setActiveIndex(index)}
-                />
-            ))}
-        </div>
-    );
-}
-
-
-function DesktopValuesSection() {
-    const ref = React.useRef(null);
-    const isInView = useInView(ref, { once: true, amount: 0.2 });
-
-    const containerVariants = {
-        hidden: {},
-        visible: {
-            transition: {
-                staggerChildren: 0.1,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.5,
-            },
-        },
-    };
-
-    return (
-         <motion.div
-            ref={ref}
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+         <div
             className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12"
         >
             {values.map((value, index) => (
-                 <motion.div key={index} variants={itemVariants}>
+                 <div key={index}>
                     <Card className="h-full flex flex-col justify-start neumorphic-outer neumorphic-outer-hover transition-transform hover:-translate-y-1">
                         <CardHeader className="flex flex-row items-center gap-4 pb-4">
                             {value.icon}
@@ -217,33 +101,18 @@ function DesktopValuesSection() {
                             <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
                         </CardContent>
                     </Card>
-                 </motion.div>
+                 </div>
             ))}
-             <motion.div variants={itemVariants}>
+             <div>
                 <Card className="h-full flex flex-col justify-center items-center neumorphic-outer neumorphic-outer-hover transition-transform hover:-translate-y-1">
                     <CardContent className="p-4 md:p-6 text-center">
                         <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
                         <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
                     </CardContent>
                 </Card>
-            </motion.div>
-        </motion.div>
+            </div>
+        </div>
     );
-}
-
-function ValuesSection() {
-    const [isClient, setIsClient] = React.useState(false);
-    const isMobile = useIsMobile();
-
-    React.useEffect(() => {
-        setIsClient(true);
-    }, []);
-
-    if (!isClient) {
-        return <div className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12" style={{ minHeight: '400px' }} />;
-    }
-
-    return isMobile ? <MobileValuesSection /> : <DesktopValuesSection />;
 }
 
 
@@ -255,15 +124,6 @@ export default function HomePage() {
   const [courseFilter, setCourseFilter] = React.useState<'Professional' | 'Kids'>('Professional');
   
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
-  const { showLoader } = useLoading();
-  const router = useRouter();
-  
-  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    showLoader();
-    router.push(href);
-  };
-
 
   return (
     <>
@@ -283,13 +143,11 @@ export default function HomePage() {
             <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
-                  <Balancer>
                     Learn english through your native language
-                  </Balancer>
                 </h1>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
-                 <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
+                 <Link href="/find-tutor">
                     <button className="cssbuttons-io-button">
                         <span>Find your tutor</span>
                         <div className="icon">
@@ -308,7 +166,7 @@ export default function HomePage() {
                         </div>
                     </button>
                 </Link>
-                <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
+                <Link href="/know-your-level">
                     <button className="sparkle-button default-animated" type="button">
                         <div className="dots_border"></div>
                         <span className="sparkle">
@@ -387,7 +245,7 @@ export default function HomePage() {
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
                     <Card className="neumorphic-outer group h-full overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
-                      <Link href={`/courses/${course.slug}`} onClick={handleLinkClick(`/courses/${course.slug}`)} className="flex flex-col h-full">
+                      <Link href={`/courses/${course.slug}`} className="flex flex-col h-full">
                         <div className="overflow-hidden rounded-t-lg">
                           <Image
                             src={course.image}

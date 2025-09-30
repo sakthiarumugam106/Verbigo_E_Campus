@@ -7,25 +7,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { blogPosts } from '@/lib/blog';
-import { useRouter } from 'next/navigation';
-import { useLoading } from '@/components/loading-provider';
 
 export default function BlogPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const router = useRouter();
-  const { showLoader } = useLoading();
 
   const filteredBlogPosts = blogPosts.filter(post => 
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
-  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    showLoader();
-    router.push(href);
-  };
-
 
   return (
     <div className="bg-background min-h-screen py-16 md:py-24">
@@ -56,7 +45,7 @@ export default function BlogPage() {
           <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {filteredBlogPosts.map((post, index) => (
               <Card key={index} className="neumorphic-outer group overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
-                 <Link href={`/blog/${post.slug}`} onClick={handleLinkClick(`/blog/${post.slug}`)} className="flex flex-col h-full">
+                 <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
                   <div className="overflow-hidden rounded-t-lg">
                       <Image
                           src={post.image}

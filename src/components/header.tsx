@@ -8,12 +8,7 @@ import { Menu } from 'lucide-react';
 import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { ThemeToggle } from './theme-toggle';
-import { useLoading } from './loading-provider';
-import { useRouter, usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-import '../app/book-demo-button.css';
-import '../app/theme-toggle.css';
-import '../app/theme-toggle-mobile.css';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -26,60 +21,26 @@ const navLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { showLoader, hideLoader } = useLoading();
-  const router = useRouter();
   const pathname = usePathname();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-
-    if (href === pathname) {
-        // If it's the current page, just hide loader and do nothing.
-        hideLoader();
-        return;
-    }
-
     if (href.startsWith('/#')) {
+      // Smooth scroll for anchor links on the same page
+      if (pathname === '/') {
+        e.preventDefault();
         const id = href.substring(2);
         const element = document.getElementById(id);
         if (element) {
-            showLoader();
             element.scrollIntoView({ behavior: 'smooth' });
-             setTimeout(hideLoader, 800); 
-        } else {
-             router.push('/');
         }
-    } else {
-      showLoader();
-      router.push(href);
+      }
+      // For anchor links on other pages, Next.js Link handles it
     }
   };
   
    const handleSheetLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
     setIsOpen(false);
-    
-    // Use a small timeout to allow the sheet to close before navigation
-    setTimeout(() => {
-        if (href.startsWith('/#')) {
-            const id = href.substring(2);
-            const element = document.getElementById(id);
-            if (element) {
-                showLoader();
-                element.scrollIntoView({ behavior: 'smooth' });
-                setTimeout(hideLoader, 800);
-            } else {
-                router.push('/');
-            }
-        } else {
-            if (href === pathname) {
-                hideLoader();
-                return;
-            }
-            showLoader();
-            router.push(href);
-        }
-    }, 150);
+    handleLinkClick(href)(e);
   };
 
 
