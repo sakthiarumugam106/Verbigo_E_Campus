@@ -195,7 +195,7 @@ export function CareersForm() {
     <>
     <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
       <DialogTrigger asChild>
-        <Button>Apply Now</Button>
+        <Button useNeumorphic={false} className="bg-[#2A3C9F] text-white hover:bg-[#2A3C9F]/90">Apply Now</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-xl">
         <DialogHeader>
