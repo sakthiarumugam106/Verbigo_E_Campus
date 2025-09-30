@@ -5,14 +5,21 @@ import { Instagram, Twitter, Linkedin, Mail } from 'lucide-react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { siteConfig, whatsapp } from '@/lib/config';
 import { useLoading } from '@/components/loading-provider';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export function Footer() {
     const { showLoader, hideLoader } = useLoading();
     const router = useRouter();
+    const pathname = usePathname();
 
     const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
+
+        // If navigating to the same page, do nothing.
+        if (href === pathname) {
+            return;
+        }
+
         if (href.startsWith('/#')) {
             const id = href.substring(2);
             const element = document.getElementById(id);
@@ -21,7 +28,11 @@ export function Footer() {
                 element.scrollIntoView({ behavior: 'smooth' });
                  setTimeout(hideLoader, 800);
             } else {
+                // If on a different page, navigate to home and then scroll
+                showLoader();
                 router.push('/');
+                // The scrolling logic will be handled by the header's click handler
+                // once the homepage loads.
             }
         } else {
             showLoader();
