@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { courses } from '@/lib/courses';
@@ -11,11 +12,9 @@ import { notFound, useRouter } from 'next/navigation';
 import { whatsapp } from '@/lib/config';
 import { useLoading } from '@/components/loading-provider';
 import '../../book-demo-button.css';
-import { use } from 'react';
 
 
-export default function CoursePage(props: { params: { slug: string } }) {
-  const params = use(props.params);
+export default function CoursePage({ params }: { params: { slug: string } }) {
   const course = courses.find((c) => c.slug === params.slug);
   const router = useRouter();
   const { showLoader } = useLoading();

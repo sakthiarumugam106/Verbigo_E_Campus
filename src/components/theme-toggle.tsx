@@ -2,8 +2,8 @@
 "use client"
 
 import * as React from "react"
-import { useTheme } from "./theme-provider"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { useTheme } from "next-themes"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
@@ -114,5 +114,3 @@ export function ThemeToggle() {
     </label>
   )
 }
-
-    

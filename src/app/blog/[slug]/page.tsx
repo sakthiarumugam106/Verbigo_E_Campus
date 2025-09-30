@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { blogPosts } from '@/lib/blog';
@@ -8,11 +9,9 @@ import Link from 'next/link';
 import { Calendar, Clock } from 'lucide-react';
 import { SocialShareButtons } from '@/components/social-share-buttons';
 import { useLoading } from '@/components/loading-provider';
-import { use } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-export default function BlogPostPage({ params: paramsProp }: { params: { slug: string } }) {
-  const params = use(paramsProp);
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = blogPosts.find((p) => p.slug === params.slug);
   const { showLoader } = useLoading();
   const router = useRouter();

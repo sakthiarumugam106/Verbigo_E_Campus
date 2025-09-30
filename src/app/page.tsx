@@ -335,6 +335,7 @@ export default function HomePage() {
                 src="/images/World_Languages.png"
                 alt="World map of official languages"
                 fill
+                priority
                 className="object-cover"
                 data-ai-hint="world language map"
                 />
