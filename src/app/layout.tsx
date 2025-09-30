@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Inter, Poppins } from 'next/font/google';
 import { AppContent } from '@/components/app-content';
+import { LoadingProvider } from '@/components/loading-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -25,7 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
       <body>
-        <AppContent>{children}</AppContent>
+        <LoadingProvider>
+          <AppContent>{children}</AppContent>
+        </LoadingProvider>
       </body>
     </html>
   );
