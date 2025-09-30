@@ -243,7 +243,7 @@ export function AiChatbot() {
           className="chat-card w-[calc(100vw-3rem)] mx-auto h-[60vh] max-h-[450px] md:w-[340px] md:h-[450px] flex flex-col rounded-xl overflow-hidden"
           ref={chatCardRef}
         >
-          <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
+          <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-3">
             <div 
               className="absolute inset-0 bg-repeat" 
               style={{ 
@@ -251,21 +251,21 @@ export function AiChatbot() {
                 opacity: 0.1,
               }}
             />
-            <div className="flex items-center gap-3 z-10">
-               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-                    <VerbigoTutorLogo width={32} height={32} />
+            <div className="flex items-center gap-2 z-10">
+               <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center">
+                    <VerbigoTutorLogo width={28} height={28} />
                </div>
-               <div className="space-y-1">
-                <CardTitle className="text-lg">Verbi</CardTitle>
+               <div className="space-y-0.5">
+                <CardTitle className="text-base">Verbi</CardTitle>
                 <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
                </div>
             </div>
-            <div className="flex items-center gap-1 z-10">
-              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleClearHistory} title="Clear chat history">
-                  <Trash2 className="h-5 w-5" />
+            <div className="flex items-center gap-0 z-10">
+              <Button variant="ghost" size="icon" className="h-7 w-7 hover:bg-primary/80" onClick={handleClearHistory} title="Clear chat history">
+                  <Trash2 className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleToggle}>
-                  <X className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-7 w-7 hover:bg-primary/80" onClick={handleToggle}>
+                  <X className="h-4 w-4" />
               </Button>
             </div>
           </CardHeader>
@@ -346,3 +346,5 @@ export function AiChatbot() {
     </>
   );
 }
+
+    
