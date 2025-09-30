@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { Loader2, Mic, MicOff, Send, X } from 'lucide-react';
+import { Loader2, Mic, MicOff, Send, Trash2, X } from 'lucide-react';
 import { useEffect, useRef, useState, useTransition } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { VerbigoTutorLogo } from './verbigo-tutor-logo';
@@ -23,7 +23,7 @@ const CHAT_STORAGE_KEY = 'verbigo-chat-history';
 
 const initialMessage: Message = {
     role: 'model',
-    content: "Hi there! 👋\n\nI'm Verbi, your friendly English teacher from Verbigo.\n\nHow can I help you improve your English today?\n\nOr perhaps you have a question about our amazing courses? 😊"
+    content: "Hi there! 👋\n\nI'm Verbi, your friendly English teacher from Verbigo.\n\n**Tip of the Day:** Try to learn one new word and use it in three different sentences. This helps build your vocabulary and understanding.\n\nHow can I help you improve your English today?"
 };
 
 export function AiChatbot() {
@@ -151,6 +151,11 @@ export function AiChatbot() {
       setTimeout(() => setIsOpening(false), 500); 
     }
   };
+  
+  const handleClearHistory = () => {
+    setHistory([initialMessage]);
+    localStorage.removeItem(CHAT_STORAGE_KEY);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -228,7 +233,7 @@ export function AiChatbot() {
         )}
       >
         <Card 
-          className="w-[calc(100vw-2rem)] mx-4 h-[70vh] max-h-[500px] md:w-[350px] md:h-[450px] shadow-2xl flex flex-col rounded-xl overflow-hidden"
+          className="chat-card w-[calc(100vw-3rem)] mx-auto h-[60vh] max-h-[450px] md:w-[340px] md:h-[450px] flex flex-col rounded-xl overflow-hidden"
           ref={chatCardRef}
         >
           <CardHeader className="relative flex flex-row items-center justify-between bg-primary text-primary-foreground p-4">
@@ -244,27 +249,22 @@ export function AiChatbot() {
                     <VerbigoTutorLogo width={32} height={32} />
                </div>
                <div className="space-y-1">
-                <CardTitle className="text-lg">Verbi Teacher</CardTitle>
+                <CardTitle className="text-lg">Verbi</CardTitle>
                 <CardDescription className="text-primary-foreground/80 text-xs">Your personal language assistant.</CardDescription>
                </div>
             </div>
-            <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80 z-10" onClick={handleToggle}>
-                <X className="h-5 w-5" />
-            </Button>
+            <div className="flex items-center gap-1 z-10">
+              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleClearHistory} title="Clear chat history">
+                  <Trash2 className="h-5 w-5" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-primary/80" onClick={handleToggle}>
+                  <X className="h-5 w-5" />
+              </Button>
+            </div>
           </CardHeader>
-           <CardContent className="relative p-0 flex-1 overflow-hidden bg-primary/5">
-            <div
-              className="absolute inset-0 bg-cover bg-center dark:hidden"
-              style={{
-                backgroundImage: "url('/images/bg_light.jpg')",
-              }}
-            />
-             <div
-              className="absolute inset-0 bg-cover bg-center hidden dark:block"
-              style={{
-                backgroundImage: "url('/images/bg_dark.jpg')",
-              }}
-            />
+           <CardContent 
+              className="relative p-0 flex-1 chat-background overflow-y-auto"
+            >
              <ScrollArea className="h-full" ref={scrollAreaRef}>
                  <div className="p-4 space-y-4">
                     {history.map((msg, index) => (
@@ -300,7 +300,7 @@ export function AiChatbot() {
                  </div>
              </ScrollArea>
           </CardContent>
-          <CardFooter className="p-4 border-t bg-background">
+          <CardFooter className="p-4 border-t bg-muted">
             <form onSubmit={handleSubmit} className="flex w-full items-center gap-2">
               <Input
                 value={input}

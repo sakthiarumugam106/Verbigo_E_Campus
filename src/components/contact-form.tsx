@@ -11,8 +11,10 @@ import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
 
 const countryCodes = {
   '91': { label: 'IN', length: 10 },
@@ -81,9 +83,11 @@ export function ContactForm() {
     setErrors({});
     
     const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
+    const fullPhoneNumber = `${finalCountryCode} ${form.phoneNumber}`;
+
     const result = await appendContactToGoogleSheet({
       ...form,
-      phoneNumber: `+${finalCountryCode} ${form.phoneNumber}`,
+      phoneNumber: fullPhoneNumber,
     });
 
     setIsSubmitting(false);
@@ -113,82 +117,82 @@ export function ContactForm() {
 
   return (
     <>
-    <form onSubmit={handleSubmit} className="grid gap-4">
-      <div className="grid gap-2 text-left">
-        <Label htmlFor="name">Name</Label>
-        <Input id="name" name="name" placeholder="Your Name" value={form.name} onChange={handleInputChange} required />
-        {errors.name && <p className="text-destructive text-xs">{errors.name[0]}</p>}
-      </div>
-      <div className="grid gap-2 text-left">
-        <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" name="email" placeholder="you@example.com" value={form.email} onChange={handleInputChange} required />
-        {errors.email && <p className="text-destructive text-xs">{errors.email[0]}</p>}
-      </div>
-      <div className="grid gap-2 text-left">
-        <Label htmlFor="phoneNumber">Phone Number</Label>
-        <div className="flex items-center">
-            <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-                <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
-                    <SelectValue>
-                      {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
-                    </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                    {Object.entries(countryCodes).map(([code, {label}]) => (
-                        <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
-                    ))}
-                    <SelectItem value="Other">Other</SelectItem>
-                </SelectContent>
-            </Select>
-            {countryCode === 'Other' ? (
-                <Input
-                  id="otherCountryCode"
-                  name="otherCountryCode"
-                  placeholder="Code"
-                  value={otherCountryCode}
-                  onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                  className="rounded-l-none border-l-0 w-[80px]"
-                  required
-                />
-            ) : (
-                <Input 
-                  id="phoneNumber"
-                  type="tel" 
-                  name="phoneNumber"
-                  placeholder={'1234567890'}
-                  value={form.phoneNumber} 
-                  onChange={handlePhoneNumberChange} 
-                  maxLength={phoneMaxLength}
-                  className="rounded-l-none"
-                  required 
-                />
-            )}
-        </div>
-         {errors.phoneNumber && <p className="text-destructive text-xs">{errors.phoneNumber[0]}</p>}
-      </div>
-      {countryCode === 'Other' && (
-        <div className="grid gap-2 text-left">
-           <Label htmlFor="phoneNumberOther">Phone Number</Label>
-           <Input 
-              id="phoneNumberOther"
-              type="tel" 
-              name="phoneNumber"
-              placeholder="1234567890"
-              value={form.phoneNumber} 
-              onChange={handlePhoneNumberChange}
-              required 
-            />
-        </div>
-      )}
-      <div className="grid gap-2 text-left">
-        <Label htmlFor="message">Message</Label>
-        <Textarea id="message" name="message" placeholder="Your Message" value={form.message} onChange={handleInputChange} required />
-        {errors.message && <p className="text-destructive text-xs">{errors.message[0]}</p>}
-      </div>
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? 'Submitting...' : 'Submit'}
-      </Button>
-    </form>
+      <Card className="neumorphic-outer w-full max-w-lg">
+        <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-bold tracking-tighter text-primary dark:text-primary-foreground">Contact Our Team</CardTitle>
+             <CardDescription>
+                Have a question about a course? We're here to help.
+             </CardDescription>
+        </CardHeader>
+        <CardContent>
+            <form onSubmit={handleSubmit} className="grid gap-4">
+            <div className="grid gap-2 text-left">
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" name="name" placeholder="Your Name" value={form.name} onChange={handleInputChange} required />
+                {errors.name && <p className="text-destructive text-xs">{errors.name[0]}</p>}
+            </div>
+            <div className="grid gap-2 text-left">
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="email" name="email" placeholder="you@example.com" value={form.email} onChange={handleInputChange} required />
+                {errors.email && <p className="text-destructive text-xs">{errors.email[0]}</p>}
+            </div>
+            <div className="grid gap-2 text-left">
+                <Label htmlFor="phoneNumber">Phone Number</Label>
+                <div className="flex items-center">
+                    <Select value={countryCode} onValueChange={handleCountryCodeChange}>
+                        <SelectTrigger useNeumorphic={false} className="w-[130px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r">
+                            <SelectValue>
+                              {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                            </SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.entries(countryCodes).map(([code, {label}]) => (
+                                <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                            ))}
+                            <SelectItem value="Other">Other</SelectItem>
+                        </SelectContent>
+                    </Select>
+                     {countryCode === 'Other' && (
+                        <div className="border border-input border-l-0">
+                            <Input
+                            id="otherCountryCode"
+                            name="otherCountryCode"
+                            placeholder="Code"
+                            value={otherCountryCode}
+                            onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                            className="rounded-none w-[80px]"
+                            required
+                            />
+                        </div>
+                     )}
+                      <Input 
+                        id="phoneNumber"
+                        type="tel" 
+                        name="phoneNumber"
+                        placeholder={'1234567890'}
+                        value={form.phoneNumber} 
+                        onChange={handlePhoneNumberChange} 
+                        maxLength={phoneMaxLength}
+                        className="rounded-l-none"
+                        required 
+                      />
+                </div>
+                {errors.phoneNumber && <p className="text-destructive text-xs">{errors.phoneNumber[0]}</p>}
+            </div>
+            <div className="grid gap-2 text-left">
+                <Label htmlFor="message">Message</Label>
+                <Textarea id="message" name="message" placeholder="Your Message..." value={form.message} onChange={handleInputChange} required className="min-h-[120px]" />
+                {errors.message && <p className="text-destructive text-xs">{errors.message[0]}</p>}
+            </div>
+            <Button type="submit" className="w-full" disabled={isSubmitting} useNeumorphic={false}>
+                {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/>Submitting...</> : 'Submit'}
+            </Button>
+            </form>
+            <p className="text-xs text-muted-foreground text-center mt-4">
+                Our language experts will get back to you shortly.
+            </p>
+        </CardContent>
+    </Card>
     <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
         <AlertDialogContent>
             <AlertDialogHeader>
@@ -202,7 +206,7 @@ export function ContactForm() {
                             damping: 20,
                             delay: 0.2,
                         }}
-                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                        className="h-20 w-20 bg-background neumorphic-outer rounded-full flex items-center justify-center"
                     >
                          <motion.div
                             initial={{ scale: 0.5, opacity: 0 }}

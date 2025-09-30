@@ -30,7 +30,7 @@ function SubmitButton({ disabled }: { disabled?: boolean }) {
   const isDisabled = pending || disabled;
 
   return (
-    <Button type="submit" className="w-full" disabled={isDisabled}>
+    <Button type="submit" className="w-full" disabled={isDisabled} useNeumorphic={false}>
       {isDisabled ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -232,7 +232,7 @@ export function CareersForm() {
                     <Label htmlFor="education">Highest Education Level</Label>
                      <input type="hidden" name="education" value={educationValue} />
                     <Select name="education-select" required onValueChange={setEducationValue} value={educationValue}>
-                        <SelectTrigger>
+                        <SelectTrigger useNeumorphic={false}>
                             <SelectValue placeholder="Select your education level" />
                         </SelectTrigger>
                         <SelectContent>
@@ -311,7 +311,7 @@ export function CareersForm() {
                             damping: 20,
                             delay: 0.2,
                         }}
-                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                        className="h-20 w-20 bg-background neumorphic-outer rounded-full flex items-center justify-center"
                     >
                          <motion.div
                             initial={{ scale: 0.5, opacity: 0 }}

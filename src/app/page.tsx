@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -25,13 +24,15 @@ import {
 } from '@/components/ui/carousel';
 import { courses } from '@/lib/courses';
 import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { whatsapp } from '@/lib/config';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { AnimatePresence, motion, useInView } from 'framer-motion';
 import { useLoading } from '@/components/loading-provider';
 import { useRouter } from 'next/navigation';
+import { CourseCategoryToggle } from '@/components/course-category-toggle';
+import './sparkle-button.css';
+import './io-button.css';
+import { Balancer } from 'react-wrap-balancer';
 
 const benefits = [
   {
@@ -102,16 +103,25 @@ const faqItems = [
   },
 ];
 
-function MobileValueItem({ value, isExpanded }: { value: (typeof values)[0], isExpanded: boolean }) {
-    const ref = React.useRef(null);
-    
+function MobileValueItem({ 
+    value, 
+    isExpanded,
+    onMouseEnter,
+    onClick 
+}: { 
+    value: (typeof values)[0], 
+    isExpanded: boolean,
+    onMouseEnter: () => void,
+    onClick: () => void,
+}) {
     return (
         <div 
-            ref={ref}
             className={cn(
-                "bg-background/60 backdrop-blur-sm border rounded-lg shadow-md overflow-hidden transition-all duration-500",
-                 isExpanded ? "bg-primary/10 border-primary/30" : "border-transparent"
+                "bg-background border rounded-lg overflow-hidden transition-all duration-500 neumorphic-outer",
+                 isExpanded ? "neumorphic-pressed" : ""
             )}
+            onMouseEnter={onMouseEnter}
+            onClick={onClick}
         >
             <div className="flex items-center gap-4 p-4 text-left">
                 <div className={cn("flex-shrink-0 transition-colors duration-500", isExpanded ? "text-primary dark:text-primary-foreground" : "text-primary/70 dark:text-primary-foreground/70")}>{value.icon}</div>
@@ -138,50 +148,16 @@ function MobileValueItem({ value, isExpanded }: { value: (typeof values)[0], isE
 
 function MobileValuesSection() {
     const [activeIndex, setActiveIndex] = React.useState<number | null>(0);
-    const containerRef = React.useRef<HTMLDivElement>(null);
-
-    React.useEffect(() => {
-        const handleScroll = () => {
-            if (!containerRef.current) return;
-            
-            const itemElements = Array.from(containerRef.current.children) as HTMLElement[];
-            const viewportCenter = window.innerHeight / 2;
-
-            let closestItemIndex: number | null = null;
-            let smallestDistance = Infinity;
-
-            itemElements.forEach((item, index) => {
-                const rect = item.getBoundingClientRect();
-                const itemCenter = rect.top + rect.height / 2;
-                const distance = Math.abs(viewportCenter - itemCenter);
-                
-                if (distance < smallestDistance) {
-                    smallestDistance = distance;
-                    closestItemIndex = index;
-                }
-            });
-            
-            // Only highlight if the item is reasonably close to the center
-            if (smallestDistance < window.innerHeight / 4) {
-                 setActiveIndex(closestItemIndex);
-            } else {
-                 setActiveIndex(null);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll(); // Initial check
-
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     return (
-        <div ref={containerRef} className="mx-auto mt-12 max-w-3xl space-y-4">
+        <div className="mx-auto mt-12 max-w-3xl space-y-4">
             {values.map((value, index) => (
                 <MobileValueItem 
                     key={index} 
                     value={value}
                     isExpanded={activeIndex === index}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    onClick={() => setActiveIndex(index)}
                 />
             ))}
         </div>
@@ -223,7 +199,7 @@ function DesktopValuesSection() {
         >
             {values.map((value, index) => (
                  <motion.div key={index} variants={itemVariants}>
-                    <Card className="h-full flex flex-col justify-start bg-background/60 backdrop-blur-sm border-primary/10 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                    <Card className="h-full flex flex-col justify-start neumorphic-outer neumorphic-outer-hover transition-transform hover:-translate-y-1">
                         <CardHeader className="flex flex-row items-center gap-4 pb-4">
                             {value.icon}
                             <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
@@ -235,7 +211,7 @@ function DesktopValuesSection() {
                  </motion.div>
             ))}
              <motion.div variants={itemVariants}>
-                <Card className="h-full flex flex-col justify-center items-center bg-background/60 backdrop-blur-sm border-primary/10 transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out">
+                <Card className="h-full flex flex-col justify-center items-center neumorphic-outer neumorphic-outer-hover transition-transform hover:-translate-y-1">
                     <CardContent className="p-4 md:p-6 text-center">
                         <h3 className="text-xl font-bold text-primary dark:text-primary-foreground mb-2">And so much more...</h3>
                         <p className="text-muted-foreground dark:text-foreground/80">We are constantly evolving to meet the needs of our learners.</p>
@@ -267,7 +243,7 @@ export default function HomePage() {
     Autoplay({ delay: 4000, stopOnInteraction: true })
   );
 
-  const [courseFilter, setCourseFilter] = React.useState('Professional');
+  const [courseFilter, setCourseFilter] = React.useState<'Professional' | 'Kids'>('Professional');
   
   const filteredCourses = courses.filter(course => course.category === courseFilter.toLowerCase());
   const { showLoader } = useLoading();
@@ -284,7 +260,7 @@ export default function HomePage() {
     <>
       <section
         id="hero"
-        className="relative w-full overflow-hidden bg-primary py-12 md:py-20"
+        className="relative w-full overflow-hidden bg-[#2A3C9F] py-12 md:py-20"
       >
         <div 
           className="absolute inset-0 bg-repeat" 
@@ -298,20 +274,60 @@ export default function HomePage() {
             <div className="flex flex-col justify-center space-y-8">
               <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
-                  Learn english through your native language
+                  <Balancer>
+                    Learn english through your native language
+                  </Balancer>
                 </h1>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row">
-                 <Button asChild size="lg" variant="secondary" className="rounded-full shadow-lg">
-                  <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
-                    Find your tutor <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="rounded-full shadow-lg bg-primary-foreground/10 text-primary-foreground border-primary-foreground/50 hover:bg-background hover:text-primary dark:hover:text-white">
-                  <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
-                    Know Your Level <GraduationCap className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+                 <Link href="/find-tutor" onClick={handleLinkClick('/find-tutor')}>
+                    <button className="cssbuttons-io-button">
+                        <span>Find your tutor</span>
+                        <div className="icon">
+                            <svg
+                            height="24"
+                            width="24"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                            <path d="M0 0h24v24H0z" fill="none"></path>
+                            <path
+                                d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                                fill="currentColor"
+                            ></path>
+                            </svg>
+                        </div>
+                    </button>
+                </Link>
+                <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')}>
+                    <button className="sparkle-button default-animated" type="button">
+                        <div className="dots_border"></div>
+                        <span className="sparkle">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="sparkle_path">
+                                <path
+                                className="path"
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                d="M14.187 8.096L15 5.25L15.813 8.096C16.0231 8.83114 16.4171 9.50062 16.9577 10.0413C17.4984 10.5819 18.1679 10.9759 18.903 11.186L21.75 12L18.904 12.813C18.1689 13.0231 17.4994 13.4171 16.9587 13.9577C16.4181 14.4984 16.0241 15.1679 15.814 15.903L15 18.75L14.187 15.904C13.9769 15.1689 13.5829 14.4994 13.0423 13.9587C12.5016 13.4181 11.8321 13.0241 11.097 12.814L8.25 12L11.096 11.187C11.8311 10.9769 12.5006 10.5829 13.0413 10.0423C13.5819 9.50162 13.9759 8.83214 14.186 8.097L14.187 8.096Z"
+                                ></path>
+                                <path
+                                className="path"
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                d="M6 14.25L5.741 15.285C5.59267 15.8785 5.28579 16.4206 4.85319 16.8532C4.42059 17.2858 3.87853 17.5927 3.285 17.741L2.25 18L3.285 18.259C3.87853 18.4073 4.42059 18.7142 4.85319 19.1468C5.28579 19.5794 5.59267 20.1215 5.741 20.715L6 21.75L6.259 20.715C6.40725 20.1216 6.71398 19.5796 7.14639 19.147C7.5788 18.7144 8.12065 18.4075 8.714 18.259L9.75 18L8.714 17.741C8.12065 17.5925 7.5788 17.2856 7.14639 16.853C6.71398 16.4204 6.40725 15.8784 6.259 15.285L6 14.25Z"
+                                ></path>
+                                <path
+                                className="path"
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                d="M6.5 4L6.303 4.5915C6.24777 4.75718 6.15472 4.90774 6.03123 5.03123C5.90774 5.15472 5.75718 5.24777 5.5915 5.303L5 5.5L5.5915 5.697C5.75718 5.75223 5.90774 5.84528 6.03123 5.96877C6.15472 6.09226 6.24777 6.24282 6.303 6.4085L6.5 7L6.697 6.4085C6.75223 6.24282 6.84528 6.09226 6.96877 5.96877C7.09226 5.84528 7.24282 5.75223 7.4085 5.697L8 5.5L7.4085 5.303C7.24282 5.24777 7.09226 5.15472 6.96877 5.03123C6.84528 4.90774 6.75223 4.75718 6.697 4.5915L6.5 4Z"
+                                ></path>
+                            </svg>
+                        </span>
+                        <span className="backdrop"></span>
+                        <span className="text_button">Know Your Level</span>
+                    </button>
+                </Link>
               </div>
             </div>
             <div className="relative h-80 lg:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
@@ -331,14 +347,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="courses" className="relative w-full bg-secondary py-16 md:py-24 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-repeat" 
-          style={{ 
-            backgroundImage: "url('/subtle-pattern.svg')",
-            opacity: 0.05,
-          }}
-        />
+      <section id="courses" className="relative w-full bg-background py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -349,12 +358,9 @@ export default function HomePage() {
                 Whether you're starting from scratch or honing your expertise, we have a course for you.
               </p>
             </div>
-            <Tabs value={courseFilter} onValueChange={setCourseFilter} className="mt-8">
-               <TabsList className="grid w-full grid-cols-2 bg-primary/20 text-primary-foreground p-1 h-auto rounded-lg">
-                <TabsTrigger value="Professional" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md py-2 font-medium">For Professionals</TabsTrigger>
-                <TabsTrigger value="Kids" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md rounded-md py-2 font-medium">For Kids</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <div className="pt-8">
+              <CourseCategoryToggle value={courseFilter} onChange={setCourseFilter} />
+            </div>
           </div>
            <Carousel
             plugins={[coursesPlugin.current]}
@@ -370,9 +376,9 @@ export default function HomePage() {
               {filteredCourses.map((course) => (
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
-                    <Card className="group h-full overflow-hidden transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 flex flex-col bg-background/80 backdrop-blur-sm border-primary/10">
+                    <Card className="neumorphic-outer group h-full overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
                       <Link href={`/courses/${course.slug}`} onClick={handleLinkClick(`/courses/${course.slug}`)} className="flex flex-col h-full">
-                        <div className="overflow-hidden">
+                        <div className="overflow-hidden rounded-t-lg">
                           <Image
                             src={course.image}
                             alt={course.title}
@@ -395,20 +401,13 @@ export default function HomePage() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 hover:bg-primary hover:text-primary-foreground" />
-            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 hover:bg-primary hover:text-primary-foreground" />
+            <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
+            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
           </Carousel>
         </div>
       </section>
 
-      <section id="values" className="relative w-full bg-primary/10 py-16 md:py-24 lg:py-32 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-repeat" 
-          style={{ 
-            backgroundImage: "url('/subtle-pattern.svg')",
-            opacity: 0.05,
-          }}
-        />
+      <section id="values" className="relative w-full bg-secondary py-16 md:py-24 lg:py-32">
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="mx-auto max-w-3xl text-center">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary dark:text-primary-foreground">
@@ -446,11 +445,11 @@ export default function HomePage() {
               Find answers to common questions about our language and grammar courses.
             </p>
           </div>
-          <div className="mx-auto mt-12 max-w-3xl">
+          <div className="mx-auto mt-12 max-w-3xl neumorphic-outer rounded-lg p-2">
             <Accordion type="single" collapsible className="w-full">
               {faqItems.map((item, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-lg font-medium text-left">
+                <AccordionItem key={index} value={`item-${index}`} className="border-b-0">
+                  <AccordionTrigger className="text-lg font-medium text-left p-4 hover:no-underline rounded-md hover:bg-primary/5">
                     {item.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-base text-muted-foreground dark:text-foreground/80">
@@ -463,24 +462,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="contact" className="w-full bg-primary/5 py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid items-center justify-center gap-4 text-center">
-            <div className="space-y-3">
-              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                Contact Our Team
-              </h2>
-              <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-foreground/80">
-                Have a question about a course? We're here to help. For demo requests, please use our dedicated demo form.
-              </p>
-            </div>
-            <div className="mx-auto w-full max-w-sm space-y-2">
-              <ContactForm />
-              <p className="text-xs text-muted-foreground dark:text-foreground/80">
-                Our language experts will get back to you shortly.
-              </p>
-            </div>
-          </div>
+      <section id="contact" className="w-full bg-secondary py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-6 flex justify-center">
+          <ContactForm />
         </div>
       </section>
     </>

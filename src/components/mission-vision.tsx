@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -53,8 +52,8 @@ export function MissionVision() {
                 {missionVisionItems.map((item, index) => (
                 <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4">
                     <div className="p-1 h-full">
-                    <Card className="shadow-lg h-full transition-all hover:shadow-2xl hover:-translate-y-2 duration-300 ease-in-out overflow-hidden flex flex-col">
-                        <div className="bg-primary/5 p-8 flex justify-center items-center">
+                    <Card className="neumorphic-outer h-full transition-transform duration-300 ease-in-out hover:-translate-y-1 overflow-hidden flex flex-col">
+                        <div className="bg-secondary p-8 flex justify-center items-center">
                             {item.icon}
                         </div>
                         <CardContent className="p-6 text-center flex-grow flex flex-col items-center justify-start gap-4">
@@ -66,8 +65,8 @@ export function MissionVision() {
                 </CarouselItem>
                 ))}
             </CarouselContent>
-             <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2" />
-            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2" />
+             <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
+            <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
         </Carousel>
     </div>
   );

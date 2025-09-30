@@ -16,6 +16,7 @@ import { Loader2, Check } from 'lucide-react';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
 import { useLoading } from './loading-provider';
+import { cn } from '@/lib/utils';
 
 const countryCodes = {
   '91': { label: 'IN', length: 10 },
@@ -119,7 +120,8 @@ export function FindTutorForm() {
     const finalLanguage = formData.language === 'Other' ? otherLanguage : formData.language;
     const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
     
-    const finalFormData = { ...formData, language: finalLanguage, whatsapp: `+${finalCountryCode} ${formData.whatsapp}` };
+    const finalFormData = { ...formData, language: finalLanguage, whatsapp: `+${finalCountryCode}${formData.whatsapp}` };
+    const sheetPhoneNumber = `${finalCountryCode}${formData.whatsapp}`;
 
     if (!finalFormData.name || !finalFormData.email || !formData.whatsapp || !finalFormData.state || !finalFormData.language || !finalFormData.schedule) {
       toast({
@@ -143,7 +145,7 @@ export function FindTutorForm() {
     showLoader();
     
     // Open WhatsApp link immediately for the user
-    const whatsappUrl = whatsapp.getTutorInquiryUrl(finalFormData);
+    const whatsappUrl = whatsapp.getTutorInquiryUrl({...finalFormData, whatsapp: sheetPhoneNumber});
     window.open(whatsappUrl, '_blank');
 
     toast({
@@ -175,17 +177,17 @@ export function FindTutorForm() {
     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 p-2">
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name}/>
+        <Input id="name" name="name" placeholder="e.g., Priya Sharma" required onChange={(e) => handleChange('name', e.target.value)} value={formData.name} />
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email}/>
+        <Input id="email" name="email" type="email" placeholder="priya.sharma@example.com" required onChange={(e) => handleChange('email', e.target.value)} value={formData.email} />
       </div>
       <div className="space-y-2">
         <Label htmlFor="whatsapp">WhatsApp Number</Label>
         <div className="flex items-center">
             <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-                <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
+                <SelectTrigger useNeumorphic={false} className="w-[130px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r">
                     <SelectValue>
                       {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
                     </SelectValue>
@@ -197,35 +199,49 @@ export function FindTutorForm() {
                     <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
             </Select>
-            {countryCode === 'Other' ? (
-                <Input
-                  id="otherCountryCode"
-                  name="otherCountryCode"
-                  placeholder="Code"
-                  value={otherCountryCode}
-                  onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                  className="rounded-l-none border-l-0 w-[80px]"
-                  required
-                />
-            ) : (
-                <Input 
-                  id="whatsapp"
-                  type="tel" 
-                  name="whatsapp"
-                  placeholder="1234567890"
-                  value={formData.whatsapp} 
-                  onChange={handlePhoneNumberChange} 
-                  maxLength={phoneMaxLength}
-                  className="rounded-l-none"
-                  required 
-                />
-            )}
+            <div className="flex w-full">
+                {countryCode === 'Other' ? (
+                  <>
+                    <Input
+                      id="otherCountryCode"
+                      name="otherCountryCode"
+                      placeholder="Code"
+                      value={otherCountryCode}
+                      onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                      className="rounded-none border-l-0 w-[80px]"
+                      required
+                    />
+                    <Input 
+                      id="whatsapp"
+                      type="tel" 
+                      name="whatsapp"
+                      placeholder="1234567890"
+                      value={formData.whatsapp} 
+                      onChange={handlePhoneNumberChange} 
+                      className="rounded-l-none border-l-0"
+                      required 
+                    />
+                  </>
+                ) : (
+                    <Input 
+                      id="whatsapp"
+                      type="tel" 
+                      name="whatsapp"
+                      placeholder="1234567890"
+                      value={formData.whatsapp} 
+                      onChange={handlePhoneNumberChange} 
+                      maxLength={phoneMaxLength}
+                      className="rounded-l-none"
+                      required 
+                    />
+                )}
+            </div>
         </div>
       </div>
        <div className="space-y-2">
         <Label htmlFor="state">State</Label>
         <Select name="state" required onValueChange={(value) => handleChange('state', value)} value={formData.state}>
-          <SelectTrigger>
+          <SelectTrigger useNeumorphic={false}>
             <SelectValue placeholder="Select your state" />
           </SelectTrigger>
           <SelectContent>
@@ -238,7 +254,7 @@ export function FindTutorForm() {
       <div className="space-y-2">
         <Label htmlFor="language">Native Language</Label>
         <Select name="language" required disabled={!formData.state} onValueChange={handleLanguageChange} value={formData.language}>
-          <SelectTrigger>
+          <SelectTrigger useNeumorphic={false}>
             <SelectValue placeholder={formData.state ? "Select your language" : "Select a state first"} />
           </SelectTrigger>
           <SelectContent>
@@ -253,13 +269,13 @@ export function FindTutorForm() {
         <div className="space-y-2">
             <Label htmlFor="otherLanguage">Please specify your language</Label>
             <Input
-            id="otherLanguage"
-            name="otherLanguage"
-            placeholder="Your language"
-            required
-            value={otherLanguage}
-            onChange={(e) => setOtherLanguage(e.target.value)}
-            />
+                id="otherLanguage"
+                name="otherLanguage"
+                placeholder="Your language"
+                required
+                value={otherLanguage}
+                onChange={(e) => setOtherLanguage(e.target.value)}
+              />
         </div>
         )}
       <div className="space-y-2 md:col-span-2">
@@ -267,20 +283,20 @@ export function FindTutorForm() {
         <RadioGroup name="schedule" required className="flex flex-col sm:flex-row gap-4 pt-2" onValueChange={(value) => handleChange('schedule', value)} value={formData.schedule}>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="Weekends" id="weekends" />
-            <Label htmlFor="weekends">Weekends</Label>
+            <Label htmlFor="weekends" className="font-normal">Weekends</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="Weekdays" id="weekdays" />
-            <Label htmlFor="weekdays">Weekdays</Label>
+            <Label htmlFor="weekdays" className="font-normal">Weekdays</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="Any" id="any" />
-            <Label htmlFor="any">Any Time</Label>
+            <Label htmlFor="any" className="font-normal">Any Time</Label>
           </div>
         </RadioGroup>
       </div>
       <div className="md:col-span-2 text-center mt-4">
-        <Button type="submit" className="w-full max-w-xs" size="lg" disabled={isPending}>
+        <Button type="submit" className="w-full max-w-xs" size="lg" disabled={isPending} useNeumorphic={false}>
             {isPending ? (
                 <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -305,7 +321,7 @@ export function FindTutorForm() {
                             damping: 20,
                             delay: 0.2,
                         }}
-                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                        className="h-20 w-20 bg-background neumorphic-outer rounded-full flex items-center justify-center"
                     >
                          <motion.div
                             initial={{ scale: 0.5, opacity: 0 }}

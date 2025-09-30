@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 export default function GetDemoPage() {
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-primary/5 p-4">
-      <Card className="w-full max-w-lg shadow-2xl">
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-background p-4">
+      <Card className="neumorphic-outer w-full max-w-lg">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold text-primary dark:text-primary-foreground">Request a Consultation</CardTitle>
           <CardDescription>

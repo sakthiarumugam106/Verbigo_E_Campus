@@ -1,0 +1,208 @@
+
+
+.sparkle-button {
+  --black-700: hsl(var(--secondary));
+  --border_radius: 9999px;
+  --transition: 0.3s ease-in-out;
+  --offset: 2px;
+
+  cursor: pointer;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  transform-origin: center;
+
+  padding: 0.625rem 2rem;
+  height: 48px;
+  width: 180px;
+  justify-content: center;
+
+  background-color: transparent;
+
+  border: none;
+  border-radius: var(--border_radius);
+  transform: scale(calc(1 + (var(--active, 0) * 0.05)));
+
+  transition: transform var(--transition);
+}
+
+.sparkle-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 100%;
+  height: 100%;
+  background-color: var(--black-700);
+
+  border-radius: var(--border_radius);
+  box-shadow: inset 0 0.5px hsl(0, 0%, 100%), inset 0 -1px 2px 0 hsl(0, 0%, 0%),
+    0px 4px 10px -4px hsla(0 0% 0% / calc(1 - var(--active, 0))),
+    0 0 0 calc(var(--active, 0) * 0.375rem) hsla(var(--accent) / 0.75);
+
+  transition: all var(--transition);
+  z-index: 0;
+}
+
+.dark .sparkle-button::before {
+   background-color: hsl(var(--secondary));
+    box-shadow: inset 0 0.5px hsl(0, 0%, 100%, 0.1), inset 0 -1px 2px 0 hsl(0, 0%, 0%),
+    0px 2px 10px -4px hsla(0 0% 0% / calc(1 - var(--active, 0))),
+    0 0 0 calc(var(--active, 0) * 0.375rem) hsla(var(--accent) / 0.75);
+}
+
+
+.sparkle-button .backdrop {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 100%;
+  height: 100%;
+  background-color: hsla(var(--accent) / 0.75);
+  background-image: radial-gradient(
+      at 51% 89%,
+      hsla(266, 45%, 74%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 100% 100%, hsla(266, 36%, 60%, 1) 0px, transparent 50%),
+    radial-gradient(at 22% 91%, hsla(266, 36%, 60%, 1) 0px, transparent 50%);
+  background-position: top;
+
+  opacity: var(--active, 0);
+  border-radius: var(--border_radius);
+  transition: opacity var(--transition);
+  z-index: 2;
+}
+
+.sparkle-button:is(:hover, :focus-visible) {
+  --active: 1;
+}
+.sparkle-button:active {
+  transform: scale(0.95);
+}
+
+.sparkle-button .sparkle {
+  position: relative;
+  z-index: 10;
+  width: 1.25rem;
+}
+
+.sparkle-button .sparkle .path {
+  fill: white;
+  stroke: white;
+}
+
+.dark .sparkle-button .sparkle .path {
+  fill: white;
+  stroke: white;
+}
+
+
+.sparkle-button:is(:hover, :focus-visible) .sparkle .path {
+    animation: path 1.5s linear 0.5s infinite;
+}
+
+
+.sparkle-button .path:nth-child(1) {
+  --scale_path_1: 1.2;
+}
+.sparkle-button .path:nth-child(2) {
+  --scale_path_2: 1.2;
+}
+.sparkle-button .path:nth-child(3) {
+  --scale_path_3: 1.2;
+}
+
+@keyframes path {
+  0%,
+  34%,
+  71%,
+  100% {
+    transform: scale(1);
+  }
+  17% {
+    transform: scale(var(--scale_path_1, 1));
+  }
+  49% {
+    transform: scale(var(--scale_path_2, 1));
+  }
+  83% {
+    transform: scale(var(--scale_path_3, 1));
+  }
+}
+
+.sparkle-button .text_button {
+  position: relative;
+  z-index: 10;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  transition: color var(--transition);
+  white-space: nowrap;
+}
+
+.sparkle-button:is(:hover, :focus-visible) .text_button {
+   background-image: linear-gradient(
+    90deg,
+    hsl(0, 0%, 100%) 0%,
+    hsl(0, 0%, 100%) 120%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+
+.dark .sparkle-button .text_button {
+   color: hsl(var(--primary-foreground));
+}
+
+.sparkle-button .dots_border {
+  --size_border: calc(100% + 2px);
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: var(--size_border);
+  height: var(--size_border);
+  background-color: transparent;
+  border-radius: 9999px;
+  z-index: -10;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.sparkle-button:hover .dots_border, .sparkle-button.default-animated .dots_border {
+    opacity: 1;
+}
+
+.sparkle-button .dots_border::before {
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform-origin: left;
+  width: 100%;
+  height: 2rem;
+  background-color: white;
+  mask: linear-gradient(transparent 0%, white 120%);
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

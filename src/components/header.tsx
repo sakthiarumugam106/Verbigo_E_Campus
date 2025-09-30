@@ -9,7 +9,11 @@ import * as React from 'react';
 import { VerbigoLogo } from '@/components/verbigo-logo';
 import { ThemeToggle } from './theme-toggle';
 import { useLoading } from './loading-provider';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import '../app/book-demo-button.css';
+import '../app/theme-toggle.css';
+import '../app/theme-toggle-mobile.css';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -24,9 +28,17 @@ export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { showLoader, hideLoader } = useLoading();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+
+    if (href === pathname) {
+        // If it's the current page, just hide loader and do nothing.
+        hideLoader();
+        return;
+    }
+
     if (href.startsWith('/#')) {
         const id = href.substring(2);
         const element = document.getElementById(id);
@@ -60,6 +72,10 @@ export function Header() {
                 router.push('/');
             }
         } else {
+            if (href === pathname) {
+                hideLoader();
+                return;
+            }
             showLoader();
             router.push(href);
         }
@@ -69,7 +85,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-16 w-full items-center justify-between px-4 md:px-6">
+      <div className="w-full h-16 px-4 md:px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
             <VerbigoLogo />
             <div className="flex flex-col">
@@ -91,11 +107,14 @@ export function Header() {
             ))}
         </nav>
         
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-4">
             <div className="hidden sm:flex">
-                <Button asChild>
-                    <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>Book Demo</Link>
-                </Button>
+                <Link href="/get-demo" onClick={handleLinkClick('/get-demo')}>
+                  <button className="btn">
+                      <span className="btn-text-one">Book Demo</span>
+                      <span className="btn-text-two">Now</span>
+                  </button>
+                </Link>
             </div>
             <ThemeToggle />
             <div className="md:hidden">
@@ -104,7 +123,6 @@ export function Header() {
                     <Button
                         variant="outline"
                         size="icon"
-                        className="hover:bg-primary hover:text-primary-foreground"
                         aria-label="Open navigation menu"
                     >
                         <Menu className="h-5 w-5" />
@@ -143,9 +161,12 @@ export function Header() {
                         <Link href="#contact" onClick={handleSheetLinkClick('/#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
                     </nav>
                     <div className="mt-8 space-y-4">
-                        <Button asChild size="lg" className="w-full">
-                            <Link href="/get-demo" onClick={handleSheetLinkClick('/get-demo')}>Book Demo</Link>
-                        </Button>
+                         <Link href="/get-demo" onClick={handleSheetLinkClick('/get-demo')}>
+                            <button className="btn w-full">
+                                <span className="btn-text-one">Book Demo</span>
+                                <span className="btn-text-two">Now</span>
+                            </button>
+                        </Link>
                     </div>
                     </SheetContent>
                 </Sheet>

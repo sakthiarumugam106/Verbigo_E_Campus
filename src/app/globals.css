@@ -1,52 +1,51 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --background: 220 20% 95%;
+    --foreground: 222.2 44% 20%;
+    --card: 220 20% 95%;
+    --card-foreground: 222.2 44% 20%;
+    --popover: 220 20% 95%;
+    --popover-foreground: 222.2 44% 20%;
     --primary: 230.77 58.21% 39.41%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
+    --secondary: 220 15% 90%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
+    --muted: 220 15% 90%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 257 100% 65%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 74.2% 50.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 220 20% 85%;
+    --input: 220 20% 85%;
     --ring: 230.77 58.21% 39.41%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    --shadow-light: #ffffff;
+    --shadow-dark: hsl(220 20% 88%);
+    --shadow-distance: 8px;
+    --chat-bg-image: url('/images/bg_light.jpg');
+    --chat-bg-color: hsla(var(--background), 0.7);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 230.77 58.21% 45%;
+    --background: 222.2 44% 12%;
+    --foreground: 210 40% 90%;
+    --card: 222.2 44% 12%;
+    --card-foreground: 210 40% 90%;
+    --popover: 222.2 44% 12%;
+    --popover-foreground: 210 40% 90%;
+    --primary: 230.77 58.21% 55%;
     --primary-foreground: 210 40% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -54,24 +53,22 @@
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 257 100% 65%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62.8% 40.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 230.77 58.21% 45%;
+    --border: 217.2 32.6% 25%;
+    --input: 217.2 32.6% 25%;
+    --ring: 230.77 58.21% 55%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --shadow-light: hsl(222.2 44% 16%);
+    --shadow-dark: hsl(222.2 44% 8%);
+    --shadow-distance: 8px;
+    --chat-bg-image: url('/images/bg_dark.jpg');
+    --chat-bg-color: hsla(var(--background), 0.7);
   }
 }
 
@@ -81,17 +78,92 @@
   }
   html {
     scroll-behavior: smooth;
-    /* Set smaller base font size for mobile, and larger for tablets and desktops */
     @apply text-[90%];
     @apply sm:text-[100%];
   }
   body {
     @apply bg-background text-foreground;
   }
-  body.loading-active {
+  body.loading-active, body.chatbot-open {
     overflow: hidden;
   }
   section {
     @apply w-full;
+  }
+}
+
+@layer components {
+    .neumorphic-outer {
+        background: linear-gradient(145deg, hsl(var(--card)), hsl(var(--card) / 0.9));
+        box-shadow: 
+            var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+            calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
+    }
+    .neumorphic-outer-hover:hover {
+        box-shadow: 
+            var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+            calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light),
+            inset var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+            inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
+    }
+    .neumorphic-pressed {
+        box-shadow: 
+            inset var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+            inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
+    }
+    .neumorphic-inner {
+         box-shadow: 
+            inset var(--shadow-distance) var(--shadow-distance) calc(var(--shadow-distance) * 2) var(--shadow-dark),
+            inset calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * -1) calc(var(--shadow-distance) * 2) var(--shadow-light);
+    }
+    .theme-toggle-button:hover {
+        background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--accent)));
+        color: hsl(var(--primary-foreground));
+    }
+}
+
+
+@layer utilities {
+  .chat-background {
+    background-image: var(--chat-bg-image);
+    background-color: var(--chat-bg-color);
+    background-blend-mode: overlay;
+    box-shadow: inset 0 0 100px hsla(0,0%,0%,0.1);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .chat-card {
+    background-color: hsl(var(--background));
+    box-shadow: none;
+  }
+  .animated-glow {
+    position: absolute;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    top: -2px;
+    left: -2px;
+    border-radius: 9999px;
+    z-index: -1;
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      hsla(0, 0%, 100%, 0) 0deg,
+      hsla(0, 0%, 100%, 0.8) 5deg,
+      hsla(0, 0%, 100%, 0) 10deg,
+      hsla(0, 0%, 100%, 0) 360deg
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .animated-hero-button:hover .animated-glow {
+    opacity: 1;
+    animation: rotate 2s linear infinite;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
   }
 }
