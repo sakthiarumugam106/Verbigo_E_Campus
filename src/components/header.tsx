@@ -35,43 +35,48 @@ export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { showLoader, hideLoader } = useLoading();
+  const { showLoader } = useLoading();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsOpen(false);
     
     if (href === pathname) {
-      if (href === '/') {
+      if (href.includes('#')) {
+         const id = href.substring(href.indexOf('#') + 1);
+         const element = document.getElementById(id);
+         if (element) {
+            showLoader();
+            element.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(useLoading().hideLoader, 500);
+         }
+      } else if (href === '/') {
         showLoader();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(hideLoader, 500);
+        setTimeout(useLoading().hideLoader, 500);
       }
       return;
     }
 
     if (href.startsWith('/#')) {
-      if (pathname === '/') {
-        const id = href.substring(2);
-        const element = document.getElementById(id);
-        if (element) {
-          showLoader();
-          element.scrollIntoView({ behavior: 'smooth' });
-          setTimeout(hideLoader, 500);
-        }
-      } else {
         showLoader();
         router.push(href);
-      }
     } else {
        showLoader();
        router.push(href);
     }
   };
+  
+  const { hideLoader } = useLoading();
+  React.useEffect(() => {
+    // Hide loader on initial mount and on path changes
+    hideLoader();
+  }, [pathname, hideLoader]);
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="w-full h-14 px-4 md:px-6 flex items-center justify-between">
+      <div className="w-full h-16 px-4 md:px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
             <VerbigoLogo />
             <div className="flex flex-col">
