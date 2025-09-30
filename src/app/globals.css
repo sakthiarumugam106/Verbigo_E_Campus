@@ -170,7 +170,7 @@
   /* From book-demo-button.css */
   .btn {
     width: 140px;
-    height: 44px; /* Adjusted to match header height */
+    height: 40px; /* Adjusted to match header height */
     background: linear-gradient(to top, #00154c, #12376e, #23487f);
     color: #fff;
     border-radius: 15px;

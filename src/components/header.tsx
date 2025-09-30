@@ -40,6 +40,15 @@ export function Header() {
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsOpen(false);
+    
+    if (href === pathname) {
+      if (href === '/') {
+        showLoader();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(hideLoader, 500);
+      }
+      return;
+    }
 
     if (href.startsWith('/#')) {
       if (pathname === '/') {
@@ -55,14 +64,6 @@ export function Header() {
         router.push(href);
       }
     } else {
-       if (href === pathname) {
-          if (href === '/') {
-            showLoader();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            setTimeout(hideLoader, 500);
-          }
-          return;
-       }
        showLoader();
        router.push(href);
     }
@@ -70,7 +71,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="w-full h-16 px-4 md:px-6 flex items-center justify-between">
+      <div className="w-full h-14 px-4 md:px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 text-primary dark:text-primary-foreground" onClick={handleLinkClick('/')}>
             <VerbigoLogo />
             <div className="flex flex-col">
@@ -154,7 +155,7 @@ export function Header() {
                         
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <button className="flex items-center justify-between text-lg font-medium text-foreground/80 hover:text-foreground focus:outline-none">
+                            <button className="flex items-center justify-between w-full text-lg font-medium text-foreground/80 hover:text-foreground focus:outline-none">
                               Languages
                               <ChevronDown className="h-4 w-4" />
                             </button>
