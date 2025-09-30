@@ -1,3 +1,4 @@
+
 'use client';
 
 import Image from 'next/image';
@@ -11,8 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Feather, BookOpen, MessageCircle, ArrowRight, GraduationCap, Languages, Laptop, MessageSquareQuote, TrendingUp, Users, Target, Lightbulb, Globe } from 'lucide-react';
-import { ContactForm } from '@/components/contact-form';
-import { Testimonials } from '@/components/testimonials';
+import dynamic from 'next/dynamic';
 import * as React from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import {
@@ -33,6 +33,15 @@ import { CourseCategoryToggle } from '@/components/course-category-toggle';
 import './sparkle-button.css';
 import './io-button.css';
 import { Balancer } from 'react-wrap-balancer';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const ContactForm = dynamic(() => import('@/components/contact-form').then(mod => mod.ContactForm), {
+  loading: () => <Skeleton className="h-[500px] w-full max-w-lg" />,
+});
+
+const Testimonials = dynamic(() => import('@/components/testimonials').then(mod => mod.Testimonials), {
+  loading: () => <Skeleton className="h-[400px] w-full max-w-5xl" />,
+});
 
 const benefits = [
   {

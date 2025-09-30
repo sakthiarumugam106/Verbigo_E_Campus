@@ -1,8 +1,16 @@
+
+'use client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CareersForm } from '@/components/careers-form';
-import { MissionVision } from '@/components/mission-vision';
+import dynamic from 'next/dynamic';
 import { jobOpenings } from '@/lib/careers';
+import { Skeleton } from '@/components/ui/skeleton';
+
+const MissionVision = dynamic(() => import('@/components/mission-vision').then(mod => mod.MissionVision), { 
+    ssr: false,
+    loading: () => <div className="w-full max-w-6xl mx-auto"><Skeleton className="h-[400px] w-full" /></div>
+});
 
 export default function CareersPage() {
   return (
