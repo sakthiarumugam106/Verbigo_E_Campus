@@ -108,14 +108,14 @@ function ValuesSection() {
     }, [pathname]);
 
     React.useEffect(() => {
-        if (!isMobile || !sectionRef.current) return;
+        if (!isMobile) return;
 
         const handleScroll = () => {
             if (sectionRef.current) {
                 const { top, bottom } = sectionRef.current.getBoundingClientRect();
                 const isOutOfView = bottom < 0 || top > window.innerHeight;
                 
-                if (isOutOfView && openItem !== undefined) {
+                if (isOutOfView) {
                     setOpenItem(undefined);
                 }
             }
@@ -126,7 +126,7 @@ function ValuesSection() {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [isMobile, openItem]);
+    }, [isMobile]);
 
     if (!isClient) {
         return <Skeleton className="h-[400px] w-full" />;
@@ -138,10 +138,10 @@ function ValuesSection() {
                 <Accordion type="single" collapsible className="w-full space-y-4" value={openItem} onValueChange={setOpenItem}>
                   {values.map((value, index) => (
                     <AccordionItem key={index} value={`item-${index}`} className="neumorphic-outer rounded-lg border-none overflow-hidden">
-                        <AccordionTrigger className="p-4 hover:no-underline w-full justify-start">
-                            <div className="flex items-center gap-4">
+                        <AccordionTrigger className="p-4 hover:no-underline w-full">
+                            <div className="flex items-center gap-4 justify-start w-full">
                                 {value.icon}
-                                <h3 className="text-xl font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
+                                <h3 className="text-xl font-semibold text-primary dark:text-primary-foreground text-left">{value.title}</h3>
                             </div>
                         </AccordionTrigger>
                         <AccordionContent className="p-4 pt-0">
@@ -424,5 +424,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
