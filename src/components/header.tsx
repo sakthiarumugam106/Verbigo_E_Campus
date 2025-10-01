@@ -35,7 +35,7 @@ export function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { showLoader } = useLoading();
+  const { showLoader, hideLoader } = useLoading();
 
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -48,12 +48,12 @@ export function Header() {
          if (element) {
             showLoader();
             element.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(useLoading().hideLoader, 500);
+            setTimeout(hideLoader, 500);
          }
       } else if (href === '/') {
         showLoader();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(useLoading().hideLoader, 500);
+        setTimeout(hideLoader, 500);
       }
       return;
     }
@@ -67,7 +67,6 @@ export function Header() {
     }
   };
   
-  const { hideLoader } = useLoading();
   React.useEffect(() => {
     // Hide loader on initial mount and on path changes
     hideLoader();
