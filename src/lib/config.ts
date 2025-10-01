@@ -23,11 +23,11 @@ export const siteConfig = {
   },
   assets: {
     baseUrl: BASE_URL,
-    emailIcon: `${BASE_URL}/icons/new-post.png`,
-    phoneIcon: `${BASE_URL}/icons/phone.png`,
-    linkedinIcon: `${BASE_URL}/icons/linkedin.png`,
-    instagramIcon: `${BASE_URL}/icons/instagram-new.png`,
-    twitterIcon: `${BASE_URL}/icons/twitterx.png`,
+    emailIcon: `https://img.icons8.com/ios-filled/50/new-post.png`,
+    phoneIcon: `https://img.icons8.com/ios-filled/50/phone.png`,
+    linkedinIcon: `https://img.icons8.com/ios-filled/50/linkedin.png`,
+    instagramIcon: `https://img.icons8.com/ios-filled/50/instagram-new.png`,
+    twitterIcon: `https://img.icons8.com/ios-filled/50/twitterx.png`,
   }
 };
 

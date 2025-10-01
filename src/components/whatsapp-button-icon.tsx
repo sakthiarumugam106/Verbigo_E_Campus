@@ -7,14 +7,14 @@ export const WhatsAppButtonIcon = ({ className }: { className?: string }) => (
     <Image
         width="50"
         height="50"
-        src="/icons/whatsapp-white.png"
+        src="https://img.icons8.com/material-outlined/50/ffffff/whatsapp--v1.png"
         alt="whatsapp"
         className="absolute inset-0 h-full w-full opacity-100 transition-opacity group-hover:opacity-0"
     />
     <Image
         width="50"
         height="50"
-        src="/icons/whatsapp-green.png"
+        src="https://img.icons8.com/material-outlined/50/40C351/whatsapp--v1.png"
         alt="whatsapp"
         className="absolute inset-0 h-full w-full opacity-0 transition-opacity group-hover:opacity-100"
     />
