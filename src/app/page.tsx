@@ -103,22 +103,22 @@ function ValuesSection() {
 
     if (isMobile) {
         return (
-            <div className="mx-auto mt-8 max-w-3xl neumorphic-outer rounded-lg p-2">
-                <Accordion type="single" collapsible className="w-full">
-                    {values.map((value, index) => (
-                        <AccordionItem key={index} value={`item-${index}`} className="border-b-0">
-                             <AccordionTrigger className="text-lg font-medium text-left p-4 hover:no-underline rounded-md hover:bg-primary/5">
-                                 <div className="flex items-center gap-4">
-                                    {React.cloneElement(value.icon, { className: "h-8 w-8 text-primary dark:text-primary-foreground" })}
-                                    <span className="flex-1 text-base font-semibold text-primary dark:text-primary-foreground">{value.title}</span>
-                                 </div>
-                             </AccordionTrigger>
-                             <AccordionContent className="text-base text-muted-foreground dark:text-foreground/80 px-4">
-                                {value.description}
-                             </AccordionContent>
-                        </AccordionItem>
-                    ))}
-                </Accordion>
+             <div
+                className="mx-auto grid grid-cols-1 gap-6 py-12"
+            >
+                {values.map((value, index) => (
+                     <div key={index}>
+                        <Card className="h-full flex flex-col justify-start neumorphic-outer">
+                            <CardHeader className="flex flex-row items-center gap-4 pb-4">
+                                {value.icon}
+                                <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                            </CardContent>
+                        </Card>
+                     </div>
+                ))}
             </div>
         );
     }
