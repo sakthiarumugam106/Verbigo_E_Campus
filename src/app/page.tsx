@@ -134,11 +134,12 @@ export default function HomePage() {
     e.preventDefault();
     showLoader();
     router.push(href);
-  }
+  };
 
-  const handleCourseCardClick = (slug: string) => {
+  const handleCourseCardClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
     showLoader();
-    router.push(`/courses/${slug}`);
+    router.push(href);
   };
 
   return (
@@ -258,11 +259,13 @@ export default function HomePage() {
               {filteredCourses.map((course) => (
                  <CarouselItem key={course.slug} className="md:basis-1/2 lg:basis-1/3 pl-4">
                    <div className="p-1 h-full">
-                    <Card className="neumorphic-outer group h-full overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
-                      <div
-                        className="flex flex-col h-full cursor-pointer"
-                        onClick={() => handleCourseCardClick(course.slug)}
-                      >
+                    <Link
+                      href={`/courses/${course.slug}`}
+                      onClick={(e) => handleCourseCardClick(e, `/courses/${course.slug}`)}
+                      className="flex flex-col h-full cursor-pointer"
+                      prefetch={true}
+                    >
+                      <Card className="neumorphic-outer group h-full overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
                         <div className="overflow-hidden rounded-t-lg">
                           <Image
                             src={course.image}
@@ -280,8 +283,8 @@ export default function HomePage() {
                             Read More <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                           </div>
                         </CardContent>
-                      </div>
-                    </Card>
+                      </Card>
+                    </Link>
                   </div>
                 </CarouselItem>
               ))}
