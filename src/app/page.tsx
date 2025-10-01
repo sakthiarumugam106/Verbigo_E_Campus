@@ -107,13 +107,13 @@ function ValuesSection() {
                 <Accordion type="single" collapsible className="w-full space-y-4">
                   {values.map((value, index) => (
                     <AccordionItem key={index} value={`item-${index}`} className="neumorphic-outer rounded-lg border-none overflow-hidden">
-                        <AccordionTrigger className="p-4 hover:no-underline flex justify-start gap-4">
-                            <div className="flex items-center gap-4">
+                        <AccordionTrigger className="p-4 hover:no-underline w-full">
+                            <div className="flex items-center justify-start gap-4">
                                 {value.icon}
                                 <h3 className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</h3>
                             </div>
                         </AccordionTrigger>
-                        <AccordionContent className="p-4 pt-0">
+                        <AccordionContent className="p-4 pt-0 text-left">
                             <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
                         </AccordionContent>
                     </AccordionItem>
