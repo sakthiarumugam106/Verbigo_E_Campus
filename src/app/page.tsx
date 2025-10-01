@@ -27,6 +27,7 @@ import { CourseCategoryToggle } from '@/components/course-category-toggle';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useRouter } from 'next/navigation';
 import { useLoading } from '@/components/loading-provider';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const ContactForm = dynamic(() => import('@/components/contact-form').then(mod => mod.ContactForm), {
   loading: () => <Skeleton className="h-[500px] w-full max-w-lg" />,
@@ -89,6 +90,39 @@ const faqItems = [
 ];
 
 function ValuesSection() {
+    const isMobile = useIsMobile();
+    const [isClient, setIsClient] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return <Skeleton className="h-[400px] w-full" />;
+    }
+
+    if (isMobile) {
+        return (
+            <div className="mx-auto mt-8 max-w-3xl neumorphic-outer rounded-lg p-2">
+                <Accordion type="single" collapsible className="w-full">
+                    {values.map((value, index) => (
+                        <AccordionItem key={index} value={`item-${index}`} className="border-b-0">
+                             <AccordionTrigger className="text-lg font-medium text-left p-4 hover:no-underline rounded-md hover:bg-primary/5">
+                                 <div className="flex items-center gap-4">
+                                    {React.cloneElement(value.icon, { className: "h-8 w-8 text-primary dark:text-primary-foreground" })}
+                                    <span className="flex-1 text-base font-semibold text-primary dark:text-primary-foreground">{value.title}</span>
+                                 </div>
+                             </AccordionTrigger>
+                             <AccordionContent className="text-base text-muted-foreground dark:text-foreground/80 px-4">
+                                {value.description}
+                             </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </div>
+        );
+    }
+
     return (
          <div
             className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12"
