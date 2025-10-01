@@ -103,7 +103,9 @@ function ValuesSection() {
 
     React.useEffect(() => {
         // Reset accordion when navigating away
-        setOpenItem(undefined);
+        if (pathname !== '/') {
+            setOpenItem(undefined);
+        }
     }, [pathname]);
 
     React.useEffect(() => {
@@ -116,7 +118,7 @@ function ValuesSection() {
                     setOpenItem(undefined);
                 }
             },
-            { threshold: 0 } // a threshold of 0 means the callback will run as soon as one pixel is visible/hidden
+            { threshold: 0 } // A threshold of 0 means the callback will run as soon as the element is no longer visible.
         );
 
         observer.observe(sectionRef.current);
@@ -138,13 +140,13 @@ function ValuesSection() {
                 <Accordion type="single" collapsible className="w-full space-y-4" value={openItem} onValueChange={setOpenItem}>
                   {values.map((value, index) => (
                     <AccordionItem key={index} value={`item-${index}`} className="neumorphic-outer rounded-lg border-none overflow-hidden">
-                        <AccordionTrigger className="p-4 hover:no-underline w-full justify-start">
+                        <AccordionTrigger className="p-4 hover:no-underline w-full">
                             <div className="flex items-center gap-4">
                                 {value.icon}
                                 <h3 className="text-xl font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
                             </div>
                         </AccordionTrigger>
-                        <AccordionContent className="p-4 pt-0 text-left">
+                        <AccordionContent className="p-4 pt-0">
                             <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
                         </AccordionContent>
                     </AccordionItem>
