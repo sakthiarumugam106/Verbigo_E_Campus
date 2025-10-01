@@ -1,4 +1,3 @@
-'use client';
 
 import { courses } from '@/lib/courses';
 import { Button } from '@/components/ui/button';
