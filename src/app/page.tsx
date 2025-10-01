@@ -145,7 +145,7 @@ function ValuesSection() {
                             <AccordionTrigger className="p-4 hover:no-underline rounded-md hover:bg-primary/5">
                                 <div className="flex items-center gap-4">
                                     {value.icon}
-                                    <h3 className="text-xl font-semibold text-primary dark:text-primary-foreground text-left">{value.title}</h3>
+                                    <h3 className="text-xl font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent>
@@ -429,5 +429,3 @@ export default function HomePage() {
     </>
   );
 }
-
-    
