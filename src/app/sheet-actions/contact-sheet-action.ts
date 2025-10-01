@@ -2,7 +2,10 @@
 'use server';
 
 // This URL will post to your Google Sheet for contact form submissions
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby5t9aPz1gO2j2VpT4Q4T9c8G7f6E5d4C3b2A1Z0/exec"; 
+//DEV
+//const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby5t9aPz1gO2j2VpT4Q4T9c8G7f6E5d4C3b2A1Z0/exec"; 
+//PROD
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5vb91gl-0e-AgI_A2cG2s1amQJHOUyyZ5EJetkHSyAYxuszof7Pe7MUsHcJ3vgAkZow/exec"; 
 
 type ContactFormData = {
   name: string;
