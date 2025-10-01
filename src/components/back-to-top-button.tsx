@@ -7,15 +7,49 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 export function BackToTopButton() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isScrollVisible, setIsScrollVisible] = useState(false);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-  const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    const toggleScrollVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setIsScrollVisible(true);
+      } else {
+        setIsScrollVisible(false);
+      }
+    };
+
+    const footer = document.getElementById('page-footer');
+    if (!footer) {
+        window.addEventListener('scroll', toggleScrollVisibility);
+        return () => window.removeEventListener('scroll', toggleScrollVisibility);
     }
-  };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFooterVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: "0px 0px 100px 0px" // Trigger a bit before it's fully in view
+      }
+    );
+    
+    observer.observe(footer);
+    window.addEventListener('scroll', toggleScrollVisibility);
+
+    return () => {
+      observer.unobserve(footer);
+      window.removeEventListener('scroll', toggleScrollVisibility);
+    };
+  }, [isClient]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -23,14 +57,8 @@ export function BackToTopButton() {
       behavior: 'smooth',
     });
   };
-
-  useEffect(() => {
-    window.addEventListener('scroll', toggleVisibility);
-
-    return () => {
-      window.removeEventListener('scroll', toggleVisibility);
-    };
-  }, []);
+  
+  const isButtonVisible = isScrollVisible && !isFooterVisible;
 
   return (
     <Button
@@ -38,8 +66,8 @@ export function BackToTopButton() {
       size="icon"
       onClick={scrollToTop}
       className={cn(
-        'fixed bottom-48 right-6 z-50 h-12 w-12 rounded-full shadow-lg transition-opacity hover:bg-primary hover:text-primary-foreground md:bottom-48',
-        isVisible ? 'opacity-100' : 'opacity-0'
+        'fixed bottom-48 right-6 z-40 h-12 w-12 rounded-full shadow-lg transition-all duration-300 md:bottom-48',
+        isButtonVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
       )}
       aria-label="Go to top"
     >

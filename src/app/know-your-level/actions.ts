@@ -7,6 +7,7 @@ import { siteConfig } from '@/lib/config';
 import { LevelAssessmentOutput } from '@/ai/flows/level-assessment-flow';
 import AssessmentReportAdminEmail from '@/emails/assessment-report-admin-email';
 import AssessmentReportUserEmail from '@/emails/assessment-report-user-email';
+import { sendEmail } from '@/lib/email-service';
 
 const UserDetailsSchema = z.object({
   name: z.string(),
@@ -40,56 +41,39 @@ export async function sendAssessmentReport(data: SendReportData): Promise<{ succ
       error: 'Invalid data provided.',
     };
   }
-  
-  if (!process.env.RESEND_API_KEY) {
-    console.error('Resend API Key is not set. Emails not sent.');
-    return { success: false, error: 'Email service is not configured.' };
-  }
 
   const { report, userDetails } = validatedFields.data;
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  let userEmailSuccess = false;
 
-  // NOTE: The 'from' address must be from a domain you have verified in Resend (e.g., 'hello@verbigo.in')
-  // to successfully send emails to users. Using 'onboarding@resend.dev' is for development only.
-  const fromAddress = 'Verbigo <onboarding@resend.dev>';
-
+  // 1. Send report to user via Nodemailer/Gmail
   try {
-    // Attempt to send email to the admin
-    const adminEmailPromise = resend.emails.send({
-      from: fromAddress,
-      to: siteConfig.email,
-      subject: `New English Assessment Report for ${userDetails.name}`,
-      react: AssessmentReportAdminEmail({ report, userDetails }),
+    const userEmailResult = await sendEmail({
+        to: userDetails.email,
+        subject: 'Your Verbigo English Assessment Report',
+        react: AssessmentReportUserEmail({ report, name: userDetails.name }),
     });
-
-    // Attempt to send email to the user
-    // IMPORTANT: This will FAIL until you verify your domain with Resend and use a 'from' address
-    // from that domain. On the free/dev plan, Resend only allows sending TO verified emails.
-    const userEmailPromise = resend.emails.send({
-      from: fromAddress,
-      to: userDetails.email, 
-      subject: 'Your Verbigo English Assessment Report',
-      react: AssessmentReportUserEmail({ report, name: userDetails.name }),
-    });
-
-    const [adminResult, userResult] = await Promise.allSettled([adminEmailPromise, userEmailPromise]);
-
-    if (adminResult.status === 'rejected') {
-        console.error("Failed to send admin email:", adminResult.reason);
+    if (userEmailResult.success) {
+        userEmailSuccess = true;
     }
-    if (userResult.status === 'rejected') {
-        console.error("Failed to send user email (This is expected until domain is verified):", userResult.reason);
-    }
-    
-    // We consider it a success if the admin email is sent, as the user email is expected to fail without domain verification.
-    if (adminResult.status === 'fulfilled') {
-      return { success: true };
-    } else {
-      return { success: false, error: 'Failed to send admin notification email.' };
-    }
-
-  } catch (error: any) {
-    console.error('Error in sendAssessmentReport function:', error);
-    return { success: false, error: 'An unexpected error occurred while sending emails.' };
+  } catch(e) {
+      console.error("Nodemailer API Error (User):", e);
   }
+
+
+  // 2. Send notification to admin via Resend
+  if (process.env.RESEND_API_KEY) {
+    try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+            from: 'Verbigo <onboarding@resend.dev>',
+            to: siteConfig.email,
+            subject: `New English Assessment Report for ${userDetails.name}`,
+            react: AssessmentReportAdminEmail({ report, userDetails }),
+        });
+    } catch (adminEmailError) {
+        console.error('Failed to send admin email via Resend:', adminEmailError);
+    }
+  }
+
+  return { success: true };
 }

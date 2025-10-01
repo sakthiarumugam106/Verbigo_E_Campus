@@ -11,8 +11,9 @@ import { submitDemoRequest, type DemoFormState } from '@/app/get-demo/actions';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import { Check, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 const initialState: DemoFormState = {
   message: '',
@@ -30,8 +31,8 @@ type CountryCode = keyof typeof countryCodes;
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" className="w-full" disabled={pending}>
-      {pending ? 'Submitting...' : 'Submit'}
+    <Button type="submit" className="w-full" disabled={pending} useNeumorphic={false}>
+      {pending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/>Submitting...</> : 'Submit'}
     </Button>
   );
 }
@@ -113,57 +114,44 @@ export function GetDemoForm() {
       <div className="space-y-2">
         <Label htmlFor="phoneNumberInput">Phone Number</Label>
         <div className="flex items-center">
-          <Select value={countryCode} onValueChange={handleCountryCodeChange}>
-            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
-                <SelectValue>
-                  {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
-                </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-                {Object.entries(countryCodes).map(([code, {label}]) => (
-                    <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
-                ))}
-                <SelectItem value="Other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-          {countryCode === 'Other' ? (
-              <Input
-                id="otherCountryCode"
-                name="otherCountryCode"
-                placeholder="Code"
-                value={otherCountryCode}
-                onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                className="rounded-l-none border-l-0 w-[80px]"
-                required
-              />
-          ) : (
-              <Input 
-                id="phoneNumberInput"
-                type="tel" 
-                name="phoneNumberInput"
-                placeholder="1234567890"
-                value={phoneNumber} 
-                onChange={handlePhoneNumberChange} 
-                maxLength={phoneMaxLength}
-                className="rounded-l-none"
-                required 
-              />
-          )}
-        </div>
-        {countryCode === 'Other' && (
-          <div className="grid gap-2 text-left mt-2">
-            <Label htmlFor="phoneNumberOther">Phone Number</Label>
+            <Select value={countryCode} onValueChange={handleCountryCodeChange}>
+              <SelectTrigger useNeumorphic={false} className="w-[130px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r">
+                  <SelectValue>
+                    {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                  </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                  {Object.entries(countryCodes).map(([code, {label}]) => (
+                      <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                  ))}
+                  <SelectItem value="Other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+          <div className="flex w-full">
+            {countryCode === 'Other' && (
+                <Input
+                  id="otherCountryCode"
+                  name="otherCountryCode"
+                  placeholder="Code"
+                  value={otherCountryCode}
+                  onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                  className="rounded-none border-l-0 w-[80px]"
+                  required
+                />
+            )}
             <Input 
-                id="phoneNumberOther"
-                type="tel" 
-                name="phoneNumberInput"
-                placeholder="1234567890"
-                value={phoneNumber} 
-                onChange={handlePhoneNumberChange}
-                required 
-              />
+              id="phoneNumberInput"
+              type="tel" 
+              name="phoneNumberInput"
+              placeholder="1234567890"
+              value={phoneNumber} 
+              onChange={handlePhoneNumberChange} 
+              maxLength={phoneMaxLength}
+              className={cn("rounded-l-none", countryCode === 'Other' && 'border-l-0')}
+              required 
+            />
           </div>
-        )}
+        </div>
         {state.errors?.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber[0]}</p>}
       </div>
       <SubmitButton />
@@ -181,7 +169,7 @@ export function GetDemoForm() {
                             damping: 20,
                             delay: 0.2,
                         }}
-                        className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center"
+                        className="h-20 w-20 bg-background neumorphic-outer rounded-full flex items-center justify-center"
                     >
                          <motion.div
                             initial={{ scale: 0.5, opacity: 0 }}

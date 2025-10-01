@@ -1,7 +1,7 @@
 
 'use client';
 
-import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { VerbigoLogo } from './verbigo-logo';
 import { cn } from '@/lib/utils';
@@ -48,6 +48,15 @@ export function useLoading() {
 export function GlobalLoader() {
     const { isLoading } = useLoading();
 
+    useEffect(() => {
+        if (isLoading) {
+            document.body.classList.add('loading-active');
+        } else {
+            document.body.classList.remove('loading-active');
+        }
+    }, [isLoading]);
+
+
     return (
         <AnimatePresence>
             {isLoading && (
@@ -56,7 +65,7 @@ export function GlobalLoader() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="fixed inset-0 z-[200] flex items-center justify-center bg-background/80 backdrop-blur-sm"
+                    className="fixed inset-0 z-[200] flex items-center justify-center bg-background/80 backdrop-blur-sm pointer-events-auto"
                 >
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}

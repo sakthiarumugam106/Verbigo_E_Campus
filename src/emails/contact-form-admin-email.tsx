@@ -4,19 +4,15 @@ import {
   Container,
   Head,
   Heading,
-  Hr,
   Html,
   Preview,
   Section,
   Text,
-  Column,
-  Row,
   Link,
   Img,
 } from '@react-email/components';
 import * as React from 'react';
 import { siteConfig } from '@/lib/config';
-
 
 interface ContactFormAdminEmailProps {
   name: string;
@@ -26,6 +22,15 @@ interface ContactFormAdminEmailProps {
   sheetSuccess: boolean;
 }
 
+const emailStyles = `
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+  }
+`;
+
 const ContactFormAdminEmail = ({
   name,
   email,
@@ -34,80 +39,69 @@ const ContactFormAdminEmail = ({
   sheetSuccess,
 }: ContactFormAdminEmailProps) => (
   <Html>
-    <Head />
+    <Head>
+      <style>{emailStyles}</style>
+    </Head>
     <Preview>New Contact Inquiry from {name}</Preview>
     <Body style={main}>
-      <Container style={container}>
+      <Container style={emailContainer}>
         <Section style={header}>
-          <Heading style={logoText}>Verbigo</Heading>
+          <Heading as="h1" style={headerH1}>
+            📬 New Contact Form Submission
+          </Heading>
         </Section>
-        <Section style={content}>
-          <Heading style={heading}>New Contact Inquiry</Heading>
-          
-          <Text style={label}>From:</Text>
-          <Text style={value}>{name} &lt;{email}&gt;</Text>
-
-          <Text style={label}>Phone Number:</Text>
-          <Text style={value}>{phoneNumber}</Text>
-          
-          <Text style={label}>Message:</Text>
-          <Text style={messageValue}>{message}</Text>
-          
-          <Hr style={hr} />
-
-          <Section style={statusSection}>
-            <Row>
-              <Column>
-                <Text style={statusText}>Data saved to Google Sheet:</Text>
-              </Column>
-              <Column style={{ width: '60px' }}>
-                <Text style={sheetSuccess ? statusSuccess : statusFailure}>
-                  {sheetSuccess ? '✔ Yes' : '✖ No'}
-                </Text>
-              </Column>
-            </Row>
+        <Section style={bodyContent}>
+          <Heading as="h2" style={bodyH2}>
+            User Details
+          </Heading>
+          <Text>Hello Admin,</Text>
+          <Text>
+            The following user has submitted their details via the contact
+            form:
+          </Text>
+          <Section style={userDetails}>
+            <Text style={detailItem}>
+              <strong>Name:</strong> {name}
+            </Text>
+            <Text style={detailItem}>
+              <strong>Email:</strong> {email}
+            </Text>
+            <Text style={detailItem}>
+              <strong>Phone:</strong> {phoneNumber}
+            </Text>
+            <Text style={detailItem}>
+              <strong>Message:</strong>
+              <br />
+              {message}
+            </Text>
+            <Text style={detailItem}>
+              <strong>Saved to Google Sheet:</strong>
+              <span
+                style={{
+                  color: sheetSuccess ? '#28a745' : '#dc3545',
+                  fontWeight: 'bold',
+                }}
+              >
+                {sheetSuccess ? ' ✔ Yes' : ' ✖ No'}
+              </span>
+            </Text>
           </Section>
         </Section>
-        <Section style={footer.container}>
-          <Row>
-            <Column>
-              <Text style={footer.heading}>Verbigo</Text>
-              <Text style={footer.subheading}>E-Campus for Language Intelligence</Text>
-            </Column>
-          </Row>
-          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '15px' }}>
-            <tr>
-              <td valign="top" style={{ width: '50%' }}>
-                <Link href={`mailto:${siteConfig.email}`} style={footer.link}>
-                  <Img src={siteConfig.assets.emailIcon} width="16" height="16" alt="Email" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
-                  <span style={{verticalAlign: 'middle'}}>{siteConfig.email}</span>
-                </Link>
-              </td>
-              <td valign="top" style={{ width: '50%' }}>
-                <Link href={`https://wa.me/${siteConfig.whatsappNumber.replace(/\D/g, '')}`} style={footer.link}>
-                  <Img src={siteConfig.assets.phoneIcon} width="16" height="16" alt="Phone" style={{ display: 'inline-block', marginRight: '8px', verticalAlign: 'middle' }}/>
-                  <span style={{verticalAlign: 'middle'}}>+{siteConfig.whatsappNumber}</span>
-                </Link>
-              </td>
-            </tr>
-          </table>
-          
-          <table width="100%" border={0} cellSpacing="0" cellPadding="0" style={{ paddingTop: '15px' }}>
-            <tr>
-              <td>
-                <Link href={siteConfig.socials.linkedin} style={{...footer.link, ...footer.social}}>
-                  <Img src={siteConfig.assets.linkedinIcon} width="24" height="24" alt="LinkedIn" />
-                </Link>
-                <Link href={siteConfig.socials.instagram} style={{...footer.link, ...footer.social}}>
-                  <Img src={siteConfig.assets.instagramIcon} width="24" height="24" alt="Instagram" />
-                </Link>
-                <Link href={siteConfig.socials.twitter} style={{...footer.link, ...footer.social}}>
-                  <Img src={siteConfig.assets.twitterIcon} width="24" height="24" alt="Twitter" />
-                </Link>
-              </td>
-            </tr>
-          </table>
-          <Text style={footer.copyright}>© {new Date().getFullYear()} Verbigo. All Rights Reserved.</Text>
+        <Section style={footer}>
+          <Text>Contact Us:</Text>
+          <Text>📞 {siteConfig.whatsappNumber} | ✉️ {siteConfig.email}</Text>
+          <Section style={socialIcons}>
+            <Link href={siteConfig.socials.linkedin}>
+              <Img src={siteConfig.assets.linkedinIcon} alt="LinkedIn" style={socialIconImg} />
+            </Link>
+            <Link href={siteConfig.socials.twitter}>
+              <Img src={siteConfig.assets.twitterIcon} alt="Twitter" style={socialIconImg} />
+            </Link>
+            <Link href={siteConfig.socials.instagram}>
+              <Img src={siteConfig.assets.instagramIcon} alt="Instagram" style={socialIconImg} />
+            </Link>
+          </Section>
+          <Text>&copy; {new Date().getFullYear()} Verbigo. All rights reserved.</Text>
         </Section>
       </Container>
     </Body>
@@ -117,133 +111,72 @@ const ContactFormAdminEmail = ({
 export default ContactFormAdminEmail;
 
 const main = {
-  backgroundColor: '#f0f5ff',
-  fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
-  padding: '20px 0',
+  margin: 0,
+  padding: 0,
+  fontFamily: 'Arial, sans-serif',
+  backgroundColor: '#f4f6f8',
 };
 
-const container = {
-  backgroundColor: '#ffffff',
-  margin: '0 auto',
-  width: '100%',
+const emailContainer = {
   maxWidth: '600px',
-  border: '1px solid #e0e0e0',
-  borderRadius: '8px',
-  overflow: 'hidden',
+  margin: 'auto',
+  backgroundColor: 'white',
+  borderRadius: '10px',
+  overflow: 'hidden' as const,
+  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
 };
 
 const header = {
-  backgroundColor: '#2e378c',
-  padding: '24px',
+  background: 'linear-gradient(135deg, #2A3C9F, #4700FF)',
+  padding: '25px',
   textAlign: 'center' as const,
-  backgroundImage: `url('https://firebasestudio-hosting.web.app/subtle-pattern.svg')`,
-  backgroundRepeat: 'repeat',
-  backgroundPosition: 'center',
+  color: 'white',
 };
 
-const logoText = {
-  color: '#ffffff',
-  fontSize: '32px',
-  fontWeight: 'bold',
+const headerH1 = {
   margin: 0,
-  fontFamily: "'Poppins', sans-serif",
+  fontSize: '28px',
 };
 
-const content = { padding: '30px 40px' };
-
-const heading = {
-  fontSize: '24px',
-  fontWeight: 'bold',
-  color: '#333',
-  textAlign: 'center' as const,
-  marginBottom: '30px',
+const bodyContent = {
+  padding: '20px',
 };
 
-const label = {
-  fontSize: '14px',
-  fontWeight: '600',
-  color: '#555',
-  margin: '0 0 5px',
+const bodyH2 = {
+  color: '#2A3C9F',
+  fontSize: '22px',
+  marginBottom: '10px',
 };
 
-const value = {
+const userDetails = {
+  background: '#f9f9f9',
+  borderRadius: '8px',
+  padding: '15px',
+  marginTop: '20px',
+  borderLeft: '4px solid #2A3C9F',
+};
+
+const detailItem = {
+  margin: '8px 0',
   fontSize: '16px',
-  color: '#333',
-  margin: '0 0 20px',
-};
-
-const messageValue = {
-    ...value,
-    padding: '15px',
-    backgroundColor: '#f9f9f9',
-    borderRadius: '5px',
-    border: '1px solid #eee',
-    whiteSpace: 'pre-wrap' as const,
-};
-
-const hr = { borderColor: '#e6ebf1', margin: '30px 0' };
-
-const statusSection = {
-  padding: '10px 20px',
-  backgroundColor: '#f9f9f9',
-  borderRadius: '5px',
-};
-
-const statusText = {
-  margin: 0,
-  fontSize: '14px',
-  color: '#555',
-};
-
-const statusSuccess = {
-  margin: 0,
-  fontSize: '14px',
-  fontWeight: 'bold',
-  color: '#28a745',
-};
-
-const statusFailure = {
-  margin: 0,
-  fontSize: '14px',
-  fontWeight: 'bold',
-  color: '#dc3545',
+  lineHeight: '1.6',
 };
 
 const footer = {
-  container: {
-    backgroundColor: '#0a192f',
-    color: '#a8b2d1',
-    padding: '25px 40px',
-  },
-  heading: {
-    color: '#ffffff',
-    fontSize: '20px',
-    fontWeight: 'bold',
-    margin: '0',
-    padding: '0',
-    fontFamily: "'Poppins', sans-serif",
-  },
-  subheading: {
-    color: '#a8b2d1',
-    fontSize: '12px',
-    margin: '4px 0 0',
-    padding: '0',
-  },
-  link: {
-    color: '#a8b2d1',
-    textDecoration: 'none',
-    fontSize: '12px',
-  },
-  social: {
-    display: 'inline-block',
-    marginRight: '10px',
-  },
-  copyright: {
-    color: '#8892b0',
-    fontSize: '10px',
-    textAlign: 'center' as const,
-    paddingTop: '15px',
-    borderTop: '1px solid #1a2c4e',
-    marginTop: '15px',
-  },
+  backgroundColor: '#f4f6f8',
+  padding: '15px',
+  textAlign: 'center' as const,
+  fontSize: '14px',
+  color: '#777',
+};
+
+const socialIcons = {
+  margin: '10px 0',
+};
+
+const socialIconImg = {
+  width: '24px',
+  height: '24px',
+  margin: '0 8px',
+  display: 'inline-block',
 };

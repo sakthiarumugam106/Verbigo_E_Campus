@@ -20,12 +20,12 @@ export const siteConfig = {
     careers: "https://script.google.com/macros/s/AKfycbztmUYt4_YyE0ZbAu-_uDLQW6jvMLMy6UKfOtU5D-hLpdNCK1mtVGy-f97q2a4h_qEi/exec",
   },
   assets: {
-    baseUrl: 'https://firebasestudio-hosting.web.app',
-    emailIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/new-post.png',
-    phoneIcon: 'https://img.icons8.com/material-outlined/16/a8b2d1/phone.png',
-    linkedinIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/linkedin.png',
-    instagramIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/instagram-new.png',
-    twitterIcon: 'https://img.icons8.com/ios-filled/24/a8b2d1/twitterx.png',
+    baseUrl: '', // Base URL is now local
+    emailIcon: '/icons/new-post.png',
+    phoneIcon: '/icons/phone.png',
+    linkedinIcon: '/icons/linkedin.png',
+    instagramIcon: '/icons/instagram-new.png',
+    twitterIcon: '/icons/twitterx.png',
   }
 };
 
@@ -47,12 +47,13 @@ export const whatsapp = {
     return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
   },
   getTutorInquiryUrl(details: { name: string, email: string, whatsapp: string, state: string, language: string, schedule: string }) {
+     const whatsappPhoneNumber = details.whatsapp.replace(/\D/g, '');
      const message = `
       New Tutor Request!
       -----------------------------
       Name: ${details.name}
       Email: ${details.email}
-      WhatsApp: ${details.whatsapp}
+      WhatsApp: ${whatsappPhoneNumber}
       State: ${details.state}
       Native Language: ${details.language}
       Schedule Preference: ${details.schedule}

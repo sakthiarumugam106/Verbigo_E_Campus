@@ -15,6 +15,8 @@ import { useEffect, useState, useTransition } from 'react';
 import { WhatsAppButtonIcon } from './whatsapp-button-icon';
 import { sendAssessmentReport } from '@/app/know-your-level/actions';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Check } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 type Question = {
   question: string;
@@ -116,62 +118,48 @@ function UserInfoForm({ onFormSubmit, isSubmitting }: { onFormSubmit: (details: 
       <div className="space-y-2">
         <Label htmlFor="phone">Phone Number</Label>
         <div className="flex items-center">
-          <Select value={countryCode} onValueChange={handleCountryCodeChange} disabled={isSubmitting}>
-            <SelectTrigger className="w-[120px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r-0">
-                <SelectValue>
-                  {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
-                </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-                {Object.entries(countryCodes).map(([code, {label}]) => (
-                    <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
-                ))}
-                <SelectItem value="Other">Other</SelectItem>
-            </SelectContent>
-          </Select>
-          {countryCode === 'Other' ? (
-              <Input
-                id="otherCountryCode"
-                name="otherCountryCode"
-                placeholder="Code"
-                value={otherCountryCode}
-                onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
-                className="rounded-l-none border-l-0 w-[80px]"
-                required
-                disabled={isSubmitting}
-              />
-          ) : (
-              <Input 
-                id="phone"
-                type="tel" 
-                name="phoneInput"
-                placeholder="1234567890"
-                value={phoneNumber} 
-                onChange={handlePhoneNumberChange} 
-                maxLength={phoneMaxLength}
-                className="rounded-l-none"
-                required 
-                disabled={isSubmitting}
-              />
-          )}
+            <Select value={countryCode} onValueChange={handleCountryCodeChange} disabled={isSubmitting}>
+                <SelectTrigger useNeumorphic={false} className="w-[130px] rounded-r-none focus:ring-0 focus:ring-offset-0 border-r">
+                    <SelectValue>
+                      {countryCode === 'Other' ? 'Other' : `${countryCodes[countryCode as CountryCode]?.label} (+${countryCode})`}
+                    </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                    {Object.entries(countryCodes).map(([code, {label}]) => (
+                        <SelectItem key={code} value={code}>{label} (+{code})</SelectItem>
+                    ))}
+                    <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+            </Select>
+            <div className="flex w-full">
+                {countryCode === 'Other' && (
+                    <Input
+                        id="otherCountryCode"
+                        name="otherCountryCode"
+                        placeholder="Code"
+                        value={otherCountryCode}
+                        onChange={(e) => setOtherCountryCode(e.target.value.replace(/\D/g, ''))}
+                        className="rounded-none border-l-0 w-[80px]"
+                        required
+                        disabled={isSubmitting}
+                      />
+                )}
+                <Input 
+                    id="phone"
+                    type="tel" 
+                    name="phoneInput"
+                    placeholder="1234567890"
+                    value={phoneNumber} 
+                    onChange={handlePhoneNumberChange} 
+                    maxLength={phoneMaxLength}
+                    className={cn("rounded-l-none", countryCode === 'Other' && 'border-l-0')}
+                    required 
+                    disabled={isSubmitting}
+                />
+            </div>
         </div>
-        {countryCode === 'Other' && (
-          <div className="grid gap-2 text-left mt-2">
-            <Label htmlFor="phoneNumberOther">Phone Number</Label>
-            <Input 
-                id="phoneNumberOther"
-                type="tel" 
-                name="phoneInput"
-                placeholder="1234567890"
-                value={phoneNumber} 
-                onChange={handlePhoneNumberChange}
-                required 
-                disabled={isSubmitting}
-              />
-          </div>
-        )}
       </div>
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button type="submit" className="w-full" disabled={isSubmitting} useNeumorphic={false}>
           {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Sending Report...</> : 'View My Report'}
       </Button>
     </form>
@@ -330,10 +318,36 @@ export function LevelAssessment() {
 
   if (view === 'showing_report' && report) {
     return (
-        <Card className="border-green-500/50">
+        <Card className="neumorphic-outer border-green-500/50">
             <CardHeader className="text-center">
-                <CardTitle className="text-2xl font-bold text-green-600 flex items-center justify-center gap-2">
-                    <CheckCircle /> Assessment Complete!
+                <div className="flex justify-center items-center">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                            type: 'spring',
+                            stiffness: 260,
+                            damping: 20,
+                            delay: 0.2,
+                        }}
+                        className="h-20 w-20 bg-background neumorphic-outer rounded-full flex items-center justify-center"
+                    >
+                         <motion.div
+                            initial={{ scale: 0.5, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{
+                                type: 'spring',
+                                stiffness: 260,
+                                damping: 20,
+                                delay: 0.4,
+                            }}
+                        >
+                            <Check className="h-12 w-12 text-green-600" />
+                        </motion.div>
+                    </motion.div>
+                </div>
+                <CardTitle className="text-2xl font-bold text-green-600 flex items-center justify-center gap-2 pt-4">
+                     Assessment Complete!
                 </CardTitle>
                 <CardDescription>Here is your proficiency report{userDetails ? `, ${userDetails.name}`: ''}.</CardDescription>
             </CardHeader>
@@ -365,8 +379,8 @@ export function LevelAssessment() {
                 </div>
             </CardContent>
             <CardFooter className="flex-col sm:flex-row gap-4 pt-6">
-                <Button onClick={handleStart} variant="outline" className="w-full sm:w-auto">Start Over</Button>
-                <Button onClick={handleDiscussWithTutor} className="w-full sm:w-auto bg-green-600 hover:bg-green-700">
+                <Button onClick={handleStart} variant="outline" className="w-full sm:w-auto" useNeumorphic={false}>Start Over</Button>
+                <Button onClick={handleDiscussWithTutor} className="w-full sm:w-auto bg-green-600 hover:bg-green-700" useNeumorphic={false}>
                     <WhatsAppButtonIcon className="h-5 w-5"/> Discuss with Tutor
                 </Button>
             </CardFooter>
@@ -376,9 +390,9 @@ export function LevelAssessment() {
 
   if (view === 'collecting_info') {
       return (
-          <Card>
+          <Card className="neumorphic-outer">
               <CardHeader className="text-center">
-                  <CardTitle className="text-2xl font-bold text-primary">One Last Step!</CardTitle>
+                  <CardTitle className="text-2xl font-bold text-primary dark:text-primary-foreground">One Last Step!</CardTitle>
                   <CardDescription>Your report is ready. Please provide your details to view it and get a copy via email.</CardDescription>
               </CardHeader>
               <CardContent>
@@ -429,7 +443,7 @@ export function LevelAssessment() {
              {answerError && <p className="text-destructive text-sm">{answerError}</p>}
              {error && <p className="text-destructive text-sm">{error}</p>}
             <div className="flex justify-end">
-              <Button type="submit" disabled={isPending || !currentAnswer.trim() || wordCount < MIN_WORDS}>
+              <Button type="submit" disabled={isPending || !currentAnswer.trim() || wordCount < MIN_WORDS} useNeumorphic={false}>
                 {isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -447,7 +461,7 @@ export function LevelAssessment() {
 
   return (
       <div className="text-center">
-        <Button onClick={handleStart} size="lg">
+        <Button onClick={handleStart} size="lg" useNeumorphic={false}>
           <GraduationCap className="mr-2 h-5 w-5" /> Start Assessment
         </Button>
       </div>

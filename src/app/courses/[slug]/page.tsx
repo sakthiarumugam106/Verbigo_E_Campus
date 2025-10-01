@@ -1,4 +1,3 @@
-
 'use client';
 
 import { courses } from '@/lib/courses';
@@ -7,33 +6,23 @@ import { WhatsAppButtonIcon } from '@/components/whatsapp-button-icon';
 import { CheckCircle2, BookOpen } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { whatsapp } from '@/lib/config';
-import { useLoading } from '@/components/loading-provider';
 
 export default function CoursePage({ params }: { params: { slug: string } }) {
   const course = courses.find((c) => c.slug === params.slug);
-  const router = useRouter();
-  const { showLoader } = useLoading();
 
   if (!course) {
     notFound();
   }
   
-  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    showLoader();
-    router.push(href);
-  };
-
-
   return (
     <div className="bg-primary/5">
       <section className="container mx-auto px-4 md:px-6 py-12 md:py-20 lg:py-24">
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col justify-center space-y-6">
             <div className="space-y-4">
-               <Link href="/#courses" onClick={handleLinkClick('/#courses')} className="text-sm font-medium text-primary dark:text-primary-foreground hover:underline">
+               <Link href="/#courses" className="text-sm font-medium text-primary dark:text-primary-foreground hover:underline">
                 &larr; Back to Courses
               </Link>
               <div className="flex items-center gap-3">
@@ -60,18 +49,19 @@ export default function CoursePage({ params }: { params: { slug: string } }) {
                 </li>
               ))}
             </ul>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row pt-4">
-              <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+            <div className="flex flex-col gap-4 min-[400px]:flex-row pt-4">
+              <Button asChild size="lg" className="bg-green-600 text-white hover:bg-white hover:text-green-600 shadow-lg transform hover:-translate-y-1 transition-all duration-300 group" useNeumorphic={false}>
                 <Link href={whatsapp.getCourseInquiryUrl(course.title)} target="_blank" rel="noopener noreferrer">
-                  <WhatsAppButtonIcon className="h-5 w-5"/>
+                  <WhatsAppButtonIcon />
                   Enroll via WhatsApp
                 </Link>
               </Button>
-               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <Link href={whatsapp.getCourseDemoUrl(course.title)} target="_blank" rel="noopener noreferrer">
-                  Book a Demo
-                </Link>
-              </Button>
+               <Link href={whatsapp.getCourseDemoUrl(course.title)} target="_blank" rel="noopener noreferrer" className="md:hidden">
+                  <button className="btn h-11">
+                      <span className="btn-text-one">Book a Demo</span>
+                      <span className="btn-text-two">Now</span>
+                  </button>
+               </Link>
             </div>
           </div>
           <div className="flex items-center justify-center rounded-xl overflow-hidden shadow-2xl">

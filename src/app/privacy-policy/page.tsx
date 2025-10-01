@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -14,9 +13,9 @@ export default function PrivacyPolicyPage() {
   }, []);
 
   return (
-    <div className="bg-primary/5 min-h-screen py-16 md:py-24">
+    <div className="bg-background min-h-screen py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <Card className="max-w-4xl mx-auto shadow-lg">
+        <Card className="neumorphic-outer max-w-4xl mx-auto">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-primary dark:text-primary-foreground">Privacy Policy</CardTitle>
           </CardHeader>

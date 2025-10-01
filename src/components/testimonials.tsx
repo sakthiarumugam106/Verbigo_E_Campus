@@ -1,4 +1,3 @@
-
 'use client';
 
 import * as React from 'react';
@@ -50,7 +49,7 @@ export function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-4 h-full">
-                  <Card className="flex flex-col justify-between h-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <Card className="neumorphic-outer flex flex-col justify-between h-full neumorphic-outer-hover">
                     <CardContent className="flex flex-col items-center text-center p-6 gap-4">
                         <Quote className="w-10 h-10 text-primary/20" />
                         <StarRating rating={testimonial.rating} />
@@ -58,15 +57,17 @@ export function Testimonials() {
                             "{testimonial.review}"
                         </p>
                     </CardContent>
-                    <div className="bg-primary/5 p-4 flex flex-col items-center text-center mt-auto">
-                        <Image
-                            src={testimonial.userImage}
-                            alt={testimonial.name}
-                            width={64}
-                            height={64}
-                            className="rounded-full border-4 border-background mb-3"
-                             data-ai-hint={testimonial.aiHint}
-                        />
+                    <div className="bg-secondary p-4 flex flex-col items-center text-center mt-auto rounded-b-lg">
+                        <div className="w-16 h-16 rounded-full neumorphic-outer p-1 -mt-12 mb-3 bg-background">
+                            <Image
+                                src={testimonial.userImage}
+                                alt={testimonial.name}
+                                width={64}
+                                height={64}
+                                className="rounded-full"
+                                data-ai-hint={testimonial.aiHint}
+                            />
+                        </div>
                         <p className="font-semibold text-primary dark:text-primary-foreground">{testimonial.name}</p>
                         <p className="text-sm text-muted-foreground dark:text-foreground/80">{testimonial.role}</p>
                     </div>
@@ -75,8 +76,8 @@ export function Testimonials() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2" />
-          <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2" />
+          <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
+          <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
         </Carousel>
   );
 }
