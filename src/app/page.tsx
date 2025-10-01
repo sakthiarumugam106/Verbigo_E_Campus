@@ -25,7 +25,7 @@ import { courses } from '@/lib/courses';
 import { cn } from '@/lib/utils';
 import { CourseCategoryToggle } from '@/components/course-category-toggle';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useLoading } from '@/components/loading-provider';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -92,10 +92,41 @@ const faqItems = [
 function ValuesSection() {
     const isMobile = useIsMobile();
     const [isClient, setIsClient] = React.useState(false);
+    const [openItem, setOpenItem] = React.useState<string | undefined>();
+    const sectionRef = React.useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
+
 
     React.useEffect(() => {
         setIsClient(true);
     }, []);
+
+    React.useEffect(() => {
+        // Reset accordion when navigating away
+        setOpenItem(undefined);
+    }, [pathname]);
+
+    React.useEffect(() => {
+        if (!isMobile || !sectionRef.current) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                // If the section is not intersecting (is not visible), collapse the item.
+                if (!entry.isIntersecting) {
+                    setOpenItem(undefined);
+                }
+            },
+            { threshold: 0 } // a threshold of 0 means the callback will run as soon as one pixel is visible/hidden
+        );
+
+        observer.observe(sectionRef.current);
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, [isMobile]);
 
     if (!isClient) {
         return <Skeleton className="h-[400px] w-full" />;
@@ -103,14 +134,14 @@ function ValuesSection() {
 
     if (isMobile) {
         return (
-             <div className="mx-auto w-full max-w-2xl py-12">
-                <Accordion type="single" collapsible className="w-full space-y-4">
+             <div className="mx-auto w-full max-w-2xl py-12" ref={sectionRef}>
+                <Accordion type="single" collapsible className="w-full space-y-4" value={openItem} onValueChange={setOpenItem}>
                   {values.map((value, index) => (
                     <AccordionItem key={index} value={`item-${index}`} className="neumorphic-outer rounded-lg border-none overflow-hidden">
-                        <AccordionTrigger className="p-4 hover:no-underline w-full">
-                            <div className="flex items-center justify-start gap-4">
+                        <AccordionTrigger className="p-4 hover:no-underline w-full justify-start">
+                            <div className="flex items-center gap-4">
                                 {value.icon}
-                                <h3 className="text-xl font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
+                                <h3 className="text-xl font-semibold text-primary dark:text-primary-foreground text-left">{value.title}</h3>
                             </div>
                         </AccordionTrigger>
                         <AccordionContent className="p-4 pt-0 text-left">
