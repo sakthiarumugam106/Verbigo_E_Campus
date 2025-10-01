@@ -92,10 +92,39 @@ const faqItems = [
 function ValuesSection() {
     const isMobile = useIsMobile();
     const [isClient, setIsClient] = React.useState(false);
-    
+    const [activeValue, setActiveValue] = React.useState<string | undefined>();
+    const sectionRef = React.useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
+
     React.useEffect(() => {
         setIsClient(true);
     }, []);
+
+    const closeAccordion = React.useCallback(() => {
+        setActiveValue(undefined);
+    }, []);
+
+    React.useEffect(() => {
+        if (isMobile) {
+            const handleScroll = () => {
+                if (sectionRef.current) {
+                    const { top, bottom } = sectionRef.current.getBoundingClientRect();
+                    const isOutOfView = bottom < 0 || top > window.innerHeight;
+                    if (isOutOfView) {
+                        closeAccordion();
+                    }
+                }
+            };
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            return () => window.removeEventListener('scroll', handleScroll);
+        }
+    }, [isMobile, closeAccordion]);
+    
+    React.useEffect(() => {
+        closeAccordion();
+    }, [pathname, closeAccordion]);
+
 
     if (!isClient) {
         return <Skeleton className="h-[400px] w-full" />;
@@ -103,35 +132,35 @@ function ValuesSection() {
 
     if (isMobile) {
         return (
-            <Carousel
-                className="w-full max-w-xs mx-auto py-12"
-                opts={{ align: 'start', loop: true }}
-            >
-                <CarouselContent>
+            <div ref={sectionRef} className="mx-auto mt-12 max-w-3xl neumorphic-outer rounded-lg p-2">
+                <Accordion 
+                    type="single" 
+                    collapsible 
+                    className="w-full"
+                    value={activeValue}
+                    onValueChange={setActiveValue}
+                >
                     {values.map((value, index) => (
-                        <CarouselItem key={index}>
-                            <div className="p-1">
-                                <Card className="neumorphic-outer h-full">
-                                    <CardHeader className="flex flex-col items-center text-center gap-4 pb-4">
-                                        {value.icon}
-                                        <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
-                                    </CardHeader>
-                                    <CardContent className="text-center">
-                                        <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        </CarouselItem>
+                        <AccordionItem key={index} value={`item-${index}`} className="border-b-0">
+                            <AccordionTrigger className="p-4 hover:no-underline rounded-md hover:bg-primary/5">
+                                <div className="flex items-center gap-4">
+                                    {value.icon}
+                                    <h3 className="text-xl font-semibold text-primary dark:text-primary-foreground text-left">{value.title}</h3>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                            </AccordionContent>
+                        </AccordionItem>
                     ))}
-                </CarouselContent>
-                <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
-                <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
-            </Carousel>
+                </Accordion>
+            </div>
         );
     }
 
     return (
          <div
+            ref={sectionRef}
             className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12"
         >
             {values.map((value, index) => (
@@ -400,3 +429,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
