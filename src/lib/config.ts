@@ -6,26 +6,28 @@
  * and other site-wide settings to make them easily updatable.
  */
 
+const BASE_URL = 'https://verbigo.in';
+
 export const siteConfig = {
-  whatsappNumber: '7708071872',
-  email: 'sakthiarumugam106@gmail.com',
+  whatsappNumber: '9943834074',
+  email: 'verbigo.campus@gmail.com',
   socials: {
-    instagram: 'https://www.instagram.com/verbigo.in',
+    instagram: 'https://www.instagram.com/verbigo.campus?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
     twitter: 'https://twitter.com/verbigo_in',
-    linkedin: 'https://www.linkedin.com/company/verbigo',
+    linkedin: 'https://www.linkedin.com/company/verbigocampus/',
   },
   googleSheetUrls: {
-    contact: "https://script.google.com/macros/s/AKfycbzs942Zf1lwHmdIFOdc07dPRSvahKLv2NKIosImOtLMt7jdgLfbZm7NoWKNnQpf0m4/exec",
+    contact: "https://script.google.com/macros/s/AKfycbw5vb91gl-0e-AgI_A2cG2s1amQJHOUyyZ5EJetkHSyAYxuszof7Pe7MUsHcJ3vgAkZow/exec",
     demo: "https://script.google.com/macros/s/AKfycbxRofdOnZAsNKHtDVC3XgJnjJiSeGtBwPL6Ra4C2AlE9FrhvwzX3xpRBe3vorJyuWKg/exec",
-    careers: "https://script.google.com/macros/s/AKfycbztmUYt4_YyE0ZbAu-_uDLQW6jvMLMy6UKfOtU5D-hLpdNCK1mtVGy-f97q2a4h_qEi/exec",
+    careers: "https://script.google.com/macros/s/AKfycbzOZMsWTES11iGpKsO8lWAlBi83TUZTuGJA61ZQ4V-SdOBT-NniBfhkreVF5KbSPZLC/exec",
   },
   assets: {
-    baseUrl: '', // Base URL is now local
-    emailIcon: '/icons/new-post.png',
-    phoneIcon: '/icons/phone.png',
-    linkedinIcon: '/icons/linkedin.png',
-    instagramIcon: '/icons/instagram-new.png',
-    twitterIcon: '/icons/twitterx.png',
+    baseUrl: BASE_URL,
+    emailIcon: `https://img.icons8.com/ios-filled/50/new-post.png`,
+    phoneIcon: `https://img.icons8.com/ios-filled/50/phone.png`,
+    linkedinIcon: `https://img.icons8.com/ios-filled/50/linkedin.png`,
+    instagramIcon: `https://img.icons8.com/ios-filled/50/instagram-new.png`,
+    twitterIcon: `https://img.icons8.com/ios-filled/50/twitterx.png`,
   }
 };
 
