@@ -264,6 +264,7 @@ export default function HomePage() {
                       onClick={(e) => handleCourseCardClick(e, `/courses/${course.slug}`)}
                       className="flex flex-col h-full cursor-pointer"
                       prefetch={true}
+                      aria-label={`Read more about the ${course.title} course`}
                     >
                       <Card className="neumorphic-outer group h-full overflow-hidden transition-transform duration-300 hover:-translate-y-1 flex flex-col">
                         <div className="overflow-hidden rounded-t-lg">
