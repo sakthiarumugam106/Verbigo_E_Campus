@@ -92,41 +92,10 @@ const faqItems = [
 function ValuesSection() {
     const isMobile = useIsMobile();
     const [isClient, setIsClient] = React.useState(false);
-    const [openItem, setOpenItem] = React.useState<string | undefined>();
-    const sectionRef = React.useRef<HTMLDivElement>(null);
-    const pathname = usePathname();
-
-
+    
     React.useEffect(() => {
         setIsClient(true);
     }, []);
-
-    React.useEffect(() => {
-        if (pathname !== '/') {
-            setOpenItem(undefined);
-        }
-    }, [pathname]);
-
-    React.useEffect(() => {
-        if (!isMobile) return;
-
-        const handleScroll = () => {
-            if (sectionRef.current) {
-                const { top, bottom } = sectionRef.current.getBoundingClientRect();
-                const isOutOfView = bottom < 0 || top > window.innerHeight;
-                
-                if (isOutOfView) {
-                    setOpenItem(undefined);
-                }
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [isMobile]);
 
     if (!isClient) {
         return <Skeleton className="h-[400px] w-full" />;
@@ -134,23 +103,30 @@ function ValuesSection() {
 
     if (isMobile) {
         return (
-             <div className="mx-auto w-full max-w-2xl py-12" ref={sectionRef}>
-                <Accordion type="single" collapsible className="w-full space-y-4" value={openItem} onValueChange={setOpenItem}>
-                  {values.map((value, index) => (
-                    <AccordionItem key={index} value={`item-${index}`} className="neumorphic-outer rounded-lg border-none overflow-hidden">
-                        <AccordionTrigger className="p-4 hover:no-underline w-full">
-                            <div className="flex items-center gap-4 justify-start w-full">
-                                {value.icon}
-                                <h3 className="text-xl font-semibold text-primary dark:text-primary-foreground text-left">{value.title}</h3>
+            <Carousel
+                className="w-full max-w-xs mx-auto py-12"
+                opts={{ align: 'start', loop: true }}
+            >
+                <CarouselContent>
+                    {values.map((value, index) => (
+                        <CarouselItem key={index}>
+                            <div className="p-1">
+                                <Card className="neumorphic-outer h-full">
+                                    <CardHeader className="flex flex-col items-center text-center gap-4 pb-4">
+                                        {value.icon}
+                                        <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="text-center">
+                                        <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                                    </CardContent>
+                                </Card>
                             </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="p-4 pt-0">
-                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
-                        </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-            </div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
+                <CarouselNext className="absolute right-[-20px] top-1/2 -translate-y-1/2 neumorphic-outer neumorphic-outer-hover" />
+            </Carousel>
         );
     }
 
