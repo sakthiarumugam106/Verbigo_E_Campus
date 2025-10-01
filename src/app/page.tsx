@@ -103,22 +103,20 @@ function ValuesSection() {
 
     if (isMobile) {
         return (
-             <div
-                className="mx-auto grid grid-cols-1 gap-6 py-12"
-            >
-                {values.map((value, index) => (
-                     <div key={index}>
-                        <Card className="h-full flex flex-col justify-start neumorphic-outer">
-                            <CardHeader className="flex flex-row items-center gap-4 pb-4">
-                                {value.icon}
-                                <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
-                            </CardContent>
-                        </Card>
-                     </div>
-                ))}
+             <div className="mx-auto w-full max-w-2xl py-12">
+                <Accordion type="single" collapsible className="w-full space-y-4">
+                  {values.map((value, index) => (
+                    <AccordionItem key={index} value={`item-${index}`} className="neumorphic-outer rounded-lg border-none overflow-hidden">
+                        <AccordionTrigger className="p-4 hover:no-underline flex gap-4">
+                            {value.icon}
+                            <h3 className="text-xl font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
+                        </AccordionTrigger>
+                        <AccordionContent className="p-4 pt-0">
+                            <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                        </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
             </div>
         );
     }
