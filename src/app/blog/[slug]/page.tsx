@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from 'react';
 import { blogPosts } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -9,7 +10,8 @@ import { SocialShareButtons } from '@/components/social-share-buttons';
 import ReactMarkdown from 'react-markdown';
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+  const { slug } = React.use(params as Promise<{ slug: string }>) || params;
+  const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();

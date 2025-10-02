@@ -1,24 +1,27 @@
 
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
-import { useFormStatus } from 'react-dom';
+import { useEffect, useRef, useState, useTransition } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { submitDemoRequest, type DemoFormState } from '@/app/get-demo/actions';
+import { submitDemoRequest } from '@/app/get-demo/actions';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from '@/components/ui/alert-dialog';
 import { motion } from 'framer-motion';
 import { Check, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { whatsapp } from '@/lib/config';
+import { z } from 'zod';
 
-const initialState: DemoFormState = {
-  message: '',
-  success: false,
-};
+const demoRequestSchema = z.object({
+  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+  email: z.string().email({ message: 'Please enter a valid email address.' }),
+  phoneNumber: z.string().min(10, { message: 'Please enter a valid phone number.' })
+});
+
 
 const countryCodes = {
   '91': { label: 'IN', length: 10 },
@@ -28,38 +31,20 @@ const countryCodes = {
 };
 type CountryCode = keyof typeof countryCodes;
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" className="w-full" disabled={pending} useNeumorphic={false}>
-      {pending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/>Submitting...</> : 'Submit'}
-    </Button>
-  );
-}
 
 export function GetDemoForm() {
-  const [state, formAction] = useActionState(submitDemoRequest, initialState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState<CountryCode | 'Other'>('91');
   const [otherCountryCode, setOtherCountryCode] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [errors, setErrors] = useState<any>({});
 
-  useEffect(() => {
-    if(state.message === '') return;
-    
-    if (state.success) {
-      setShowConfirmation(true);
-    } else {
-        toast({
-            title: 'Error',
-            description: state.message,
-            variant: 'destructive',
-        });
-    }
-  }, [state, toast]);
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -78,38 +63,72 @@ export function GetDemoForm() {
       setCountryCode(value as CountryCode);
     }
   };
-
-  const handleFormAction = (formData: FormData) => {
-    const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
-    const fullPhoneNumber = `+${finalCountryCode} ${phoneNumber}`;
-    formData.set('phoneNumber', fullPhoneNumber);
-    formAction(formData);
-  };
   
   const phoneMaxLength = countryCode !== 'Other' ? countryCodes[countryCode as CountryCode]?.length : undefined;
 
   const handleConfirmation = () => {
     setShowConfirmation(false);
     formRef.current?.reset();
+    setName('');
+    setEmail('');
     setPhoneNumber('');
     setCountryCode('91');
     setOtherCountryCode('');
+    setErrors({});
     router.push('/');
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+
+    const finalCountryCode = countryCode === 'Other' ? otherCountryCode : countryCode;
+    const fullPhoneNumber = `+${finalCountryCode} ${phoneNumber}`;
+
+    const validation = demoRequestSchema.safeParse({
+        name,
+        email,
+        phoneNumber: fullPhoneNumber,
+    });
+
+    if (!validation.success) {
+        const fieldErrors = validation.error.flatten().fieldErrors;
+        setErrors(fieldErrors);
+        toast({
+            title: "Error",
+            description: "Please correct the errors in the form.",
+            variant: "destructive"
+        });
+        return;
+    }
+
+    // 1. Redirect to WhatsApp
+    window.open(whatsapp.whatsappDemoUrl, '_blank');
+    toast({
+        title: 'Redirecting to WhatsApp!',
+        description: 'Please send the prepared message to book your demo.',
+    });
+
+    setShowConfirmation(true);
+    
+    // 2. Submit data in the background
+    startTransition(async () => {
+        await submitDemoRequest({ name, email, phoneNumber: fullPhoneNumber });
+    });
   };
 
   return (
     <>
-    <form ref={formRef} action={handleFormAction} className="space-y-6">
-      <input type="hidden" name="phoneNumber" />
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="name">Full Name</Label>
-        <Input id="name" name="name" placeholder="Jane Austen" required />
-        {state.errors?.name && <p className="text-sm text-destructive mt-1">{state.errors.name[0]}</p>}
+        <Input id="name" name="name" placeholder="Jane Austen" required value={name} onChange={(e) => setName(e.target.value)} />
+        {errors?.name && <p className="text-sm text-destructive mt-1">{errors.name[0]}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email Address</Label>
-        <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required />
-        {state.errors?.email && <p className="text-sm text-destructive mt-1">{state.errors.email[0]}</p>}
+        <Input id="email" name="email" type="email" placeholder="jane.austen@example.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
+        {errors?.email && <p className="text-sm text-destructive mt-1">{errors.email[0]}</p>}
       </div>
       <div className="space-y-2">
         <Label htmlFor="phoneNumberInput">Phone Number</Label>
@@ -152,9 +171,11 @@ export function GetDemoForm() {
             />
           </div>
         </div>
-        {state.errors?.phoneNumber && <p className="text-sm text-destructive mt-1">{state.errors.phoneNumber[0]}</p>}
+        {errors?.phoneNumber && <p className="text-sm text-destructive mt-1">{errors.phoneNumber[0]}</p>}
       </div>
-      <SubmitButton />
+      <Button type="submit" className="w-full" disabled={isPending} useNeumorphic={false}>
+        {isPending ? <><Loader2 className="mr-2 h-4 w-4 animate-spin"/>Submitting...</> : 'Submit'}
+      </Button>
     </form>
     <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
         <AlertDialogContent>

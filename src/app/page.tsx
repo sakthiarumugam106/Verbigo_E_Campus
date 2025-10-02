@@ -25,8 +25,9 @@ import { courses } from '@/lib/courses';
 import { cn } from '@/lib/utils';
 import { CourseCategoryToggle } from '@/components/course-category-toggle';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useLoading } from '@/components/loading-provider';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const ContactForm = dynamic(() => import('@/components/contact-form').then(mod => mod.ContactForm), {
   loading: () => <Skeleton className="h-[500px] w-full max-w-lg" />,
@@ -89,8 +90,77 @@ const faqItems = [
 ];
 
 function ValuesSection() {
+    const isMobile = useIsMobile();
+    const [isClient, setIsClient] = React.useState(false);
+    const [activeValue, setActiveValue] = React.useState<string | undefined>();
+    const sectionRef = React.useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
+
+    React.useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    const closeAccordion = React.useCallback(() => {
+        setActiveValue(undefined);
+    }, []);
+
+    React.useEffect(() => {
+        if (isMobile) {
+            const handleScroll = () => {
+                if (sectionRef.current) {
+                    const { top, bottom } = sectionRef.current.getBoundingClientRect();
+                    const isOutOfView = bottom < 0 || top > window.innerHeight;
+                    if (isOutOfView) {
+                        closeAccordion();
+                    }
+                }
+            };
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            return () => window.removeEventListener('scroll', handleScroll);
+        }
+    }, [isMobile, closeAccordion]);
+    
+    React.useEffect(() => {
+        closeAccordion();
+    }, [pathname, closeAccordion]);
+
+
+    if (!isClient) {
+        return <Skeleton className="h-[400px] w-full" />;
+    }
+
+    if (isMobile) {
+        return (
+            <div ref={sectionRef} className="mx-auto mt-12 max-w-3xl neumorphic-outer rounded-lg p-2">
+                <Accordion 
+                    type="single" 
+                    collapsible 
+                    className="w-full"
+                    value={activeValue}
+                    onValueChange={setActiveValue}
+                >
+                    {values.map((value, index) => (
+                        <AccordionItem key={index} value={`item-${index}`} className="border-b-0">
+                            <AccordionTrigger className="p-4 hover:no-underline rounded-md hover:bg-primary/5">
+                                <div className="flex items-center gap-4">
+                                    {value.icon}
+                                    <h3 className="text-xl font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
+                                </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <p className="text-muted-foreground dark:text-foreground/80">{value.description}</p>
+                            </AccordionContent>
+                        </AccordionItem>
+                    ))}
+                </Accordion>
+            </div>
+        );
+    }
+
     return (
          <div
+            ref={sectionRef}
             className="mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 py-12"
         >
             {values.map((value, index) => (
