@@ -14,21 +14,10 @@ import ContactFormUserEmail from '@/emails/contact-form-user-email';
 const demoRequestSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
-  phoneNumber: z.string().min(10, { message: 'Please enter a valid phone number.' })
-    .regex(/^\+\d+ \d+$/, 'Invalid phone number format. Expected "+<code> <number>".'),
+  phoneNumber: z.string().min(10, { message: 'Please enter a valid phone number.' }),
 });
 
 type DemoRequestData = z.infer<typeof demoRequestSchema>;
-
-export type DemoFormState = {
-  message: string;
-  success: boolean;
-  errors?: {
-    name?: string[];
-    email?: string[];
-    phoneNumber?: string[];
-  };
-};
 
 // Helper function to isolate the email sending logic and the react-email import
 async function sendNotificationEmail(data: { name: string; email: string; phoneNumber: string; }) {
@@ -68,7 +57,7 @@ async function handlePostSubmissionTasks(data: DemoRequestData) {
     // Phone number for emails (with +)
     const emailPhoneNumber = phoneNumber;
     // Phone number for Google Sheet (without +)
-    const sheetPhoneNumber = phoneNumber.replace('+', '').trim();
+    const sheetPhoneNumber = phoneNumber.replace(/\D/g, '');
 
     try {
         await Promise.all([
@@ -97,21 +86,13 @@ async function handlePostSubmissionTasks(data: DemoRequestData) {
 
 
 export async function submitDemoRequest(
-  prevState: DemoFormState,
-  formData: FormData
-): Promise<DemoFormState> {
+  data: DemoRequestData
+): Promise<{ success: boolean; message: string; }> {
   try {
-    const rawFormData = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      phoneNumber: formData.get('phoneNumber'),
-    };
-
-    const validatedFields = demoRequestSchema.safeParse(rawFormData);
+    const validatedFields = demoRequestSchema.safeParse(data);
 
     if (!validatedFields.success) {
       return {
-        errors: validatedFields.error.flatten().fieldErrors,
         message: 'Invalid fields. Please check your submission.',
         success: false,
       };

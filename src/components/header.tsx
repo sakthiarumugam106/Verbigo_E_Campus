@@ -40,31 +40,26 @@ export function Header() {
   const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsOpen(false);
-    
-    if (href === pathname) {
-      if (href.includes('#')) {
-         const id = href.substring(href.indexOf('#') + 1);
-         const element = document.getElementById(id);
-         if (element) {
-            showLoader();
-            element.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(hideLoader, 500);
-         }
-      } else if (href === '/') {
-        showLoader();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        setTimeout(hideLoader, 500);
+
+    // If already on the page and it's a hash link, just scroll.
+    if (pathname === '/' && href.startsWith('/#')) {
+      const id = href.substring(2);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
       }
       return;
     }
 
-    if (href.startsWith('/#')) {
-        showLoader();
-        router.push(href);
-    } else {
-       showLoader();
-       router.push(href);
+    // If navigating to the same page (but not a hash link), scroll to top.
+    if (href === pathname) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
     }
+
+    // For all other navigations.
+    showLoader();
+    router.push(href);
   };
   
   React.useEffect(() => {
