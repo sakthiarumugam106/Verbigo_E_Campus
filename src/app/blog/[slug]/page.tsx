@@ -1,4 +1,3 @@
-
 'use client';
 
 import { blogPosts } from '@/lib/blog';
@@ -10,7 +9,7 @@ import { SocialShareButtons } from '@/components/social-share-buttons';
 import ReactMarkdown from 'react-markdown';
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const slug = params.slug;
+  const { slug } = params;
   const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {

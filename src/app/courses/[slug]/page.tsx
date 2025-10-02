@@ -1,4 +1,3 @@
-
 'use client';
 
 import { courses } from '@/lib/courses';
@@ -11,7 +10,7 @@ import { notFound } from 'next/navigation';
 import { whatsapp } from '@/lib/config';
 
 export default function CoursePage({ params }: { params: { slug: string } }) {
-  const slug = params.slug;
+  const { slug } = params;
   const course = courses.find((c) => c.slug === slug);
 
   if (!course) {
