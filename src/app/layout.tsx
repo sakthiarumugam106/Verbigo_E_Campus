@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description:
     'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
   icons: {
-    icon: '/logo.png',
+    icon: '/images/logo.png',
   },
 };
 

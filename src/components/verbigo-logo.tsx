@@ -2,12 +2,11 @@
 'use client';
 
 import Image from 'next/image';
-import logo from '../logo.png';
 
 export function VerbigoLogo() {
   return (
     <Image
-      src={logo}
+      src="/images/logo.png"
       alt="Verbigo Logo"
       width="40"
       height="40"
