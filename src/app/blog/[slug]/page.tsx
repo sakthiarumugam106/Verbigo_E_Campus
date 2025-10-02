@@ -1,3 +1,4 @@
+
 'use client';
 
 import { blogPosts } from '@/lib/blog';
@@ -8,8 +9,8 @@ import { Calendar, Clock } from 'lucide-react';
 import { SocialShareButtons } from '@/components/social-share-buttons';
 import ReactMarkdown from 'react-markdown';
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+export default function BlogPostPage({ params: { slug } }: { params: { slug: string } }) {
+  const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();
