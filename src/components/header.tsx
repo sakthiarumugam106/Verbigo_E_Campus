@@ -46,18 +46,14 @@ export function Header() {
       const id = href.substring(2);
       const element = document.getElementById(id);
       if (element) {
-        showLoader();
         element.scrollIntoView({ behavior: 'smooth' });
-        setTimeout(hideLoader, 500);
       }
       return;
     }
 
     // If navigating to the same page (but not a hash link), scroll to top.
     if (href === pathname) {
-      showLoader();
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(hideLoader, 500);
       return;
     }
 
