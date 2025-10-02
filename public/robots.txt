@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://verbigo.in
+
+# Sitemaps
+Sitemap: https://verbigo.in/sitemap.xml

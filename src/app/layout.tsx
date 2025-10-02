@@ -12,14 +12,45 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
+const siteUrl = 'https://verbigo.in';
+
 export const metadata: Metadata = {
-  title: 'Verbigo | Master Your Language Skills',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Verbigo | Master Your Language Skills',
+    template: `%s | Verbigo`,
+  },
   description:
-    'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
+    'Unlock your full potential with expert-led courses in grammar, writing, and communication. Join Verbigo to master the art of language with personalized feedback and cutting-edge technology.',
+  keywords: ['language learning', 'English courses', 'IELTS preparation', 'business communication', 'public speaking', 'phonics', 'Verbigo'],
+  robots: 'index, follow',
   icons: {
     icon: '/images/logo.png',
   },
+  openGraph: {
+    title: 'Verbigo | Master Your Language Skills',
+    description: 'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
+    url: siteUrl,
+    siteName: 'Verbigo',
+    images: [
+      {
+        url: `${siteUrl}/images/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Verbigo - E-Campus for Language Intelligence',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Verbigo | Master Your Language Skills',
+    description: 'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
+    images: [`${siteUrl}/images/og-image.png`],
+  },
 };
+
 
 export default function RootLayout({
   children,
