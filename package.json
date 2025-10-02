@@ -7,8 +7,7 @@
     "dev": "next dev --turbopack -p 9002",
     "genkit:dev": "genkit start -- tsx -r dotenv/config src/ai/dev.ts",
     "genkit:watch": "genkit start -- tsx --watch srcai/dev.ts",
-    "build": "next build",
-    "postbuild": "next-sitemap",
+    "build": "next build && next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
