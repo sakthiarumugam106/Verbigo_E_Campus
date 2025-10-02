@@ -9,7 +9,8 @@ import { Calendar, Clock } from 'lucide-react';
 import { SocialShareButtons } from '@/components/social-share-buttons';
 import ReactMarkdown from 'react-markdown';
 
-export default function BlogPostPage({ params: { slug } }: { params: { slug: string } }) {
+export default function BlogPostPage({ params }: { params: { slug: string } }) {
+  const slug = params.slug;
   const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {

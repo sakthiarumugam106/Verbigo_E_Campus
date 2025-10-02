@@ -10,7 +10,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { whatsapp } from '@/lib/config';
 
-export default function CoursePage({ params: { slug } }: { params: { slug: string } }) {
+export default function CoursePage({ params }: { params: { slug: string } }) {
+  const slug = params.slug;
   const course = courses.find((c) => c.slug === slug);
 
   if (!course) {
