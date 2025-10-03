@@ -6,4 +6,7 @@ module.exports = {
   priority: 1.0,
   sitemapSize: 7000,
   trailingSlash: true,
+  additionalPaths: async (config) => [
+    { loc: '/' }
+  ],
 };
