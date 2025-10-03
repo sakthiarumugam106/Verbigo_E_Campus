@@ -5,4 +5,5 @@ module.exports = {
   changefreq: 'daily',
   priority: 1.0,
   sitemapSize: 7000,
+  trailingSlash: true,
 };
