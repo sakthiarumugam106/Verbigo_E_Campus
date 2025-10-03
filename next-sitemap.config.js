@@ -3,25 +3,28 @@ module.exports = {
   siteUrl: 'https://verbigo.in',
   generateRobotsTxt: true,
   changefreq: 'daily',
-  priority: 1.0,
+  priority: 0.7, // default priority for other pages
   sitemapSize: 7000,
   trailingSlash: true,
   additionalPaths: async (config) => [
-    { loc: '/', changefreq: 'daily', priority: 1.0, lastmod: new Date().toISOString() }
+    {
+      loc: '/',
+      changefreq: 'daily',
+      priority: 1.0,
+      lastmod: new Date().toISOString()
+    }
   ],
-   transform: async (config, path) => {
-    // Return null to exclude a path
+  transform: async (config, path) => {
     if (path.match(/api/)) {
-      return null;
+      return null; // exclude API routes
     }
 
-    // Use default transformation for all other paths
     return {
-      loc: path, 
-      changefreq: config.changefreq,
+      loc: path,
+      changefreq: path === '/' ? 'daily' : config.changefreq,
       priority: path === '/' ? 1.0 : config.priority,
-      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+      lastmod: new Date().toISOString(),
       alternateRefs: config.alternateRefs ?? [],
-    }
+    };
   }
 };
