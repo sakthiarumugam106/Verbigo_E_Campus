@@ -27,6 +27,9 @@ export const metadata: Metadata = {
   icons: {
     icon: '/images/logo.png',
   },
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'Verbigo | Master Your Language Skills',
     description: 'Unlock your full potential with expert-led courses in grammar, writing, and communication.',
