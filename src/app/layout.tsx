@@ -63,8 +63,9 @@ export default function RootLayout({
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    "name": "Verbigo",
     'url': 'https://verbigo.in',
-    'logo': 'https://verbigo.in/images/logo.png'
+    'logo': 'https://verbigo.in/images/logo-square.png'
   };
 
   return (
