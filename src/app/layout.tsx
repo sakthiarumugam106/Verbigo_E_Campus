@@ -60,8 +60,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    "name": "Verbigo",
+    'url': 'https://verbigo.in',
+    'logo': 'https://verbigo.in/images/logo-square.png'
+  };
+
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${poppins.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body>
         <LoadingProvider>
           <AppContent>{children}</AppContent>
@@ -70,4 +84,3 @@ export default function RootLayout({
     </html>
   );
 }
-
