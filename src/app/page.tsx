@@ -68,24 +68,24 @@ const values = [
 
 const faqItems = [
   {
-    question: 'Who are the instructors?',
+    question: 'What types of courses do you offer?',
     answer:
-      'Our courses are taught by a team of experienced linguists, published authors, and certified language coaches. Each instructor brings a wealth of knowledge and a passion for teaching.',
+      'We offer a wide range of courses for different age groups and needs. For professionals, we have programs like Business Communication and IELTS preparation. For kids, we offer courses such as Phonics Starter and Public Speaking to build a strong early foundation.',
   },
   {
-    question: 'What is the course format?',
+    question: 'How does the "Know Your Level" feature work?',
     answer:
-      'Courses consist of video lessons, interactive quizzes, and practical writing assignments. You can learn at your own pace and revisit materials anytime.',
+      'Our "Know Your Level" page uses an advanced AI to assess your English proficiency. You just need to answer three quick questions, and our AI will provide a detailed report on your level, including a skill breakdown, helping you choose the right course.',
   },
   {
-    question: 'Will I get feedback on my writing?',
+    question: 'How do I find a tutor that speaks my native language?',
     answer:
-      'Yes! All our courses include opportunities for personalized feedback from instructors and peers. Our Advanced Writing Workshop offers in-depth critiques to help you grow as a writer.',
+      'You can use our "Find Your Tutor" feature. Simply select your state and native language, and we will connect you with a qualified tutor who can provide instruction in a way that is most comfortable and effective for you.',
   },
   {
-    question: 'Do you offer courses for non-native English speakers?',
+    question: 'Can I book a demo before enrolling in a course?',
     answer:
-      "Absolutely. Our 'Grammar Essentials' course is a great starting point for non-native speakers looking to solidify their understanding of English grammar.",
+      "Absolutely! We encourage you to book a free demo to experience our teaching style and platform. You can book a demo through our website or by contacting us on WhatsApp. This is a great way to ensure the course is the right fit for you.",
   },
 ];
 
