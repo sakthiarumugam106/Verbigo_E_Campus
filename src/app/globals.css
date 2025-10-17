@@ -485,11 +485,11 @@
     opacity: 0;
     transition: opacity 0.3s;
   }
-  
-  .sparkle-button:hover .dots_border, .sparkle-button.default-animated .dots_border {
+
+  .sparkle-button:is(:hover, :focus-visible, .default-animated) .dots_border {
       opacity: 1;
   }
-  
+
   .sparkle-button .dots_border::before {
     content: "";
     position: absolute;
@@ -503,7 +503,7 @@
     );
     animation: rotate 2s linear infinite;
   }
-  
+
   @keyframes rotate {
     from {
       transform: rotate(0deg);
@@ -512,6 +512,7 @@
       transform: rotate(360deg);
     }
   }
+
 
   /* From theme-toggle.css */
   .theme-switch {

@@ -169,7 +169,7 @@ function ValuesSection() {
                  <div key={index}>
                     <Card className="h-full flex flex-col justify-start neumorphic-outer neumorphic-outer-hover transition-transform hover:-translate-y-1">
                         <CardHeader className="flex flex-row items-center gap-4 pb-4">
-                            {value.icon}
+                            {React.cloneElement(value.icon, { className: "h-8 w-8 text-primary dark:text-primary-foreground" })}
                             <CardTitle className="text-xl font-semibold text-primary dark:text-primary-foreground">{value.title}</CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -257,8 +257,9 @@ export default function HomePage() {
                 
                     <button className="sparkle-button default-animated scale-90 sm:scale-100" type="button" onClick={handleNavClick('/know-your-level')}>
                         <div className="dots_border"></div>
+                        <span className="backdrop"></span>
                         <span className="sparkle">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="sparkle_path">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                 <path
                                 className="path"
                                 strokeLinejoin="round"
@@ -279,7 +280,6 @@ export default function HomePage() {
                                 ></path>
                             </svg>
                         </span>
-                        <span className="backdrop"></span>
                         <span className="text_button">Know Your Level</span>
                     </button>
               </div>
