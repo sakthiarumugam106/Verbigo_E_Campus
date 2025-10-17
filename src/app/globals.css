@@ -304,7 +304,6 @@
     color: hsl(var(--primary-foreground));
   }
 
-  /* From sparkle-button.css provided by user */
   .button {
     --black-700: hsl(var(--secondary));
     --border_radius: 9999px;
@@ -431,7 +430,7 @@
   
   @keyframes rotate {
     to {
-      transform: rotate(360deg);
+      transform: translate(-50%, -50%) rotate(360deg);
     }
   }
   
@@ -1128,5 +1127,6 @@
     transform: scale(1) rotate(360deg);
   }
 }
+
 
 
