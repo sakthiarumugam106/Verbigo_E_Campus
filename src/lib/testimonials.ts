@@ -38,7 +38,7 @@ export const testimonials = [
     {
     review:
       "As a non-native speaker, I found Verbigo's patient approach incredibly helpful. I feel much more comfortable expressing myself in English now.",
-    name: 'Karthik Shi',
+    name: 'Karthik S',
     role: 'ESL Student',
     userImage: 'https://picsum.photos/100/100?random=15',
     aiHint: 'student portrait',
