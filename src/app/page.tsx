@@ -67,26 +67,22 @@ const values = [
 ];
 
 const faqItems = [
-  {
-    question: 'What types of courses do you offer?',
-    answer:
-      'We offer a wide range of courses for different age groups and needs. For professionals, we have programs like Business Communication and IELTS preparation. For kids, we offer courses such as Phonics Starter and Public Speaking to build a strong early foundation.',
-  },
-  {
-    question: 'How does the "Know Your Level" feature work?',
-    answer:
-      'Our "Know Your Level" page uses an advanced AI to assess your English proficiency. You just need to answer three quick questions, and our AI will provide a detailed report on your level, including a skill breakdown, helping you choose the right course.',
-  },
-  {
-    question: 'How do I find a tutor that speaks my native language?',
-    answer:
-      'You can use our "Find Your Tutor" feature. Simply select your state and native language, and we will connect you with a qualified tutor who can provide instruction in a way that is most comfortable and effective for you.',
-  },
-  {
-    question: 'Can I book a demo before enrolling in a course?',
-    answer:
-      "Absolutely! We encourage you to book a free demo to experience our teaching style and platform. You can book a demo through our website or by contacting us on WhatsApp. This is a great way to ensure the course is the right fit for you.",
-  },
+    {
+        question: 'What types of courses do you offer?',
+        answer: 'We offer a wide range of courses for different age groups and needs. For professionals, we have programs like Business Communication and IELTS preparation. For kids, we offer courses such as Phonics Starter and Public Speaking to build a strong early foundation.',
+    },
+    {
+        question: 'How does the "Know Your Level" feature work?',
+        answer: 'Our "Know Your Level" page uses an advanced AI to assess your English proficiency. You just need to answer three quick questions, and our AI will provide a detailed report on your level, including a skill breakdown, helping you choose the right course.',
+    },
+    {
+        question: 'How do I find a tutor that speaks my native language?',
+        answer: 'You can use our "Find Your Tutor" feature. Simply select your state and native language, and we will connect you with a qualified tutor who can provide instruction in a way that is most comfortable and effective for you.',
+    },
+    {
+        question: 'Can I book a demo before enrolling in a course?',
+        answer: "Absolutely! We encourage you to book a free demo to experience our teaching style and platform. You can book a demo through our website or by contacting us on WhatsApp. This is a great way to ensure the course is the right fit for you.",
+    },
 ];
 
 function ValuesSection() {
@@ -235,7 +231,7 @@ export default function HomePage() {
                     Learn english through your native language
                 </h1>
               </div>
-              <div className="flex flex-row gap-4">
+              <div className="flex flex-row items-center justify-start gap-2">
                  
                     <button className="cssbuttons-io-button scale-90 sm:scale-100" onClick={handleNavClick('/find-tutor')}>
                         <span>Find your tutor</span>
@@ -255,7 +251,7 @@ export default function HomePage() {
                         </div>
                     </button>
                 
-                    <button className="button scale-90 sm:scale-100" type="button" onClick={handleNavClick('/know-your-level')}>
+                     <button className="button scale-90 sm:scale-100" type="button" onClick={handleNavClick('/know-your-level')}>
                         <div className="dots_border"></div>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

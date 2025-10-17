@@ -306,7 +306,7 @@
 
   /* From sparkle-button.css provided by user */
   .button {
-    --black-700: hsla(var(--secondary));
+    --black-700: hsl(var(--secondary));
     --border_radius: 9999px;
     --transtion: 0.3s ease-in-out;
     --offset: 2px;
@@ -1128,4 +1128,5 @@
     transform: scale(1) rotate(360deg);
   }
 }
+
 
