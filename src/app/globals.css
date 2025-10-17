@@ -304,71 +304,62 @@
     color: hsl(var(--primary-foreground));
   }
 
-  /* From sparkle-button.css */
-  .sparkle-button {
+  /* From sparkle-button.css provided by user */
+  .button {
     --black-700: hsl(var(--secondary));
     --border_radius: 9999px;
-    --transition: 0.3s ease-in-out;
+    --transtion: 0.3s ease-in-out;
     --offset: 2px;
-  
     cursor: pointer;
     position: relative;
-  
     display: flex;
     align-items: center;
     gap: 0.5rem;
-  
     transform-origin: center;
-  
-    padding: 0.625rem 2rem;
+    padding: 0.625rem 1rem;
     height: 48px;
     width: 180px;
     justify-content: center;
-  
     background-color: transparent;
-  
     border: none;
     border-radius: var(--border_radius);
     transform: scale(calc(1 + (var(--active, 0) * 0.05)));
-  
-    transition: transform var(--transition);
+    transition: transform var(--transtion);
+  }
+
+  .dark .button {
+    --black-700: hsl(var(--secondary));
   }
   
-  .sparkle-button::before {
+  .button::before {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  
     width: 100%;
     height: 100%;
     background-color: var(--black-700);
-  
     border-radius: var(--border_radius);
     box-shadow: inset 0 0.5px hsl(0, 0%, 100%), inset 0 -1px 2px 0 hsl(0, 0%, 0%),
       0px 4px 10px -4px hsla(0 0% 0% / calc(1 - var(--active, 0))),
       0 0 0 calc(var(--active, 0) * 0.375rem) hsla(var(--accent) / 0.75);
-  
-    transition: all var(--transition);
+    transition: all var(--transtion);
     z-index: 0;
   }
-  
-  .dark .sparkle-button::before {
-     background-color: hsl(var(--secondary));
-      box-shadow: inset 0 0.5px hsl(0, 0%, 100%, 0.1), inset 0 -1px 2px 0 hsl(0, 0%, 0%),
+
+  .dark .button::before {
+    box-shadow: inset 0 0.5px hsl(0, 0%, 100%, 0.1), inset 0 -1px 2px 0 hsl(0, 0%, 0%),
       0px 2px 10px -4px hsla(0 0% 0% / calc(1 - var(--active, 0))),
       0 0 0 calc(var(--active, 0) * 0.375rem) hsla(var(--accent) / 0.75);
   }
   
-  
-  .sparkle-button .backdrop {
+  .button::after {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  
     width: 100%;
     height: 100%;
     background-color: hsla(var(--accent) / 0.75);
@@ -380,49 +371,95 @@
       radial-gradient(at 100% 100%, hsla(266, 36%, 60%, 1) 0px, transparent 50%),
       radial-gradient(at 22% 91%, hsla(266, 36%, 60%, 1) 0px, transparent 50%);
     background-position: top;
-  
     opacity: var(--active, 0);
     border-radius: var(--border_radius);
-    transition: opacity var(--transition);
+    transition: opacity var(--transtion);
     z-index: 2;
   }
   
-  .sparkle-button:is(:hover, :focus-visible) {
+  .button:is(:hover, :focus-visible) {
     --active: 1;
   }
-  .sparkle-button:active {
+  .button:active {
     transform: scale(0.95);
   }
   
-  .sparkle-button .sparkle {
+  .button .dots_border {
+    --size_border: calc(100% + 2px);
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--size_border);
+    height: var(--size_border);
+    background-color: transparent;
+    border-radius: var(--border_radius);
+    z-index: -10;
+  }
+
+  .button:is(:hover, :focus-visible) .dots_border {
+    opacity: 1;
+  }
+  
+  .button .dots_border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0,
+      white 30deg,
+      transparent 60deg
+    );
+    animation: rotate 2s linear infinite;
+    opacity: 0;
+  }
+
+  .button:is(:hover, :focus-visible) .dots_border::before {
+      opacity: 1;
+  }
+  
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .button .sparkle {
     position: relative;
     z-index: 10;
     width: 1.25rem;
   }
   
-  .sparkle-button .sparkle .path {
+  .button .sparkle .path {
+    fill: hsl(var(--foreground));
+    stroke: hsl(var(--foreground));
+    transition: all var(--transtion);
+  }
+
+  .dark .button .sparkle .path {
+    fill: hsl(var(--primary-foreground));
+    stroke: hsl(var(--primary-foreground));
+  }
+  
+  .button:is(:hover, :focus-visible) .sparkle .path {
+    animation: path 1.5s linear 0.5s infinite;
     fill: white;
     stroke: white;
   }
   
-  .dark .sparkle-button .sparkle .path {
-    fill: white;
-    stroke: white;
-  }
-  
-  
-  .sparkle-button:is(:hover, :focus-visible) .sparkle .path {
-      animation: path 1.5s linear 0.5s infinite;
-  }
-  
-  
-  .sparkle-button .path:nth-child(1) {
+  .button .sparkle .path:nth-child(1) {
     --scale_path_1: 1.2;
   }
-  .sparkle-button .path:nth-child(2) {
+  .button .sparkle .path:nth-child(2) {
     --scale_path_2: 1.2;
   }
-  .sparkle-button .path:nth-child(3) {
+  .button .sparkle .path:nth-child(3) {
     --scale_path_3: 1.2;
   }
   
@@ -444,18 +481,18 @@
     }
   }
   
-  .sparkle-button .text_button {
+  .button .text_button {
     position: relative;
     z-index: 10;
     font-size: 0.875rem;
     font-weight: 500;
     color: hsl(var(--foreground));
-    transition: color var(--transition);
+    transition: color var(--transtion);
     white-space: nowrap;
   }
   
-  .sparkle-button:is(:hover, :focus-visible) .text_button {
-     background-image: linear-gradient(
+  .button:is(:hover, :focus-visible) .text_button {
+    background-image: linear-gradient(
       90deg,
       hsl(0, 0%, 100%) 0%,
       hsl(0, 0%, 100%) 120%
@@ -464,55 +501,10 @@
     background-clip: text;
     color: transparent;
   }
-  
-  
-  .dark .sparkle-button .text_button {
+    
+  .dark .button .text_button {
      color: hsl(var(--primary-foreground));
   }
-  
-  .sparkle-button .dots_border {
-    --size_border: calc(100% + 2px);
-    overflow: hidden;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: var(--size_border);
-    height: var(--size_border);
-    background-color: transparent;
-    border-radius: 9999px;
-    z-index: -10;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .sparkle-button:is(:hover, :focus-visible, .default-animated) .dots_border {
-      opacity: 1;
-  }
-
-  .sparkle-button .dots_border::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 9999px;
-    background: conic-gradient(
-      from 0deg,
-      transparent 0,
-      white 30deg,
-      transparent 60deg
-    );
-    animation: rotate 2s linear infinite;
-  }
-
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
 
   /* From theme-toggle.css */
   .theme-switch {
@@ -1120,5 +1112,3 @@
     transform: scale(1) rotate(360deg);
   }
 }
-
-    
