@@ -144,7 +144,7 @@ function ValuesSection() {
                         <AccordionItem key={index} value={`item-${index}`} className="border-b-0">
                             <AccordionTrigger className="p-4 hover:no-underline rounded-md hover:bg-primary/5">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10">{value.icon}</div>
+                                    <div className="w-10 h-10 flex items-center justify-center shrink-0">{value.icon}</div>
                                     <h3 className="text-xl font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
                                 </div>
                             </AccordionTrigger>
@@ -233,7 +233,7 @@ export default function HomePage() {
                     Learn english through your native language
                 </h1>
               </div>
-              <div className="flex flex-col gap-4 sm:flex-row">
+              <div className="flex flex-row gap-4">
                  
                     <button className="cssbuttons-io-button" onClick={handleNavClick('/find-tutor')}>
                         <span>Find your tutor</span>
