@@ -144,8 +144,10 @@ function ValuesSection() {
                         <AccordionItem key={index} value={`item-${index}`} className="border-b-0">
                             <AccordionTrigger className="p-4 hover:no-underline rounded-md hover:bg-primary/5">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 flex items-center justify-center shrink-0">{value.icon}</div>
-                                    <h3 className="text-xl font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
+                                    <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                                        {React.cloneElement(value.icon, { className: "h-8 w-8 text-primary dark:text-primary-foreground" })}
+                                    </div>
+                                    <h3 className="text-lg font-semibold text-left text-primary dark:text-primary-foreground">{value.title}</h3>
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent>
@@ -235,7 +237,7 @@ export default function HomePage() {
               </div>
               <div className="flex flex-row gap-4">
                  
-                    <button className="cssbuttons-io-button" onClick={handleNavClick('/find-tutor')}>
+                    <button className="cssbuttons-io-button scale-90 sm:scale-100" onClick={handleNavClick('/find-tutor')}>
                         <span>Find your tutor</span>
                         <div className="icon">
                             <svg
@@ -253,7 +255,7 @@ export default function HomePage() {
                         </div>
                     </button>
                 
-                    <button className="sparkle-button default-animated" type="button" onClick={handleNavClick('/know-your-level')}>
+                    <button className="sparkle-button default-animated scale-90 sm:scale-100" type="button" onClick={handleNavClick('/know-your-level')}>
                         <div className="dots_border"></div>
                         <span className="sparkle">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="sparkle_path">
@@ -429,3 +431,5 @@ export default function HomePage() {
     </>
   );
 }
+
+    
