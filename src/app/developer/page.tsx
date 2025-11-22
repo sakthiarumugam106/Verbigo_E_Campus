@@ -15,7 +15,7 @@ export default function DeveloperPage() {
     phone: '+917708071872',
     linkedin: 'https://www.linkedin.com/in/sakthivel-arumugam-49479721a',
     profileImage: 'https://media.licdn.com/dms/image/v2/D5603AQEZrR6-ddoo6g/profile-displayphoto-shrink_800_800/B56ZTzScqrHQAg-/0/1739248487934?e=1765411200&v=beta&t=2LVv38Vr-UAKkMid-0IqC5lVhtL4K3pnPmYs1WHUAd4',
-    qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://www.linkedin.com/in/sakthivel-arumugam-49479721a/',
+    qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://www.linkedin.com/in/sakthivel-arumugam-49479721a',
   };
 
   return (
@@ -34,14 +34,16 @@ export default function DeveloperPage() {
               />
             </div>
             <div className="mt-6">
-              <Image
-                src={developer.qrCode}
-                alt="LinkedIn QR Code"
-                width={120}
-                height={120}
-                className="rounded-lg neumorphic-inner"
-                data-ai-hint="QR code"
-              />
+              <div className="p-2 rounded-lg neumorphic-inner">
+                <Image
+                  src={developer.qrCode}
+                  alt="LinkedIn QR Code"
+                  width={100}
+                  height={100}
+                  className="rounded-md"
+                  data-ai-hint="QR code"
+                />
+              </div>
               <p className="mt-2 text-sm text-muted-foreground">Scan to Connect</p>
             </div>
           </div>
