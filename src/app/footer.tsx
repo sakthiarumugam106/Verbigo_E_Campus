@@ -76,6 +76,7 @@ export function Footer() {
               <h3 className="font-semibold">Legal</h3>
               <Link href="/privacy-policy" onClick={handleLinkClick('/privacy-policy')} className="text-sm text-gray-400 hover:text-white">Privacy Policy</Link>
               <Link href="/terms-of-service" onClick={handleLinkClick('/terms-of-service')} className="text-sm text-gray-400 hover:text-white">Terms of Service</Link>
+              <Link href="/developer" onClick={handleLinkClick('/developer')} className="text-sm text-gray-400 hover:text-white">Developer Contact</Link>
             </div>
           </div>
         </div>
