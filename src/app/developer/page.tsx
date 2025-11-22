@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -11,10 +12,10 @@ export default function DeveloperPage() {
     name: 'Sakthivel Arumugam',
     title: 'Full Stack Developer | Java | Angular | Spring Boot',
     email: 'sakthiarumugam106@gmail.com',
-    phone: '+919943834074',
-    linkedin: 'https://www.linkedin.com/in/sakthivel-arumugam-60334a193/',
-    profileImage: '/images/developer-profile.jpg', // Placeholder - replace with your actual image path
-    qrCode: '/images/developer-qr.png', // Placeholder - replace with your actual QR code path
+    phone: '+917708071872',
+    linkedin: 'https://www.linkedin.com/in/sakthivel-arumugam-49479721a',
+    profileImage: 'https://media.licdn.com/dms/image/D5603AQEZrR6-ddoo6g/profile-displayphoto-shrink_400_400/0/1739248487920?e=1765411200&v=beta&t=hZBBgkte2C-630_-y6IkbzlHPzdAkvurWwZECya8LZQ', 
+    qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://www.linkedin.com/in/sakthivel-arumugam-49479721a/',
   };
 
   return (
