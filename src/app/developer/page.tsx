@@ -10,7 +10,7 @@ import Link from 'next/link';
 export default function DeveloperPage() {
   const developer = {
     name: 'Sakthivel Arumugam',
-    title: 'Full Stack Developer | Java | Angular | Spring Boot',
+    title: 'Full Stack Developer',
     email: 'sakthiarumugam106@gmail.com',
     phone: '+917708071872',
     linkedin: 'https://www.linkedin.com/in/sakthivel-arumugam-49479721a',
