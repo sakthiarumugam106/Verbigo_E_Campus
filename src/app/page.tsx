@@ -224,16 +224,16 @@ export default function HomePage() {
           }}
         />
         <div className="container relative mx-auto px-4 md:px-6">
-          <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-            <div className="flex flex-col justify-center space-y-8">
+          <div className="grid gap-8 md:gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+            <div className="flex flex-col justify-center space-y-6 text-center md:text-left">
               <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl font-bold tracking-tighter text-primary-foreground sm:text-6xl xl:text-7xl/none font-brand">
                     Learn english through your native language
                 </h1>
               </div>
-              <div className="flex flex-row items-center justify-start gap-2">
+              <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
                  
-                    <button className="cssbuttons-io-button scale-90 sm:scale-100" onClick={handleNavClick('/find-tutor')}>
+                    <button className="cssbuttons-io-button w-full sm:w-auto" onClick={handleNavClick('/find-tutor')}>
                         <span>Find your tutor</span>
                         <div className="icon">
                             <svg
@@ -251,7 +251,7 @@ export default function HomePage() {
                         </div>
                     </button>
                 
-                     <button className="button scale-90 sm:scale-100" type="button" onClick={handleNavClick('/know-your-level')}>
+                     <button className="button w-full sm:w-auto" type="button" onClick={handleNavClick('/know-your-level')}>
                         <div className="dots_border"></div>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
