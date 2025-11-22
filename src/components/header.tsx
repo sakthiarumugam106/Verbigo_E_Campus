@@ -24,11 +24,18 @@ const navLinks = [
       { name: 'Tamil', href: '/ta' },
     ]
   },
+  { 
+    name: 'Learn Online', 
+    isDropdown: true,
+    subLinks: [
+      { name: 'Learn English Online', href: '/learn-english-online' },
+      { name: 'Spoken English Classes', href: '/spoken-english-classes' },
+      { name: 'Phonics for Kids', href: '/phonics-learning' },
+    ]
+  },
   { name: 'Courses', href: '/#courses' },
   { name: 'Blog', href: '/blog' },
   { name: 'Know Your Level', href: '/know-your-level' },
-  { name: 'Our Values', href: '/#values' },
-  { name: 'FAQ', href: '/#faq' },
 ];
 
 export function Header() {
@@ -169,10 +176,29 @@ export function Header() {
                           </DropdownMenuContent>
                         </DropdownMenu>
 
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button className="flex items-center justify-between w-full text-lg font-medium text-foreground/80 hover:text-foreground focus:outline-none">
+                              Learn Online
+                              <ChevronDown className="h-4 w-4" />
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent>
+                            <DropdownMenuItem asChild>
+                              <Link href="/learn-english-online" onClick={handleLinkClick('/learn-english-online')}>Learn English Online</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
+                              <Link href="/spoken-english-classes" onClick={handleLinkClick('/spoken-english-classes')}>Spoken English Classes</Link>
+                            </DropdownMenuItem>
+                             <DropdownMenuItem asChild>
+                              <Link href="/phonics-learning" onClick={handleLinkClick('/phonics-learning')}>Phonics for Kids</Link>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+
                         <Link href="/#courses" onClick={handleLinkClick('/#courses')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Courses</Link>
                         <Link href="/blog" onClick={handleLinkClick('/blog')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Blog</Link>
                         <Link href="/know-your-level" onClick={handleLinkClick('/know-your-level')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Know Your Level</Link>
-                        <Link href="/#values" onClick={handleLinkClick('/#values')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Our Values</Link>
                         <Link href="/#faq" onClick={handleLinkClick('/#faq')} className="text-lg font-medium text-foreground/80 hover:text-foreground">FAQ</Link>
                         <Link href="/careers" onClick={handleLinkClick('/careers')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Careers</Link>
                         <Link href="#contact" onClick={handleLinkClick('/#contact')} className="text-lg font-medium text-foreground/80 hover:text-foreground">Contact</Link>
