@@ -12,6 +12,24 @@ module.exports = {
       changefreq: 'daily',
       priority: 1.0,
       lastmod: new Date().toISOString()
+    },
+    {
+      loc: '/learn-english-online',
+      changefreq: 'daily',
+      priority: 0.9,
+      lastmod: new Date().toISOString()
+    },
+    {
+      loc: '/spoken-english-classes',
+      changefreq: 'daily',
+      priority: 0.9,
+      lastmod: new Date().toISOString()
+    },
+    {
+      loc: '/phonics-learning',
+      changefreq: 'daily',
+      priority: 0.9,
+      lastmod: new Date().toISOString()
     }
   ],
   transform: async (config, path) => {

@@ -60,13 +60,15 @@ export function Footer() {
             <div className="flex flex-col items-center sm:items-start gap-2">
               <h3 className="font-semibold">Platform</h3>
               <Link href="/#courses" onClick={handleLinkClick('/#courses')} className="text-sm text-gray-400 hover:text-white">Courses</Link>
-              <Link href="/#values" onClick={handleLinkClick('/#values')} className="text-sm text-gray-400 hover:text-white">Our Values</Link>
+              <Link href="/learn-english-online" onClick={handleLinkClick('/learn-english-online')} className="text-sm text-gray-400 hover:text-white">Learn English Online</Link>
+              <Link href="/spoken-english-classes" onClick={handleLinkClick('/spoken-english-classes')} className="text-sm text-gray-400 hover:text-white">Spoken English</Link>
+              <Link href="/phonics-learning" onClick={handleLinkClick('/phonics-learning')} className="text-sm text-gray-400 hover:text-white">Phonics Learning</Link>
               <Link href={whatsapp.whatsappDemoUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white">Book a Demo</Link>
-              <Link href="/#faq" onClick={handleLinkClick('/#faq')} className="text-sm text-gray-400 hover:text-white">FAQ</Link>
             </div>
             <div className="flex flex-col items-center sm:items-start gap-2">
               <h3 className="font-semibold">Company</h3>
               <Link href="/about-us" onClick={handleLinkClick('/about-us')} className="text-sm text-gray-400 hover:text-white">About Us</Link>
+              <Link href="/blog" onClick={handleLinkClick('/blog')} className="text-sm text-gray-400 hover:text-white">Blog</Link>
               <Link href="/careers" onClick={handleLinkClick('/careers')} className="text-sm text-gray-400 hover:text-white">Careers</Link>
               <Link href="/#contact" onClick={handleLinkClick('/#contact')} className="text-sm text-gray-400 hover:text-white">Contact</Link>
             </div>
@@ -74,6 +76,7 @@ export function Footer() {
               <h3 className="font-semibold">Legal</h3>
               <Link href="/privacy-policy" onClick={handleLinkClick('/privacy-policy')} className="text-sm text-gray-400 hover:text-white">Privacy Policy</Link>
               <Link href="/terms-of-service" onClick={handleLinkClick('/terms-of-service')} className="text-sm text-gray-400 hover:text-white">Terms of Service</Link>
+              <Link href="/developer" onClick={handleLinkClick('/developer')} className="text-sm text-gray-400 hover:text-white">Developer Contact</Link>
             </div>
           </div>
         </div>
@@ -93,6 +96,11 @@ export function Footer() {
               <Twitter className="h-5 w-5" />
             </Link>
           </div>
+        </div>
+         <div className="text-center mt-8 pt-8 border-t border-gray-800">
+            <p className="text-sm text-gray-500">
+              Crafted with ❤️ by <Link href="https://verbigo.in/" target="_blank" rel="noopener noreferrer" className="hover:text-white font-semibold">Verbigo</Link>
+            </p>
         </div>
       </div>
     </footer>
