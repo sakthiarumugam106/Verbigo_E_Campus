@@ -14,7 +14,7 @@ export default function DeveloperPage() {
     email: 'sakthiarumugam106@gmail.com',
     phone: '+917708071872',
     linkedin: 'https://www.linkedin.com/in/sakthivel-arumugam-49479721a',
-    profileImage: 'https://media.licdn.com/dms/image/D5603AQEZrR6-ddoo6g/profile-displayphoto-shrink_400_400/0/1739248487920?e=1765411200&v=beta&t=hZBBgkte2C-630_-y6IkbzlHPzdAkvurWwZECya8LZQ', 
+    profileImage: 'https://media.licdn.com/dms/image/v2/D5603AQEZrR6-ddoo6g/profile-displayphoto-shrink_800_800/B56ZTzScqrHQAg-/0/1739248487934?e=1765411200&v=beta&t=2LVv38Vr-UAKkMid-0IqC5lVhtL4K3pnPmYs1WHUAd4',
     qrCode: 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://www.linkedin.com/in/sakthivel-arumugam-49479721a/',
   };
 
