@@ -96,6 +96,11 @@ export function Footer() {
             </Link>
           </div>
         </div>
+         <div className="text-center mt-8 pt-8 border-t border-gray-800">
+            <p className="text-sm text-gray-500">
+              Crafted with ❤️ by <Link href="https://verbigo.in/" target="_blank" rel="noopener noreferrer" className="hover:text-white font-semibold">Verbigo</Link>
+            </p>
+        </div>
       </div>
     </footer>
   );
