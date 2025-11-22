@@ -34,7 +34,7 @@ export default function DeveloperPage() {
               />
             </div>
             <div className="mt-6">
-              <div className="p-2 rounded-lg neumorphic-inner">
+              <div className="p-4 rounded-lg neumorphic-inner">
                 <Image
                   src={developer.qrCode}
                   alt="LinkedIn QR Code"
